@@ -15,11 +15,8 @@
     <color name="white">#fff</color>
     <color name="white_bg">#ffffff</color>
     <color name="red">#f00</color>
-
     <color name="background_tab_pressed">#6633B5E5</color>
-
     <color name="my_green">#1CBE9D</color>
-
 
     <!-- 主题颜色紅色 -->
     <color name="main_color">#349342</color>
@@ -44,11 +41,13 @@
     <!-- 字体颜色 -->
     <color name="text_white">#fff</color>
     <!-- 标题正文 -->
-    <color name="text_black">#333333</color>
+    <color name="text_black">#2f5e2f</color>
     <!-- 正文 -->
-    <color name="text_gray">#666666</color>
+    <color name="text_gray">#484948 </color>
     <!-- 次要文字 -->
-    <color name="text_more_gray">#999999</color>
+    <color name="text_more_gray">#636563</color>
+    <!-- 最灰色 -->
+    <color name="text_more_more_gray">#949694</color>
     <color name="btn_blue_color">#7ebbff</color>
     <!-- 其它 -->
 

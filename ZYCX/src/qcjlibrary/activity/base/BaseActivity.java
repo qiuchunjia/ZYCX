@@ -43,6 +43,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,7 +54,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
@@ -79,27 +79,24 @@ import com.zhiyicx.zycx.sociax.android.Thinksns;
  * @pdOid
  */
 public abstract class BaseActivity extends FragmentActivity implements
-		OnClickListener, HttpResponceListener {
+		OnClickListener, HttpResponceListener, TitleInterface {
 	/**
 	 * activity的总布局，加入mTitleLayout和mBodyLayout
 	 * 
 	 * 
 	 */
-	private RelativeLayout mLayout;
+	public RelativeLayout mLayout;
 	/** title 容器 */
-	private LinearLayout mTitlell;
+	public LinearLayout mTitlell;
 	/** 内容容器 */
 	public FrameLayout mContentll;
 	/** 底部容器 */
 	public LinearLayout mBottomll;
 	/** bundle数据 */
 	public Bundle mBundle;
-	/** title左边的图片id */
-	private int mTitleLeftImageId;
-	/** title的右边id */
-	private int mTitleRightImageId;
 	/** title的布局 */
 	private View mTitleLayout;
+	private Title mTitleClass; // 用来封装title布局的类
 	/** 內容的布局 */
 	private View mBodyLayout;
 	/** 底部的布局 */
@@ -111,22 +108,11 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	// adapter的基类
 	private BAdapter mAdapter;
-	/** 常用的title布局的控件，注意 这只是常用的title哈，不常用的 就隐藏这个title，然后就直接画到这个该布局xml里面 */
-	public TextView tv_title_left;
-	public TextView tv_title;
-	public TextView tv_title_right;
-	public ImageView iv_title_left;
-	public ImageView iv_title_right2;
-	public ImageView iv_title_right1;
-	public ImageView iv_title_right3;
-	// 2015-10-21 新添加控件
-	private RelativeLayout rl_twoButton;
-	private TextView tv_1;
-	private TextView tv_2;
 	/**
 	 * 方便子类替换content部分
 	 */
 	public FragmentManager mFManager = getSupportFragmentManager();
+	public DrawerLayout mDrawerLayout;
 
 	/**
 	 * 使用友盟来分享就是爽爽哒
@@ -138,6 +124,13 @@ public abstract class BaseActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+		initSet();
+	}
+
+	/**
+	 * 初始化设置
+	 */
+	public void initSet() {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mApp = (Thinksns) getApplication();
@@ -147,6 +140,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 		setContentView(combineTheLayout());
 		initIntent();
 		initView();
+		initData();
 		initListener();
 		doRefreshNew();
 	}
@@ -177,66 +171,91 @@ public abstract class BaseActivity extends FragmentActivity implements
 		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
 	}
 
-	public RelativeLayout getRl_twoButton() {
-		return rl_twoButton;
-	}
-
-	public TextView getTv_1() {
-		return tv_1;
-	}
-
-	public TextView getTv_2() {
-		return tv_2;
-	}
-
 	/** 设置title的布局 */
 	private void setTitleLayout() {
-		// 当需改变的时候就imgeid时就从重新这个方法，这样可以增加扩张性
-		mTitleLeftImageId = setTitleLeftImageId();
-		mTitleRightImageId = setTitleRightImageId();
 		String title = setCenterTitle();
-		// if (title != null && title.length() > 0) {
-		if (title != null) {
-			mTitleLayout = mInflater.inflate(R.layout.title, null);
-			tv_title_left = (TextView) mTitleLayout
-					.findViewById(R.id.tv_title_left);
-			tv_title = (TextView) mTitleLayout.findViewById(R.id.tv_title);
-			tv_title_right = (TextView) mTitleLayout
-					.findViewById(R.id.tv_title_right);
-			iv_title_left = (ImageView) mTitleLayout
-					.findViewById(R.id.iv_title_left);
-			iv_title_right2 = (ImageView) mTitleLayout
-					.findViewById(R.id.iv_title_right2);
-			iv_title_right1 = (ImageView) mTitleLayout
-					.findViewById(R.id.iv_title_right1);
-			iv_title_right3 = (ImageView) mTitleLayout
-					.findViewById(R.id.iv_title_right3);
-			/****************** 通知部分新添加布局 ********************/
-			// 2015-10-21
-			rl_twoButton = (RelativeLayout) mTitleLayout
-					.findViewById(R.id.rl_twoButton);
-			tv_1 = (TextView) mTitleLayout.findViewById(R.id.tv_1);
-			tv_2 = (TextView) mTitleLayout.findViewById(R.id.tv_2);
-			/****************** 通知部分新添加布局 ********************/
-			if (mTitleLeftImageId != 0) {
-				iv_title_left.setImageResource(mTitleLeftImageId);
-			}
-			if (mTitleRightImageId != 0) {
-				iv_title_left.setImageResource(mTitleRightImageId);
-			}
-			iv_title_left.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					onBackPressed();
-				}
-			});
-			tv_title.setText(title + "");
+		if (title != null && !title.equals("")) {
+			mTitleLayout = mInflater.inflate(R.layout.qcj_title, null);
+			mTitleClass = new Title(mTitleLayout, this);
+			/*********** title的默认设置 ****************/
+			this.titleSetCenterTitle(title);
+			this.titleOnBackPress();
+			this.titleSlideMenu();
 		} else {
-			// 如果没有title的话 就设置为空
 			mTitlell.setVisibility(View.GONE);
 		}
 	}
 
+	/********************************** title常用的方法 *****************************************/
+
+	@Override
+	public Title getTitleClass() {
+
+		return mTitleClass;
+	}
+
+	@Override
+	public void titleSetLeftImage(int resouceId) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetLeftImage(resouceId);
+		}
+
+	}
+
+	@Override
+	public void titleSetLeftImageAndTxt(int resouceId, String str) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetLeftImageAndTxt(resouceId, str);
+		}
+	}
+
+	@Override
+	public void titleOnBackPress() {
+		if (mTitleClass != null) {
+			mTitleClass.titleOnBackPress();
+		}
+	}
+
+	@Override
+	public void titleSlideMenu() {
+		if (mTitleClass != null) {
+			mTitleClass.titleSlideMenu();
+		}
+	}
+
+	@Override
+	public void titleSetCenterTitle(String title) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetCenterTitle(title);
+		}
+
+	}
+
+	@Override
+	public void titleSetCenterTwoTitle(String title1, String title2) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetCenterTwoTitle(title1, title2);
+		}
+
+	}
+
+	@Override
+	public void titleSetRightTitle(String rightTitle) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetRightTitle(rightTitle);
+		}
+
+	}
+
+	@Override
+	public void titleSetRightImage(int resouceId) {
+		if (mTitleClass != null) {
+			mTitleClass.titleSetRightImage(resouceId);
+		}
+
+	}
+
+	/********************************** title常用的方法end *****************************************/
 	/**
 	 * 第一次无数据的时候刷新
 	 */
@@ -284,69 +303,12 @@ public abstract class BaseActivity extends FragmentActivity implements
 			mTitlell.addView(mTitleLayout);
 		if (mBottomLayout != null) {
 			mBottomll.addView(mBottomLayout);
-			// Log.i("bottom", "--------------------->");
 		}
 		return mLayout;
 	}
 
 	/** 設置中間的title */
 	public abstract String setCenterTitle();
-
-	/**
-	 * 设置使用的title
-	 * 
-	 * @param leftTitle
-	 *            左边的title 不设置的可以为空
-	 * @param centerTitle
-	 *            中的title 不设置的可以为空
-	 * @param rightTitle
-	 *            右边的title 不需要就设置为空
-	 */
-	public void setAlltitle(String leftTitle, String centerTitle,
-			String rightTitle) {
-		if (leftTitle != null) {
-			tv_title_left.setText(leftTitle + "");
-		}
-		if (centerTitle != null && centerTitle.length() > 0) {
-			tv_title.setText(centerTitle + "");
-		}
-		if (rightTitle != null) {
-			tv_title_right.setText(rightTitle + "");
-		}
-
-	}
-
-	/**
-	 * 设置title的图标
-	 * 
-	 * @param leftResId
-	 *            左边按钮的资源文件
-	 * @param rightResId1
-	 *            右边1按钮的资源文件
-	 * @param rightResId
-	 *            右边按钮的资源文件
-	 * @param rightResid3
-	 */
-	public void setAllImagetitle(int leftResId, int rightResId1,
-			int rightResId, int rightResid3) {
-		if (leftResId != 0) {
-			iv_title_left.setImageResource(leftResId);
-			setViewVisable(iv_title_left);
-		}
-		if (rightResId1 != 0) {
-			iv_title_right1.setImageResource(rightResId1);
-			setViewVisable(iv_title_right1);
-		}
-		if (rightResId != 0) {
-			iv_title_right2.setImageResource(rightResId);
-			setViewVisable(iv_title_right2);
-		}
-		if (rightResid3 != 0) {
-			iv_title_right3.setImageResource(rightResid3);
-			setViewVisable(iv_title_right3);
-		}
-
-	}
 
 	/**
 	 * 设置控件是否显示
@@ -360,28 +322,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * 改变title
-	 * 
-	 * @param str
-	 *            需要改变的title文字
-	 */
-	public void changeTheTitle(String str) {
-		if (tv_title != null) {
-			tv_title.setText(str + "");
-		}
-	}
-
-	/** 設置title左邊的圖片的id 需要改变图片就在子类中重新这个方法 */
-	public int setTitleLeftImageId() {
-		return 0;
-	}
-
-	/** 设置title右边的的图片id 需要改变图片就在子类中重新这个方法 */
-	public int setTitleRightImageId() {
-		return 0;
-	}
-
 	/** 獲取intent传来的内容 */
 	public abstract void initIntent();
 
@@ -390,6 +330,8 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	/** 初始化各个控件 */
 	public abstract void initView();
+
+	public abstract void initData();
 
 	/** 初始化设置各个控件的监听器 */
 	public abstract void initListener();
