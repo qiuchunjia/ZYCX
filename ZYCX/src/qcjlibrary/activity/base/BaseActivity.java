@@ -112,7 +112,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 * 方便子类替换content部分
 	 */
 	public FragmentManager mFManager = getSupportFragmentManager();
-	public DrawerLayout mDrawerLayout;
 
 	/**
 	 * 使用友盟来分享就是爽爽哒
@@ -124,6 +123,10 @@ public abstract class BaseActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		initSet();
 	}
 
@@ -131,8 +134,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 * 初始化设置
 	 */
 	public void initSet() {
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mApp = (Thinksns) getApplication();
 		mInflater = LayoutInflater.from(getApplicationContext());
 		initTheCommonLayout();
@@ -180,7 +181,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 			/*********** title的默认设置 ****************/
 			this.titleSetCenterTitle(title);
 			this.titleOnBackPress();
-			this.titleSlideMenu();
 		} else {
 			mTitlell.setVisibility(View.GONE);
 		}
@@ -217,9 +217,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void titleSlideMenu() {
-		if (mTitleClass != null) {
-			mTitleClass.titleSlideMenu();
+	public void titleSlideMenu(DrawerLayout drawerLayout) {
+		if (mTitleClass != null && drawerLayout != null) {
+			mTitleClass.titleSlideMenu(drawerLayout);
 		}
 	}
 

@@ -3,14 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_white_bg_color"
-    android:orientation="vertical">
-    <!-- 可以点击的广告栏-->
+    android:orientation="vertical" >
+
+    <!-- 可以点击的广告栏 -->
+
     <RelativeLayout
+        android:id="@+id/rl_ads"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@color/main_gray_color"></RelativeLayout>
+        android:background="@color/main_gray_color" >
+    </RelativeLayout>
 
-    <include layout="@layout/view_line_vertical"></include>
+    <include layout="@layout/view_line_vertical" >
+    </include>
 
     <RelativeLayout
         android:id="@+id/index_choose"
@@ -20,7 +25,7 @@
         android:layout_marginRight="@dimen/margin_left_small"
         android:layout_marginTop="@dimen/margin_top"
         android:layout_weight="1"
-        android:background="@color/main_white_pure_color">
+        android:background="@color/main_white_pure_color" >
 
         <TextView
             android:id="@+id/tv_recommand"
@@ -31,32 +36,33 @@
             android:text="为你推荐"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_big" />
-        <!-- 主页选项框-->
+        <!-- 主页选项框 -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_recommand"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/ll_first"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <RelativeLayout
                     android:id="@+id/rl_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                        android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_hot_question" />
 
                     <TextView
@@ -71,20 +77,21 @@
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
 
-                <include layout="@layout/view_line_hor"></include>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
                 <RelativeLayout
                     android:id="@+id/rl_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                        android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_exprest_say" />
 
                     <TextView
@@ -99,20 +106,21 @@
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
 
-                <include layout="@layout/view_line_hor"></include>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
                 <RelativeLayout
                     android:id="@+id/rl_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                        android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_cook" />
 
                     <TextView
@@ -126,8 +134,6 @@
                         android:textColor="@color/text_black"
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
-
-
             </LinearLayout>
 
             <include layout="@layout/view_line_vertical" />
@@ -137,20 +143,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <RelativeLayout
                     android:id="@+id/rl_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                        android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_cancel_expre" />
 
                     <TextView
@@ -165,20 +171,21 @@
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
 
-                <include layout="@layout/view_line_hor"></include>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
                 <RelativeLayout
                     android:id="@+id/rl_5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                        android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_electric" />
 
                     <TextView
@@ -193,20 +200,21 @@
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
 
-                <include layout="@layout/view_line_hor"></include>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
                 <RelativeLayout
                     android:id="@+id/rl_6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" >
 
                     <ImageView
                         android:id="@+id/iv_choose6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/item_height"
+                       android:layout_marginTop="@dimen/margin_top_big"
                         android:src="@drawable/index_medicine_notify" />
 
                     <TextView
@@ -221,11 +229,16 @@
                         android:textSize="@dimen/text_big" />
                 </RelativeLayout>
 
-                <include layout="@layout/view_line_hor"></include>
-
-
+                <include layout="@layout/view_line_hor" />
             </LinearLayout>
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/white_area"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/text_white" >
     </RelativeLayout>
 
 </LinearLayout>

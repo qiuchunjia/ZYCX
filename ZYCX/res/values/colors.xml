@@ -41,14 +41,14 @@
     <!-- 字体颜色 -->
     <color name="text_white">#fff</color>
     <!-- 标题正文 -->
-    <color name="text_black">#2f5e2f</color>
+    <color name="text_green">#2f5e2f</color>
+    <color name="text_black">#484948</color>
     <!-- 正文 -->
-    <color name="text_gray">#484948 </color>
+    <color name="text_gray">#636563</color>
     <!-- 次要文字 -->
-    <color name="text_more_gray">#636563</color>
-    <!-- 最灰色 -->
-    <color name="text_more_more_gray">#949694</color>
+    <color name="text_more_gray">#949694</color>
     <color name="btn_blue_color">#7ebbff</color>
+    <color name="quit_color">#31963a</color>
     <!-- 其它 -->
 
 </resources>

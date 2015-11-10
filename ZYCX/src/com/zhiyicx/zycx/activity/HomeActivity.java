@@ -1,15 +1,17 @@
 package com.zhiyicx.zycx.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
+import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.baidu.appx.BDInterstitialAd;
+import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.QClassFragment;
@@ -39,6 +42,15 @@ public class HomeActivity extends BaseActivity {
 	private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
 	private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
 
+	private FragmentIndex mDefaultFragment; // 新增加的页面
+	public static final int index_Default = -1;
+	public static final int index_zhixun = 0;
+	public static final int index_qclass = 1;
+	public static final int index_qustion = 2;
+	public static final int index_qikan = 3;
+	public static final int index_web = 4;
+	private int mCurrentIndex = index_Default; // 当前所处的位置 默认为-1
+
 	private RelativeLayout mZixunLayout, mClassLayout, mQuestionLayout,
 			mQikanLayout, mWebLayout;
 	private BDInterstitialAd appxInterstitialAdView;
@@ -47,28 +59,77 @@ public class HomeActivity extends BaseActivity {
 	private FragmentMenu mMenu;
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
-	}
-
-	@Override
 	public void initSet() {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mApp = (Thinksns) getApplication();
 		mInflater = LayoutInflater.from(getApplicationContext());
 		setContentView(R.layout.comom_layout_drawer);
-		mDrawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
-		mLayout = (RelativeLayout) findViewById(R.id.rl_layout);
-		mTitlell = (LinearLayout) mLayout.findViewById(R.id.ll_Title);
-		mContentll = (FrameLayout) mLayout.findViewById(R.id.ll_content);
-		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
+		initParentView();
 		// 把内容和title结合
 		combineTheLayout();
 		initIntent();
 		initView();
 		initData();
 		initListener();
+		initEvents();
+	}
+
+	private void initEvents() {
+		Title title = getTitleClass();
+		if (title != null) {
+			title.rl_left_1.setVisibility(View.GONE);
+			title.rl_left_2.setVisibility(View.VISIBLE);
+		}
+		titleSlideMenu(mDrawer);
+		mDrawer.setDrawerListener(new DrawerListener() {
+			@Override
+			public void onDrawerStateChanged(int newState) {
+			}
+
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				View mContent = mDrawer.getChildAt(0);
+				View mMenu = drawerView;
+				float scale = 1 - slideOffset;
+				float rightScale = 0.8f + scale * 0.2f;
+
+				if (drawerView.getTag().equals("LEFT")) {
+					float leftScale = 1 - 0.3f * scale;
+					ViewHelper.setScaleX(mMenu, leftScale);
+					ViewHelper.setScaleY(mMenu, leftScale);
+					ViewHelper.setAlpha(mMenu, 0.6f + 0.4f * (1 - scale));
+					ViewHelper.setTranslationX(mContent,
+							mMenu.getMeasuredWidth() * (1 - scale));
+					ViewHelper.setPivotX(mContent, 0);
+					ViewHelper.setPivotY(mContent,
+							mContent.getMeasuredHeight() / 2);
+					mContent.invalidate();
+					ViewHelper.setScaleX(mContent, rightScale);
+					ViewHelper.setScaleY(mContent, rightScale);
+				}
+
+			}
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView) {
+			}
+		});
+	}
+
+	/**
+	 * 初始化父布局，这个本来是父类来实现的，但是由于要更改策略，不得不重新
+	 */
+	private void initParentView() {
+		mDrawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
+		mLayout = (RelativeLayout) findViewById(R.id.rl_layout);
+		mTitlell = (LinearLayout) mLayout.findViewById(R.id.ll_Title);
+		mContentll = (FrameLayout) mLayout.findViewById(R.id.ll_content);
+		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
 	}
 
 	@Override
@@ -93,16 +154,12 @@ public class HomeActivity extends BaseActivity {
 		mQikanLayout = (RelativeLayout) findViewById(R.id.qikan_layout);
 		mQuestionLayout = (RelativeLayout) findViewById(R.id.question_layout);
 		mWebLayout = (RelativeLayout) findViewById(R.id.weibo_layout);
-		mDrawer = new DrawerLayout(getApplicationContext());
-		if (mMenu == null) {
-			mMenu = new FragmentMenu();
-		}
 	}
 
 	@Override
 	public void initData() {
 		HttpHelper.setContext(getApplicationContext());
-		setTabSelection(0);
+		setTabSelection(mCurrentIndex);
 		// 曹立该添加，百度广告，点击 Tab 时第二项时弹出广告
 		initBDAD();
 	}
@@ -215,11 +272,12 @@ public class HomeActivity extends BaseActivity {
 
 	public void onClick(View v) {
 		switch (v.getId()) {
+
 		case R.id.zixun_layout:
-			setTabSelection(0);
+			setTabSelection(index_zhixun);
 			break;
 		case R.id.class_layout:
-			setTabSelection(1);
+			setTabSelection(index_qclass);
 			// 展示插屏广告前先请先检查下广告是否加载完毕
 			// if (appxInterstitialAdView.isLoaded()) {
 			// appxInterstitialAdView.showAd();
@@ -230,13 +288,13 @@ public class HomeActivity extends BaseActivity {
 			// startActivity(new Intent(HomeActivity.this, BDActivity.class));
 			break;
 		case R.id.question_layout:
-			setTabSelection(2);
+			setTabSelection(index_qustion);
 			break;
 		case R.id.qikan_layout:
-			setTabSelection(3);
+			setTabSelection(index_qikan);
 			break;
 		case R.id.weibo_layout:
-			setTabSelection(4);
+			setTabSelection(index_web);
 			// Intent intent = new Intent(this, WeiboAppActivity.class);
 			// startActivity(intent);
 			// Anim.in(activity);
@@ -250,13 +308,16 @@ public class HomeActivity extends BaseActivity {
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
-		// mZixunLayout.setBackgroundResource(android.R.color.transparent);
-		// mClassLayout.setBackgroundResource(android.R.color.transparent);
-		// mQuestionLayout.setBackgroundResource(android.R.color.transparent);
-		// mQikanLayout.setBackgroundResource(android.R.color.transparent);
-		// mWebLayout.setBackgroundResource(android.R.color.transparent);
 		switch (index) {
-		case 0:
+		case index_Default:
+			if (mDefaultFragment == null) {
+				mDefaultFragment = new FragmentIndex();
+				transaction.add(R.id.content, mDefaultFragment);
+			} else {
+				transaction.show(mDefaultFragment);
+			}
+			break;
+		case index_zhixun:
 			if (mZiXunFgmt == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mZiXunFgmt = new ZiXunFragment();
@@ -267,7 +328,7 @@ public class HomeActivity extends BaseActivity {
 			}
 			// mZixunLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
-		case 1:
+		case index_qclass:
 			if (mQClassFgmt == null) {
 				mQClassFgmt = new QClassFragment();
 				transaction.add(R.id.content, mQClassFgmt);
@@ -276,7 +337,7 @@ public class HomeActivity extends BaseActivity {
 			}
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
-		case 2:
+		case index_qustion:
 			if (mQustionFgmt == null) {
 				mQustionFgmt = new QuestionFragment();
 				transaction.add(R.id.content, mQustionFgmt);
@@ -285,7 +346,7 @@ public class HomeActivity extends BaseActivity {
 			}
 			// mQuestionLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
-		case 3:
+		case index_qikan:
 			if (mQiKanFgmt == null) {
 				mQiKanFgmt = new QiKanFragment();
 				transaction.add(R.id.content, mQiKanFgmt);
@@ -294,7 +355,7 @@ public class HomeActivity extends BaseActivity {
 			}
 			// mQikanLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
-		case 4:
+		case index_web:
 			if (mWebFgmt == null) {
 				mWebFgmt = new WebFragment();
 				transaction.add(R.id.content, mWebFgmt);

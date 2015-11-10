@@ -1,6 +1,8 @@
 package qcjlibrary.activity.base;
 
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -115,14 +117,13 @@ public class Title implements TitleInterface {
 	}
 
 	@Override
-	public void titleSlideMenu() {
-		if (mTitleView != null && mActivity != null) {
+	public void titleSlideMenu(final DrawerLayout drawerLayout) {
+		if (mTitleView != null && mActivity != null && drawerLayout != null) {
 			rl_left_2.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					// mActivity.onBackPressed();
-
+					drawerLayout.openDrawer(Gravity.LEFT);
 				}
 			});
 		}

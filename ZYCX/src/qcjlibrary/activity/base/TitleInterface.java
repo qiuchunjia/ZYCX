@@ -1,5 +1,7 @@
 package qcjlibrary.activity.base;
 
+import android.support.v4.widget.DrawerLayout;
+
 /**
  * author：qiuchunjia time：
  * 
@@ -22,7 +24,7 @@ public interface TitleInterface {
 	/**
 	 * 点击左边实现滑动菜单
 	 */
-	public void titleSlideMenu();
+	public void titleSlideMenu(DrawerLayout drawerLayout);
 
 	/**
 	 * 设置左边的一个控件的布局图片

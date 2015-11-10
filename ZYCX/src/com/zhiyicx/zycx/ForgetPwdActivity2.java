@@ -21,7 +21,7 @@ import com.zhiyicx.zycx.net.JsonDataListener;
 import com.zhiyicx.zycx.net.NetComTools;
 import com.zhiyicx.zycx.tools.PublicMethods;
 
-public class SureNewPd extends Activity implements OnClickListener
+public class ForgetPwdActivity2 extends Activity implements OnClickListener
 {
     @SuppressWarnings("unused")
 
@@ -134,7 +134,7 @@ public class SureNewPd extends Activity implements OnClickListener
         {
             Toast.makeText(getApplicationContext(), "修改成功，", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
-            intent.setClass(SureNewPd.this, LoginActivity.class);
+            intent.setClass(ForgetPwdActivity2.this, LoginActivity.class);
             startActivity(intent);
 
         } else if (code.equals("10300"))
