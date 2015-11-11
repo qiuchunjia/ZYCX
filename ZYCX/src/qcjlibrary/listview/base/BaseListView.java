@@ -52,10 +52,6 @@ public abstract class BaseListView extends XListView implements
 	private BAdapter mAdapter;
 
 	private SwipeMenuAdapter menuAdapter;
-	/**
-	 * 最后可见的位置
-	 */
-	private int mLastVisiablPos;
 
 	public Thinksns mApp;
 

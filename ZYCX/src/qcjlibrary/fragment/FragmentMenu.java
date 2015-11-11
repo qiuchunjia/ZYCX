@@ -1,7 +1,9 @@
 package qcjlibrary.fragment;
 
+import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.img.RoundImageView;
+import qcjlibrary.model.base.Model;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,7 +16,6 @@ import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.GuideActivity;
-import com.zhiyicx.zycx.activity.HomeActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.unit.Anim;
 
@@ -79,6 +80,8 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.iv_edit:
+			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 
 			break;
 		case R.id.rl_home:

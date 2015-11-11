@@ -28,7 +28,7 @@
             android:layout_toRightOf="@id/riv_user_icon"
             android:text="呵呵哒"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_very_big" />
 
         <ImageView
             android:id="@+id/iv_edit"
@@ -66,7 +66,7 @@
             android:layout_toRightOf="@id/iv_home"
             android:text="进入首页"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_big" />
 
         <ImageView
             android:id="@+id/iv_home_next"
@@ -103,7 +103,7 @@
             android:layout_toRightOf="@id/iv_question"
             android:text="我的提问"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_big" />
 
         <ImageView
             android:id="@+id/iv_question_next"
@@ -140,7 +140,7 @@
             android:layout_toRightOf="@id/iv_app"
             android:text="我的应用"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_big" />
 
         <ImageView
             android:id="@+id/iv_app_next"
@@ -177,7 +177,7 @@
             android:layout_toRightOf="@id/iv_cycle"
             android:text="我的圈子"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_big" />
 
         <ImageView
             android:id="@+id/iv_cycle_next"
@@ -214,7 +214,7 @@
             android:layout_toRightOf="@id/iv_periodical"
             android:text="我的期刊"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_big" />
 
         <ImageView
             android:id="@+id/iv_periodical_next"
@@ -237,6 +237,6 @@
         android:background="@color/quit_color"
         android:text="退出登录"
         android:textColor="@color/text_white"
-        android:textSize="@dimen/text_common" />
+        android:textSize="@dimen/text_big" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package qcjlibrary.util;
+package qcjlibrary.adapter.base;
 
 import qcjlibrary.img.RoundImageView;
 import qcjlibrary.img.SmartImageView;

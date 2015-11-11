@@ -67,21 +67,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
-        <activity
             android:name=".activity.GuideActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
@@ -93,6 +78,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -101,14 +93,6 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="bak3" />
-        <!-- 癌友帮二期开发新增加页面 -->
-
-        <activity
-            android:name="com.zhiyicx.zycx.RegisterActivity2"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <!-- 癌友帮二期开发新增加页面end -->
         <!-- 人人登录配置 -->
         <activity
             android:name="com.renn.rennsdk.oauth.OAuthActivity"
@@ -335,6 +319,19 @@
             android:name=".BDActivity"
             android:label="@string/title_activity_bd" >
         </activity>
+
+        <!-- 癌友帮二期开发新增加页面 -->
+
+        <activity
+            android:name="com.zhiyicx.zycx.RegisterActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name="qcjlibrary.activity.MeCenterActivity" />
+        <activity android:name="qcjlibrary.activity.MeCenterBasicActivity" />
+        <activity android:name="qcjlibrary.activity.MeAplicationActivity" />
+
+        <!-- 癌友帮二期开发新增加页面end -->
     </application>
 
 </manifest>
