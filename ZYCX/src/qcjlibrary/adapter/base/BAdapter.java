@@ -43,6 +43,7 @@ public abstract class BAdapter extends BaseAdapter {
 	public final static int REFRESH_NEW = 1;
 	public final static int REFRESH_HEADER = 2;
 	public final static int REFRESH_FOOTER = 3;
+	public final static int REQUEST_ITEM_COUNT = 20; // 请求item的数量
 	public BaseListView mListView;
 	public LayoutInflater mInflater;
 
@@ -66,7 +67,7 @@ public abstract class BAdapter extends BaseAdapter {
 	}
 
 	/** 子类实现，用来第一次打开的时候获取新数据，当刷新到时候是调用refreshNew() */
-	public abstract List<Model> refreshNew();
+	public abstract void refreshNew();
 
 	/**
 	 * @param item
@@ -75,7 +76,7 @@ public abstract class BAdapter extends BaseAdapter {
 	 *            获取刷新数据的多少 默認為20條，考虑的扩展性，可以修改它
 	 * @pdOid 上拉刷新數據
 	 */
-	public abstract List<Model> refreshHeader(Model item, int count);
+	public abstract void refreshHeader(Model item, int count);
 
 	/**
 	 * @param item
@@ -84,7 +85,7 @@ public abstract class BAdapter extends BaseAdapter {
 	 *            數量
 	 * @pdOid 下拉加载更多
 	 */
-	public abstract List<Model> refreshFooter(Model item, int count);
+	public abstract void refreshFooter(Model item, int count);
 
 	/**
 	 * 真正的獲取數據，先查看是否存在缓存，如果存在就调用缓存的， 如果不存在就調用refreshnew（）獲取的數據加載到adapter里面
@@ -92,6 +93,7 @@ public abstract class BAdapter extends BaseAdapter {
 	public void doRefreshNew() {
 		// 先获取缓存
 		// TODO
+		refreshNew();
 	}
 
 	/** 真正的刷新数据數據，即調用RefreshHeader() 獲取的數據加載到adapter里面 */
@@ -101,6 +103,7 @@ public abstract class BAdapter extends BaseAdapter {
 			mList = new ArrayList<Model>();
 		this.notifyDataSetChanged();
 		if (mList.size() > 0) {
+			refreshHeader(mList.get(0), REQUEST_ITEM_COUNT);
 			// TODO
 		} else {
 			doRefreshNew();
@@ -116,6 +119,7 @@ public abstract class BAdapter extends BaseAdapter {
 		this.notifyDataSetChanged();
 		if (!mList.isEmpty()) {
 			// TODO
+			refreshFooter(mList.get(mList.size() - 1), REQUEST_ITEM_COUNT);
 		}
 
 	}
@@ -332,6 +336,15 @@ public abstract class BAdapter extends BaseAdapter {
 				mRequst.post(mApp.getHostUrl(), params,
 						new MyAsyncHttpResponseHandler(modeltype, RefreshType));
 			}
+		} else {
+			// TODO 专门用来测试
+			List<Model> list = new ArrayList<Model>();
+			list.add(new Model());
+			list.add(new Model());
+			list.add(new Model());
+			list.add(new Model());
+			list.add(new Model());
+			addHeadList(list);
 		}
 
 	}

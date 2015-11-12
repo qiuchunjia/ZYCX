@@ -19,7 +19,7 @@ public class MeCenterActivity extends BaseActivity {
 	private RelativeLayout rl_user;
 	private RoundImageView riv_user_icon;
 	private RelativeLayout rl_mycase;
-	private ImageView iv_question;
+	private RelativeLayout rl_question;
 	private RelativeLayout rl_app;
 	private RelativeLayout rl_cycle;
 	private RelativeLayout rl_periodical;
@@ -47,7 +47,7 @@ public class MeCenterActivity extends BaseActivity {
 		rl_user = (RelativeLayout) findViewById(R.id.rl_user);
 		riv_user_icon = (RoundImageView) findViewById(R.id.riv_user_icon);
 		rl_mycase = (RelativeLayout) findViewById(R.id.rl_mycase);
-		iv_question = (ImageView) findViewById(R.id.iv_question);
+		rl_question = (RelativeLayout) findViewById(R.id.rl_question);
 		rl_app = (RelativeLayout) findViewById(R.id.rl_app);
 		rl_cycle = (RelativeLayout) findViewById(R.id.rl_cycle);
 		rl_periodical = (RelativeLayout) findViewById(R.id.rl_periodical);
@@ -63,7 +63,7 @@ public class MeCenterActivity extends BaseActivity {
 	public void initListener() {
 		rl_user.setOnClickListener(this);
 		rl_mycase.setOnClickListener(this);
-		iv_question.setOnClickListener(this);
+		rl_question.setOnClickListener(this);
 		rl_app.setOnClickListener(this);
 		rl_cycle.setOnClickListener(this);
 		rl_periodical.setOnClickListener(this);
@@ -82,8 +82,9 @@ public class MeCenterActivity extends BaseActivity {
 		case R.id.rl_mycase:
 
 			break;
-		case R.id.iv_question:
-
+		case R.id.rl_question:
+			mApp.startActivity_qcj(this, ExpertRequestActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_app:
 			mApp.startActivity_qcj(this, MeAplicationActivity.class,

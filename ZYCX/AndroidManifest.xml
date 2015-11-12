@@ -330,6 +330,7 @@
         <activity android:name="qcjlibrary.activity.MeCenterActivity" />
         <activity android:name="qcjlibrary.activity.MeCenterBasicActivity" />
         <activity android:name="qcjlibrary.activity.MeAplicationActivity" />
+        <activity android:name="qcjlibrary.activity.ExpertRequestActivity" />
 
         <!-- 癌友帮二期开发新增加页面end -->
     </application>
