@@ -338,6 +338,7 @@
         <activity android:name="qcjlibrary.activity.FoodCategoryActivity" />
         <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
         <activity android:name="qcjlibrary.activity.FoodCategorySingleDetail" />
+        <activity android:name="qcjlibrary.activity.CaseHistoryActivity" />
 
         <!-- 癌友帮二期开发新增加页面end -->
     </application>

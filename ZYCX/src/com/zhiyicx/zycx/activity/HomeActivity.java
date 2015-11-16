@@ -2,6 +2,7 @@ package com.zhiyicx.zycx.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.fragment.FragmentCaseIndex;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import android.app.Activity;
@@ -40,7 +41,8 @@ public class HomeActivity extends BaseActivity {
 	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
 	private QuestionFragment mQustionFgmt;// 问答fragment qcj
 	private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
-	private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
+	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
+	private FragmentCaseIndex mCaseFgmt;
 
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
@@ -356,12 +358,18 @@ public class HomeActivity extends BaseActivity {
 			// mQikanLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_web:
-			if (mWebFgmt == null) {
-				mWebFgmt = new WebFragment();
-				transaction.add(R.id.content, mWebFgmt);
+			if (mCaseFgmt == null) {
+				mCaseFgmt = new FragmentCaseIndex();
+				transaction.add(R.id.content, mCaseFgmt);
 			} else {
-				transaction.show(mWebFgmt);
+				transaction.show(mCaseFgmt);
 			}
+			// if (mWebFgmt == null) {
+			// mWebFgmt = new WebFragment();
+			// transaction.add(R.id.content, mWebFgmt);
+			// } else {
+			// transaction.show(mWebFgmt);
+			// }
 			// mWebLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		}
@@ -381,8 +389,10 @@ public class HomeActivity extends BaseActivity {
 		if (mQiKanFgmt != null) {
 			transaction.hide(mQiKanFgmt);
 		}
-		if (mWebFgmt != null)
-			transaction.hide(mWebFgmt);
+		if (mCaseFgmt != null)
+			transaction.hide(mCaseFgmt);
+		// if (mWebFgmt != null)
+		// transaction.hide(mWebFgmt);
 	}
 
 	@Override

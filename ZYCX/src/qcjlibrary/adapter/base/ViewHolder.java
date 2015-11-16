@@ -59,5 +59,9 @@ public class ViewHolder {
 	public TextView tv_cancer;
 
 	/******************* 食物种类 item end ************************/
+	/******************* 病例历史item ************************/
+	public TextView tv_content;
+	// public TextView tv_date;
+	/******************* 病例历史item end ************************/
 
 }

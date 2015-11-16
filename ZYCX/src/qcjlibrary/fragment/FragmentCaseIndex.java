@@ -1,6 +1,9 @@
 package qcjlibrary.fragment;
 
+import qcjlibrary.activity.CaseHistoryActivity;
+import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -87,7 +90,8 @@ public class FragmentCaseIndex extends BaseFragment {
 
 			break;
 		case R.id.rl_history:
-
+			mApp.startActivity_qcj(getActivity(), CaseHistoryActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.tv_look:
 
