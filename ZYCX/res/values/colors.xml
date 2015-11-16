@@ -42,6 +42,7 @@
     <color name="text_white">#fff</color>
     <!-- 标题正文 -->
     <color name="text_green">#349342</color>
+    <color name="text_user">#2f5e2f</color>
     <color name="text_yellow">#e39925</color>
     <color name="text_red">#f46565</color>
     <color name="text_black">#484948</color>

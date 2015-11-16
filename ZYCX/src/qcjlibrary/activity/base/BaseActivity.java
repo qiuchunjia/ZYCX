@@ -19,6 +19,7 @@ import org.apache.http.Header;
 
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.config.Config;
+import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
@@ -43,6 +44,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -161,6 +163,20 @@ public abstract class BaseActivity extends FragmentActivity implements
 		}
 		ToastUtils.showToast("请先登录");
 		return false;
+	}
+
+	/**
+	 * 根据布局id替换 fragment
+	 * 
+	 * @param layoutid
+	 * @param fragment
+	 */
+	public void replaceFragment(int layoutid, BaseFragment fragment) {
+		FragmentTransaction transaction = mFManager.beginTransaction();
+		if (fragment != null) {
+			transaction.replace(layoutid, fragment);
+			transaction.commit();
+		}
 	}
 
 	/** 初始化公共布局 */

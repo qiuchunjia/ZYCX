@@ -35,6 +35,9 @@ public class Title implements TitleInterface {
 	public RelativeLayout rl_twoButton;
 	public TextView tv_1;
 	public TextView tv_2;
+	public RelativeLayout rl_1_image; // 中间一个图片空间的情况
+	public ImageView iv_1_choose;
+
 	// 右边部分控件
 	public TextView tv_title_right; // 距离右10dp
 	public ImageView iv_title_right1;// 距离右10dp
@@ -75,6 +78,9 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.iv_title_right2);
 			iv_title_right3 = (ImageView) mTitleView
 					.findViewById(R.id.iv_title_right3);
+			rl_1_image = (RelativeLayout) mTitleView
+					.findViewById(R.id.rl_1_image);
+			iv_1_choose = (ImageView) mTitleView.findViewById(R.id.iv_1_choose);
 			Log.i("title", "init title end");
 		}
 	}
