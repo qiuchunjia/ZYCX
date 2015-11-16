@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white_bg_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white_pure_color"
+        android:paddingBottom="@dimen/margin_bottom" >
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shiliaodaquanbanner" />
+        <!-- 搜索框 -->
+
+        <LinearLayout
+            android:id="@+id/ll_find"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_below="@id/iv_bg"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginRight="@dimen/margin_right_small"
+            android:background="@drawable/view_border_gray_3"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/iv_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shiliaosearch" />
+
+            <EditText
+                android:id="@+id/et_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_left_small"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="搜索关键词" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/view_line_vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/main_gray_color" />
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/main_white_pure_color" >
+    </RelativeLayout>
+
+</LinearLayout>

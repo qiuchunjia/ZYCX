@@ -100,6 +100,21 @@
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_big" />
         </RelativeLayout>
+        <!-- 中间一个图片控件的情况 -->
+
+        <RelativeLayout
+            android:id="@+id/rl_1_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/iv_1_choose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/segmented_control_02" />
+        </RelativeLayout>
     </FrameLayout>
 
     <!-- 右边的布局 -->

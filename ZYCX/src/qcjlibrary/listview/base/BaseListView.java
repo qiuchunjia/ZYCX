@@ -11,15 +11,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.swipelistview.SwipeMenuAdapter;
 import qcjlibrary.listview.base.xlistview.XListView;
 import qcjlibrary.model.base.Model;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
 
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -43,12 +40,10 @@ public abstract class BaseListView extends XListView implements
 		initXListView();
 	}
 
-	private Context mContext;
+	public Context mContext; // 上下文
 
 	// /** mlist數據 */
 	private List<Model> mList;
-	/** activity */
-	private BaseActivity mActivity;
 	private BAdapter mAdapter;
 
 	private SwipeMenuAdapter menuAdapter;
@@ -58,7 +53,6 @@ public abstract class BaseListView extends XListView implements
 	/** 初始化设置 */
 	public void initSet(Context context) {
 		this.setScrollbarFadingEnabled(true);
-		this.setCacheColorHint(0);
 		this.setDividerHeight(1);
 		this.setVerticalScrollBarEnabled(false);
 		mApp = (Thinksns) context.getApplicationContext();
@@ -103,10 +97,6 @@ public abstract class BaseListView extends XListView implements
 			this.setFooterVisable();
 		}
 	}
-
-	/** 重新每一個item的點擊事件 */
-	public abstract void onClick(AdapterView<?> parent, View view,
-			int position, long id);
 
 	@Override
 	public void onRefresh() {

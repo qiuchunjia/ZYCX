@@ -6,11 +6,10 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -22,13 +21,13 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class ExpertRequestAdapter extends BAdapter {
+public class PraiseAdapter extends BAdapter {
 
-	public ExpertRequestAdapter(BaseActivity activity, List<Model> list) {
+	public PraiseAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 	}
 
-	public ExpertRequestAdapter(BaseFragment fragment, List<Model> list) {
+	public PraiseAdapter(BaseFragment fragment, List<Model> list) {
 		super(fragment, list);
 	}
 
@@ -37,7 +36,7 @@ public class ExpertRequestAdapter extends BAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater.inflate(R.layout.item_expert_request, null);
+			convertView = mInflater.inflate(R.layout.item_msg_praise, null);
 			initView(convertView, holder);
 			convertView.setTag(holder);
 		} else {
@@ -49,16 +48,6 @@ public class ExpertRequestAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
-			holder.rl_agree.setVisibility(View.GONE);
-			holder.tv_agree.setVisibility(View.GONE);
-			holder.tv_noagree.setVisibility(View.GONE);
-			if (position == 0) {
-				holder.rl_agree.setVisibility(View.VISIBLE);
-			} else if (position == 1) {
-				holder.tv_agree.setVisibility(View.VISIBLE);
-			} else if (position == 2) {
-				holder.tv_noagree.setVisibility(View.VISIBLE);
-			}
 		}
 	}
 
@@ -70,21 +59,14 @@ public class ExpertRequestAdapter extends BAdapter {
 	 */
 	private void initView(View convertView, ViewHolder holder) {
 		if (convertView != null && holder != null) {
+			holder.riv_msg_icon = (RoundImageView) convertView
+					.findViewById(R.id.riv_msg_icon);
+			holder.tv_user = (TextView) convertView.findViewById(R.id.tv_user);
+			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_title = (TextView) convertView
 					.findViewById(R.id.tv_title);
-			holder.tv_answer = (TextView) convertView
-					.findViewById(R.id.tv_answer);
-			holder.tv_expert_answer = (TextView) convertView
-					.findViewById(R.id.tv_expert_answer);
-			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-			holder.rl_agree = (RelativeLayout) convertView
-					.findViewById(R.id.rl_agree);
-			holder.iv_yes = (ImageView) convertView.findViewById(R.id.iv_yes);
-			holder.iv_no = (ImageView) convertView.findViewById(R.id.iv_no);
-			holder.tv_agree = (TextView) convertView
-					.findViewById(R.id.tv_agree);
-			holder.tv_noagree = (TextView) convertView
-					.findViewById(R.id.tv_noagree);
+			holder.tv_other_replay = (TextView) convertView
+					.findViewById(R.id.tv_other_replay);
 		}
 	}
 

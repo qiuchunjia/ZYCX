@@ -1,7 +1,7 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.ExpertRequestAdapter;
+import qcjlibrary.adapter.MePerioAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import android.view.View;
 
@@ -12,9 +12,9 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class ExpertRequestActivity extends BaseActivity {
+public class MePerioActivity extends BaseActivity {
 	private CommonListView mCommonListView;
-	private ExpertRequestAdapter mAdapter;
+	private MePerioAdapter mAdapter;
 
 	@Override
 	public void onClick(View v) {
@@ -40,7 +40,7 @@ public class ExpertRequestActivity extends BaseActivity {
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(20);
-		mAdapter = new ExpertRequestAdapter(this, null);
+		mAdapter = new MePerioAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
 	}
 

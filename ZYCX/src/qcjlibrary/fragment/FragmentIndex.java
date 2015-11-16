@@ -1,6 +1,9 @@
 package qcjlibrary.fragment;
 
+import qcjlibrary.activity.FoodWayActivity;
+import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -66,6 +69,8 @@ public class FragmentIndex extends BaseFragment {
 		switch (v.getId()) {
 		case R.id.rl_1:
 			// TODO
+			mApp.startActivity_qcj(mActivity, MsgNotifyPraiseActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		case R.id.rl_2:
@@ -73,6 +78,8 @@ public class FragmentIndex extends BaseFragment {
 			break;
 		case R.id.rl_3:
 			// TODO
+			mApp.startActivity_qcj(mActivity, FoodWayActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_4:
 			// TODO

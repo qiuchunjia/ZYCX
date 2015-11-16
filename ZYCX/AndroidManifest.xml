@@ -331,6 +331,13 @@
         <activity android:name="qcjlibrary.activity.MeCenterBasicActivity" />
         <activity android:name="qcjlibrary.activity.MeAplicationActivity" />
         <activity android:name="qcjlibrary.activity.ExpertRequestActivity" />
+        <activity android:name="qcjlibrary.activity.MsgNotifyPraiseActivity" />
+        <activity android:name="qcjlibrary.activity.MsgNotifyDetailActivity" />
+        <activity android:name="qcjlibrary.activity.MePerioActivity" />
+        <activity android:name="qcjlibrary.activity.FoodWayActivity" />
+        <activity android:name="qcjlibrary.activity.FoodCategoryActivity" />
+        <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
+        <activity android:name="qcjlibrary.activity.FoodCategorySingleDetail" />
 
         <!-- 癌友帮二期开发新增加页面end -->
     </application>

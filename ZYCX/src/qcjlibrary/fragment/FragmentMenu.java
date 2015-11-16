@@ -1,6 +1,7 @@
 package qcjlibrary.fragment;
 
 import qcjlibrary.activity.MeCenterActivity;
+import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
@@ -97,7 +98,8 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.rl_periodical:
-
+			mApp.startActivity_qcj(getActivity(), MePerioActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
 			quitLogin();

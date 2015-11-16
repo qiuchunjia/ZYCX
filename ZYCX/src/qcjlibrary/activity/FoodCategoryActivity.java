@@ -1,9 +1,11 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.ExpertRequestAdapter;
+import qcjlibrary.adapter.FoodCategoryAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.zhiyicx.zycx.R;
 
@@ -12,9 +14,9 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class ExpertRequestActivity extends BaseActivity {
+public class FoodCategoryActivity extends BaseActivity {
 	private CommonListView mCommonListView;
-	private ExpertRequestAdapter mAdapter;
+	private FoodCategoryAdapter mAdapter;
 
 	@Override
 	public void onClick(View v) {
@@ -23,7 +25,7 @@ public class ExpertRequestActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "专家提问";
+		return "谷类";
 	}
 
 	@Override
@@ -39,14 +41,23 @@ public class ExpertRequestActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(20);
-		mAdapter = new ExpertRequestAdapter(this, null);
+		mCommonListView.setDividerHeight(0);
+		mAdapter = new FoodCategoryAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position,
+						FoodCategorySingleDetail.class);
+			}
+		});
 	}
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubF
 
 	}
 

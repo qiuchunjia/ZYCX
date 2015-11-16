@@ -1,7 +1,5 @@
 package qcjlibrary.listview.base.swipelistview;
 
-
-
 import qcjlibrary.listview.base.BaseListView;
 import android.content.Context;
 import android.graphics.Color;
@@ -263,9 +261,4 @@ public class SwipeMenuListView extends BaseListView {
 		void onSwipeEnd(int position);
 	}
 
-	@Override
-	public void onClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
-
-	}
 }
