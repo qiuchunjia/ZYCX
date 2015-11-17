@@ -34,7 +34,7 @@
         android:layout_height="80dp"
         android:layout_marginLeft="@dimen/margin_left"
         android:layout_marginRight="@dimen/margin_right"
-        android:layout_marginTop="@dimen/margin_left"
+        android:layout_marginTop="30dp"
         android:layout_toRightOf="@id/ll_time_line"
         android:background="@color/main_white_pure_color"
         android:padding="@dimen/margin_left_small" >

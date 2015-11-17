@@ -2,6 +2,7 @@ package qcjlibrary.fragment;
 
 import qcjlibrary.activity.CaseHistoryActivity;
 import qcjlibrary.activity.MePerioActivity;
+import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.base.Model;
 import android.view.View;
@@ -83,7 +84,8 @@ public class FragmentCaseIndex extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_mycase:
-
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		case R.id.rl_down:

@@ -339,6 +339,10 @@
         <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
         <activity android:name="qcjlibrary.activity.FoodCategorySingleDetail" />
         <activity android:name="qcjlibrary.activity.CaseHistoryActivity" />
+        <activity android:name="qcjlibrary.activity.CaseHistoryDetailActivity" />
+        <activity android:name="qcjlibrary.activity.PatientHistoryActivity" />
+        <activity android:name="qcjlibrary.activity.PatientInforActivity" />
+        <activity android:name="qcjlibrary.activity.PatientMeActivity" />
 
         <!-- 癌友帮二期开发新增加页面end -->
     </application>

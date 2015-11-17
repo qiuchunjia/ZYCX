@@ -5,6 +5,8 @@ import qcjlibrary.adapter.CaseHistoryAdapter;
 import qcjlibrary.adapter.MePerioAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.zhiyicx.zycx.R;
 
@@ -43,6 +45,15 @@ public class CaseHistoryActivity extends BaseActivity {
 		mCommonListView.setDividerHeight(0);
 		mAdapter = new CaseHistoryAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position,
+						CaseHistoryDetailActivity.class);
+			}
+		});
 	}
 
 	@Override
