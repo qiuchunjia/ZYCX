@@ -1,10 +1,13 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.MePerioAdapter;
+import qcjlibrary.adapter.UseMedicineNotifyAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.util.DisplayUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.zhiyicx.zycx.R;
 
@@ -13,7 +16,7 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class MePerioActivity extends BaseActivity {
+public class UseMedicineNotifyActivity extends BaseActivity {
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
 
@@ -24,7 +27,7 @@ public class MePerioActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "专家提问";
+		return "用药提醒";
 	}
 
 	@Override
@@ -40,9 +43,19 @@ public class MePerioActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(20);
-		mAdapter = new MePerioAdapter(this, null);
+		mCommonListView.setDividerHeight(DisplayUtils.dp2px(this, 10));
+		mAdapter = new UseMedicineNotifyAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position,
+						MedicineEditNotifyActivity.class);
+
+			}
+		});
 	}
 
 	@Override

@@ -27,8 +27,8 @@ public class CommonListView extends BaseListView {
 	public void stepToNextActivity(AdapterView<?> parent, View view,
 			int position, Class<? extends Activity> activityClass) {
 		Model model = (Model) parent.getItemAtPosition(position);
-		if (mContext instanceof BaseActivity) {
-			BaseActivity activity = ((BaseActivity) mContext);
+		if (mActivity instanceof BaseActivity) {
+			BaseActivity activity = ((BaseActivity) mActivity);
 			Bundle data = activity.sendDataToBundle(model, null);
 			mApp.startActivity_qcj(activity, activityClass, data);
 		}

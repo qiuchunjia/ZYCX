@@ -64,4 +64,28 @@ public class ViewHolder {
 	// public TextView tv_date;
 	/******************* 病例历史item end ************************/
 
+	/******************* 用药提醒item ************************/
+	public ImageView iv_medicine_notify;
+	public TextView tv_user_name;
+	public TextView tv_medicine_name;
+	public TextView tv_user_time;
+	/******************* 病例历史item end ************************/
+	/******************* 经历item ************************/
+	public ImageView iv_cancer_icon;
+	public TextView tv_cancer_name;
+	public TextView tv_cancer_numer;
+	public TextView tv_cancer_experence;
+	public ImageView iv_cancer_icon2;
+	public TextView tv_cancer_name2;
+	public TextView tv_cancer_numer2;
+	public TextView tv_cancer_experence2;
+	/******************* 经历item end ************************/
+	/******************* 癌症话题 item ************************/
+	public TextView tv_topic_title;
+	public TextView tv_topic_advice;
+	public TextView tv_topic_user;
+	public TextView tv_topic_update;
+	public TextView tv_topic_date;
+	/******************* 癌症话题item end ************************/
+
 }

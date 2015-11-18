@@ -37,11 +37,12 @@
     <color name="main_white_bg_color">#f1f4f2</color>
     <!-- 特殊链接色 -->
     <color name="main_href_color">#2f7dff</color>
-
+    <color name="main_white_other_color">#f9fbfb</color>
     <!-- 字体颜色 -->
     <color name="text_white">#fff</color>
     <!-- 标题正文 -->
     <color name="text_green">#349342</color>
+    <color name="text_blue">#5cc5f0</color>
     <color name="text_user">#2f5e2f</color>
     <color name="text_yellow">#e39925</color>
     <color name="text_red">#f46565</color>

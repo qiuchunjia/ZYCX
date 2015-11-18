@@ -508,12 +508,21 @@ public class Thinksns extends Application {
 	/** 定义一个user，整個app都用它 */
 	private static ModelUser mUser;
 	public ImageLoader mImageLoader;
+	private Activity mActivity;
 
 	/**
 	 * 初始化百度定位
 	 */
 	private void initBaidu() {
 		SDKInitializer.initialize(getApplicationContext());
+	}
+
+	public void setActivity(Activity activity) {
+		this.mActivity = activity;
+	}
+
+	public Activity getActivity() {
+		return mActivity;
 	}
 
 	/**

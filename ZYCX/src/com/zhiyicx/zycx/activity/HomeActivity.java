@@ -3,6 +3,7 @@ package com.zhiyicx.zycx.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.fragment.FragmentCaseIndex;
+import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import android.app.Activity;
@@ -28,9 +29,7 @@ import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.QClassFragment;
-import com.zhiyicx.zycx.fragment.QiKanFragment;
 import com.zhiyicx.zycx.fragment.QuestionFragment;
-import com.zhiyicx.zycx.fragment.WebFragment;
 import com.zhiyicx.zycx.fragment.ZiXunFragment;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
@@ -40,10 +39,10 @@ public class HomeActivity extends BaseActivity {
 	private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
 	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
 	private QuestionFragment mQustionFgmt;// 问答fragment qcj
-	private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
+	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
 	private FragmentCaseIndex mCaseFgmt;
-
+	private FragmentExperience mExpegmt;
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
 	public static final int index_zhixun = 0;
@@ -65,6 +64,7 @@ public class HomeActivity extends BaseActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mApp = (Thinksns) getApplication();
+		mApp.setActivity(this);
 		mInflater = LayoutInflater.from(getApplicationContext());
 		setContentView(R.layout.comom_layout_drawer);
 		initParentView();
@@ -349,12 +349,18 @@ public class HomeActivity extends BaseActivity {
 			// mQuestionLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qikan:
-			if (mQiKanFgmt == null) {
-				mQiKanFgmt = new QiKanFragment();
-				transaction.add(R.id.content, mQiKanFgmt);
+			if (mExpegmt == null) {
+				mExpegmt = new FragmentExperience();
+				transaction.add(R.id.content, mExpegmt);
 			} else {
-				transaction.show(mQiKanFgmt);
+				transaction.show(mExpegmt);
 			}
+			// if (mQiKanFgmt == null) {
+			// mQiKanFgmt = new QiKanFragment();
+			// transaction.add(R.id.content, mQiKanFgmt);
+			// } else {
+			// transaction.show(mQiKanFgmt);
+			// }
 			// mQikanLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_web:
@@ -386,9 +392,12 @@ public class HomeActivity extends BaseActivity {
 		if (mQustionFgmt != null) {
 			transaction.hide(mQustionFgmt);
 		}
-		if (mQiKanFgmt != null) {
-			transaction.hide(mQiKanFgmt);
+		if (mExpegmt != null) {
+			transaction.hide(mExpegmt);
 		}
+		// if (mQiKanFgmt != null) {
+		// transaction.hide(mQiKanFgmt);
+		// }
 		if (mCaseFgmt != null)
 			transaction.hide(mCaseFgmt);
 		// if (mWebFgmt != null)

@@ -137,6 +137,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 */
 	public void initSet() {
 		mApp = (Thinksns) getApplication();
+		mApp.setActivity(this);
 		mInflater = LayoutInflater.from(getApplicationContext());
 		initTheCommonLayout();
 		// 把内容和title结合

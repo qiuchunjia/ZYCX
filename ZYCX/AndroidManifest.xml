@@ -343,6 +343,9 @@
         <activity android:name="qcjlibrary.activity.PatientHistoryActivity" />
         <activity android:name="qcjlibrary.activity.PatientInforActivity" />
         <activity android:name="qcjlibrary.activity.PatientMeActivity" />
+        <activity android:name="qcjlibrary.activity.UseMedicineNotifyActivity" />
+        <activity android:name="qcjlibrary.activity.MedicineEditNotifyActivity" />
+        <activity android:name="qcjlibrary.activity.CancerSingleActivity" />
 
         <!-- 癌友帮二期开发新增加页面end -->
     </application>
