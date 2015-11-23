@@ -100,7 +100,8 @@ public class FragmentCaseIndex extends BaseFragment {
 
 			break;
 		case R.id.tv_edit:
-
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.ll_notify:
 			mApp.startActivity_qcj(getActivity(),

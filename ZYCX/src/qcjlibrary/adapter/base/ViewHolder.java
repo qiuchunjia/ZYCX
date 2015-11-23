@@ -87,5 +87,20 @@ public class ViewHolder {
 	public TextView tv_topic_update;
 	public TextView tv_topic_date;
 	/******************* 癌症话题item end ************************/
+	/******************* 经历轨迹title item ************************/
+	public RoundImageView iv_cycle_icon;
+	public TextView tv_username;
+	public TextView tv_has_update;
+	public TextView tv_flag_key;
+	public TextView tv_flag_value;
+	// public TextView tv_date;
+	/******************* 经历轨迹title item end ************************/
+	/******************* 经历轨迹 item ************************/
+	public TextView tv_date_mouth;
+	public TextView tv_date_day;
+	public TextView tv_date_week;
+	public TextView tv_date_year;
+	public TextView tv_date_content;
+	/******************* 经历轨迹 item end ************************/
 
 }

@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_white_bg_color"
+    android:background="@color/main_white_pure_color"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="170dp"
         android:background="@color/main_white_pure_color"
         android:paddingLeft="@dimen/margin_left_small"
         android:paddingRight="@dimen/margin_right_small" >
@@ -40,6 +40,17 @@
             android:text="呵呵哒"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_common" />
+
+        <TextView
+            android:id="@+id/tv_has_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_username"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/margin_top"
+            android:text="已更新9篇"
+            android:textColor="@color/text_more_gray"
+            android:textSize="@dimen/text_small" />
 
         <LinearLayout
             android:id="@+id/ll_flag"

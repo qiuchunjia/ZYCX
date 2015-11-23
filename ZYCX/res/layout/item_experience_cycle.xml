@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_white_bg_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white_bg_color" >
+
+        <LinearLayout
+            android:id="@+id/ll_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginTop="@dimen/item_height"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/view_border_gray_white_0"
+                android:orientation="vertical"
+                android:paddingBottom="5dp" >
+
+                <TextView
+                    android:id="@+id/tv_date_mouth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@color/text_red"
+                    android:gravity="center"
+                    android:text="八月"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_date_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="22"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_big" />
+
+                <TextView
+                    android:id="@+id/tv_date_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="SAT"
+                    android:textColor="@color/text_black"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_date_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/view_border_gray_gray_50"
+                android:text="2015"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_date_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="@dimen/margin_right_small"
+            android:layout_marginTop="@dimen/item_height"
+            android:layout_toRightOf="@id/ll_time_line"
+            android:background="@drawable/jinglibox"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="5"
+            android:paddingBottom="@dimen/margin_bottom"
+            android:paddingLeft="15dp"
+            android:paddingRight="@dimen/margin_right_small"
+            android:paddingTop="@dimen/margin_top"
+            android:text="1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日1月31日"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_common" />
+
+        <LinearLayout
+            android:id="@+id/ll_time_line"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/tv_date_content"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_toRightOf="@+id/ll_date"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="@dimen/line_height"
+                android:layout_height="60dp"
+                android:background="@color/main_gray_color" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shijianzhouyuanicon" />
+
+            <View
+                android:layout_width="@dimen/line_height"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/main_gray_color" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

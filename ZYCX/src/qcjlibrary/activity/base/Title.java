@@ -167,6 +167,7 @@ public class Title implements TitleInterface {
 	@Override
 	public void titleSetRightImage(int resouceId) {
 		if (resouceId > 0) {
+			iv_title_right1.setVisibility(View.VISIBLE);
 			iv_title_right1.setImageResource(resouceId);
 		}
 	}
