@@ -3,7 +3,7 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 
@@ -12,12 +12,13 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class RequestChooseCancerActivity extends BaseActivity {
-	private LinearLayout ll_choose_cancer;
+public class RequestWayActivity extends BaseActivity {
+	private TextView tv_common;
+	private TextView tv_zhuanye;
 
 	@Override
 	public String setCenterTitle() {
-		return "选择癌种";
+		return "提问方式";
 	}
 
 	@Override
@@ -27,13 +28,14 @@ public class RequestChooseCancerActivity extends BaseActivity {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.activity_request_choose_cancer;
+		return R.layout.activity_request_way;
 	}
 
 	@Override
 	public void initView() {
-		titleSetRightTitle("提交");
-		ll_choose_cancer = (LinearLayout) findViewById(R.id.ll_choose_cancer);
+		titleSetRightTitle("关闭");
+		tv_common = (TextView) findViewById(R.id.tv_common);
+		tv_zhuanye = (TextView) findViewById(R.id.tv_zhuanye);
 
 	}
 

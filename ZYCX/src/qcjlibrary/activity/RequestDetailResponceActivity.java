@@ -1,0 +1,74 @@
+package qcjlibrary.activity;
+
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
+import qcjlibrary.img.RoundImageView;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import cn.jpush.android.data.r;
+
+import com.zhiyicx.zycx.R;
+
+/**
+ * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
+ *
+ */
+
+public class RequestDetailResponceActivity extends BaseActivity {
+	private RoundImageView riv_other_icon;
+	private TextView tv_other_username;
+	private TextView tv_other_date;
+	private TextView tv_other_content;
+	private LinearLayout ll_replay;
+
+	@Override
+	public String setCenterTitle() {
+		return "呵呵哒的解答";
+	}
+
+	@Override
+	public void initIntent() {
+
+	}
+
+	@Override
+	public int getLayoutId() {
+		return R.layout.activity_request_detail;
+	}
+
+	@Override
+	public void initView() {
+		titleSetRightTitle("关闭");
+		riv_other_icon = (RoundImageView) findViewById(R.id.riv_other_icon);
+		tv_other_username = (TextView) findViewById(R.id.tv_other_username);
+		tv_other_date = (TextView) findViewById(R.id.tv_other_date);
+		tv_other_content = (TextView) findViewById(R.id.tv_other_content);
+		ll_replay = (LinearLayout) findViewById(R.id.ll_replay);
+	}
+
+	@Override
+	public void initData() {
+		Title title = getTitleClass();
+		title.tv_title_right.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void initListener() {
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_title_right:
+
+			break;
+
+		default:
+			break;
+		}
+
+	}
+}

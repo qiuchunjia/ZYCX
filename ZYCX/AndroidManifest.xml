@@ -351,6 +351,9 @@
         <activity android:name="qcjlibrary.activity.RequestSendTopicActivity" />
         <activity android:name="qcjlibrary.activity.RequestSendTopicCommitedActivity" />
         <activity android:name="qcjlibrary.activity.RequestChooseCancerActivity" />
+        <activity android:name="qcjlibrary.activity.RequestWayActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailResponceActivity" />
         <!-- 癌友帮二期开发新增加页面end -->
     </application>
 

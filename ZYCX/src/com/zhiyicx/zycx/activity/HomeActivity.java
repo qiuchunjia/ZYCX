@@ -6,6 +6,7 @@ import qcjlibrary.fragment.FragmentCaseIndex;
 import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
+import qcjlibrary.fragment.FragmentRequestAnwer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -38,11 +39,12 @@ import com.zhiyicx.zycx.sociax.unit.Anim;
 public class HomeActivity extends BaseActivity {
 	private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
 	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
-	private QuestionFragment mQustionFgmt;// 问答fragment qcj
+	// private QuestionFragment mQustionFgmt;// 问答fragment qcj
 	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
 	private FragmentCaseIndex mCaseFgmt;
 	private FragmentExperience mExpegmt;
+	private FragmentRequestAnwer mAnwergmt;
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
 	public static final int index_zhixun = 0;
@@ -340,12 +342,18 @@ public class HomeActivity extends BaseActivity {
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
-			if (mQustionFgmt == null) {
-				mQustionFgmt = new QuestionFragment();
-				transaction.add(R.id.content, mQustionFgmt);
+			if (mAnwergmt == null) {
+				mAnwergmt = new FragmentRequestAnwer();
+				transaction.add(R.id.content, mAnwergmt);
 			} else {
-				transaction.show(mQustionFgmt);
+				transaction.show(mAnwergmt);
 			}
+			// if (mQustionFgmt == null) {
+			// mQustionFgmt = new QuestionFragment();
+			// transaction.add(R.id.content, mQustionFgmt);
+			// } else {
+			// transaction.show(mQustionFgmt);
+			// }
 			// mQuestionLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qikan:
@@ -389,9 +397,12 @@ public class HomeActivity extends BaseActivity {
 		if (mQClassFgmt != null) {
 			transaction.hide(mQClassFgmt);
 		}
-		if (mQustionFgmt != null) {
-			transaction.hide(mQustionFgmt);
+		if (mAnwergmt != null) {
+			transaction.hide(mAnwergmt);
 		}
+		// if (mQustionFgmt != null) {
+		// transaction.hide(mQustionFgmt);
+		// }
 		if (mExpegmt != null) {
 			transaction.hide(mExpegmt);
 		}
