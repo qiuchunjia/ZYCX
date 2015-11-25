@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.base.Model;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -68,7 +69,9 @@ public class RequestSendTopicActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
-
+			mApp.startActivity_qcj(this,
+					RequestSendTopicCommitedActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 
 		default:

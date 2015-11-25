@@ -1,12 +1,14 @@
 package qcjlibrary.fragment;
 
-import qcjlibrary.activity.CaseHistoryActivity;
-import qcjlibrary.activity.PatientMeActivity;
-import qcjlibrary.activity.UseMedicineNotifyActivity;
+import qcjlibrary.activity.RequestDetailActivity;
+import qcjlibrary.adapter.RequestAnswerAdapter;
+import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
-import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DisplayUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,6 +36,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private LinearLayout ll_4;
 	private ImageView iv_4;
 	private CommonListView mCommonListView;
+	private BAdapter mAdapter;
 
 	@Override
 	public void initIntentData() {
@@ -60,12 +63,22 @@ public class FragmentRequestAnwer extends BaseFragment {
 		ll_4 = (LinearLayout) findViewById(R.id.ll_4);
 		iv_4 = (ImageView) findViewById(R.id.iv_4);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
+		mAdapter = new RequestAnswerAdapter(this, null);
+		mCommonListView.setAdapter(mAdapter);
+		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position,
+						RequestDetailActivity.class);
+			}
+		});
 	}
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
 
 	}
 

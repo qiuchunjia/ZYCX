@@ -91,9 +91,11 @@
     <RelativeLayout
         android:id="@+id/rl_photo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/main_white_pure_color" >
+        android:background="@color/main_white_pure_color"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/iv_choose_camera"

@@ -1,5 +1,8 @@
 package com.zhiyicx.zycx.activity;
 
+import qcjlibrary.activity.FoodWayActivity;
+import qcjlibrary.activity.RequestSendTopicActivity;
+import qcjlibrary.activity.RequestWayActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.fragment.FragmentCaseIndex;
@@ -7,10 +10,7 @@ import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentRequestAnwer;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import qcjlibrary.model.base.Model;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -30,11 +31,9 @@ import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.QClassFragment;
-import com.zhiyicx.zycx.fragment.QuestionFragment;
 import com.zhiyicx.zycx.fragment.ZiXunFragment;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
-import com.zhiyicx.zycx.sociax.unit.Anim;
 
 public class HomeActivity extends BaseActivity {
 	private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
@@ -61,6 +60,8 @@ public class HomeActivity extends BaseActivity {
 	private DrawerLayout mDrawer;
 	private FragmentMenu mMenu;
 
+	private Title mTitle; // 标题
+
 	@Override
 	public void initSet() {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
@@ -72,18 +73,18 @@ public class HomeActivity extends BaseActivity {
 		initParentView();
 		// 把内容和title结合
 		combineTheLayout();
+		initEvents();
 		initIntent();
 		initView();
 		initData();
 		initListener();
-		initEvents();
 	}
 
 	private void initEvents() {
-		Title title = getTitleClass();
-		if (title != null) {
-			title.rl_left_1.setVisibility(View.GONE);
-			title.rl_left_2.setVisibility(View.VISIBLE);
+		mTitle = getTitleClass();
+		if (mTitle != null) {
+			mTitle.rl_left_1.setVisibility(View.GONE);
+			mTitle.rl_left_2.setVisibility(View.VISIBLE);
 		}
 		titleSlideMenu(mDrawer);
 		mDrawer.setDrawerListener(new DrawerListener() {
@@ -239,38 +240,6 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
-		if (item.getItemId() == R.id.action_settings) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			final Activity obj = this;
-			builder.setMessage("确定要注销此帐户吗?");
-			builder.setTitle("提示");
-			builder.setPositiveButton("确认",
-					new android.content.DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							Thinksns app = (Thinksns) obj
-									.getApplicationContext();
-							app.getUserSql().clear();
-							// Thinksns.exitApp();
-							Intent intent = new Intent(HomeActivity.this,
-									GuideActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							HomeActivity.this.startActivity(intent);
-							Anim.in(HomeActivity.this);
-							finish();
-						}
-					});
-			builder.setNegativeButton("取消",
-					new android.content.DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
-			builder.create().show();
-		}
 		return true;
 	}
 
@@ -312,6 +281,7 @@ public class HomeActivity extends BaseActivity {
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
+		mTitle.iv_title_right1.setVisibility(View.GONE);
 		switch (index) {
 		case index_Default:
 			if (mDefaultFragment == null) {
@@ -342,6 +312,19 @@ public class HomeActivity extends BaseActivity {
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
+			titleSetCenterTitle("问答");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1
+					.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							RequestWayActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
 			if (mAnwergmt == null) {
 				mAnwergmt = new FragmentRequestAnwer();
 				transaction.add(R.id.content, mAnwergmt);

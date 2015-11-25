@@ -6,7 +6,6 @@ import qcjlibrary.img.RoundImageView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.jpush.android.data.r;
 
 import com.zhiyicx.zycx.R;
 
@@ -34,12 +33,12 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.activity_request_detail;
+		return R.layout.activity_request_detail_responce;
 	}
 
 	@Override
 	public void initView() {
-		titleSetRightTitle("关闭");
+		titleSetRightImage(R.drawable.more3);
 		riv_other_icon = (RoundImageView) findViewById(R.id.riv_other_icon);
 		tv_other_username = (TextView) findViewById(R.id.tv_other_username);
 		tv_other_date = (TextView) findViewById(R.id.tv_other_date);
@@ -50,7 +49,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
-		title.tv_title_right.setOnClickListener(this);
+		title.iv_title_right1.setOnClickListener(this);
 
 	}
 
@@ -62,7 +61,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_title_right:
+		case R.id.iv_title_right1:
 
 			break;
 

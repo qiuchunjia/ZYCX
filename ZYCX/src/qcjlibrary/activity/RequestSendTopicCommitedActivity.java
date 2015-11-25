@@ -55,8 +55,8 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 		case R.id.btn_requests:
 
 			break;
-
-		default:
+		case R.id.tv_title_right:
+			onBackPressed();
 			break;
 		}
 

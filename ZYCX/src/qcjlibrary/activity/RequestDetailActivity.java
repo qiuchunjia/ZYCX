@@ -55,7 +55,7 @@ public class RequestDetailActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
-		titleSetRightTitle("关闭");
+		titleSetRightImage(R.drawable.fenxiang);
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
@@ -80,13 +80,14 @@ public class RequestDetailActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
-		title.tv_title_right.setOnClickListener(this);
+		title.iv_title_right1.setOnClickListener(this);
 
 	}
 
 	@Override
 	public void initListener() {
 		ll_answer.setOnClickListener(this);
+		tv_flag_value2.setOnClickListener(this);
 	}
 
 	@Override
@@ -97,8 +98,13 @@ public class RequestDetailActivity extends BaseActivity {
 					sendDataToBundle(new Model(), null));
 			break;
 
-		default:
+		case R.id.tv_flag_value2:
+			mApp.startActivity_qcj(this, RequestFlagActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
+		case R.id.iv_title_right1:
+			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
+					sendDataToBundle(new Model(), null));
 		}
 
 	}

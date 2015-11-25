@@ -102,5 +102,29 @@ public class ViewHolder {
 	public TextView tv_date_year;
 	public TextView tv_date_content;
 	/******************* 经历轨迹 item end ************************/
+	/******************* 咨询 item ************************/
+	public ImageView iv_photo;
+	// public TextView tv_content;
+	// public TextView tv_date;
+	public TextView tv_from;
+	public TextView tv_num;
+
+	/******************* 咨询 item end ************************/
+	/******************* 问答 item ************************/
+	// public TextView tv_title;
+	public TextView tv_advice;
+	// public TextView tv_answer;
+	// public TextView tv_expert_answer;
+	// public TextView tv_date;
+	// public TextView tv_num;
+
+	/******************* 问答 item end ************************/
+	/******************* 轻课堂item ************************/
+	// public TextView tv_title;
+	// public TextView tv_content;
+	// public TextView tv_num;
+	public TextView tv_update;
+	public ImageView iv_vedio;
+	/******************* 轻课堂item end ************************/
 
 }
