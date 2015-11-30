@@ -8,6 +8,8 @@ import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
  */
 
 public interface PopInterface {
+	public int getLayoutId();
+
 	/**
 	 * 初始化布局
 	 */

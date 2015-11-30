@@ -2,6 +2,7 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.img.RoundImageView;
+import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -88,25 +89,38 @@ public class MeCenterBasicActivity extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.rl_user:
 			// TODO
+
 			break;
 
 		case R.id.rl_mycase:
-
+			mApp.startActivity_qcj(
+					this,
+					SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.DECLARATION,
+							null));
 			break;
 		case R.id.rl_nick:
-
+			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.NICK, null));
 			break;
 		case R.id.rl_gender:
-
+			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.GENDER, null));
 			break;
 		case R.id.rl_birth:
-
+			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.BIRTHDAY, null));
 			break;
 		case R.id.rl_address:
-
+			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.LOCATION, null));
 			break;
 		case R.id.rl_cancer_category:
-
+			mApp.startActivity_qcj(
+					this,
+					SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.CANCERCATEGORY,
+							null));
 			break;
 		}
 

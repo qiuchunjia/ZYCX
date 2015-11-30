@@ -1,5 +1,7 @@
-package qcjlibrary.widget.popupview.base;
+package qcjlibrary.widget.popupview;
 
+import qcjlibrary.widget.popupview.base.PopView;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,9 +23,14 @@ public class PopSizeChoose extends PopView {
 	private TextView tv_small;
 	private ImageView iv_cancle;
 
-	public PopSizeChoose(Activity activity, int xml, Object object,
+	public PopSizeChoose(Activity activity, Object object,
 			PopResultListener resultListener) {
-		super(activity, xml, object, resultListener);
+		super(activity, object, resultListener);
+	}
+
+	@Override
+	public int getLayoutId() {
+		return R.layout.pop_zixun_textsize;
 	}
 
 	@Override

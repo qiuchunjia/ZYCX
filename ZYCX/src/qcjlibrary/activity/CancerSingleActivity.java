@@ -7,7 +7,7 @@ import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
-import qcjlibrary.widget.popupview.base.PopSingleCancer;
+import qcjlibrary.widget.popupview.PopSingleCancer;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -91,8 +91,8 @@ public class CancerSingleActivity extends BaseActivity {
 			break;
 
 		case R.id.iv_bottom_arrow:
-			PopSingleCancer popSingleCancer = new PopSingleCancer(this,
-					R.layout.pop_single_cancer, null, this);
+			PopSingleCancer popSingleCancer = new PopSingleCancer(this, null,
+					this);
 			popSingleCancer.showPop(mTitlell, -1, 0, 0);
 			break;
 		}

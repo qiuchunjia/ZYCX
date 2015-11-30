@@ -6,7 +6,7 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.util.UIUtils;
-import qcjlibrary.widget.popupview.base.PopSizeChoose;
+import qcjlibrary.widget.popupview.PopSizeChoose;
 import qcjlibrary.widget.popupview.base.PopView;
 import android.content.Intent;
 import android.text.SpannableStringBuilder;
@@ -126,8 +126,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			finish();
 			break;
 		case R.id.iv_title_right3:
-			PopView popView = new PopSizeChoose(this,
-					R.layout.pop_zixun_textsize, null, this);
+			PopView popView = new PopSizeChoose(this, null, this);
 			popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
 			break;
 		case R.id.iv_title_right1:
@@ -323,7 +322,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 			@Override
 			public void OnError(String error) {
-//				Log.d(TAG, error);
+				// Log.d(TAG, error);
 			}
 		});
 	}

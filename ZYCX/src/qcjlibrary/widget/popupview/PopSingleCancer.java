@@ -1,10 +1,11 @@
-package qcjlibrary.widget.popupview.base;
+package qcjlibrary.widget.popupview;
 
+import qcjlibrary.widget.popupview.base.PopView;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -24,9 +25,14 @@ public class PopSingleCancer extends PopView {
 	private TextView tv_cancer_content;
 	private ImageView iv_bottom_arrow;
 
-	public PopSingleCancer(Activity activity, int xml, Object object,
+	public PopSingleCancer(Activity activity, Object object,
 			PopResultListener resultListener) {
-		super(activity, xml, object, resultListener);
+		super(activity, object, resultListener);
+	}
+
+	@Override
+	public int getLayoutId() {
+		return R.layout.pop_single_cancer;
 	}
 
 	@Override

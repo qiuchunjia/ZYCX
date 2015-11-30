@@ -1,5 +1,7 @@
 package qcjlibrary.fragment;
 
+import qcjlibrary.activity.ExpertRequestActivity;
+import qcjlibrary.activity.MeAplicationActivity;
 import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.fragment.base.BaseFragment;
@@ -89,10 +91,12 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.rl_question:
-
+			mApp.startActivity_qcj(mActivity, ExpertRequestActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_app:
-
+			mApp.startActivity_qcj(mActivity, MeAplicationActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
 

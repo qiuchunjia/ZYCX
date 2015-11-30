@@ -1,5 +1,7 @@
-package qcjlibrary.widget.popupview.base;
+package qcjlibrary.widget.popupview;
 
+import qcjlibrary.widget.popupview.base.PopView;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,9 +18,14 @@ public class PopDealAnwer extends PopView {
 	private TextView tv_praise;
 	private TextView tv_cancle;
 
-	public PopDealAnwer(Activity activity, int xml, Object object,
+	public PopDealAnwer(Activity activity, Object object,
 			PopResultListener resultListener) {
-		super(activity, xml, object, resultListener);
+		super(activity, object, resultListener);
+	}
+
+	@Override
+	public int getLayoutId() {
+		return R.layout.pop_deal_anwer;
 	}
 
 	@Override

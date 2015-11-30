@@ -4,6 +4,8 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.widget.popupview.PopExpertAdvice;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -81,13 +83,13 @@ public class RequestDetailActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
-
 	}
 
 	@Override
 	public void initListener() {
 		ll_answer.setOnClickListener(this);
 		tv_flag_value2.setOnClickListener(this);
+		tv_expertcontent.setOnClickListener(this);
 	}
 
 	@Override
@@ -105,6 +107,11 @@ public class RequestDetailActivity extends BaseActivity {
 		case R.id.iv_title_right1:
 			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
 					sendDataToBundle(new Model(), null));
+			break;
+		case R.id.tv_expertcontent:
+			PopExpertAdvice advice = new PopExpertAdvice(this, null, this);
+			advice.showPop(tv_expertcontent, Gravity.RIGHT, 0, 0);
+			break;
 		}
 
 	}

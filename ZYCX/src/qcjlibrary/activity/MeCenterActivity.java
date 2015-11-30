@@ -5,7 +5,6 @@ import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.zhiyicx.zycx.R;
@@ -33,8 +32,6 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -80,7 +77,8 @@ public class MeCenterActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_mycase:
-
+			mApp.startActivity_qcj(this, PatientMeActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_question:
 			mApp.startActivity_qcj(this, ExpertRequestActivity.class,
@@ -94,7 +92,8 @@ public class MeCenterActivity extends BaseActivity {
 
 			break;
 		case R.id.rl_periodical:
-
+			mApp.startActivity_qcj(this, MePerioActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
 
@@ -102,5 +101,4 @@ public class MeCenterActivity extends BaseActivity {
 		}
 
 	}
-
 }

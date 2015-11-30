@@ -36,13 +36,13 @@ public abstract class PopView implements PopInterface {
 	 * @param xml
 	 *            布局文件
 	 */
-	public PopView(Activity activity, int xml, Object object,
+	public PopView(Activity activity, Object object,
 			PopResultListener resultListener) {
 		this.mActivity = activity;
 		this.mInflater = LayoutInflater.from(mActivity);
 		this.mData = object;
 		this.mResultListener = resultListener;
-		initPopWindow(xml);
+		initPopWindow();
 	}
 
 	/**
@@ -51,9 +51,9 @@ public abstract class PopView implements PopInterface {
 	/**
 	 * @param xml
 	 */
-	public void initPopWindow(int xml) {
+	public void initPopWindow() {
 		if (mPopWindow == null) {
-			mView = mInflater.inflate(xml, null);
+			mView = mInflater.inflate(getLayoutId(), null);
 			mPopWindow = setPopWidthAndHeight(mView);
 			mPopWindow.setBackgroundDrawable(new ColorDrawable(0));
 			mPopWindow.setOnDismissListener(new OnDismissListener() {
@@ -77,21 +77,21 @@ public abstract class PopView implements PopInterface {
 	 * @return
 	 */
 	public PopupWindow setPopWidthAndHeight(View dataView) {
-		mPopWindow = new PopupWindow(mView, LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		return mPopWindow;
+		PopupWindow popupWindow = new PopupWindow(dataView,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		return popupWindow;
 	}
 
 	public PopupWindow setPopWidthAndHeight2(View dataView) {
-		mPopWindow = new PopupWindow(mView, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		return mPopWindow;
+		PopupWindow popupWindow = new PopupWindow(dataView,
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		return popupWindow;
 	}
 
 	public PopupWindow setPopWidthAndHeight3(View dataView) {
-		mPopWindow = new PopupWindow(mView, LayoutParams.WRAP_CONTENT,
-				LayoutParams.MATCH_PARENT);
-		return mPopWindow;
+		PopupWindow popupWindow = new PopupWindow(dataView,
+				LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		return popupWindow;
 	}
 
 	public PopResultListener getResultListener() {

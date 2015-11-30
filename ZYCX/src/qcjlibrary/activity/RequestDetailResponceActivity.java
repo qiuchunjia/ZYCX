@@ -3,7 +3,7 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.img.RoundImageView;
-import qcjlibrary.widget.popupview.base.PopDealAnwer;
+import qcjlibrary.widget.popupview.PopDealAnwer;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -65,8 +65,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
-			PopDealAnwer popDealAnwer = new PopDealAnwer(this,
-					R.layout.pop_deal_anwer, null, this);
+			PopDealAnwer popDealAnwer = new PopDealAnwer(this, null, this);
 			popDealAnwer.showPop(ll_replay, Gravity.BOTTOM, 0, 0);
 
 			break;

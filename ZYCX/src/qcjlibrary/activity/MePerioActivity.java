@@ -24,7 +24,7 @@ public class MePerioActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "专家提问";
+		return "我的期刊";
 	}
 
 	@Override
