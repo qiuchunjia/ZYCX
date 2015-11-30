@@ -20,6 +20,8 @@
             android:id="@+id/zixun_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center" >
@@ -28,13 +30,15 @@
                 android:id="@+id/index_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/index_message" />
+                android:src="@drawable/zixun" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/class_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center" >
@@ -43,13 +47,15 @@
                 android:id="@+id/IB_home_bottom_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/index_movie" />
+                android:src="@drawable/qingketang" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/question_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center" >
@@ -58,13 +64,15 @@
                 android:id="@+id/IB_home_bottom_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/greenround" />
+                android:src="@drawable/question" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/qikan_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center" >
@@ -73,13 +81,15 @@
                 android:id="@+id/IB_home_bottom_qikan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/index_expres" />
+                android:src="@drawable/jingli" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/weibo_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center" >
@@ -88,7 +98,7 @@
                 android:id="@+id/IB_home_bottom_web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/index_cancer" />
+                android:src="@drawable/bingli" />
         </RelativeLayout>
     </LinearLayout>
 

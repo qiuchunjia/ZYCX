@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -54,6 +55,9 @@ public class HomeActivity extends BaseActivity {
 
 	private RelativeLayout mZixunLayout, mClassLayout, mQuestionLayout,
 			mQikanLayout, mWebLayout;
+	private ImageView index_message, IB_home_bottom_class,
+			IB_home_bottom_question, IB_home_bottom_qikan, IB_home_bottom_web;
+
 	private BDInterstitialAd appxInterstitialAdView;
 	private String TAG = "HomeActivity";
 	private DrawerLayout mDrawer;
@@ -134,6 +138,7 @@ public class HomeActivity extends BaseActivity {
 		mTitlell = (LinearLayout) mLayout.findViewById(R.id.ll_Title);
 		mContentll = (FrameLayout) mLayout.findViewById(R.id.ll_content);
 		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
+
 	}
 
 	@Override
@@ -158,6 +163,12 @@ public class HomeActivity extends BaseActivity {
 		mQikanLayout = (RelativeLayout) findViewById(R.id.qikan_layout);
 		mQuestionLayout = (RelativeLayout) findViewById(R.id.question_layout);
 		mWebLayout = (RelativeLayout) findViewById(R.id.weibo_layout);
+
+		index_message = (ImageView) findViewById(R.id.index_message);
+		IB_home_bottom_class = (ImageView) findViewById(R.id.IB_home_bottom_class);
+		IB_home_bottom_question = (ImageView) findViewById(R.id.IB_home_bottom_question);
+		IB_home_bottom_qikan = (ImageView) findViewById(R.id.IB_home_bottom_qikan);
+		IB_home_bottom_web = (ImageView) findViewById(R.id.IB_home_bottom_web);
 	}
 
 	@Override
@@ -247,9 +258,11 @@ public class HomeActivity extends BaseActivity {
 
 		case R.id.zixun_layout:
 			setTabSelection(index_zhixun);
+			index_message.setImageResource(R.drawable.zixun_press);
 			break;
 		case R.id.class_layout:
 			setTabSelection(index_qclass);
+			IB_home_bottom_class.setImageResource(R.drawable.qingketang_press);
 			// 展示插屏广告前先请先检查下广告是否加载完毕
 			// if (appxInterstitialAdView.isLoaded()) {
 			// appxInterstitialAdView.showAd();
@@ -264,9 +277,11 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case R.id.qikan_layout:
 			setTabSelection(index_qikan);
+			IB_home_bottom_qikan.setImageResource(R.drawable.jingli_press);
 			break;
 		case R.id.weibo_layout:
 			setTabSelection(index_web);
+			IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
 			// Intent intent = new Intent(this, WeiboAppActivity.class);
 			// startActivity(intent);
 			// Anim.in(activity);
@@ -281,6 +296,7 @@ public class HomeActivity extends BaseActivity {
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
 		mTitle.iv_title_right1.setVisibility(View.GONE);
+		resetBottomImage();
 		switch (index) {
 		case index_Default:
 			if (mDefaultFragment == null) {
@@ -370,6 +386,16 @@ public class HomeActivity extends BaseActivity {
 			break;
 		}
 		transaction.commit();
+	}
+
+	/**
+	 * 重置底部image
+	 */
+	private void resetBottomImage() {
+		index_message.setImageResource(R.drawable.zixun);
+		IB_home_bottom_class.setImageResource(R.drawable.qingketang);
+		IB_home_bottom_qikan.setImageResource(R.drawable.jingli);
+		IB_home_bottom_web.setImageResource(R.drawable.bingli);
 	}
 
 	private void hideFragments(FragmentTransaction transaction) {
