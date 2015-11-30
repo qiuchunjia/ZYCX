@@ -102,7 +102,6 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity1"
@@ -356,8 +355,10 @@
         <activity android:name="qcjlibrary.activity.RequestDetailResponceActivity" />
         <activity android:name="qcjlibrary.activity.RequestFlagActivity" />
         <activity android:name="qcjlibrary.activity.ZhiXunFlagActivity" />
-           <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
-        <!-- 癌友帮二期开发新增加页面end -->
+        <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
+        <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
+ <!-- 癌友帮二期开发新增加页面end -->
+        </activity>
     </application>
 
 </manifest>

@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.GuideActivity;
+import com.zhiyicx.zycx.activity.HomeActivity;
+import com.zhiyicx.zycx.activity.WebActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.unit.Anim;
 
@@ -88,7 +90,9 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.rl_home:
-
+			mApp.startActivity_qcj(mActivity, HomeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+			mActivity.finish();
 			break;
 		case R.id.rl_question:
 			mApp.startActivity_qcj(mActivity, ExpertRequestActivity.class,
@@ -99,7 +103,8 @@ public class FragmentMenu extends BaseFragment {
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
-
+			mApp.startActivity_qcj(mActivity, WebActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_periodical:
 			mApp.startActivity_qcj(getActivity(), MePerioActivity.class,

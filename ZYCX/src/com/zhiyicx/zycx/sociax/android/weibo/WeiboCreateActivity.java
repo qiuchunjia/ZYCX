@@ -263,11 +263,13 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 				if (tFaceView.getVisibility() == View.GONE) {
 					tFaceView.setVisibility(View.VISIBLE);
 					face.setImageResource(R.drawable.key_bar);
-					SociaxUIUtils.hideSoftKeyboard(WeiboCreateActivity.this, edit);
+					SociaxUIUtils.hideSoftKeyboard(WeiboCreateActivity.this,
+							edit);
 				} else if (tFaceView.getVisibility() == View.VISIBLE) {
 					tFaceView.setVisibility(View.GONE);
 					face.setImageResource(R.drawable.face_bar);
-					SociaxUIUtils.showSoftKeyborad(WeiboCreateActivity.this, edit);
+					SociaxUIUtils.showSoftKeyborad(WeiboCreateActivity.this,
+							edit);
 				}
 			}
 		});
@@ -279,7 +281,8 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 				if (tFaceView.getVisibility() == View.VISIBLE) {
 					tFaceView.setVisibility(View.GONE);
 					face.setImageResource(R.drawable.key_bar);
-					SociaxUIUtils.showSoftKeyborad(WeiboCreateActivity.this, edit);
+					SociaxUIUtils.showSoftKeyborad(WeiboCreateActivity.this,
+							edit);
 				}
 			}
 		});

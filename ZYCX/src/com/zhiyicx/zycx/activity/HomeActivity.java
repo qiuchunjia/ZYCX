@@ -11,6 +11,7 @@ import qcjlibrary.fragment.FragmentRequestAnwer;
 import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.base.Model;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
@@ -90,6 +91,7 @@ public class HomeActivity extends BaseActivity {
 			mTitle.rl_left_2.setVisibility(View.VISIBLE);
 		}
 		titleSlideMenu(mDrawer);
+		mDrawer.setScrimColor(Color.TRANSPARENT); // 去掉滑动的时候阴影
 		mDrawer.setDrawerListener(new DrawerListener() {
 			@Override
 			public void onDrawerStateChanged(int newState) {
