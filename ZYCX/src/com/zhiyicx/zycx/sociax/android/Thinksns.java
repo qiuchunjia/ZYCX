@@ -715,7 +715,7 @@ public class Thinksns extends Application {
 	 */
 	public static String getHostUrl() {
 		// TODO 以后把地址写到xml里面
-		return "http://daxs.zhiyicx.com/index.php";
+		return "http://demo-qingko.zhiyicx.com/index.php?";
 	}
 
 	// -----------------------------获取api------------------------------------------------------

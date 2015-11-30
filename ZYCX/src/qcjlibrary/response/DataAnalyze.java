@@ -4,6 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import android.util.Log;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.util.JsonUtils;
 
@@ -29,14 +33,13 @@ public class DataAnalyze {
 	public static Object parseData(String str, Class class1) {
 		if (str != null) {
 			try {
+				Log.i("Result", str);
 				JSONObject jsonObject = new JSONObject(str);
 				for (int i = 0; i < flag.length; i++) {
 					if (jsonObject.has(flag[i])) {
-						Object object = jsonObject.get(flag[i]);
-						if (object != null) {
-							String judgeStr = object.toString();
-							if (judgeStr.contains("[")
-									|| judgeStr.contains("]")) {
+						String judgeStr = jsonObject.getString(flag[i]);
+						if (judgeStr != null) {
+							if (judgeStr.indexOf("[") == 0) {
 								JSONArray dataArray = jsonObject
 										.getJSONArray(flag[i]);
 								// 当为数组的时候就返回
@@ -54,6 +57,37 @@ public class DataAnalyze {
 
 						}
 						return JsonUtils.parseJsonObject(jsonObject,
+								ModelMsg.class);
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 通过Gson来解析json
+	 * 
+	 * @param str
+	 * @param class1
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static Object parseDataByGson(String str, Class class1) {
+		if (str != null) {
+			try {
+				Log.i("Result", str);
+				JSONObject jsonObject = new JSONObject(str);
+				for (int i = 0; i < flag.length; i++) {
+					if (jsonObject.has(flag[i])) {
+						Gson gson = new Gson();
+						String judgeStr = jsonObject.getString(flag[i]);
+						if (judgeStr != null) {
+							return gson.fromJson(judgeStr, class1);
+						}
+						return gson.fromJson(jsonObject.toString(),
 								ModelMsg.class);
 					}
 				}

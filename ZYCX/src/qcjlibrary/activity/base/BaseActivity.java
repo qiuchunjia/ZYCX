@@ -29,6 +29,7 @@ import qcjlibrary.util.Anim;
 import qcjlibrary.util.BitmapUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Uri2Path;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -81,7 +82,8 @@ import com.zhiyicx.zycx.sociax.android.Thinksns;
  * @pdOid
  */
 public abstract class BaseActivity extends FragmentActivity implements
-		OnClickListener, HttpResponceListener, TitleInterface {
+		OnClickListener, HttpResponceListener, TitleInterface,
+		PopResultListener {
 	/**
 	 * activity的总布局，加入mTitleLayout和mBodyLayout
 	 * 
@@ -885,7 +887,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 */
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		return DataAnalyze.parseData(str, class1);
+		return DataAnalyze.parseDataByGson(str, class1);
 	}
 
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
@@ -920,4 +922,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	/************************************ 网络请求传递，以及返回数据解析end ***************************************/
+	/************** popWindow返回的数据 *******************************/
+	public Object onPopResult(Object object) {
+		return object;
+	}
+	/************** popWindow返回的数据 end *******************************/
 }

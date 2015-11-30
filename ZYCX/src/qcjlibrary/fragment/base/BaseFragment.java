@@ -341,7 +341,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 	 */
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		return DataAnalyze.parseData(str, class1);
+		return DataAnalyze.parseDataByGson(str, class1);
 	}
 
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {

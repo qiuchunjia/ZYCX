@@ -1,35 +1,33 @@
-package com.zhiyicx.zycx.fragment;
+package qcjlibrary.fragment;
 
 import qcjlibrary.adapter.ZhiXunAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.model.ModelZiXunDetail;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.ZiXUnContentActivity;
 
 /**
  * Created by Administrator on 2015/1/14.
  */
-public class ZiXunListFragment extends BaseFragment {
-
+public class FragmentZiXunList extends BaseFragment {
 	final private static String TAG = "ZiXunListFragment";
 	private BAdapter mAdapter;
 	private CommonListView mCommonListView;
 	private int mType = 0;
 
-	public static ZiXunListFragment newInstanse(int type) {
-		ZiXunListFragment f = new ZiXunListFragment();
+	public static FragmentZiXunList newInstanse(int type) {
+		FragmentZiXunList f = new FragmentZiXunList();
 		Bundle bundle = new Bundle();
 		bundle.putInt("type", type);
 		f.setArguments(bundle);
 		return f;
-	}
-
-	@Override
-	public void initIntentData() {
-
 	}
 
 	@Override
@@ -38,10 +36,28 @@ public class ZiXunListFragment extends BaseFragment {
 	}
 
 	@Override
+	public void initIntentData() {
+		Bundle bundle = getArguments();
+		mType = bundle.getInt("type");
+	}
+
+	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mAdapter = new ZhiXunAdapter(this, null);
+		ModelZiXunDetail detail = new ModelZiXunDetail();
+		detail.setFenlei_id(mType);
+		mAdapter = new ZhiXunAdapter(this, detail);
+		mCommonListView.setDividerHeight(0);
 		mCommonListView.setAdapter(mAdapter);
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position,
+						ZiXUnContentActivity.class);
+			}
+		});
 	}
 
 	@Override

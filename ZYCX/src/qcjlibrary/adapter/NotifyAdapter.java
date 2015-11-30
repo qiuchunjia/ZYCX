@@ -92,4 +92,10 @@ public class NotifyAdapter extends BAdapter {
 		return 0;
 	}
 
+	@Override
+	public List<Model> getReallyList(Object object, Class type2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

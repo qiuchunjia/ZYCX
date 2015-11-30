@@ -1,7 +1,5 @@
 package com.zhiyicx.zycx.activity;
 
-import qcjlibrary.activity.FoodWayActivity;
-import qcjlibrary.activity.RequestSendTopicActivity;
 import qcjlibrary.activity.RequestWayActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
@@ -10,6 +8,7 @@ import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentRequestAnwer;
+import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.base.Model;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentTransaction;
@@ -31,12 +30,12 @@ import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.QClassFragment;
-import com.zhiyicx.zycx.fragment.ZiXunFragment;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
 
 public class HomeActivity extends BaseActivity {
-	private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
+	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
+	private FragmentZhixun mZiXunFgmt; // 咨询fragment qcj
 	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
 	// private QuestionFragment mQustionFgmt;// 问答fragment qcj
 	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
@@ -294,7 +293,7 @@ public class HomeActivity extends BaseActivity {
 		case index_zhixun:
 			if (mZiXunFgmt == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
-				mZiXunFgmt = new ZiXunFragment();
+				mZiXunFgmt = new FragmentZhixun();
 				transaction.add(R.id.content, mZiXunFgmt);
 			} else {
 				// 如果MessageFragment不为空，则直接将它显示出来

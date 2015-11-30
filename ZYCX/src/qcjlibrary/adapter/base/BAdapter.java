@@ -20,6 +20,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.ToastUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 
@@ -374,13 +375,15 @@ public abstract class BAdapter extends BaseAdapter {
 			if (arg2 != null) {
 				String result = new String(arg2);
 				if (result != null) {
-					Object object = DataAnalyze.parseData(result, type);
+					Object object = DataAnalyze.parseDataByGson(result, type);
+					Log.i("zhixunadapter", object.toString() + "hh");
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							ToastUtils.showToast(((ModelMsg) object).getMsg()
 									+ "");
 						} else {
-							List<Model> list = (List<Model>) object;
+							Object objectResult = getReallyList(object, type);
+							List<Model> list = (List<Model>) objectResult;
 							if (RefreshType == REFRESH_NEW
 									&& RefreshType == REFRESH_HEADER) {
 								addHeadList(list);
@@ -396,4 +399,5 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 	}
 
+	public abstract Object getReallyList(Object object, Class type2);
 }

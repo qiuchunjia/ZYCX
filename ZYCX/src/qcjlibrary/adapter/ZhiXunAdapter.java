@@ -5,7 +5,10 @@ import java.util.List;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
+import qcjlibrary.api.api.ZhiXunImpl;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelZiXun;
+import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +26,15 @@ import com.zhiyicx.zycx.R;
 
 public class ZhiXunAdapter extends BAdapter {
 
+	private ModelZiXunDetail mDetail;
+
 	public ZhiXunAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 	}
 
-	public ZhiXunAdapter(BaseFragment fragment, List<Model> list) {
-		super(fragment, list);
+	public ZhiXunAdapter(BaseFragment fragment, ModelZiXunDetail data) {
+		super(fragment, null);
+		mDetail = data;
 	}
 
 	@Override
@@ -48,6 +54,16 @@ public class ZhiXunAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			ModelZiXunDetail modelZiXunDetail = (ModelZiXunDetail) mList
+					.get(position);
+			if (modelZiXunDetail != null) {
+				mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_photo);
+				holder.tv_content.setText(modelZiXunDetail.getTitle());
+				holder.tv_date.setText(modelZiXunDetail.getcTime());
+				// holder.tv_from = (TextView) convertView
+				// .findViewById(R.id.tv_from);
+				holder.tv_num.setText(modelZiXunDetail.getReadCount());
+			}
 		}
 	}
 
@@ -71,17 +87,36 @@ public class ZhiXunAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		requstMessage(mDetail, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+		if (item instanceof ModelZiXunDetail) {
+			ModelZiXunDetail detail = (ModelZiXunDetail) item;
+			detail.setLastid(detail.getId());
+			requstMessage(detail, REFRESH_HEADER);
+		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+		if (item instanceof ModelZiXunDetail) {
+			ModelZiXunDetail detail = (ModelZiXunDetail) item;
+			detail.setMaxid(detail.getId());
+			requstMessage(detail, REFRESH_FOOTER);
+		}
+	}
+
+	/**
+	 * 请求咨询内容
+	 * 
+	 * @param data
+	 * @param type
+	 */
+	private void requstMessage(ModelZiXunDetail data, int type) {
+		ZhiXunImpl xunImpl = new ZhiXunImpl();
+		sendRequest(xunImpl.indexItem(data), ModelZiXun.class, 0, type);
 	}
 
 	@Override
@@ -90,4 +125,13 @@ public class ZhiXunAdapter extends BAdapter {
 		return 0;
 	}
 
+	@Override
+	public Object getReallyList(Object object, Class type2) {
+		if (object instanceof ModelZiXun) {
+			ModelZiXun modelZiXun = (ModelZiXun) object;
+			modelZiXun.getList();
+			return modelZiXun.getList();
+		}
+		return null;
+	}
 }
