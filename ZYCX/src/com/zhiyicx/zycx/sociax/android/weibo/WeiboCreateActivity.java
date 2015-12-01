@@ -59,6 +59,10 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 	private TSFaceView tFaceView;
 	private static RelativeLayout btnLayout;
 
+	private RelativeLayout rl_left_1;
+	private TextView tv_title_right;
+	private TextView tv_title;
+
 	private static final int CAMERA = 0;
 	private static final int LOCATION = 1;
 	private static final int AT_REQUEST_CODE = 3;
@@ -69,7 +73,7 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreateNoTitle(savedInstanceState);
 		initView();
 	}
 
@@ -94,6 +98,22 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 		checkIntentData();
 		edit.clearFocus();
 		tFaceView.setFaceAdapter(mFaceAdapter);
+		/**** qcj添加title 并初始化 *********/
+		rl_left_1 = (RelativeLayout) findViewById(R.id.rl_left_1);
+		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
+		tv_title_right.setVisibility(View.VISIBLE);
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("发布");
+		tv_title_right.setText("提交");
+		rl_left_1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		tv_title_right.setOnClickListener(getRightListener());
+		/**** qcj添加title end *********/
 
 	}
 
@@ -369,7 +389,9 @@ public class WeiboCreateActivity extends ThinksnsAbscractActivity {
 							R.string.word_limit, Toast.LENGTH_SHORT).show();
 				} else {
 					camera.setEnabled(false);
-					getCustomTitle().getRight().setEnabled(false);
+					/*** qcj 注释 **/
+					// getCustomTitle().getRight().setEnabled(false);
+					/*** qcj 注释end **/
 					// sendingButtonAnim(getCustomTitle().getRight());
 					Thinksns app = (Thinksns) WeiboCreateActivity.this
 							.getApplicationContext();

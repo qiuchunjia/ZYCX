@@ -6,6 +6,8 @@
     android:orientation="vertical"
     android:weightSum="1" >
 
+    <include layout="@layout/qcj_title" />
+
     <com.zhiyicx.zycx.sociax.component.LoadingView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -20,20 +22,20 @@
         android:gravity="top"
         android:hint="@string/send_not_content"
         android:inputType="textMultiLine"
+        android:padding="8dp"
         android:textColor="@color/font"
-        android:textSize="@dimen/fontSize" 
-        android:padding="8dp">
+        android:textSize="@dimen/fontSize" >
 
-        <requestFocus >
+        <requestFocus>
         </requestFocus>
     </EditText>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
-		android:layout_height="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="bottom"
-        android:background="@drawable/footbg" >
+        android:background="@color/main_color" >
 
         <TextView
             android:id="@+id/overWordCount"

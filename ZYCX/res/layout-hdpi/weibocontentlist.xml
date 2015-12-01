@@ -3,8 +3,10 @@
     android:id="@+id/weibo_content_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/qcj_title" />
 
     <com.zhiyicx.zycx.sociax.component.LoadingView
         android:layout_width="match_parent"
@@ -19,28 +21,28 @@
 
         <com.zhiyicx.zycx.sociax.component.CommentList
             android:id="@+id/weibo_content_comment_list"
-            android:listSelector="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom" >
 
         <LinearLayout
             android:id="@+id/info_util_layout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@color/main_color" >
 
             <TextView
                 android:id="@+id/text_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/weibo_app_bar"
                 android:clickable="true"
                 android:drawableTop="@drawable/weibo_app_collection"
                 android:gravity="center_horizontal"
@@ -51,7 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/weibo_app_bar"
                 android:clickable="true"
                 android:drawableTop="@drawable/menu_trans_img"
                 android:gravity="center_horizontal"
@@ -62,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/weibo_app_bar"
                 android:clickable="true"
                 android:drawableTop="@drawable/weibo_app_comment"
                 android:gravity="center_horizontal"
@@ -78,18 +78,17 @@
                 android:drawableTop="@drawable/weibo_app_more"
                 android:gravity="center_horizontal"
                 android:text="@string/more"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/text_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/weibo_app_bar"
                 android:clickable="true"
                 android:drawableTop="@drawable/weibo_app_delete"
                 android:gravity="center_horizontal"
-                android:text="@string/delete"/>
-
+                android:text="@string/delete" />
         </LinearLayout>
     </FrameLayout>
 

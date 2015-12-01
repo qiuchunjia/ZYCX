@@ -2,14 +2,38 @@ package com.zhiyicx.zycx.sociax.android.weibo;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
-import com.zhiyicx.zycx.sociax.android.ThinksnsAbscractActivity;
-import com.zhiyicx.zycx.sociax.android.ThinksnsImageView;
-import com.zhiyicx.zycx.sociax.android.ThinksnsStartWeb;
 import com.zhiyicx.zycx.sociax.adapter.CommentListAdapter;
 import com.zhiyicx.zycx.sociax.adapter.GroupWeiboComListAdapter;
 import com.zhiyicx.zycx.sociax.adapter.SociaxListAdapter;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.android.ThinksnsAbscractActivity;
+import com.zhiyicx.zycx.sociax.android.ThinksnsImageView;
 import com.zhiyicx.zycx.sociax.api.Api;
 import com.zhiyicx.zycx.sociax.component.CommentList;
 import com.zhiyicx.zycx.sociax.component.CustomTitle;
@@ -26,32 +50,6 @@ import com.zhiyicx.zycx.sociax.modle.SociaxItem;
 import com.zhiyicx.zycx.sociax.modle.Weibo;
 import com.zhiyicx.zycx.sociax.unit.WeiboContent;
 import com.zhiyicx.zycx.util.Utils;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-
-import android.text.TextPaint;
-import android.text.style.ClickableSpan;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class WeiboContentList extends ThinksnsAbscractActivity {
 	private static final String TAG = "WeiboContent";
@@ -73,6 +71,11 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 	private SociaxListAdapter adapter;
 
 	private View headView;
+	/********* qcj添加 *******/
+	private RelativeLayout rl_left_1;
+	private TextView tv_title;
+
+	/********* qcj添加 *******/
 
 	public enum FavoriteStatus {
 		YES, NO
@@ -80,7 +83,7 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreateNoTitle(savedInstanceState);
 		Thinksns app = (Thinksns) WeiboContentList.this.getApplicationContext();
 		thread = new Worker(app, "delete opt");
 		handler = new ActivityHandler(thread.getLooper(), app);
@@ -88,17 +91,21 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 
 		try {
 			if (getIntentData().get("commenttype") != null) {
-                if(/*"receivecomment".equals(getIntentData().getString("commenttype"))*/false)
-                {
-                    mComment = new Comment(new JSONObject(getIntentData().getString("data")));
-                }else
-				    weibo = new Weibo(new JSONObject(getIntentData().getString("data")), 1);
+				if (/*
+					 * "receivecomment".equals(getIntentData().getString(
+					 * "commenttype"))
+					 */false) {
+					mComment = new Comment(new JSONObject(getIntentData()
+							.getString("data")));
+				} else
+					weibo = new Weibo(new JSONObject(getIntentData().getString(
+							"data")), 1);
 			} else {
 				weibo = new Weibo(new JSONObject(getIntentData().getString(
 						"data")));
 			}
 		} catch (Exception e) {
-			Log.d(TAG," WeiboContentList oncreat wm " + e.toString());
+			Log.d(TAG, " WeiboContentList oncreat wm " + e.toString());
 			WeiboContentList.this.finish();
 		}
 		// 获取list的布局对象
@@ -108,7 +115,7 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 		list.addHeaderView(headView);
 
 		this.setWeiboContentData(weibo);
-		
+
 		setFavoritState(weibo);
 		this.setClickListener();
 
@@ -118,14 +125,29 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 			ListData<SociaxItem> data = new ListData<SociaxItem>();
 			adapter = new GroupWeiboComListAdapter(this, data, weibo);
 			list.setAdapter(adapter, System.currentTimeMillis(), this);
-			//adapter.loadInitData();
+			// adapter.loadInitData();
 			TextView favorite = (TextView) findViewById(R.id.text_favorite);
 			favorite.setVisibility(View.GONE);
 		} else {
 			ListData<SociaxItem> data = new ListData<SociaxItem>();
 			adapter = new CommentListAdapter(this, data, weibo);
 			list.setAdapter(adapter, System.currentTimeMillis(), this);
-			//adapter.loadInitData();
+			// adapter.loadInitData();
+
+			/*******************************/
+			/**** qcj添加title 并初始化 *********/
+			rl_left_1 = (RelativeLayout) findViewById(R.id.rl_left_1);
+			tv_title = (TextView) findViewById(R.id.tv_title);
+			tv_title.setText("微博正文");
+			rl_left_1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					onBackPressed();
+				}
+			});
+			/**** qcj添加title end *********/
+
 		}
 	}
 
@@ -136,7 +158,7 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 		msg1.obj = weibo;
 		msg1.what = REFRESH;
 		msg1.arg1 = 0;
-		//handler.sendMessage(msg1);
+		// handler.sendMessage(msg1);
 		adapter.clearList();
 		adapter.loadInitData();
 	}
@@ -170,19 +192,16 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 			}
 		});
 
-		RelativeLayout layout = (RelativeLayout) headView.findViewById(R.id.userinfo);
-        /*
-		layout.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getIntentData().putInt("uid", weibo.getUid());
-				Thinksns app = (Thinksns) WeiboContentList.this
-						.getApplicationContext();
-				app.startActivity(WeiboContentList.this,
-						ThinksnsUserInfo.class, getIntentData());
-			}
-		});
-		*/
+		RelativeLayout layout = (RelativeLayout) headView
+				.findViewById(R.id.userinfo);
+		/*
+		 * layout.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { getIntentData().putInt("uid",
+		 * weibo.getUid()); Thinksns app = (Thinksns) WeiboContentList.this
+		 * .getApplicationContext(); app.startActivity(WeiboContentList.this,
+		 * ThinksnsUserInfo.class, getIntentData()); } });
+		 */
 
 		favorite = (TextView) findViewById(R.id.text_favorite);
 		favorite.setOnClickListener(new OnClickListener() {
@@ -222,46 +241,49 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 			}
 		});
 
-        TextView textDelete = (TextView)findViewById(R.id.text_delete);
-        textDelete.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Activity obj = WeiboContentList.this;
-                AlertDialog.Builder builder = new Builder(obj);
-                builder.setMessage("确定要删除此微博吗?");
-                builder.setTitle("提示");
-                builder.setPositiveButton("确认",
-                        new android.content.DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Message msg = handler.obtainMessage();
-                                msg.obj = weibo;
-                                msg.what = DEL_WEIBO;
-                                handler.sendMessage(msg);
-                            }
-                        });
-                builder.setNegativeButton("取消",
-                        new android.content.DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                builder.create().show();
-            }
-        });
+		TextView textDelete = (TextView) findViewById(R.id.text_delete);
+		textDelete.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final Activity obj = WeiboContentList.this;
+				AlertDialog.Builder builder = new Builder(obj);
+				builder.setMessage("确定要删除此微博吗?");
+				builder.setTitle("提示");
+				builder.setPositiveButton("确认",
+						new android.content.DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+								Message msg = handler.obtainMessage();
+								msg.obj = weibo;
+								msg.what = DEL_WEIBO;
+								handler.sendMessage(msg);
+							}
+						});
+				builder.setNegativeButton("取消",
+						new android.content.DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						});
+				builder.create().show();
+			}
+		});
 
-        if(weibo.getUid() != Utils.getUid(this))
-            textDelete.setEnabled(false);
-        else
-            textDelete.setEnabled(true);
+		if (weibo.getUid() != Utils.getUid(this))
+			textDelete.setEnabled(false);
+		else
+			textDelete.setEnabled(true);
 	}
 
 	// 增加内容
 	private void setWeiboContentData(Weibo weibo) {
 		WeiboContent helper = new WeiboContent(this);
-		helper.appendWeiboData(weibo,headView.findViewById(R.id.weibo_content_layout));
+		helper.appendWeiboData(weibo,
+				headView.findViewById(R.id.weibo_content_layout));
 	}
 
 	@Override
@@ -379,9 +401,8 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 							((Weibo) msg.obj).getWeiboId());
 					getIntentData().putInt("delete_id",
 							((Weibo) msg.obj).getWeiboId());
-					Log.d(TAG,
-							"ThinksnsWeiboContent delete weibo id "
-									+ ((Weibo) msg.obj).getWeiboId());
+					Log.d(TAG, "ThinksnsWeiboContent delete weibo id "
+							+ ((Weibo) msg.obj).getWeiboId());
 					break;
 				case REFRESH:
 					newWeibo = status.show(((Weibo) msg.obj).getWeiboId());
@@ -494,16 +515,15 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 			return new ClickableSpan() {
 				@Override
 				public void onClick(View widget) {
-                    /*
-					String uname = "";
-					uname = value.substring(1, value.length());
-					getIntentData().putInt("uid", 0);
-					getIntentData().putString("uname", uname);
-					Thinksns app = (Thinksns) WeiboContentList.this
-							.getApplicationContext();
-					app.startActivity(WeiboContentList.this,
-							ThinksnsUserInfo.class, getIntentData());
-                    */
+					/*
+					 * String uname = ""; uname = value.substring(1,
+					 * value.length()); getIntentData().putInt("uid", 0);
+					 * getIntentData().putString("uname", uname); Thinksns app =
+					 * (Thinksns) WeiboContentList.this
+					 * .getApplicationContext();
+					 * app.startActivity(WeiboContentList.this,
+					 * ThinksnsUserInfo.class, getIntentData());
+					 */
 				}
 
 				@Override
@@ -519,11 +539,11 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 					// TODO Auto-generated method stub
 
 					/*
-					getIntentData().putString("type", "joinTopic");
-					getIntentData().putString("topic", value);
-					Thinksns app = (Thinksns) WeiboContentList.this
-							.getApplicationContext();
-					*/
+					 * getIntentData().putString("type", "joinTopic");
+					 * getIntentData().putString("topic", value); Thinksns app =
+					 * (Thinksns) WeiboContentList.this
+					 * .getApplicationContext();
+					 */
 					/*
 					 * app.startActivity(ThinksnsWeiboContent.this,
 					 * ThinksnsCreate.class, getIntentData());
@@ -543,18 +563,17 @@ public class WeiboContentList extends ThinksnsAbscractActivity {
 			return new ClickableSpan() {
 				@Override
 				public void onClick(View widget) {
-                    /*
+					/*
+					 * Intent intent = new Intent(); intent.putExtra("url",
+					 * value); intent.setClass(WeiboContentList.this,
+					 * ThinksnsStartWeb.class);
+					 * WeiboContentList.this.startActivity(intent);
+					 */
 					Intent intent = new Intent();
-					intent.putExtra("url", value);
-					intent.setClass(WeiboContentList.this,
-							ThinksnsStartWeb.class);
-					WeiboContentList.this.startActivity(intent);
-                    */
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.VIEW");
-                    Uri content_url = Uri.parse(value);
-                    intent.setData(content_url);
-                    startActivity(intent);
+					intent.setAction("android.intent.action.VIEW");
+					Uri content_url = Uri.parse(value);
+					intent.setData(content_url);
+					startActivity(intent);
 
 				}
 

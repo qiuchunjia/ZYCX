@@ -6,6 +6,8 @@
     android:orientation="vertical"
     android:weightSum="1" >
 
+    <include layout="@layout/qcj_title" />
+
     <com.zhiyicx.zycx.sociax.component.LoadingView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -98,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-          android:layout_marginRight="@dimen/margin_right_small"
+            android:layout_marginRight="@dimen/margin_right_small"
             android:text="200"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" >

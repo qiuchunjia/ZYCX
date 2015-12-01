@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -43,10 +45,13 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 	private static Handler handler;
 	private static LoadingView loadingView;
 	private static int replyCommentId = -1;
+	private RelativeLayout rl_left_1;
+	private TextView tv_title_right;
+	private TextView tv_title;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreateNoTitle(savedInstanceState);
 		edit = (EditText) findViewById(R.id.send_content);
 		checkBox = (CheckBox) findViewById(R.id.isComment);
 		loadingView = (LoadingView) findViewById(LoadingView.ID);
@@ -71,14 +76,29 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 							"data")));
 				}
 			} catch (WeiboDataInvalidException e) {
-				Log.d(TAG,
-						"ThinksnsSend ---> wm " + e.toString());
+				Log.d(TAG, "ThinksnsSend ---> wm " + e.toString());
 				WeiboSendActivity.this.finish();
 			} catch (JSONException e) {
 				WeiboSendActivity.this.finish();
 			}
 		}
 		this.setInputLimit(getIntentData().getInt("send_type"));
+
+		/**** qcj添加title 并初始化 *********/
+		rl_left_1 = (RelativeLayout) findViewById(R.id.rl_left_1);
+		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
+		tv_title_right.setVisibility(View.VISIBLE);
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("评论");
+		tv_title_right.setText("发送");
+		rl_left_1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		tv_title_right.setOnClickListener(getRightListener());
 	}
 
 	@Override
@@ -199,26 +219,22 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 						if (groupStatuses.repostStatuses(newWeibo,
 								checkBox.isChecked())) {
 							loadingView.error("分享成功", edit);
-							Log.d(TAG,
-									"weibo transpond success...");
+							Log.d(TAG, "weibo transpond success...");
 							WeiboSendActivity.this.finish();
 						} else {
 							loadingView.error("分享失败", edit);
 							loadingView.hide(edit);
-							Log.d(TAG,
-									"weibo transpond fail ...");
+							Log.d(TAG, "weibo transpond fail ...");
 						}
 					} else {
 						if (statuses.repost(newWeibo, checkBox.isChecked())) {
 							loadingView.error("分享成功", edit);
-							Log.d(TAG,
-									"weibo transpond success...");
+							Log.d(TAG, "weibo transpond success...");
 							WeiboSendActivity.this.finish();
 						} else {
 							loadingView.error("分享失败", edit);
 							loadingView.hide(edit);
-							Log.d(TAG,
-									"weibo transpond fail ...");
+							Log.d(TAG, "weibo transpond fail ...");
 						}
 					}
 					break;
