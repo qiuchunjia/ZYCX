@@ -44,7 +44,7 @@ public class PatientHistoryActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "患者信息";
+		return "既往史";
 	}
 
 	@Override
@@ -59,6 +59,7 @@ public class PatientHistoryActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		titleSetRightTitle("保存");
 		et_name = (EditText) findViewById(R.id.et_name);
 		et_allergy_name = (EditText) findViewById(R.id.et_allergy_name);
 		et_single_name = (EditText) findViewById(R.id.et_single_name);

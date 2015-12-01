@@ -105,8 +105,8 @@ public class RequestDetailActivity extends BaseActivity {
 					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.iv_title_right1:
-			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
-					sendDataToBundle(new Model(), null));
+//			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
+//					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.tv_expertcontent:
 			PopExpertAdvice advice = new PopExpertAdvice(this, null, this);

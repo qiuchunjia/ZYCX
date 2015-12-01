@@ -255,7 +255,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/tv_other_content"
                     android:layout_marginTop="@dimen/margin_left_small"
-                    android:drawableLeft="@drawable/pinglunicon"
+                    android:drawableLeft="@drawable/pinglunicon_request"
                     android:drawablePadding="5dp"
                     android:text="1"
                     android:textColor="@color/text_more_gray"

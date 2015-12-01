@@ -297,7 +297,7 @@ public class HomeActivity extends BaseActivity {
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
-		mTitle.iv_title_right1.setVisibility(View.GONE);
+		setChangeTitle(index);
 		resetBottomImage();
 		switch (index) {
 		case index_Default:
@@ -329,19 +329,6 @@ public class HomeActivity extends BaseActivity {
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
-			titleSetCenterTitle("问答");
-			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
-			mTitle.iv_title_right1
-					.setImageResource(R.drawable.chuangjianjingli);
-			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							RequestWayActivity.class,
-							sendDataToBundle(new Model(), null));
-				}
-			});
 			if (mAnwergmt == null) {
 				mAnwergmt = new FragmentRequestAnwer();
 				transaction.add(R.id.content, mAnwergmt);
@@ -388,6 +375,93 @@ public class HomeActivity extends BaseActivity {
 			break;
 		}
 		transaction.commit();
+	}
+
+	/**
+	 * 根据点击的fragment，设置可变的title，以及title右边需要实现的功能
+	 * 
+	 * @param index
+	 */
+
+	private void setChangeTitle(int index) {
+		mTitle.iv_title_right1.setVisibility(View.GONE);
+		switch (index) {
+		case index_Default:
+			titleSetCenterTitle("癌友帮");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.index);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// mApp.startActivity_qcj(HomeActivity.this,
+					// RequestWayActivity.class,
+					// sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_zhixun:
+			titleSetCenterTitle("资讯");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// mApp.startActivity_qcj(HomeActivity.this,
+					// RequestWayActivity.class,
+					// sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qclass:
+			titleSetCenterTitle("最新");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// mApp.startActivity_qcj(HomeActivity.this,
+					// RequestWayActivity.class,
+					// sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qustion:
+			titleSetCenterTitle("问答");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1
+					.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							RequestWayActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qikan:
+			titleSetCenterTitle("经历");
+			break;
+		case index_web:
+			titleSetCenterTitle("病例");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// mApp.startActivity_qcj(HomeActivity.this,
+					// RequestWayActivity.class,
+					// sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		}
+
 	}
 
 	/**

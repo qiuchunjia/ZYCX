@@ -50,6 +50,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		titleSetRightTitle("确认");
 		et_medicine_name = (EditText) findViewById(R.id.et_medicine_name);
 		tv_once = (TextView) findViewById(R.id.tv_once);
 		tv_eat_med_repeat = (TextView) findViewById(R.id.tv_eat_med_repeat);

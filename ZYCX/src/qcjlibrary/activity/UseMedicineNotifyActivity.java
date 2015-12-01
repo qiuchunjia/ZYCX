@@ -42,6 +42,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		titleSetRightImage(R.drawable.tianjia);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(this, 10));
 		mAdapter = new UseMedicineNotifyAdapter(this, null);

@@ -1,6 +1,7 @@
 package qcjlibrary.fragment;
 
 import qcjlibrary.activity.CaseHistoryActivity;
+import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
@@ -109,7 +110,8 @@ public class FragmentCaseIndex extends BaseFragment {
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.ll_food:
-
+			mApp.startActivity_qcj(mActivity, FoodWayActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		}

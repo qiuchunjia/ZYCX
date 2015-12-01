@@ -6,6 +6,8 @@ import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.util.DisplayUtils;
+import qcjlibrary.widget.popupview.PopCancerCategory;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -106,7 +108,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 			// mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.ll_4:
-
+			PopCancerCategory category = new PopCancerCategory(mActivity, null,
+					mActivity);
+			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 			break;
 
 		}

@@ -51,6 +51,7 @@ public class PatientInforActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		titleSetRightTitle("保存");
 		et_name = (EditText) findViewById(R.id.et_name);
 		rl_gender = (RelativeLayout) findViewById(R.id.rl_gender);
 		et_name = (EditText) findViewById(R.id.et_name);

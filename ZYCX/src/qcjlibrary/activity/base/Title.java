@@ -158,6 +158,7 @@ public class Title implements TitleInterface {
 	public void titleSetRightTitle(String rightTitle) {
 		if (tv_title_right != null) {
 			if (rightTitle != null && !rightTitle.equals("")) {
+				tv_title_right.setVisibility(View.VISIBLE);
 				tv_title_right.setText(rightTitle);
 			}
 		}

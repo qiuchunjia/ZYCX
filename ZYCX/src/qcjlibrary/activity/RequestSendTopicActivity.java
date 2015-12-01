@@ -69,8 +69,7 @@ public class RequestSendTopicActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
-			mApp.startActivity_qcj(this,
-					RequestSendTopicCommitedActivity.class,
+			mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
 					sendDataToBundle(new Model(), null));
 			break;
 

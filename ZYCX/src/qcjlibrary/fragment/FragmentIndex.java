@@ -2,6 +2,7 @@ package qcjlibrary.fragment;
 
 import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
+import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.base.Model;
 import android.view.View;
@@ -88,7 +89,9 @@ public class FragmentIndex extends BaseFragment {
 			// TODO
 			break;
 		case R.id.rl_6:
-			// TODO
+			mApp.startActivity_qcj(getActivity(),
+					UseMedicineNotifyActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		}
