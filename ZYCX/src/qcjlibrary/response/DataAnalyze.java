@@ -4,12 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import android.util.Log;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.util.JsonUtils;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 /**
  * author：qiuchunjia time：下午2:44:40

@@ -2,12 +2,7 @@ package qcjlibrary.model;
 
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.JsonUtils;
 
 /**
  * author：qiuchunjia time：上午10:48:31 类描述：这个类是实现

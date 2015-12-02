@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.WeakHashMap;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.api.api;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.FileSizeUtil;
@@ -791,4 +792,24 @@ public class Thinksns extends Application {
 	public static String getCache_path() {
 		return "cache_path";
 	}
+
+	/*************************** 接口部分 ******************************/
+	private qcjlibrary.api.api.ZhiXunImpl mZhixun;
+	private qcjlibrary.api.api.RequestImpl mRequestImpl;
+
+	public api.ZhiXunImpl getZhiXunImpl() {
+		if (mZhixun == null) {
+			mZhixun = new api.ZhiXunImpl();
+		}
+		return mZhixun;
+	}
+
+	public api.RequestImpl getRequestImpl() {
+		if (mRequestImpl == null) {
+			mRequestImpl = new api.RequestImpl();
+		}
+		return mRequestImpl;
+	}
+
+	/*************************** 接口部分end ******************************/
 }

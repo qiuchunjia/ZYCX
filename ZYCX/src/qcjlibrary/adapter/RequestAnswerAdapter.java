@@ -6,8 +6,9 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -75,12 +76,13 @@ public class RequestAnswerAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+//		sendRequest(mApp.getRequestImpl().index(), ModelRequest.class, 0,
+//				REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+//		sendRequest(null, null, 1, 1);
 	}
 
 	@Override
@@ -96,7 +98,6 @@ public class RequestAnswerAdapter extends BAdapter {
 
 	@Override
 	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -1,6 +1,5 @@
 package qcjlibrary.api;
 
-import qcjlibrary.model.ModelZiXunCategory;
 import qcjlibrary.model.ModelZiXunDetail;
 import android.util.Log;
 
@@ -19,6 +18,7 @@ public class api {
 	public static final String ACT = "act";
 
 	public static final String APPNAME = "3g";
+	public static final String API = "api";
 
 	public static RequestParams getToken(RequestParams params) {
 		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns
@@ -26,6 +26,12 @@ public class api {
 		params.add("oauth_token", preferenceUtil.getString("oauth_token", ""));
 		params.add("oauth_token_secret",
 				preferenceUtil.getString("oauth_token_secret", ""));
+		return params;
+	}
+
+	public static RequestParams getTestToken(RequestParams params) {
+		params.add("oauth_token", "18e22c9690b5e01ce224a58f401eb995");
+		params.add("oauth_token_secret", "be826a6243b7f9c0800ac82ce692c2f7");
 		return params;
 	}
 
@@ -68,5 +74,20 @@ public class api {
 			}
 			return null;
 		}
+	}
+
+	public static final class RequestImpl implements RequestIm {
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, ASK);
+			params.add(ACT, INDEX);
+			params = getTestToken(params);
+			Log.i("paramtoken", params.toString());
+			return params;
+		}
+
 	}
 }

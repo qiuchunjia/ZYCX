@@ -1,12 +1,18 @@
 package qcjlibrary.fragment;
 
+import java.util.List;
+
 import qcjlibrary.activity.RequestDetailActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +45,8 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private ImageView iv_4;
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
+	private List<ModelCancerCategory> mCancerList; // 癌症种类
+	private List<Model> mItemList; // 内容集合
 
 	@Override
 	public void initIntentData() {
@@ -65,8 +73,6 @@ public class FragmentRequestAnwer extends BaseFragment {
 		ll_4 = (LinearLayout) findViewById(R.id.ll_4);
 		iv_4 = (ImageView) findViewById(R.id.iv_4);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mAdapter = new RequestAnswerAdapter(this, null);
-		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -81,7 +87,24 @@ public class FragmentRequestAnwer extends BaseFragment {
 
 	@Override
 	public void initData() {
+		sendRequest(mApp.getRequestImpl().index(), ModelRequest.class, 0);
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelRequest) {
+			ModelRequest request = (ModelRequest) object;
+			mCancerList = request.getFenlei();
+			Object data = request.getList();
+			mItemList = (List<Model>) data;
+			Log.i("cancerlist",
+					mCancerList.toString() + "       " + mItemList.toString());
+			mAdapter = new RequestAnswerAdapter(this, mItemList);
+			mCommonListView.setAdapter(mAdapter);
+		}
+		return object;
 	}
 
 	@Override

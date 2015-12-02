@@ -379,8 +379,8 @@ public abstract class BAdapter extends BaseAdapter {
 					Log.i("zhixunadapter", object.toString() + "hh");
 					if (object != null) {
 						if (object instanceof ModelMsg) {
-							ToastUtils.showToast(((ModelMsg) object).getMsg()
-									+ "");
+							ToastUtils.showToast(((ModelMsg) object)
+									.getMessage() + "");
 						} else {
 							Object objectResult = getReallyList(object, type);
 							List<Model> list = (List<Model>) objectResult;
