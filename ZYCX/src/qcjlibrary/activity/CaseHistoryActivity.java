@@ -2,7 +2,6 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.CaseHistoryAdapter;
-import qcjlibrary.adapter.MePerioAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import android.view.View;
 import android.widget.AdapterView;

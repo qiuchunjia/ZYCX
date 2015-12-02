@@ -1,6 +1,6 @@
 package qcjlibrary.adapter.base;
 
-import qcjlibrary.img.RoundImageView;
+import qcjlibrary.widget.RoundImageView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

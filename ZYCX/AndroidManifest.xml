@@ -355,9 +355,12 @@
         <activity android:name="qcjlibrary.activity.RequestDetailResponceActivity" />
         <activity android:name="qcjlibrary.activity.RequestFlagActivity" />
         <activity android:name="qcjlibrary.activity.ZhiXunFlagActivity" />
+        <activity android:name="qcjlibrary.activity.SearchNewActivity" />
+        <activity android:name="qcjlibrary.activity.UserAgreenmentActivity" />
         <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
- <!-- 癌友帮二期开发新增加页面end -->
+
+            <!-- 癌友帮二期开发新增加页面end -->
         </activity>
     </application>
 

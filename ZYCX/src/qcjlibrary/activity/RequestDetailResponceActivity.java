@@ -2,7 +2,7 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
-import qcjlibrary.img.RoundImageView;
+import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopDealAnwer;
 import android.view.Gravity;
 import android.view.View;

@@ -2,8 +2,8 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
-import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopExpertAdvice;
 import android.view.Gravity;
 import android.view.View;

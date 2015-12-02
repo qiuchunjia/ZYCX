@@ -2,8 +2,10 @@ package com.zhiyicx.zycx;
 
 import org.json.JSONObject;
 
+import qcjlibrary.activity.UserAgreenmentActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.base.Model;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +31,7 @@ public class RegisterActivity1 extends BaseActivity {
 	private TextView tv_vertify_code;
 	private Button btn_next;
 	private ImageView iv_choose;
+	private TextView tv_user_agreenment;
 
 	@Override
 	public String setCenterTitle() {
@@ -57,6 +60,7 @@ public class RegisterActivity1 extends BaseActivity {
 		tv_vertify_code = (TextView) findViewById(R.id.tv_vertify_code);
 		btn_next = (Button) findViewById(R.id.btn_next);
 		iv_choose = (ImageView) findViewById(R.id.iv_choose);
+		tv_user_agreenment = (TextView) findViewById(R.id.tv_user_agreenment);
 	}
 
 	@Override
@@ -68,6 +72,7 @@ public class RegisterActivity1 extends BaseActivity {
 		tv_vertify_code.setOnClickListener(this);
 		btn_next.setOnClickListener(this);
 		iv_choose.setOnClickListener(this);
+		tv_user_agreenment.setOnClickListener(this);
 	}
 
 	private boolean isAgreen = true;
@@ -97,7 +102,11 @@ public class RegisterActivity1 extends BaseActivity {
 				btn_next.setBackgroundColor(getResources().getColor(
 						R.color.main_color));
 			}
-
+			break;
+		case R.id.tv_user_agreenment:
+			Intent intent = new Intent();
+			intent.setClass(this, UserAgreenmentActivity.class);
+			startActivity(intent);
 			break;
 		}
 

@@ -21,7 +21,7 @@
             android:textColor="@color/text_green"
             android:textSize="@dimen/text_very_big" />
 
-        <qcjlibrary.img.RoundImageView
+        <qcjlibrary.widget.RoundImageView
             android:id="@+id/iv_cycle_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"

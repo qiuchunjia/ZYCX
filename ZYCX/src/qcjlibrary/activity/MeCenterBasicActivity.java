@@ -1,8 +1,8 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

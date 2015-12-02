@@ -2,6 +2,7 @@ package qcjlibrary.fragment;
 
 import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
+import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.base.Model;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.HomeActivity;
 
 /**
  * author：qiuchunjia time：上午10:32:51 类描述：这个类是实现
@@ -26,6 +28,7 @@ public class FragmentIndex extends BaseFragment {
 	private RelativeLayout rl_4;
 	private RelativeLayout rl_5;
 	private RelativeLayout rl_6;
+	private HomeActivity mHomeActivity;
 
 	@Override
 	public void initIntentData() {
@@ -62,20 +65,20 @@ public class FragmentIndex extends BaseFragment {
 
 	@Override
 	public void initData() {
-
+		if (mActivity instanceof HomeActivity) {
+			mHomeActivity = (HomeActivity) mActivity;
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_1:
-			// TODO
-			mApp.startActivity_qcj(mActivity, MsgNotifyPraiseActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			setTabFragement(HomeActivity.index_qustion);
 			break;
 
 		case R.id.rl_2:
-			// TODO
+			setTabFragement(HomeActivity.index_qclass);
 			break;
 		case R.id.rl_3:
 			// TODO
@@ -83,10 +86,11 @@ public class FragmentIndex extends BaseFragment {
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_4:
-			// TODO
+			setTabFragement(HomeActivity.index_qikan);
 			break;
 		case R.id.rl_5:
-			// TODO
+			mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_6:
 			mApp.startActivity_qcj(getActivity(),
@@ -94,6 +98,12 @@ public class FragmentIndex extends BaseFragment {
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 
+		}
+	}
+
+	private void setTabFragement(int index) {
+		if (mHomeActivity != null) {
+			mHomeActivity.setTabSelection(index);
 		}
 	}
 }

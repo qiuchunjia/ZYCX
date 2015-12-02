@@ -24,7 +24,7 @@
                 android:paddingLeft="@dimen/margin_left_small"
                 android:paddingRight="@dimen/margin_right_small" >
 
-                <qcjlibrary.img.RoundImageView
+                <qcjlibrary.widget.RoundImageView
                     android:id="@+id/riv_other_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"

@@ -1,6 +1,8 @@
 package com.zhiyicx.zycx.activity;
 
+import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestWayActivity;
+import qcjlibrary.activity.SearchNewActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.fragment.FragmentCaseIndex;
@@ -291,7 +293,7 @@ public class HomeActivity extends BaseActivity {
 		}
 	}
 
-	private void setTabSelection(int index) {
+	public void setTabSelection(int index) {
 
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = mFManager.beginTransaction();
@@ -394,9 +396,9 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					// mApp.startActivity_qcj(HomeActivity.this,
-					// RequestWayActivity.class,
-					// sendDataToBundle(new Model(), null));
+					mApp.startActivity_qcj(HomeActivity.this,
+							MsgNotifyPraiseActivity.class,
+							sendDataToBundle(new Model(), null));
 				}
 			});
 			break;
@@ -408,9 +410,9 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					// mApp.startActivity_qcj(HomeActivity.this,
-					// RequestWayActivity.class,
-					// sendDataToBundle(new Model(), null));
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
 				}
 			});
 			break;
@@ -422,9 +424,9 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					// mApp.startActivity_qcj(HomeActivity.this,
-					// RequestWayActivity.class,
-					// sendDataToBundle(new Model(), null));
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
 				}
 			});
 			break;
@@ -454,9 +456,9 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					// mApp.startActivity_qcj(HomeActivity.this,
-					// RequestWayActivity.class,
-					// sendDataToBundle(new Model(), null));
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
 				}
 			});
 			break;

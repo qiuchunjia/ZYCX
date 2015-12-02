@@ -1,11 +1,13 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.UseMedicineNotifyAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.util.DisplayUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -61,13 +63,19 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		Title title = getTitleClass();
+		title.iv_title_right1.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				mApp.startActivity_qcj(UseMedicineNotifyActivity.this,
+						MedicineEditNotifyActivity.class, null);
+			}
+		});
 	}
 
 	@Override
 	public void initListener() {
-		// TODO Auto-generated method stub
 
 	}
 
