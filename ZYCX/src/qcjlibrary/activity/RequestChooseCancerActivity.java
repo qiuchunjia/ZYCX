@@ -1,13 +1,18 @@
 package qcjlibrary.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.base.Model;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 
@@ -18,7 +23,8 @@ import com.zhiyicx.zycx.R;
 
 public class RequestChooseCancerActivity extends BaseActivity {
 	private LinearLayout ll_choose_cancer;
-	private List<Model> mList;
+	private List<ModelCancerCategory> mList;
+	private ModelRequestAsk mAsk;
 
 	@Override
 	public String setCenterTitle() {
@@ -27,7 +33,7 @@ public class RequestChooseCancerActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mAsk = (ModelRequestAsk) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -46,22 +52,18 @@ public class RequestChooseCancerActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-		mList = new ArrayList<Model>();
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		mList.add(new Model());
-		addDataToView(mList);
+		sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelRequest) {
+			ModelRequest request = (ModelRequest) object;
+			mList = request.getFenlei();
+			addDataToView(mList);
+		}
+		return object;
 	}
 
 	/**
@@ -69,11 +71,24 @@ public class RequestChooseCancerActivity extends BaseActivity {
 	 * 
 	 * @param list
 	 */
-	private void addDataToView(List<Model> list) {
+	private void addDataToView(List<ModelCancerCategory> list) {
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {
+				ModelCancerCategory category = list.get(i);
 				View view = mInflater
 						.inflate(R.layout.item_choose_cancer, null);
+				TextView tv_cancer = (TextView) view
+						.findViewById(R.id.tv_cancer);
+				ImageView iv_choose = (ImageView) view
+						.findViewById(R.id.iv_choose);
+				tv_cancer.setText(category.getTitle());
+				iv_choose.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+					}
+				});
 				ll_choose_cancer.addView(view);
 			}
 		}

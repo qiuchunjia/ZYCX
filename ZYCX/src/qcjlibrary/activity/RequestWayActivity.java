@@ -2,12 +2,12 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.activity.HomeActivity;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -17,6 +17,7 @@ import com.zhiyicx.zycx.activity.HomeActivity;
 public class RequestWayActivity extends BaseActivity {
 	private TextView tv_common;
 	private TextView tv_zhuanye;
+	private ModelRequestAsk mAsk;
 
 	@Override
 	public String setCenterTitle() {
@@ -38,7 +39,7 @@ public class RequestWayActivity extends BaseActivity {
 		titleSetRightTitle("关闭");
 		tv_common = (TextView) findViewById(R.id.tv_common);
 		tv_zhuanye = (TextView) findViewById(R.id.tv_zhuanye);
-
+		mAsk = new ModelRequestAsk();
 	}
 
 	@Override
@@ -62,12 +63,14 @@ public class RequestWayActivity extends BaseActivity {
 			break;
 
 		case R.id.tv_common:
+			mAsk.setIs_expert("0");
 			mApp.startActivity_qcj(this, RequestSendTopicActivity.class,
-					sendDataToBundle(new Model(), null));
+					sendDataToBundle(mAsk, null));
 			break;
 		case R.id.tv_zhuanye:
+			mAsk.setIs_expert("1");
 			mApp.startActivity_qcj(this, RequestSendTopicActivity.class,
-					sendDataToBundle(new Model(), null));
+					sendDataToBundle(mAsk, null));
 			break;
 		}
 

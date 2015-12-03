@@ -1,15 +1,16 @@
 package qcjlibrary.activity;
 
-import com.zhiyicx.zycx.R;
-
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.model.base.Model;
+import qcjlibrary.util.ToastUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.activity.base.Title;
-import qcjlibrary.model.base.Model;
+
+import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -28,6 +29,12 @@ public class RequestSendTopicActivity extends BaseActivity {
 	private TextView tv_protect;// 护理类
 	private TextView tv_good;// 康复类
 
+	private ModelRequestAsk mAsk;
+
+	private String mTitle;
+	private String mContent;
+	private String mType;
+
 	@Override
 	public String setCenterTitle() {
 		return "发表问题";
@@ -35,7 +42,7 @@ public class RequestSendTopicActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mAsk = (ModelRequestAsk) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -75,25 +82,37 @@ public class RequestSendTopicActivity extends BaseActivity {
 	public void onClick(View v) {
 		resetTextColorAndBg();
 		switch (v.getId()) {
-		case R.id.tv_title_right:
-			mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
-					sendDataToBundle(new Model(), null));
-			break;
 
 		case R.id.tv_cure:
+			mType = "0";
 			setTextColorAndBg(tv_cure);
 			break;
 		case R.id.tv_protect:
+			mType = "1";
 			setTextColorAndBg(tv_protect);
 			break;
 		case R.id.tv_good:
+			mType = "2";
 			setTextColorAndBg(tv_good);
+			break;
+		case R.id.tv_title_right:
+			getDataFromView();
+			if (judgeTheData()) {
+				mAsk.setType(mType);
+				mAsk.setType(mType);
+				mAsk.setContent(mContent);
+				mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
+						sendDataToBundle(mAsk, null));
+			}
 			break;
 
 		}
 
 	}
 
+	/**
+	 * 重置颜色和背景
+	 */
 	private void resetTextColorAndBg() {
 		tv_cure.setBackgroundColor(getResources().getColor(
 				R.color.main_white_pure_color));
@@ -114,5 +133,29 @@ public class RequestSendTopicActivity extends BaseActivity {
 	private void setTextColorAndBg(TextView textview) {
 		textview.setBackgroundResource(R.drawable.view_border_green_pure_0);
 		textview.setTextColor(getResources().getColor(R.color.text_green));
+	}
+
+	/**
+	 * 从界面上获取数据
+	 */
+	public void getDataFromView() {
+		mTitle = et_title.getText().toString();
+		mContent = et_content.getText().toString();
+	}
+
+	private boolean judgeTheData() {
+		if (mTitle == null || mTitle.equals("")) {
+			ToastUtils.showToast("标题不能为空");
+			return false;
+		}
+		if (mContent == null || mContent.equals("")) {
+			ToastUtils.showToast("内容不能为空");
+			return false;
+		}
+		if (mType == null || mType.equals("")) {
+			ToastUtils.showToast("请选择类型");
+			return false;
+		}
+		return true;
 	}
 }
