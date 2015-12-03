@@ -1,6 +1,11 @@
 package qcjlibrary.api;
 
+import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.ModelZiXunDetail;
+import qcjlibrary.model.base.Model;
 import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
@@ -17,9 +22,18 @@ public class api {
 	public static final String MOD = "mod";
 	public static final String ACT = "act";
 
+	public static final String LASTID = "lastid"; // 上来刷新
+	public static final String MAXID = "maxid"; // 下拉加载更多
+
 	public static final String APPNAME = "3g";
 	public static final String API = "api";
 
+	/**
+	 * 添加token到params
+	 * 
+	 * @param params
+	 * @return
+	 */
 	public static RequestParams getToken(RequestParams params) {
 		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns
 				.getContext());
@@ -29,9 +43,35 @@ public class api {
 		return params;
 	}
 
+	/**
+	 * token的测试数据
+	 * 
+	 * @param params
+	 * 
+	 * @return
+	 */
 	public static RequestParams getTestToken(RequestParams params) {
 		params.add("oauth_token", "18e22c9690b5e01ce224a58f401eb995");
 		params.add("oauth_token_secret", "be826a6243b7f9c0800ac82ce692c2f7");
+		return params;
+	}
+
+	/**
+	 * 分页
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	public static RequestParams getChangePage(RequestParams params, Model model) {
+		if (model != null && params != null) {
+			if (model.getLastid() != null && !model.getLastid().equals("")) {
+				params.add(LASTID, model.getLastid());
+			}
+			if (model.getMaxid() != null && !model.getMaxid().equals("")) {
+				params.add(MAXID, model.getMaxid());
+			}
+		}
 		return params;
 	}
 
@@ -79,15 +119,55 @@ public class api {
 	public static final class RequestImpl implements RequestIm {
 
 		@Override
-		public RequestParams index() {
+		public RequestParams index(ModelRequestItem item) {
 			RequestParams params = new RequestParams();
 			params.add(APP, API);
 			params.add(MOD, ASK);
 			params.add(ACT, INDEX);
 			params = getTestToken(params);
-			Log.i("paramtoken", params.toString());
+			if (item != null) {
+				params = getChangePage(params, item);
+				Log.i("paramstest", params.toString());
+				return params;
+			}
 			return params;
 		}
 
+		@Override
+		public RequestParams search(ModelRequestSearch search) {
+			if (search != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, SEARCH);
+				params.add(KEY, search.getKey());
+				params.add(TYPE, search.getType());
+				params.add(CAT, search.getCat());
+				Log.i("paramstest", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams addQuestion(ModelRequestAsk ask) {
+			if (ask != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, ADDQUESTION);
+
+				params.add(QID, ask.getQid());
+				params.add(CONTENT, ask.getContent());
+				params.add(QUESTION_DETAIL, ask.getQuestion_detail());
+				params.add(IS_EXPERT, ask.getIs_expert());
+				params.add(CID, ask.getCid());
+				params.add(TYPE, ask.getType());
+				params.add(TOPICS, ask.getTopics());
+				Log.i("paramstest", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
 	}
 }

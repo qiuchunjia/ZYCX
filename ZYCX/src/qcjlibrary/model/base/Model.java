@@ -8,23 +8,23 @@ import java.io.Serializable;
  */
 
 public class Model implements Serializable {
-	private int p; // 这个p用于数据分页
+	public String lastid;
+	public String maxid;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public int getP() {
-		return p;
+	public String getLastid() {
+		return lastid;
 	}
 
-	public void setP(int p) {
-		this.p = p;
+	public void setLastid(String lastid) {
+		this.lastid = lastid;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getMaxid() {
+		return maxid;
+	}
+
+	public void setMaxid(String maxid) {
+		this.maxid = maxid;
 	}
 
 }

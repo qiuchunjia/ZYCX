@@ -747,6 +747,8 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
 	private Request mRequst;
+	public static final int REQUEST_GET = 0;
+	public static final int REQUEST_POST = 1;
 
 	public void sendRequest(RequestParams params,
 			Class<? extends Model> modeltype, int requsetType) {
@@ -754,7 +756,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
-			if (requsetType == 0) {
+			if (requsetType == REQUEST_GET) {
 				mRequst.get(mApp.getHostUrl(), params,
 						new MyAsyncHttpResponseHandler(modeltype));
 			} else {

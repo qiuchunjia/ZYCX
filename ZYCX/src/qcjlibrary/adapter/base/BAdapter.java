@@ -94,7 +94,9 @@ public abstract class BAdapter extends BaseAdapter {
 	public void doRefreshNew() {
 		// 先获取缓存
 		// TODO
-		refreshNew();
+		if (mList == null) { // 当为空的时候才请求，其它的都用doRefreshHeader()
+			refreshNew();
+		}
 	}
 
 	/** 真正的刷新数据數據，即調用RefreshHeader() 獲取的數據加載到adapter里面 */
@@ -376,19 +378,20 @@ public abstract class BAdapter extends BaseAdapter {
 				String result = new String(arg2);
 				if (result != null) {
 					Object object = DataAnalyze.parseDataByGson(result, type);
-					Log.i("zhixunadapter", object.toString() + "hh");
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							ToastUtils.showToast(((ModelMsg) object)
 									.getMessage() + "");
 						} else {
 							Object objectResult = getReallyList(object, type);
-							List<Model> list = (List<Model>) objectResult;
-							if (RefreshType == REFRESH_NEW
-									&& RefreshType == REFRESH_HEADER) {
-								addHeadList(list);
-							} else {
-								addFooterList(list);
+							if (objectResult instanceof List<?>) {
+								List<Model> list = (List<Model>) objectResult;
+								if (RefreshType == REFRESH_NEW
+										&& RefreshType == REFRESH_HEADER) {
+									addHeadList(list);
+								} else {
+									addFooterList(list);
+								}
 							}
 						}
 					} else {

@@ -113,6 +113,7 @@ public class ViewHolder {
 	/******************* 问答 item ************************/
 	// public TextView tv_title;
 	public TextView tv_advice;
+	public ImageView iv_a;
 	// public TextView tv_answer;
 	// public TextView tv_expert_answer;
 	// public TextView tv_date;

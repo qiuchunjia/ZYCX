@@ -87,7 +87,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getRequestImpl().index(), ModelRequest.class, 0);
+		sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -101,7 +101,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 			mItemList = (List<Model>) data;
 			Log.i("cancerlist",
 					mCancerList.toString() + "       " + mItemList.toString());
-			mAdapter = new RequestAnswerAdapter(this, mItemList);
+			mAdapter = new RequestAnswerAdapter(this, mItemList, null);
 			mCommonListView.setAdapter(mAdapter);
 		}
 		return object;
@@ -131,8 +131,8 @@ public class FragmentRequestAnwer extends BaseFragment {
 			// mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.ll_4:
-			PopCancerCategory category = new PopCancerCategory(mActivity, null,
-					mActivity);
+			PopCancerCategory category = new PopCancerCategory(mActivity,
+					mCancerList, mActivity);
 			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 			break;
 
