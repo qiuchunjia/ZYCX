@@ -1,8 +1,5 @@
 package qcjlibrary.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import qcjlibrary.model.base.Model;
 
 /**
@@ -16,14 +13,14 @@ public class ModelMsg extends Model {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String code;
+	private int code;
 	private String message;
 
-	public String getCode() {
+	public int getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 

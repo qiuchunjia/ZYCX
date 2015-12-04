@@ -354,6 +354,7 @@
         <activity android:name="qcjlibrary.activity.RequestDetailActivity" />
         <activity android:name="qcjlibrary.activity.RequestDetailResponceActivity" />
         <activity android:name="qcjlibrary.activity.RequestFlagActivity" />
+        <activity android:name="qcjlibrary.activity.RequestSearchActivity" />
         <activity android:name="qcjlibrary.activity.ZhiXunFlagActivity" />
         <activity android:name="qcjlibrary.activity.SearchNewActivity" />
         <activity android:name="qcjlibrary.activity.UserAgreenmentActivity" />

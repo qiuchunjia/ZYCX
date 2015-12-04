@@ -20,6 +20,7 @@ import org.apache.http.Header;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
@@ -789,6 +790,24 @@ public abstract class BaseActivity extends FragmentActivity implements
 		return DataAnalyze.parseDataByGson(str, class1);
 	}
 
+	/**
+	 * 判断返回的网络数据是否成功
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public boolean judgeTheMsg(Object object) {
+		if (object instanceof ModelMsg) {
+			ModelMsg msg = (ModelMsg) object;
+			if (msg.getCode() == 0) {
+				return true;
+			}
+			ToastUtils.showToast(msg.getMessage());
+			return false;
+		}
+		return false;
+	}
+
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
 		private Class type;
 
@@ -799,7 +818,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
 				Throwable arg3) {
-			Log.i("test", "请求异常");
 			ToastUtils.showToast("请求异常");
 		}
 

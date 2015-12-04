@@ -82,9 +82,12 @@ public class DataAnalyze {
 				for (int i = 0; i < flag.length; i++) {
 					if (jsonObject.has(flag[i])) {
 						Gson gson = new Gson();
-						String judgeStr = jsonObject.getString(flag[i]);
-						if (judgeStr != null) {
-							return gson.fromJson(judgeStr, class1);
+						Object judgeObject = jsonObject.get((flag[i]));
+						if (!(judgeObject instanceof Boolean)) {
+							String judgeStr = judgeObject.toString();
+							if (judgeStr != null) {
+								return gson.fromJson(judgeStr, class1);
+							}
 						}
 						return gson.fromJson(jsonObject.toString(),
 								ModelMsg.class);

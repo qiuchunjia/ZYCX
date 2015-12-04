@@ -2,7 +2,9 @@ package qcjlibrary.fragment;
 
 import java.util.List;
 
+import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.RequestDetailActivity;
+import qcjlibrary.activity.RequestSearchActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
@@ -109,6 +111,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 
 	@Override
 	public void initListener() {
+		rl_space.setOnClickListener(this);
 		ll_1.setOnClickListener(this);
 		ll_2.setOnClickListener(this);
 		ll_3.setOnClickListener(this);
@@ -118,6 +121,10 @@ public class FragmentRequestAnwer extends BaseFragment {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.rl_space:
+			mApp.startActivity_qcj(getActivity(), RequestSearchActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+			break;
 		case R.id.ll_1:
 			// mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
 			// mActivity.sendDataToBundle(new Model(), null));
