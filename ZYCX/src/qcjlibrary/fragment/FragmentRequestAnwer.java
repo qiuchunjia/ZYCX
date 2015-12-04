@@ -45,6 +45,10 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private ImageView iv_3;
 	private LinearLayout ll_4;
 	private ImageView iv_4;
+	private TextView tv_1;
+	private TextView tv_2;
+	private TextView tv_3;
+	private TextView tv_4;
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
@@ -74,6 +78,12 @@ public class FragmentRequestAnwer extends BaseFragment {
 		iv_3 = (ImageView) findViewById(R.id.iv_3);
 		ll_4 = (LinearLayout) findViewById(R.id.ll_4);
 		iv_4 = (ImageView) findViewById(R.id.iv_4);
+
+		tv_1 = (TextView) findViewById(R.id.tv_1);
+		tv_2 = (TextView) findViewById(R.id.tv_2);
+		tv_3 = (TextView) findViewById(R.id.tv_3);
+		tv_4 = (TextView) findViewById(R.id.tv_4);
+
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
@@ -120,31 +130,48 @@ public class FragmentRequestAnwer extends BaseFragment {
 
 	@Override
 	public void onClick(View v) {
+		resetImage();
 		switch (v.getId()) {
 		case R.id.rl_space:
 			mApp.startActivity_qcj(getActivity(), RequestSearchActivity.class,
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.ll_1:
-			// mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
-			// mActivity.sendDataToBundle(new Model(), null));
+			iv_1.setImageResource(R.drawable.medica_green);
+			tv_1.setTextColor(getResources().getColor(R.color.text_green));
 			break;
 
 		case R.id.ll_2:
-
+			iv_2.setImageResource(R.drawable.umbrella_green);
+			tv_2.setTextColor(getResources().getColor(R.color.text_green));
 			break;
 		case R.id.ll_3:
-			// mApp.startActivity_qcj(getActivity(), CaseHistoryActivity.class,
-			// mActivity.sendDataToBundle(new Model(), null));
+			iv_3.setImageResource(R.drawable.heart_green);
+			tv_3.setTextColor(getResources().getColor(R.color.text_green));
 			break;
 		case R.id.ll_4:
+			iv_4.setImageResource(R.drawable.more_green);
+			tv_4.setTextColor(getResources().getColor(R.color.text_green));
 			PopCancerCategory category = new PopCancerCategory(mActivity,
 					mCancerList, mActivity);
 			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 			break;
-
 		}
 
+	}
+
+	/**
+	 * 重置图片
+	 */
+	public void resetImage() {
+		iv_1.setImageResource(R.drawable.medica);
+		iv_2.setImageResource(R.drawable.umbrella);
+		iv_3.setImageResource(R.drawable.heart);
+		iv_4.setImageResource(R.drawable.more);
+		tv_1.setTextColor(getResources().getColor(R.color.text_more_gray));
+		tv_2.setTextColor(getResources().getColor(R.color.text_more_gray));
+		tv_3.setTextColor(getResources().getColor(R.color.text_more_gray));
+		tv_4.setTextColor(getResources().getColor(R.color.text_more_gray));
 	}
 
 }
