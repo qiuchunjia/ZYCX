@@ -1,5 +1,6 @@
 package qcjlibrary.api;
 
+import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
@@ -16,7 +17,9 @@ public interface RequestIm {
 	public static final String INDEX = "index";
 	public static final String SEARCH = "search";
 	public static final String ADDQUESTION = "addQuestion";
-	
+	public static final String ANSWER = "answer";
+	public static final String SAVEANSWER = "saveAnswer";
+
 	public static final String ID = "id";
 	public static final String KEY = "key";
 	public static final String TYPE = "type";
@@ -28,6 +31,7 @@ public interface RequestIm {
 	public static final String CID = "cid";
 	// public static final String TYPE = "type";
 	public static final String TOPICS = "topics";
+	public static final String AUID = "auid";
 
 	/**
 	 * 问答首页
@@ -51,4 +55,20 @@ public interface RequestIm {
 	 * @return
 	 */
 	public RequestParams addQuestion(ModelRequestAsk ask);
+
+	/**
+	 * 问答 问题详细页
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public RequestParams answer(ModelRequestItem item);
+
+	/**
+	 * 问答 回答问题
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public RequestParams saveAnswer(ModelRequestAnswerComom answerComom);
 }

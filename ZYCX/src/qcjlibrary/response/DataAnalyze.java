@@ -32,7 +32,7 @@ public class DataAnalyze {
 	public static Object parseData(String str, Class class1) {
 		if (str != null) {
 			try {
-				Log.i("Result", str);
+				Log.i("DataAnalyze", str);
 				JSONObject jsonObject = new JSONObject(str);
 				for (int i = 0; i < flag.length; i++) {
 					if (jsonObject.has(flag[i])) {

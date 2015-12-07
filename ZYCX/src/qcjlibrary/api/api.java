@@ -1,6 +1,7 @@
 package qcjlibrary.api;
 
 import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
@@ -167,6 +168,34 @@ public class api {
 				params.add(TYPE, ask.getType());
 				params.add(TOPICS, ask.getTopics());
 				Log.i("paramstest", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams answer(ModelRequestItem item) {
+			if (item != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, ANSWER);
+				params.add(ID, item.getQuestion_id());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams saveAnswer(ModelRequestAnswerComom answerComom) {
+			if (answerComom != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, SAVEANSWER);
+				params.add(QID, answerComom.getQid());
+				params.add(CONTENT, answerComom.getContent());
+				params.add(AUID, answerComom.getAuid());
 				return getTestToken(params);
 			}
 			return null;

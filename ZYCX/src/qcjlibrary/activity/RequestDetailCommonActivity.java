@@ -1,15 +1,21 @@
 package qcjlibrary.activity;
 
+import java.util.List;
+
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelRequestAnswerComom;
+import qcjlibrary.model.ModelRequestDetailCommon;
+import qcjlibrary.model.ModelRequestFlag;
+import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.widget.RoundImageView;
-import qcjlibrary.widget.popupview.PopExpertAdvice;
-import android.view.Gravity;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -20,25 +26,21 @@ import com.zhiyicx.zycx.R;
  */
 
 public class RequestDetailCommonActivity extends BaseActivity {
-	private TextView tv_title;
+	private TextView request_tv_title;
 	private TextView tv_content;
 	private TextView tv_flag_value;
 	private TextView tv_flag_value2;
 	private RoundImageView riv_icon;
 	private TextView tv_username;
 	private TextView tv_date;
-	private RelativeLayout rl_expert;
-	private TextView tv_expertcontent;
-	private TextView tv_other;
-	private RoundImageView riv_other_icon;
-	private TextView tv_other_username;
-	private TextView tv_other_content;
-	private TextView tv_other_date;
-	private TextView tv_other_num;
-	private ImageView iv_medat;
-	private TextView tv_agree;
+	private LinearLayout ll_add_answer; // 添加评论内容，当评论后要刷新这个控件
+
 	private LinearLayout ll_relate;
 	private LinearLayout ll_answer;
+	private TextView tv_other;
+
+	// 数据model赛
+	private ModelRequestItem mRequestItem;
 
 	@Override
 	public String setCenterTitle() {
@@ -47,7 +49,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -58,46 +60,170 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		titleSetRightImage(R.drawable.fenxiang);
-		tv_title = (TextView) findViewById(R.id.tv_title);
+		request_tv_title = (TextView) findViewById(R.id.request_tv_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
 		riv_icon = (RoundImageView) findViewById(R.id.riv_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_date = (TextView) findViewById(R.id.tv_date);
-		rl_expert = (RelativeLayout) findViewById(R.id.rl_expert);
-		tv_expertcontent = (TextView) findViewById(R.id.tv_expertcontent);
-		tv_other = (TextView) findViewById(R.id.tv_other);
-		riv_other_icon = (RoundImageView) findViewById(R.id.riv_other_icon);
-		tv_other_username = (TextView) findViewById(R.id.tv_other_username);
-		tv_other_content = (TextView) findViewById(R.id.tv_other_content);
-		tv_other_date = (TextView) findViewById(R.id.tv_other_date);
-		tv_other_num = (TextView) findViewById(R.id.tv_other_num);
-		iv_medat = (ImageView) findViewById(R.id.iv_medat);
-		tv_agree = (TextView) findViewById(R.id.tv_agree);
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
 		ll_answer = (LinearLayout) findViewById(R.id.ll_answer);
+		ll_add_answer = (LinearLayout) findViewById(R.id.ll_add_answer);
+		tv_other = (TextView) findViewById(R.id.tv_other);
 	}
 
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
+		sendRequest(mApp.getRequestImpl().answer(mRequestItem),
+				ModelRequestDetailCommon.class, REQUEST_GET);
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelRequestDetailCommon) {
+			ModelRequestDetailCommon detailCommon = (ModelRequestDetailCommon) object;
+			addDataToHeadAndFlag(detailCommon.getQuestion(),
+					detailCommon.getTopic_list());
+			addDataToAnswer(detailCommon.getAnswer());
+			addDataToRelate(detailCommon.getOther_question());
+		}
+		return object;
+	}
+
+	/**
+	 * 添加数据到相关模块
+	 * 
+	 * @param other_question
+	 */
+	private void addDataToRelate(List<ModelRequestRelate> other_question) {
+		if (other_question != null) {
+			if (ll_relate.getChildCount() > 0) {
+				ll_relate.removeAllViews();
+			}
+			for (int i = 0; i < other_question.size(); i++) {
+				ModelRequestRelate relate = other_question.get(i);
+				View view = mInflater.inflate(
+						R.layout.item_request_detail_relate, null);
+				/*********** 初始化布局问答布局 ********************/
+				TextView tv_relate_title = (TextView) view
+						.findViewById(R.id.tv_relate_title);
+				TextView tv_watch_num = (TextView) view
+						.findViewById(R.id.tv_watch_num);
+				/*********** 初始化布局问答布局 end ********************/
+				tv_relate_title.setText(relate.getTitle());
+				tv_watch_num.setText("浏览次数：" + relate.getView_count());
+				ll_relate.addView(view);
+			}
+		}
+	}
+
+	/**
+	 * 添加数据到问答模块
+	 * 
+	 * @param answer
+	 */
+	private void addDataToAnswer(List<ModelRequestAnswerComom> answers) {
+		if (answers != null) {
+			if (ll_add_answer.getChildCount() > 0) {
+				ll_add_answer.removeAllViews();
+			}
+			tv_other.setText(answers.size() + "条解答");
+			for (int i = 0; i < answers.size(); i++) {
+				ModelRequestAnswerComom answerComom = answers.get(i);
+				View view = mInflater.inflate(
+						R.layout.item_requset_detail_common, null);
+				/*********** 初始化布局问答布局 ********************/
+				RoundImageView riv_other_icon = (RoundImageView) view
+						.findViewById(R.id.riv_other_icon);
+				TextView tv_other_username = (TextView) view
+						.findViewById(R.id.tv_other_username);
+				TextView tv_other_content = (TextView) view
+						.findViewById(R.id.tv_other_content);
+				TextView tv_other_date = (TextView) view
+						.findViewById(R.id.tv_other_date);
+				TextView tv_other_num = (TextView) view
+						.findViewById(R.id.tv_other_num);
+				ImageView iv_medat = (ImageView) view
+						.findViewById(R.id.iv_medat);
+				TextView tv_agree = (TextView) view.findViewById(R.id.tv_agree);
+				/*********** 初始化布局问答布局 end ********************/
+				mApp.displayImage(answerComom.getUser_face(), riv_other_icon);
+				tv_other_username.setText(answerComom.getUser_name());
+				tv_other_content.setText(answerComom.getAnswer_content());
+				tv_other_num.setText(answerComom.getAgree_count());
+				tv_other_date.setText(answerComom.getTime());
+				if (answerComom.getIs_best().equals("1")) {
+					iv_medat.setVisibility(View.VISIBLE);
+					tv_agree.setVisibility(View.GONE);
+				} else {
+					tv_agree.setTag(answerComom);
+					tv_agree.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// 调用同意的接口
+						}
+					});
+				}
+				ll_add_answer.addView(view);
+
+			}
+		}
+
+	}
+
+	/**
+	 * 添加数据到头部和表情部分
+	 * 
+	 * @param question
+	 * @param topic_list
+	 */
+	private void addDataToHeadAndFlag(ModelRequestItem question,
+			List<ModelRequestFlag> topic_list) {
+		if (question != null) {
+			request_tv_title.setText(question.getQuestion_content());
+			tv_content.setText(question.getQuestion_detail());
+			mApp.displayImage(question.getUser_face(), riv_icon);
+			tv_username.setText(question.getUser_name());
+			tv_date.setText(question.getTime());
+		}
+		if (topic_list != null) {
+			for (int i = 0; i < topic_list.size(); i++) {
+				ModelRequestFlag flag = topic_list.get(i);
+				tv_flag_value.setText(flag.getTitle());
+			}
+		}
 	}
 
 	@Override
 	public void initListener() {
 		ll_answer.setOnClickListener(this);
 		tv_flag_value2.setOnClickListener(this);
-		tv_expertcontent.setOnClickListener(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Object object = getReturnResultSeri(resultCode, data, null);
+		if (object instanceof Boolean) {
+			sendRequest(mApp.getRequestImpl().answer(mRequestItem),
+					ModelRequestDetailCommon.class, REQUEST_GET);
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_answer:
-			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
-					sendDataToBundle(new Model(), null));
+			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
+			// sendDataToBundle(new Model(), null));
+			mApp.startActivityForResult_qcj(this,
+					RequestDetailReponceSingleActivity.class,
+					sendDataToBundle(mRequestItem, null));
 			break;
 
 		case R.id.tv_flag_value2:
@@ -107,10 +233,6 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		case R.id.iv_title_right1:
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
 			// sendDataToBundle(new Model(), null));
-			break;
-		case R.id.tv_expertcontent:
-			PopExpertAdvice advice = new PopExpertAdvice(this, null, this);
-			advice.showPop(tv_expertcontent, Gravity.RIGHT, 0, 0);
 			break;
 		}
 

@@ -360,6 +360,7 @@
         <activity android:name="qcjlibrary.activity.UserAgreenmentActivity" />
         <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
         <activity android:name="qcjlibrary.activity.CancerCategoryActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailReponceSingleActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->

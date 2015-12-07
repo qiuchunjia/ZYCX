@@ -32,6 +32,12 @@ public class ModelRequestItem extends Model {
 	private String is_recommend;
 	private String answercontent;
 	private String answername;
+	/** item详情部分需要的字段 **/
+	private String question_detail;
+	private String uid;
+	private String category;
+
+	/** item详情部分需要的字段end **/
 
 	private String id;// id 癌种分类id 选填
 	private String status;// status 是否解决 选填
@@ -167,6 +173,30 @@ public class ModelRequestItem extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getQuestion_detail() {
+		return question_detail;
+	}
+
+	public void setQuestion_detail(String question_detail) {
+		this.question_detail = question_detail;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Override
