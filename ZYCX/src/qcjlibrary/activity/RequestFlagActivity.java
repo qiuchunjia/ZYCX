@@ -46,14 +46,14 @@ public class RequestFlagActivity extends BaseActivity {
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
-		mAdapter = new RequestAnswerAdapter(this, null, null);
+		mAdapter = new RequestAnswerAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mCommonListView.stepToNextActivity(parent, view, position,
-						RequestDetailActivity.class);
+						RequestDetailCommonActivity.class);
 			}
 		});
 	}

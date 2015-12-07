@@ -19,7 +19,7 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class RequestDetailActivity extends BaseActivity {
+public class RequestDetailExpertActivity extends BaseActivity {
 	private TextView tv_title;
 	private TextView tv_content;
 	private TextView tv_flag_value;
@@ -52,7 +52,7 @@ public class RequestDetailActivity extends BaseActivity {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.activity_request_detail;
+		return R.layout.activity_request_detail_common;
 	}
 
 	@Override
@@ -105,8 +105,8 @@ public class RequestDetailActivity extends BaseActivity {
 					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.iv_title_right1:
-//			mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
-//					sendDataToBundle(new Model(), null));
+			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
+			// sendDataToBundle(new Model(), null));
 			break;
 		case R.id.tv_expertcontent:
 			PopExpertAdvice advice = new PopExpertAdvice(this, null, this);

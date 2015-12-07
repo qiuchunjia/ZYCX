@@ -49,7 +49,7 @@ public class CancerCategoryActivity extends BaseActivity {
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(
-				getApplicationContext(), 20));
+				getApplicationContext(), 10));
 		if (mCategory != null) {
 			titleSetCenterTitle(mCategory.getTitle() + "");
 		}
@@ -58,21 +58,8 @@ public class CancerCategoryActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		mSearch.setCat(mCategory.getId());
-		sendRequest(mApp.getRequestImpl().search(mSearch), ModelRequest.class,
-				REQUEST_GET);
-	}
-
-	@Override
-	public Object onResponceSuccess(String str, Class class1) {
-		Object object = super.onResponceSuccess(str, class1);
-		if (object instanceof ModelRequest) {
-			ModelRequest request = (ModelRequest) object;
-			Object data = request.getList();
-			mItemList = (List<Model>) data;
-			mAdapter = new RequestAnswerAdapter(this, mItemList, mSearch);
-			mCommonListView.setAdapter(mAdapter);
-		}
-		return object;
+		mAdapter = new RequestAnswerAdapter(this, mSearch);
+		mCommonListView.setAdapter(mAdapter);
 	}
 
 	@Override

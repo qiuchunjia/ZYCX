@@ -85,8 +85,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 			mInflater = inflater;
 			initIntentData();
 			initView();
-			initListener();
 			initData();
+			initListener();
 			doRefreshNew();
 			// 新鲜事
 		} else {

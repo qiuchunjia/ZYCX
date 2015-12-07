@@ -26,18 +26,22 @@ import com.zhiyicx.zycx.R;
  */
 
 public class RequestAnswerAdapter extends BAdapter {
-	private ModelRequestSearch mSearch;
+	private Model mRequestData;
 
-	public RequestAnswerAdapter(BaseActivity activity, List<Model> list,
-			ModelRequestSearch searchData) {
-		super(activity, list);
-		this.mSearch = searchData;
+	public RequestAnswerAdapter(BaseActivity activity, Model data) {
+		super(activity, null);
+		this.mRequestData = data;
 	}
 
-	public RequestAnswerAdapter(BaseFragment fragment, List<Model> list,
-			ModelRequestSearch searchData) {
-		super(fragment, list);
-		this.mSearch = searchData;
+	public RequestAnswerAdapter(BaseActivity activity, List<Model> list,
+			Model data) {
+		super(activity, list);
+		this.mRequestData = data;
+	}
+
+	public RequestAnswerAdapter(BaseFragment fragment, Model data) {
+		super(fragment, null);
+		this.mRequestData = data;
 	}
 
 	@Override
@@ -80,6 +84,8 @@ public class RequestAnswerAdapter extends BAdapter {
 				if (modelRequestItem.getIs_expert() != null) {
 					if (modelRequestItem.getIs_expert().equals("1")) {
 						holder.tv_expert_answer.setVisibility(View.VISIBLE);
+						holder.tv_expert_answer.setText("专家建议："
+								+ modelRequestItem.getBest_answer());
 					}
 				}
 				holder.tv_date.setText(modelRequestItem.getTime());
@@ -113,13 +119,16 @@ public class RequestAnswerAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		if (mSearch != null) {
+		if (mRequestData instanceof ModelRequestSearch) {
+			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
 			// 这个用于搜索
-			sendRequest(mApp.getRequestImpl().search(mSearch),
+			sendRequest(mApp.getRequestImpl().search(search),
 					ModelRequest.class, 0, REFRESH_NEW);
-		} else {
+		} else if (mRequestData instanceof ModelRequestItem) {
+			ModelRequestItem item = (ModelRequestItem) mRequestData;
 			// 这个接口用于首页
-			sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class,
+			Log.i("anwer", item.toString() + "");
+			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class,
 					0, REFRESH_NEW);
 		}
 	}

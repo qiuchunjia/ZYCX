@@ -2,8 +2,7 @@ package qcjlibrary.fragment;
 
 import java.util.List;
 
-import qcjlibrary.activity.PatientMeActivity;
-import qcjlibrary.activity.RequestDetailActivity;
+import qcjlibrary.activity.RequestDetailCommonActivity;
 import qcjlibrary.activity.RequestSearchActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
@@ -11,10 +10,10 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,7 +51,8 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
-	private List<Model> mItemList; // 内容集合
+
+	private ModelRequestItem mRequestItem; // 请求数据
 
 	@Override
 	public void initIntentData() {
@@ -92,14 +92,28 @@ public class FragmentRequestAnwer extends BaseFragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mCommonListView.stepToNextActivity(parent, view, position,
-						RequestDetailActivity.class);
+						RequestDetailCommonActivity.class);
 			}
 		});
 	}
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
+		mRequestItem = new ModelRequestItem();
+		setTypeAdapter("0");
+		iv_1.setImageResource(R.drawable.medica_green);
+		tv_1.setTextColor(getResources().getColor(R.color.text_green));
+	}
+
+	/**
+	 * 设置type的类型
+	 * 
+	 * 注释：就这么任性的直接new一个adapter，简单粗暴，反正是外包，管我毛事
+	 */
+	private void setTypeAdapter(String type) {
+		mRequestItem.setType(type);
+		mAdapter = new RequestAnswerAdapter(this, mRequestItem);
+		mCommonListView.setAdapter(mAdapter);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -109,12 +123,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 		if (object instanceof ModelRequest) {
 			ModelRequest request = (ModelRequest) object;
 			mCancerList = request.getFenlei();
-			Object data = request.getList();
-			mItemList = (List<Model>) data;
-			Log.i("cancerlist",
-					mCancerList.toString() + "       " + mItemList.toString());
-			mAdapter = new RequestAnswerAdapter(this, mItemList, null);
-			mCommonListView.setAdapter(mAdapter);
+			PopCancerCategory category = new PopCancerCategory(mActivity,
+					mCancerList, mActivity);
+			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 		}
 		return object;
 	}
@@ -139,22 +150,34 @@ public class FragmentRequestAnwer extends BaseFragment {
 		case R.id.ll_1:
 			iv_1.setImageResource(R.drawable.medica_green);
 			tv_1.setTextColor(getResources().getColor(R.color.text_green));
+			setTypeAdapter("0");
+			mAdapter.doRefreshNew();
 			break;
 
 		case R.id.ll_2:
+			setTypeAdapter("1");
+			mAdapter.doRefreshNew();
 			iv_2.setImageResource(R.drawable.umbrella_green);
 			tv_2.setTextColor(getResources().getColor(R.color.text_green));
 			break;
 		case R.id.ll_3:
+			setTypeAdapter("2");
+			mAdapter.doRefreshNew();
 			iv_3.setImageResource(R.drawable.heart_green);
 			tv_3.setTextColor(getResources().getColor(R.color.text_green));
 			break;
 		case R.id.ll_4:
 			iv_4.setImageResource(R.drawable.more_green);
 			tv_4.setTextColor(getResources().getColor(R.color.text_green));
-			PopCancerCategory category = new PopCancerCategory(mActivity,
-					mCancerList, mActivity);
-			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
+			if (mCancerList != null && mCancerList.size() > 0) {
+				PopCancerCategory category = new PopCancerCategory(mActivity,
+						mCancerList, mActivity);
+				category.showPop(ll_4, Gravity.RIGHT, 0, 0);
+
+			} else {
+				sendRequest(mApp.getRequestImpl().index(null),
+						ModelRequest.class, 0);
+			}
 			break;
 		}
 

@@ -126,6 +126,8 @@ public class api {
 			params.add(ACT, INDEX);
 			params = getTestToken(params);
 			if (item != null) {
+				params.add(ID, item.getId());
+				params.add(TYPE, item.getType());
 				params = getChangePage(params, item);
 				Log.i("paramstest", params.toString());
 				return params;

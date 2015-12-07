@@ -16,7 +16,8 @@ public interface RequestIm {
 	public static final String INDEX = "index";
 	public static final String SEARCH = "search";
 	public static final String ADDQUESTION = "addQuestion";
-
+	
+	public static final String ID = "id";
 	public static final String KEY = "key";
 	public static final String TYPE = "type";
 	public static final String CAT = "cat";

@@ -33,8 +33,36 @@ public class ModelRequestItem extends Model {
 	private String answercontent;
 	private String answername;
 
+	private String id;// id 癌种分类id 选填
+	private String status;// status 是否解决 选填
+	private String type;// type提分分类 新增 选填（0-治疗类 1-护理类 2-康复类）
+
 	public String getQuestion_id() {
 		return question_id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setQuestion_id(String question_id) {
