@@ -165,7 +165,12 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
+							Model model = (Model) v.getTag();
 							// 调用同意的接口
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestDetailResponceActivity.class,
+									sendDataToBundle(model, null));
 						}
 					});
 				}
@@ -219,8 +224,6 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_answer:
-			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
-			// sendDataToBundle(new Model(), null));
 			mApp.startActivityForResult_qcj(this,
 					RequestDetailReponceSingleActivity.class,
 					sendDataToBundle(mRequestItem, null));

@@ -80,6 +80,18 @@
                     android:text="乳房癌"
                     android:textColor="@color/text_blue"
                     android:textSize="@dimen/text_common" />
+
+                <TextView
+                    android:id="@+id/tv_flag_value2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_content"
+                    android:layout_marginLeft="@dimen/margin_left_small"
+                    android:layout_marginTop="@dimen/margin_left_small"
+                    android:layout_toRightOf="@id/tv_flag_value"
+                    android:text="乳房癌"
+                    android:textColor="@color/text_blue"
+                    android:textSize="@dimen/text_common" />
             </RelativeLayout>
 
             <include layout="@layout/view_line_vertical" />
