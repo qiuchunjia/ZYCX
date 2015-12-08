@@ -133,7 +133,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			}
 			tv_other.setText(answers.size() + "条解答");
 			for (int i = 0; i < answers.size(); i++) {
-				ModelRequestAnswerComom answerComom = answers.get(i);
+				final ModelRequestAnswerComom answerComom = answers.get(i);
+				answerComom.setQid(mRequestItem.getQuestion_id());
 				View view = mInflater.inflate(
 						R.layout.item_requset_detail_common, null);
 				/*********** 初始化布局问答布局 ********************/
@@ -149,33 +150,27 @@ public class RequestDetailCommonActivity extends BaseActivity {
 						.findViewById(R.id.tv_other_num);
 				ImageView iv_medat = (ImageView) view
 						.findViewById(R.id.iv_medat);
-				TextView tv_agree = (TextView) view.findViewById(R.id.tv_agree);
 				/*********** 初始化布局问答布局 end ********************/
 				mApp.displayImage(answerComom.getUser_face(), riv_other_icon);
 				tv_other_username.setText(answerComom.getUser_name());
 				tv_other_content.setText(answerComom.getAnswer_content());
-				tv_other_num.setText(answerComom.getAgree_count());
+				tv_other_num.setText(answerComom.getComment_count());
 				tv_other_date.setText(answerComom.getTime());
+				iv_medat.setVisibility(View.GONE);
 				if (answerComom.getIs_best().equals("1")) {
 					iv_medat.setVisibility(View.VISIBLE);
-					tv_agree.setVisibility(View.GONE);
-				} else {
-					tv_agree.setTag(answerComom);
-					tv_agree.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							Model model = (Model) v.getTag();
-							// 调用同意的接口
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestDetailResponceActivity.class,
-									sendDataToBundle(model, null));
-						}
-					});
 				}
-				ll_add_answer.addView(view);
+				view.setOnClickListener(new OnClickListener() {
 
+					@Override
+					public void onClick(View v) {
+						mApp.startActivityForResult_qcj(
+								RequestDetailCommonActivity.this,
+								RequestDetailResponceActivity.class,
+								sendDataToBundle(answerComom, null));
+					}
+				});
+				ll_add_answer.addView(view);
 			}
 		}
 

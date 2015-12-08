@@ -200,5 +200,48 @@ public class api {
 			}
 			return null;
 		}
+
+		@Override
+		public RequestParams commentList(ModelRequestAnswerComom answerComom) {
+			if (answerComom != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, COMMENTLIST);
+				params.add(AID, answerComom.getAnswer_id());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams answerComment(ModelRequestAnswerComom answerComom) {
+			if (answerComom != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, ANSWERCOMMENT);
+				params.add(AID, answerComom.getAnswer_id());
+				params.add(CONTENT, answerComom.getContent());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams setBestAnswer(ModelRequestAnswerComom answerComom) {
+			if (answerComom != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, SETBESTANSWER);
+				params.add(AID, answerComom.getAnswer_id());
+				params.add(TYPE, answerComom.getType());
+				params.add(QID, answerComom.getQid());
+				Log.i("setBestAnswer", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
 	}
 }

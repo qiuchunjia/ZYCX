@@ -3,6 +3,7 @@ package qcjlibrary.fragment;
 import java.util.List;
 
 import qcjlibrary.activity.RequestDetailCommonActivity;
+import qcjlibrary.activity.RequestDetailExpertActivity;
 import qcjlibrary.activity.RequestSearchActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
@@ -91,8 +92,18 @@ public class FragmentRequestAnwer extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position,
-						RequestDetailCommonActivity.class);
+				ModelRequestItem item = (ModelRequestItem) parent
+						.getItemAtPosition(position);
+				if (item != null) {
+					if (item.getIs_expert().equals("0")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailCommonActivity.class);
+					} else if (item.getIs_expert().equals("1")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailExpertActivity.class);
+					}
+				}
+
 			}
 		});
 	}

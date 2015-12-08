@@ -19,6 +19,9 @@ public interface RequestIm {
 	public static final String ADDQUESTION = "addQuestion";
 	public static final String ANSWER = "answer";
 	public static final String SAVEANSWER = "saveAnswer";
+	public static final String COMMENTLIST = "commentlist";
+	public static final String ANSWERCOMMENT = "answerComment";
+	public static final String SETBESTANSWER = "setBestAnswer";
 
 	public static final String ID = "id";
 	public static final String KEY = "key";
@@ -32,6 +35,7 @@ public interface RequestIm {
 	// public static final String TYPE = "type";
 	public static final String TOPICS = "topics";
 	public static final String AUID = "auid";
+	public static final String AID = "aid";
 
 	/**
 	 * 问答首页
@@ -71,4 +75,28 @@ public interface RequestIm {
 	 * @return
 	 */
 	public RequestParams saveAnswer(ModelRequestAnswerComom answerComom);
+
+	/**
+	 * 问答 回答评论列表：
+	 * 
+	 * @param answerComom
+	 * @return
+	 */
+	public RequestParams commentList(ModelRequestAnswerComom answerComom);
+
+	/**
+	 * 问答 对回答进行评论（对专家回答第一次追问） 专家普通都可以用
+	 * 
+	 * @param answerComom
+	 * @return
+	 */
+	public RequestParams answerComment(ModelRequestAnswerComom answerComom);
+
+	/**
+	 * 问答 设为最佳答案
+	 * 
+	 * @param answerComom
+	 * @return
+	 */
+	public RequestParams setBestAnswer(ModelRequestAnswerComom answerComom);
 }
