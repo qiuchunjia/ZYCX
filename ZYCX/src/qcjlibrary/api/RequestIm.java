@@ -27,7 +27,8 @@ public interface RequestIm {
 	public static final String ADDCOMMENT = "addComment"; // 问答
 															// 对专家某条追答再次进行追问（对评论进行评论）
 	public static final String TOPICQUESTION = "topicQuestion"; // 问答 根据标签获取问题
-
+	public static final String GETTOPIC = "getTopic"; 
+	
 	public static final String ID = "id";
 	public static final String KEY = "key";
 	public static final String TYPE = "type";
@@ -126,4 +127,13 @@ public interface RequestIm {
 	 * @return
 	 */
 	public RequestParams topicQuestion(ModelRequestFlag flag);
+
+	/**
+	 * 问答 根据问题获取默认标签
+	 * http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Ask&act=getTopic
+	 * 
+	 * @param ask
+	 * @return
+	 */
+	public RequestParams getTopic(ModelRequestAsk ask);
 }

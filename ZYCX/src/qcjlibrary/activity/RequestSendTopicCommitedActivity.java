@@ -2,6 +2,8 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.model.ModelRequestItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,6 +16,8 @@ import com.zhiyicx.zycx.R;
 
 public class RequestSendTopicCommitedActivity extends BaseActivity {
 	private Button btn_requests;
+	private ModelRequestItem mRequestItem;
+	private ModelRequestAsk mAsk;
 
 	@Override
 	public String setCenterTitle() {
@@ -22,7 +26,7 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mAsk = (ModelRequestAsk) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -53,7 +57,21 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_requests:
-
+			if (mAsk != null) {
+				ModelRequestItem item = new ModelRequestItem();
+				item.setQuestion_id(mAsk.getQid());
+				if (mAsk.getIs_expert().equals("0")) {
+					mApp.startActivity_qcj(
+							RequestSendTopicCommitedActivity.this,
+							RequestDetailCommonActivity.class,
+							sendDataToBundle(item, null));
+				} else if (mAsk.getIs_expert().equals("1")) {
+					mApp.startActivity_qcj(
+							RequestSendTopicCommitedActivity.this,
+							RequestDetailExpertActivity.class,
+							sendDataToBundle(item, null));
+				}
+			}
 			break;
 		case R.id.tv_title_right:
 			onBackPressed();

@@ -1,6 +1,5 @@
 package qcjlibrary.api;
 
-import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -271,6 +270,20 @@ public class api {
 				params.add(TID, flag.getDomain());
 				getChangePage(params, flag);
 				Log.i("topicQuestion", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams getTopic(ModelRequestAsk ask) {
+			if (ask != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, GETTOPIC);
+				params.add(CONTENT, ask.getContent());
+				Log.i("getTopic", params.toString());
 				return getTestToken(params);
 			}
 			return null;

@@ -1,5 +1,8 @@
 package qcjlibrary.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import qcjlibrary.model.base.Model;
 
 /**
@@ -15,6 +18,21 @@ public class ModelMsg extends Model {
 	private static final long serialVersionUID = 1L;
 	private int code;
 	private String message;
+
+	public ModelMsg(JSONObject data) {
+		try {
+			if (data.has("message")) {
+
+				setMessage(data.getString("domain"));
+			}
+			if (data.has("code")) {
+				setCode(data.getInt("code"));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public int getCode() {
 		return code;

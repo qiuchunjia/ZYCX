@@ -1,5 +1,8 @@
 package qcjlibrary.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import qcjlibrary.model.base.Model;
 
 /**
@@ -19,6 +22,31 @@ public class ModelRequestFlag extends Model {
 	 */
 	private String domain;
 	private String title;
+	private boolean isChoose; // 判断是否选择,用于选择标签的时候
+
+	public ModelRequestFlag(JSONObject data) {
+		try {
+			if (data.has("domain")) {
+
+				setDomain(data.getString("domain"));
+			}
+			if (data.has("title")) {
+
+				setTitle(data.getString("title"));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public boolean isChoose() {
+		return isChoose;
+	}
+
+	public void setChoose(boolean isChoose) {
+		this.isChoose = isChoose;
+	}
 
 	public ModelRequestFlag() {
 		// TODO Auto-generated constructor stub

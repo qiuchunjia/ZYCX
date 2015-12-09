@@ -33,7 +33,7 @@ public class FragmentMenu extends BaseFragment {
 	private RelativeLayout rl_user;
 	private RoundImageView riv_user_icon;
 	private TextView tv_username;
-	private ImageView iv_edit;
+	private ImageView menu_iv_edit;
 	private RelativeLayout rl_home;
 	private RelativeLayout rl_question;
 	private RelativeLayout rl_app;
@@ -56,7 +56,7 @@ public class FragmentMenu extends BaseFragment {
 		rl_user = (RelativeLayout) findViewById(R.id.rl_user);
 		riv_user_icon = (RoundImageView) findViewById(R.id.riv_user_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
-		iv_edit = (ImageView) findViewById(R.id.iv_edit);
+		menu_iv_edit = (ImageView) findViewById(R.id.menu_iv_edit);
 		rl_home = (RelativeLayout) findViewById(R.id.rl_home);
 		rl_question = (RelativeLayout) findViewById(R.id.rl_question);
 		rl_app = (RelativeLayout) findViewById(R.id.rl_app);
@@ -69,7 +69,7 @@ public class FragmentMenu extends BaseFragment {
 	@Override
 	public void initListener() {
 		riv_user_icon.setOnClickListener(this);
-		iv_edit.setOnClickListener(this);
+		menu_iv_edit.setOnClickListener(this);
 		rl_home.setOnClickListener(this);
 		rl_question.setOnClickListener(this);
 		rl_app.setOnClickListener(this);
@@ -84,7 +84,7 @@ public class FragmentMenu extends BaseFragment {
 		case R.id.riv_user_icon:
 
 			break;
-		case R.id.iv_edit:
+		case R.id.menu_iv_edit:
 			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
 					mActivity.sendDataToBundle(new Model(), null));
 

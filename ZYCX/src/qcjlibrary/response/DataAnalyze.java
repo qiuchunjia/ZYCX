@@ -32,28 +32,31 @@ public class DataAnalyze {
 	public static Object parseData(String str, Class class1) {
 		if (str != null) {
 			try {
-				Log.i("DataAnalyze", str);
+				Log.i("parseData", str);
 				JSONObject jsonObject = new JSONObject(str);
 				for (int i = 0; i < flag.length; i++) {
 					if (jsonObject.has(flag[i])) {
-						String judgeStr = jsonObject.getString(flag[i]);
-						if (judgeStr != null) {
-							if (judgeStr.indexOf("[") == 0) {
-								JSONArray dataArray = jsonObject
-										.getJSONArray(flag[i]);
-								// 当为数组的时候就返回
-								if (dataArray != null) {
-									return JsonUtils.parseJsonArray(dataArray,
+						Object judgeObject = jsonObject.get((flag[i]));
+						if (!(judgeObject instanceof Boolean)) {
+							String judgeStr = jsonObject.getString(flag[i]);
+							if (judgeStr != null) {
+								if (judgeStr.indexOf("[") == 0) {
+									JSONArray dataArray = jsonObject
+											.getJSONArray(flag[i]);
+									// 当为数组的时候就返回
+									if (dataArray != null) {
+										return JsonUtils.parseJsonArray(
+												dataArray, class1);
+									}
+								}
+								JSONObject dataJson = jsonObject
+										.getJSONObject(flag[i]);
+								if (dataJson != null) {
+									return JsonUtils.parseJsonObject(dataJson,
 											class1);
 								}
-							}
-							JSONObject dataJson = jsonObject
-									.getJSONObject(flag[i]);
-							if (dataJson != null) {
-								return JsonUtils.parseJsonObject(dataJson,
-										class1);
-							}
 
+							}
 						}
 						return JsonUtils.parseJsonObject(jsonObject,
 								ModelMsg.class);
