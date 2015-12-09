@@ -20,8 +20,11 @@ public interface RequestIm {
 	public static final String ANSWER = "answer";
 	public static final String SAVEANSWER = "saveAnswer";
 	public static final String COMMENTLIST = "commentlist";
-	public static final String ANSWERCOMMENT = "answerComment";
+	public static final String ANSWERCOMMENT = "answerComment"; // 问答
+																// 对回答进行评论（对专家回答第一次追问）,
 	public static final String SETBESTANSWER = "setBestAnswer";
+	public static final String ADDCOMMENT = "addComment"; // 问答
+															// 对专家某条追答再次进行追问（对评论进行评论）
 
 	public static final String ID = "id";
 	public static final String KEY = "key";
@@ -99,4 +102,12 @@ public interface RequestIm {
 	 * @return
 	 */
 	public RequestParams setBestAnswer(ModelRequestAnswerComom answerComom);
+
+	/**
+	 * 问答 对专家某条追答再次进行追问（对评论进行评论）
+	 * 
+	 * @param answerComom
+	 * @return
+	 */
+	public RequestParams addComment(ModelRequestAnswerComom answerComom);
 }

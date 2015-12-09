@@ -223,6 +223,7 @@ public class api {
 				params.add(ACT, ANSWERCOMMENT);
 				params.add(AID, answerComom.getAnswer_id());
 				params.add(CONTENT, answerComom.getContent());
+				Log.i("answerComment", params.toString());
 				return getTestToken(params);
 			}
 			return null;
@@ -239,6 +240,21 @@ public class api {
 				params.add(TYPE, answerComom.getType());
 				params.add(QID, answerComom.getQid());
 				Log.i("setBestAnswer", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams addComment(ModelRequestAnswerComom answerComom) {
+			if (answerComom != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, ADDCOMMENT);
+				params.add(CID, answerComom.getComment_id());
+				params.add(CONTENT, answerComom.getContent());
+				Log.i("addComment", params.toString());
 				return getTestToken(params);
 			}
 			return null;

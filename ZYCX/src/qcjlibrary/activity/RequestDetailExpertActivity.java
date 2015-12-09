@@ -4,6 +4,7 @@ import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestDetailExpert;
 import qcjlibrary.model.ModelRequestFlag;
@@ -46,6 +47,8 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 	// 数据model赛
 	private ModelRequestItem mRequestItem;
+	// 返回的数据
+	private ModelRequestDetailExpert mDetailExpert;
 
 	@Override
 	public String setCenterTitle() {
@@ -75,6 +78,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
 
 		ll_expert_repaly = (LinearLayout) findViewById(R.id.ll_expert_repaly);
+		ll_expert_repaly.setVisibility(View.GONE);
 		et_content = (EditText) findViewById(R.id.et_content);
 		tv_send = (TextView) findViewById(R.id.tv_send);
 
@@ -96,12 +100,17 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestDetailExpert) {
-			ModelRequestDetailExpert detailExpert = (ModelRequestDetailExpert) object;
-			addDataToHeadAndFlag(detailExpert.getQuestion(),
-					detailExpert.getTopic_list());
-			addDataToExpertAnswer(detailExpert.getAnswer(),
-					detailExpert.getCommentlist());
-			addDataToRelate(detailExpert.getOther_question());
+			mDetailExpert = (ModelRequestDetailExpert) object;
+			addDataToHeadAndFlag(mDetailExpert.getQuestion(),
+					mDetailExpert.getTopic_list());
+			addDataToExpertAnswer(mDetailExpert.getAnswer(),
+					mDetailExpert.getCommentlist());
+			addDataToRelate(mDetailExpert.getOther_question());
+		}
+		if (judgeTheMsg(object)) {
+			et_content.setText("");
+			sendRequest(mApp.getRequestImpl().answer(mRequestItem),
+					ModelRequestDetailExpert.class, REQUEST_GET);
 		}
 		return object;
 	}
@@ -147,7 +156,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-
+					ll_expert_repaly.setVisibility(View.VISIBLE);
 				}
 			});
 		}
@@ -239,12 +248,44 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			if (!TextUtils.isEmpty(content)) {
 				ModelRequestAnswerComom answerComom = new ModelRequestAnswerComom();
 				answerComom.setContent(content);
-				//TODO
-				sendRequest(mApp.getRequestImpl().answerComment(answerComom),
-						ModelRequestDetailExpert.class, REQUEST_GET);
+				// 当没有追加内容的时候 就拿专家的id，当有追加内容的时候就拿 追加当中id最大的专家id
+				if (mDetailExpert != null) {
+					addDataToModel(mDetailExpert.getCommentlist(),
+							mDetailExpert.getAnswer(), answerComom);
+				}
 			}
 			break;
 		}
 
 	}
+
+	/**
+	 * 添加数据到数据源
+	 * 
+	 * @param commentlist
+	 * @param answer
+	 * @param answerComom
+	 */
+	private void addDataToModel(List<ModelRequestAnswerComom> commentlist,
+			ModelRequestAnswerComom answer, ModelRequestAnswerComom answerComom) {
+		if (commentlist != null) {
+			for (int i = commentlist.size() - 1; i >= 0; i--) {
+				ModelRequestAnswerComom comom = commentlist.get(i);
+				if (comom.getFrom().equals("expert")) {
+					answerComom.setComment_id(comom.getComment_id());
+				}
+			}
+
+		}
+		if (answerComom.getComment_id() != null && !answerComom.equals("")) {
+			sendRequest(mApp.getRequestImpl().addComment(answerComom),
+					ModelMsg.class, REQUEST_GET);
+		} else {
+			answerComom.setAnswer_id(answer.getAnswer_id());
+			sendRequest(mApp.getRequestImpl().answerComment(answerComom),
+					ModelMsg.class, REQUEST_GET);
+		}
+
+	}
+
 }
