@@ -1,18 +1,15 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.activity.base.Title;
-import qcjlibrary.adapter.ExpertRequestAdapter;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.util.DisplayUtils;
-import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 
@@ -25,6 +22,7 @@ public class RequestFlagActivity extends BaseActivity {
 	private TextView tv_flag_value;
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
+	private ModelRequestFlag mFlag;
 
 	@Override
 	public String setCenterTitle() {
@@ -33,7 +31,7 @@ public class RequestFlagActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mFlag = (ModelRequestFlag) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -46,7 +44,7 @@ public class RequestFlagActivity extends BaseActivity {
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
-		mAdapter = new RequestAnswerAdapter(this, null);
+		mAdapter = new RequestAnswerAdapter(this, mFlag);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -60,6 +58,9 @@ public class RequestFlagActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
+		if (mFlag != null) {
+			tv_flag_value.setText("\"" + mFlag.getTitle() + "\"");
+		}
 
 	}
 

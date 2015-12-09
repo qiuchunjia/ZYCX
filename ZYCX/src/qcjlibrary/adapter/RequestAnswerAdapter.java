@@ -7,6 +7,7 @@ import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
@@ -130,6 +131,11 @@ public class RequestAnswerAdapter extends BAdapter {
 			Log.i("anwer", item.toString() + "");
 			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class,
 					0, REFRESH_NEW);
+		} else if (mRequestData instanceof ModelRequestFlag) {
+			// 这个接口用于标签
+			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+			sendRequest(mApp.getRequestImpl().topicQuestion(flag),
+					ModelRequest.class, 0, REFRESH_NEW);
 		}
 	}
 

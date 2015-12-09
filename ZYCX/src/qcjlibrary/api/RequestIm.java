@@ -2,6 +2,7 @@ package qcjlibrary.api;
 
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 
@@ -25,6 +26,7 @@ public interface RequestIm {
 	public static final String SETBESTANSWER = "setBestAnswer";
 	public static final String ADDCOMMENT = "addComment"; // 问答
 															// 对专家某条追答再次进行追问（对评论进行评论）
+	public static final String TOPICQUESTION = "topicQuestion"; // 问答 根据标签获取问题
 
 	public static final String ID = "id";
 	public static final String KEY = "key";
@@ -39,6 +41,7 @@ public interface RequestIm {
 	public static final String TOPICS = "topics";
 	public static final String AUID = "auid";
 	public static final String AID = "aid";
+	public static final String TID = "tid";
 
 	/**
 	 * 问答首页
@@ -109,5 +112,18 @@ public interface RequestIm {
 	 * @param answerComom
 	 * @return
 	 */
+
 	public RequestParams addComment(ModelRequestAnswerComom answerComom);
+
+	/**
+	 * 问答 根据标签获取问题
+	 * 
+	 * 
+	 * http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Ask&act=
+	 * topicQuestion
+	 * 
+	 * @param flag
+	 * @return
+	 */
+	public RequestParams topicQuestion(ModelRequestFlag flag);
 }

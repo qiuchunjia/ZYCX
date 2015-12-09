@@ -30,6 +30,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	private TextView tv_content;
 	private TextView tv_flag_value;
 	private TextView tv_flag_value2;
+	private TextView tv_flag_value3;
 	private RoundImageView riv_icon;
 	private TextView tv_username;
 	private TextView tv_date;
@@ -64,6 +65,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		tv_content = (TextView) findViewById(R.id.tv_content);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
+		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
 		riv_icon = (RoundImageView) findViewById(R.id.riv_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_date = (TextView) findViewById(R.id.tv_date);
@@ -105,7 +107,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 				ll_relate.removeAllViews();
 			}
 			for (int i = 0; i < other_question.size(); i++) {
-				ModelRequestRelate relate = other_question.get(i);
+				final ModelRequestRelate relate = other_question.get(i);
 				View view = mInflater.inflate(
 						R.layout.item_request_detail_relate, null);
 				/*********** 初始化布局问答布局 ********************/
@@ -116,6 +118,25 @@ public class RequestDetailCommonActivity extends BaseActivity {
 				/*********** 初始化布局问答布局 end ********************/
 				tv_relate_title.setText(relate.getTitle());
 				tv_watch_num.setText("浏览次数：" + relate.getView_count());
+				view.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						ModelRequestItem item = new ModelRequestItem();
+						item.setQuestion_id(relate.getQid());
+						if (relate.getIs_expert().equals("0")) {
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestDetailCommonActivity.class,
+									sendDataToBundle(item, null));
+						} else if (relate.getIs_expert().equals("1")) {
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestDetailExpertActivity.class,
+									sendDataToBundle(item, null));
+						}
+					}
+				});
 				ll_relate.addView(view);
 			}
 		}
@@ -193,8 +214,49 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		}
 		if (topic_list != null) {
 			for (int i = 0; i < topic_list.size(); i++) {
-				ModelRequestFlag flag = topic_list.get(i);
-				tv_flag_value.setText(flag.getTitle());
+				final ModelRequestFlag flag = topic_list.get(i);
+				if (i == 0) {
+					tv_flag_value.setVisibility(View.VISIBLE);
+					tv_flag_value.setText(flag.getTitle());
+					tv_flag_value.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestFlagActivity.class,
+									sendDataToBundle(flag, null));
+						}
+					});
+				}
+				if (i == 1) {
+					tv_flag_value2.setVisibility(View.VISIBLE);
+					tv_flag_value2.setText(flag.getTitle());
+					tv_flag_value2.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestFlagActivity.class,
+									sendDataToBundle(flag, null));
+						}
+					});
+				}
+				if (i == 2) {
+					tv_flag_value3.setVisibility(View.VISIBLE);
+					tv_flag_value3.setText(flag.getTitle());
+					tv_flag_value3.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							mApp.startActivity_qcj(
+									RequestDetailCommonActivity.this,
+									RequestFlagActivity.class,
+									sendDataToBundle(flag, null));
+						}
+					});
+				}
 			}
 		}
 	}

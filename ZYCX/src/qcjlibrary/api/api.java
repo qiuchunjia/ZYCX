@@ -3,6 +3,7 @@ package qcjlibrary.api;
 import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.ModelZiXunDetail;
@@ -255,6 +256,21 @@ public class api {
 				params.add(CID, answerComom.getComment_id());
 				params.add(CONTENT, answerComom.getContent());
 				Log.i("addComment", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams topicQuestion(ModelRequestFlag flag) {
+			if (flag != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, ASK);
+				params.add(ACT, TOPICQUESTION);
+				params.add(TID, flag.getDomain());
+				getChangePage(params, flag);
+				Log.i("topicQuestion", params.toString());
 				return getTestToken(params);
 			}
 			return null;
