@@ -239,6 +239,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			if (!TextUtils.isEmpty(content)) {
 				ModelRequestAnswerComom answerComom = new ModelRequestAnswerComom();
 				answerComom.setContent(content);
+				//TODO
 				sendRequest(mApp.getRequestImpl().answerComment(answerComom),
 						ModelRequestDetailExpert.class, REQUEST_GET);
 			}
