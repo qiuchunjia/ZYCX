@@ -336,7 +336,7 @@
         <activity android:name="qcjlibrary.activity.FoodWayActivity" />
         <activity android:name="qcjlibrary.activity.FoodCategoryActivity" />
         <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
-        <activity android:name="qcjlibrary.activity.FoodCategorySingleDetail" />
+        <activity android:name="qcjlibrary.activity.FoodSingleDetailActivity" />
         <activity android:name="qcjlibrary.activity.CaseHistoryActivity" />
         <activity android:name="qcjlibrary.activity.CaseHistoryDetailActivity" />
         <activity android:name="qcjlibrary.activity.PatientHistoryActivity" />

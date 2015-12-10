@@ -3,6 +3,8 @@ package qcjlibrary.api;
 import qcjlibrary.model.ModelFood;
 import qcjlibrary.model.ModelFoodCategory;
 import qcjlibrary.model.ModelFoodSearch;
+import qcjlibrary.model.ModelFoodSearch0;
+import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -313,10 +315,11 @@ public class api {
 				params.add(ACT, FOOD_SEARCH);
 
 				params.add(KEY, foodSearch.getKey());
-				params.add(STATE, foodSearch.getKey());
+				params.put(STATE, foodSearch.getState());
 				params.put(TYPE_ID, foodSearch.getType_id());
 				params.put(P, foodSearch.getP());
 				params.add(TABLE, foodSearch.getTable());
+				Log.i("food_search", params.toString());
 				return getTestToken(params);
 			}
 			return null;
@@ -332,26 +335,26 @@ public class api {
 		}
 
 		@Override
-		public RequestParams food_detail(ModelFood food) {
-			if (food != null) {
+		public RequestParams food_detail(ModelFoodSearch0 search0) {
+			if (search0 != null) {
 				RequestParams params = new RequestParams();
 				params.add(APP, API);
 				params.add(MOD, SHILIAO);
 				params.add(ACT, FOOD_DETAIL);
-				params.add(ID, food.getId());
+				params.add(ID, search0.getId());
 				return getTestToken(params);
 			}
 			return null;
 		}
 
 		@Override
-		public RequestParams food_side_detail(ModelFoodCategory foodCategory) {
-			if (foodCategory != null) {
+		public RequestParams food_side_detail(ModelFoodSearch1 search1) {
+			if (search1 != null) {
 				RequestParams params = new RequestParams();
 				params.add(APP, API);
 				params.add(MOD, SHILIAO);
 				params.add(ACT, FOOD_SIDE_DETAIL);
-				params.add(ID, foodCategory.getId());
+				params.add(ID, search1.getId());
 				return getTestToken(params);
 			}
 			return null;

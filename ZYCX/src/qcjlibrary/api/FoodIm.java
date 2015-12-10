@@ -1,9 +1,8 @@
 package qcjlibrary.api;
 
-import qcjlibrary.model.ModelFood;
-import qcjlibrary.model.ModelFoodCategory;
 import qcjlibrary.model.ModelFoodSearch;
-import qcjlibrary.model.base.Model;
+import qcjlibrary.model.ModelFoodSearch0;
+import qcjlibrary.model.ModelFoodSearch1;
 
 import com.loopj.android.http.RequestParams;
 
@@ -74,7 +73,7 @@ public interface FoodIm {
 	 * @param model
 	 * @return
 	 */
-	public RequestParams food_detail(ModelFood food);
+	public RequestParams food_detail(ModelFoodSearch0 search0);
 
 	/**
 	 * 食疗-食疗方详情 int id 食疗方id 必填
@@ -85,5 +84,5 @@ public interface FoodIm {
 	 * @param model
 	 * @return
 	 */
-	public RequestParams food_side_detail(ModelFoodCategory category);
+	public RequestParams food_side_detail(ModelFoodSearch1 search1);
 }

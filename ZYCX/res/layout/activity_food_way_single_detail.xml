@@ -329,6 +329,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/view_border_gray_3"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -352,6 +353,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/view_border_gray_3"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -384,6 +386,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/view_border_gray_3"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/default_image_small" />
 
                     <TextView

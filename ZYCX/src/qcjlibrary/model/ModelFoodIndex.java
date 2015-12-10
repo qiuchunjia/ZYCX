@@ -17,7 +17,7 @@ public class ModelFoodIndex extends Model {
 	private static final long serialVersionUID = 1L;
 
 	private List<ModelFood> food; // 食疗
-	private List<ModelFood> foodSide; // 食疗方
+	private List<ModelFoodCategory> foodSide; // 食疗方
 
 	public ModelFoodIndex() {
 	}
@@ -30,11 +30,11 @@ public class ModelFoodIndex extends Model {
 		this.food = food;
 	}
 
-	public List<ModelFood> getFoodSide() {
+	public List<ModelFoodCategory> getFoodSide() {
 		return foodSide;
 	}
 
-	public void setFoodSide(List<ModelFood> foodSide) {
+	public void setFoodSide(List<ModelFoodCategory> foodSide) {
 		this.foodSide = foodSide;
 	}
 

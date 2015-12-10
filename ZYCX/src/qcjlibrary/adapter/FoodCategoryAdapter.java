@@ -1,12 +1,15 @@
 package qcjlibrary.adapter;
 
-import java.util.List;
-
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelFoodSearch;
+import qcjlibrary.model.ModelFoodSearch0;
+import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelFoodSearchIndex;
 import qcjlibrary.model.base.Model;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,13 +25,16 @@ import com.zhiyicx.zycx.R;
  */
 
 public class FoodCategoryAdapter extends BAdapter {
+	private ModelFoodSearch mSearch;
 
-	public FoodCategoryAdapter(BaseActivity activity, List<Model> list) {
-		super(activity, list);
+	public FoodCategoryAdapter(BaseActivity activity, ModelFoodSearch search) {
+		super(activity, null);
+		this.mSearch = search;
 	}
 
-	public FoodCategoryAdapter(BaseFragment fragment, List<Model> list) {
-		super(fragment, list);
+	public FoodCategoryAdapter(BaseFragment fragment, ModelFoodSearch search) {
+		super(fragment, null);
+		this.mSearch = search;
 	}
 
 	@Override
@@ -48,6 +54,21 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			Model model = mList.get(position);
+			if (model instanceof ModelFoodSearch0) {
+				ModelFoodSearch0 search0 = (ModelFoodSearch0) model;
+				mApp.displayImage(search0.getImgSrc(), holder.iv_food_icon);
+				holder.tv_food_name.setText(search0.getFood_name());
+				holder.tv_food_function.setText(search0.getFood_effect());
+				holder.tv_cancer.setText(search0.getFood_forcancer());
+			} else {
+				ModelFoodSearch1 search1 = (ModelFoodSearch1) model;
+				Log.i("ModelFoodSearch1", search1.toString());
+				mApp.displayImage(search1.getImgSrc(), holder.iv_food_icon);
+				holder.tv_food_name.setText(search1.getSide_name());
+				holder.tv_food_function.setText(search1.getGongxiao());
+				holder.tv_cancer.setText(search1.getFangzhi_cancer());
+			}
 		}
 	}
 
@@ -72,29 +93,37 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getFoodImpl().food_search(mSearch),
+				ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
+		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		// TODO Auto-generated method stub
+		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
+		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 	}
 
 	@Override
 	public int getTheCacheType() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
+	public Object getReallyList(Object object, Class type2) {
+		if (object instanceof ModelFoodSearchIndex) {
+			ModelFoodSearchIndex index = (ModelFoodSearchIndex) object;
+			if (mSearch.getState() == 0) {
+				return index.getFoodList();
+			} else {
+				return index.getSideList();
+			}
+		}
 		return null;
 	}
-
 }

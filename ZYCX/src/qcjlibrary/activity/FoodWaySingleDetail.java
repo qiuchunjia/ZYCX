@@ -1,6 +1,11 @@
 package qcjlibrary.activity;
 
+import java.util.List;
+
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelFoodWayDetail;
+import qcjlibrary.model.ModelFoodWayDetailInfo;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +38,9 @@ public class FoodWaySingleDetail extends BaseActivity {
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
 
+	private ModelFoodSearch1 mFoodData;
+	private ModelFoodWayDetail mDetail;
+
 	@Override
 	public String setCenterTitle() {
 		return "姜汤肚";
@@ -40,7 +48,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mFoodData = (ModelFoodSearch1) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -72,13 +80,65 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData),
+				ModelFoodWayDetail.class, REQUEST_GET);
 
 	}
 
 	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelFoodWayDetail) {
+			mDetail = (ModelFoodWayDetail) object;
+			addInfoToView(mDetail.getInfo());
+			addRelateToView(mDetail.getSideList());
+		}
+		return object;
+	}
+
+	/**
+	 * 把基本信息添加到上面
+	 * 
+	 * @param info
+	 */
+	private void addInfoToView(ModelFoodWayDetailInfo info) {
+		if (info != null) {
+			tv_food_name.setText(info.getSide_name());
+			mApp.displayImage(info.getImgSrc(), iv_food_icon);
+			// TODO 添加圆形的控件
+			tv_food_way_value.setText(info.getZuofa());
+			tv_category_value.setText(info.getFangzhi_cancer());
+		}
+	}
+
+	/**
+	 * 添加相关的图片
+	 * 
+	 * @param foodRel
+	 */
+	private void addRelateToView(List<ModelFoodWayDetailInfo> foodRel) {
+		if (foodRel != null) {
+			for (int i = 0; i < foodRel.size(); i++) {
+				ModelFoodWayDetailInfo detailInfo = foodRel.get(i);
+				if (i == 0) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate1);
+					tv_relate1.setText(detailInfo.getSide_name());
+				} else if (i == 1) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate2);
+					tv_relate2.setText(detailInfo.getSide_name());
+				} else if (i == 2) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate3);
+					tv_relate3.setText(detailInfo.getSide_name());
+				} else if (i == 3) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate4);
+					tv_relate4.setText(detailInfo.getSide_name());
+				}
+			}
+		}
+	}
+
+	@Override
 	public void initListener() {
-		// TODO Auto-generated method stub
 
 	}
 

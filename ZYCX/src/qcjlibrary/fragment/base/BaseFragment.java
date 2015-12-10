@@ -20,6 +20,7 @@ import org.apache.http.Header;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.BaseListView;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
@@ -304,6 +305,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 
 	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
 	private Request mRequst;
+	public static final int REQUEST_GET = 0;
+	public static final int REQUEST_POST = 1;
 
 	public void sendRequest(RequestParams params,
 			Class<? extends Model> modeltype, int requsetType) {
@@ -342,6 +345,24 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		return DataAnalyze.parseDataByGson(str, class1);
+	}
+
+	/**
+	 * 判断返回的网络数据是否成功
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public boolean judgeTheMsg(Object object) {
+		if (object instanceof ModelMsg) {
+			ModelMsg msg = (ModelMsg) object;
+			if (msg.getCode() == 0) {
+				return true;
+			}
+			ToastUtils.showToast(msg.getMessage());
+			return false;
+		}
+		return false;
 	}
 
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {

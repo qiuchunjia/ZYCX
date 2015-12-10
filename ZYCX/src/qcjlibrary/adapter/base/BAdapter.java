@@ -378,7 +378,6 @@ public abstract class BAdapter extends BaseAdapter {
 				String result = new String(arg2);
 				if (result != null) {
 					Object object = DataAnalyze.parseDataByGson(result, type);
-					Log.i("anwer", object.toString() + "");
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							ToastUtils.showToast(((ModelMsg) object)

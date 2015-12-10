@@ -1,6 +1,11 @@
 package qcjlibrary.activity;
 
+import java.util.List;
+
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelFoodIdDetail;
+import qcjlibrary.model.ModelFoodIdDetailInfo;
+import qcjlibrary.model.ModelFoodSearch0;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,7 +18,7 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class FoodCategorySingleDetail extends BaseActivity {
+public class FoodSingleDetailActivity extends BaseActivity {
 	private TextView tv_food_name;
 	private TextView tv_food_category;
 	private ImageView iv_food_icon;
@@ -33,6 +38,9 @@ public class FoodCategorySingleDetail extends BaseActivity {
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
 
+	private ModelFoodSearch0 mFoodData;
+	private ModelFoodIdDetail mDetail;
+
 	@Override
 	public String setCenterTitle() {
 		return "玉米";
@@ -40,7 +48,7 @@ public class FoodCategorySingleDetail extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mFoodData = (ModelFoodSearch0) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -73,13 +81,67 @@ public class FoodCategorySingleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		sendRequest(mApp.getFoodImpl().food_detail(mFoodData),
+				ModelFoodIdDetail.class, REQUEST_GET);
 
 	}
 
 	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelFoodIdDetail) {
+			mDetail = (ModelFoodIdDetail) object;
+			addInfoToView(mDetail.getInfo());
+			addRelateToView(mDetail.getFoodRel());
+		}
+		return object;
+	}
+
+	/**
+	 * 添加相关的图片
+	 * 
+	 * @param foodRel
+	 */
+	private void addRelateToView(List<ModelFoodIdDetailInfo> foodRel) {
+		if (foodRel != null) {
+			for (int i = 0; i < foodRel.size(); i++) {
+				ModelFoodIdDetailInfo detailInfo = foodRel.get(i);
+				if (i == 0) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate1);
+					tv_relate1.setText(detailInfo.getFood_name());
+				} else if (i == 1) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate2);
+					tv_relate2.setText(detailInfo.getFood_name());
+				} else if (i == 2) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate3);
+					tv_relate3.setText(detailInfo.getFood_name());
+				} else if (i == 3) {
+					mApp.displayImage(detailInfo.getImgSrc(), iv_relate4);
+					tv_relate4.setText(detailInfo.getFood_name());
+				}
+			}
+		}
+	}
+
+	/**
+	 * 把基本信息添加到上面
+	 * 
+	 * @param info
+	 */
+	private void addInfoToView(ModelFoodIdDetailInfo info) {
+		if (info != null) {
+			tv_food_name.setText(info.getFood_name());
+			mApp.displayImage(info.getImgSrc(), iv_food_icon);
+			tv_food_main_value.setText(info.getFood_anticancer());
+			tv_function_value.setText(info.getFood_tumor());
+			// TODO 添加圆形的控件
+
+			tv_category_value.setText(info.getFood_forcancer());
+		}
+	}
+
+	@Override
 	public void initListener() {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -4,11 +4,19 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.fragment.FragementFood;
 import qcjlibrary.fragment.FragementFoodWay;
+import qcjlibrary.model.ModelFoodIndex;
+import qcjlibrary.model.ModelFoodSearch;
+import qcjlibrary.model.ModelFoodSearchIndex;
+import qcjlibrary.util.ToastUtils;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 
@@ -20,11 +28,18 @@ import com.zhiyicx.zycx.R;
 public class FoodWayActivity extends BaseActivity {
 	private ImageView iv_find;
 	private EditText et_find;
+	private TextView tv_find;
+	private LinearLayout ll_find;
+	private RelativeLayout rl_find;
+	private ImageView iv_find_main;
+
 	private RelativeLayout rl_content;
 	Title mTitle;
 
 	private FragementFood mFragmentFood;
 	private FragementFoodWay mFragmentFoodWay;
+
+	ModelFoodSearch mFoodSearch; // 搜索需要传送的数据
 
 	@Override
 	public String setCenterTitle() {
@@ -33,7 +48,6 @@ public class FoodWayActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -46,6 +60,10 @@ public class FoodWayActivity extends BaseActivity {
 	public void initView() {
 		iv_find = (ImageView) findViewById(R.id.iv_find);
 		et_find = (EditText) findViewById(R.id.et_find);
+		tv_find = (TextView) findViewById(R.id.tv_find);
+		ll_find = (LinearLayout) findViewById(R.id.ll_find);
+		rl_find = (RelativeLayout) findViewById(R.id.rl_find);
+		iv_find_main = (ImageView) findViewById(R.id.iv_find_main);
 		rl_content = (RelativeLayout) findViewById(R.id.rl_content);
 		mTitle = getTitleClass();
 	}
@@ -59,6 +77,18 @@ public class FoodWayActivity extends BaseActivity {
 		mTitle.iv_1_choose.setImageResource(R.drawable.segmented_control_02);
 		mTitle.tv_title.setVisibility(View.GONE);
 		mTitle.iv_1_choose.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelFoodSearchIndex) {
+			mApp.startActivity_qcj(this, FoodCategoryActivity.class,
+					sendDataToBundle(mFoodSearch, null));
+		} else {
+			ToastUtils.showToast("暂时没有相关内容！");
+		}
+		return object;
 	}
 
 	private boolean isSecond = false;
@@ -92,13 +122,34 @@ public class FoodWayActivity extends BaseActivity {
 				}
 			}
 		});
-
+		tv_find.setOnClickListener(this);
+		iv_find_main.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.tv_find:
+			ll_find.setVisibility(View.GONE);
+			rl_find.setVisibility(View.VISIBLE);
+			et_find.setFocusable(true);
+			break;
+
+		case R.id.iv_find_main:
+			String key = et_find.getText().toString();
+			if (!TextUtils.isEmpty(key)) {
+				mFoodSearch = new ModelFoodSearch();
+				mFoodSearch.setKey(key);
+				if (isSecond) {
+					mFoodSearch.setState(1);
+				} else {
+					mFoodSearch.setState(0);
+				}
+				sendRequest(mApp.getFoodImpl().food_search(mFoodSearch),
+						ModelFoodSearchIndex.class, REQUEST_GET);
+			}
+			break;
+		}
 
 	}
-
 }
