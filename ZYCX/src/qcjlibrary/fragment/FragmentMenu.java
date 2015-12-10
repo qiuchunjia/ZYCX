@@ -4,6 +4,7 @@ import qcjlibrary.activity.ExpertRequestActivity;
 import qcjlibrary.activity.MeAplicationActivity;
 import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.activity.MePerioActivity;
+import qcjlibrary.activity.RequestMyAskActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.widget.RoundImageView;
@@ -95,7 +96,7 @@ public class FragmentMenu extends BaseFragment {
 			mActivity.finish();
 			break;
 		case R.id.rl_question:
-			mApp.startActivity_qcj(mActivity, ExpertRequestActivity.class,
+			mApp.startActivity_qcj(mActivity, RequestMyAskActivity.class,
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_app:

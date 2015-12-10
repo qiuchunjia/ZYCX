@@ -46,18 +46,18 @@ public class FragementFood extends BaseFragment {
 	@Override
 	public void initData() {
 		List<ModelFood> foods = new ArrayList<ModelFood>();
-		ModelFood food1 = new ModelFood();
-		food1.setFoodName("萝卜");
-		food1.setFoodNum("14");
-		foods.add(food1);
-		ModelFood food2 = new ModelFood();
-		food2.setFoodName("青菜");
-		food2.setFoodNum("15");
-		foods.add(food2);
-		ModelFood food3 = new ModelFood();
-		food3.setFoodName("茶类");
-		food3.setFoodNum("13");
-		foods.add(food3);
+		// ModelFood food1 = new ModelFood();
+		// // food1.setFoodName("萝卜");
+		// // food1.setFoodNum("14");
+		// // foods.add(food1);
+		// // ModelFood food2 = new ModelFood();
+		// // food2.setFoodName("青菜");
+		// // food2.setFoodNum("15");
+		// // foods.add(food2);
+		// // ModelFood food3 = new ModelFood();
+		// // food3.setFoodName("茶类");
+		// // food3.setFoodNum("13");
+		// foods.add(food3);
 		View view = null;
 		for (int i = 0; i < foods.size(); i++) {
 			ModelFood food = foods.get(i);
@@ -65,8 +65,8 @@ public class FragementFood extends BaseFragment {
 			TextView tv_foot_name = (TextView) view
 					.findViewById(R.id.tv_foot_name);
 			TextView tv_number = (TextView) view.findViewById(R.id.tv_number);
-			tv_number.setText(food.getFoodNum() + "");
-			tv_foot_name.setText(food.getFoodName() + "");
+//			tv_number.setText(food.getFoodNum() + "");
+//			tv_foot_name.setText(food.getFoodName() + "");
 			view.setOnClickListener(new OnClickListener() {
 
 				@Override

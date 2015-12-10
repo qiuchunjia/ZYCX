@@ -28,7 +28,7 @@ public class FoodWayActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "食谱";
+		return "食材和食疗方";
 	}
 
 	@Override

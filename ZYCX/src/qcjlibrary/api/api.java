@@ -1,5 +1,8 @@
 package qcjlibrary.api;
 
+import qcjlibrary.model.ModelFood;
+import qcjlibrary.model.ModelFoodCategory;
+import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -288,5 +291,71 @@ public class api {
 			}
 			return null;
 		}
+
+		@Override
+		public RequestParams myAsk() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, ASK);
+			params.add(ACT, MYASK);
+			return getTestToken(params);
+		}
+	}
+
+	public static final class FoodImpl implements FoodIm {
+
+		@Override
+		public RequestParams food_search(ModelFoodSearch foodSearch) {
+			if (foodSearch != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, SHILIAO);
+				params.add(ACT, FOOD_SEARCH);
+
+				params.add(KEY, foodSearch.getKey());
+				params.add(STATE, foodSearch.getKey());
+				params.put(TYPE_ID, foodSearch.getType_id());
+				params.put(P, foodSearch.getP());
+				params.add(TABLE, foodSearch.getTable());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, SHILIAO);
+			params.add(ACT, INDEX);
+			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams food_detail(ModelFood food) {
+			if (food != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, SHILIAO);
+				params.add(ACT, FOOD_DETAIL);
+				params.add(ID, food.getId());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams food_side_detail(ModelFoodCategory foodCategory) {
+			if (foodCategory != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, SHILIAO);
+				params.add(ACT, FOOD_SIDE_DETAIL);
+				params.add(ID, foodCategory.getId());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
 	}
 }

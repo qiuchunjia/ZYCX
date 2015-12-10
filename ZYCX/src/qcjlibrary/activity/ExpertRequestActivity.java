@@ -3,6 +3,7 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.ExpertRequestAdapter;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.util.DisplayUtils;
 import android.view.View;
 
 import com.zhiyicx.zycx.R;
@@ -39,7 +40,7 @@ public class ExpertRequestActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(20);
+		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
 		mAdapter = new ExpertRequestAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
 	}

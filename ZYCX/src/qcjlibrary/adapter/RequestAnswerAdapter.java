@@ -9,6 +9,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import android.util.Log;
@@ -136,6 +137,9 @@ public class RequestAnswerAdapter extends BAdapter {
 			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag),
 					ModelRequest.class, 0, REFRESH_NEW);
+		} else if (mRequestData instanceof ModelRequestMyAsk) {
+			sendRequest(mApp.getRequestImpl().myAsk(), ModelRequest.class, 0,
+					REFRESH_NEW);
 		}
 	}
 

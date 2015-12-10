@@ -7,14 +7,14 @@ import qcjlibrary.model.base.Model;
  *
  */
 
-public class ModelFood extends Model {
+public class ModelFoodCategory extends Model {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
-	private String type_name;
+	private String class_name;
 	private String sort;
 	private String count;
 
@@ -26,12 +26,12 @@ public class ModelFood extends Model {
 		this.id = id;
 	}
 
-	public String getType_name() {
-		return type_name;
+	public String getClass_name() {
+		return class_name;
 	}
 
-	public void setType_name(String type_name) {
-		this.type_name = type_name;
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
 	}
 
 	public String getSort() {
