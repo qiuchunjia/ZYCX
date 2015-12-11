@@ -5,13 +5,16 @@ import qcjlibrary.model.ModelFoodCategory;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
@@ -313,10 +316,12 @@ public class api {
 				params.add(APP, API);
 				params.add(MOD, SHILIAO);
 				params.add(ACT, FOOD_SEARCH);
-
-				params.add(KEY, foodSearch.getKey());
+				if (!TextUtils.isEmpty(foodSearch.getKey())) {
+					params.add(KEY, foodSearch.getKey());
+				} else {
+					params.put(TYPE_ID, foodSearch.getType_id());
+				}
 				params.put(STATE, foodSearch.getState());
-				params.put(TYPE_ID, foodSearch.getType_id());
 				params.put(P, foodSearch.getP());
 				params.add(TABLE, foodSearch.getTable());
 				Log.i("food_search", params.toString());
@@ -360,5 +365,41 @@ public class api {
 			return null;
 		}
 
+	}
+
+	public static final class UserImpl implements UserIm {
+
+		@Override
+		public RequestParams edituserdata(ModelUser user) {
+			if (user != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, PERSONAGE);
+				params.add(ACT, EDITUSERDATA);
+				params.add(SEX, user.getSex());
+				params.add(INTRO, user.getIntro());
+				params.add(CANCER, user.getCancer());
+				params.add(BIRTHDAY, user.getBirthday());
+				params.add(LOCATION, user.getLocation());
+				params.add(CITY_IDS, user.getCity_ids());
+				params.add(UNAME, user.getUname());
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams arealist(ModelMeAddress address) {
+			if (address != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, PERSONAGE);
+				params.add(ACT, AREALIST);
+				params.add(AREA_ID, address.getArea_id());
+				Log.i("arealist", params.toString());
+				return getTestToken(params);
+			}
+			return null;
+		}
 	}
 }

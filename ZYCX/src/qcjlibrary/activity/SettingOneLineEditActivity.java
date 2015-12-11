@@ -1,10 +1,14 @@
 package qcjlibrary.activity;
 
-import com.zhiyicx.zycx.R;
-
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelUser;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+
+import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午2:39:22 类描述：这个类是实现
@@ -22,6 +26,7 @@ public class SettingOneLineEditActivity extends BaseActivity {
 	public final static int BIRTHDAY = 3; // 生日;
 	public final static int LOCATION = 4; // 地址;
 	public final static int CANCERCATEGORY = 5; // 癌种;
+	ModelUser mUserData = new ModelUser();
 
 	@Override
 	public String setCenterTitle() {
@@ -43,6 +48,31 @@ public class SettingOneLineEditActivity extends BaseActivity {
 		titleSetRightTitle("修改");
 		et_oneline = (EditText) findViewById(R.id.et_oneline);
 		judgeTheTitle(mCurrentPosition);
+	}
+
+	@Override
+	public void initData() {
+	}
+
+	@Override
+	public void initListener() {
+		Title title = getTitleClass();
+		title.tv_title_right.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_title_right:
+			String content = et_oneline.getText().toString();
+			if (!TextUtils.isEmpty(content)) {
+				sendContent(mCurrentPosition, content);
+			}
+			break;
+
+		}
+
 	}
 
 	/**
@@ -78,22 +108,50 @@ public class SettingOneLineEditActivity extends BaseActivity {
 		}
 	}
 
-	@Override
-	public void initData() {
-		// TODO Auto-generated method stub
+	/**
+	 * 发送消息
+	 * 
+	 * @param position
+	 * @param content
+	 */
+	private void sendContent(int position, String content) {
+		switch (position) {
+		case DECLARATION:
+			mUserData.setIntro(content);
+			sendRequest(mApp.getUserImpl().edituserdata(mUserData),
+					ModelMsg.class, REQUEST_GET);
+			break;
 
+		case NICK:
+			mUserData.setUname(content);
+			sendRequest(mApp.getUserImpl().edituserdata(mUserData),
+					ModelMsg.class, REQUEST_GET);
+			break;
+
+		case GENDER:
+			break;
+
+		case BIRTHDAY:
+			mUserData.setBirthday(content);
+			sendRequest(mApp.getUserImpl().edituserdata(mUserData),
+					ModelMsg.class, REQUEST_GET);
+			break;
+		case LOCATION:
+			break;
+
+		case CANCERCATEGORY:
+			break;
+
+		}
 	}
 
 	@Override
-	public void initListener() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (judgeTheMsg(object)) {
+			onBackPressed();
+		}
+		return object;
 	}
 
 }

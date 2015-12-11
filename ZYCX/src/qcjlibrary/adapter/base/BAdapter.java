@@ -377,7 +377,7 @@ public abstract class BAdapter extends BaseAdapter {
 			if (arg2 != null) {
 				String result = new String(arg2);
 				if (result != null) {
-					Object object = DataAnalyze.parseDataByGson(result, type);
+					Object object = onResponceSuccess(result, type);
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							ToastUtils.showToast(((ModelMsg) object)
@@ -400,6 +400,10 @@ public abstract class BAdapter extends BaseAdapter {
 				}
 			}
 		}
+	}
+
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseDataByGson(str, class1);
 	}
 
 	public abstract Object getReallyList(Object object, Class type2);

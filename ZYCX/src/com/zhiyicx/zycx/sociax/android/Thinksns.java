@@ -663,19 +663,19 @@ public class Thinksns extends Application {
 		String school_name = preferences.getString(Config.SCHOOL_NAME, null);
 		String autograph = preferences.getString(Config.AUTOGRAPH, null);
 		String email = preferences.getString(Config.EMAIL, null);
-		mUser.setMobile(mobile);
-		mUser.setPwd(pwd);
-		mUser.setUserid(userId);
-		mUser.setOauth_token(oauth_token);
-		mUser.setOauth_token_secret(oauth_token_secret);
-		mUser.setschool_id(school_id);
-		mUser.setUname(uname);
-		mUser.setSex(sex);
-		mUser.setIs_init(is_init);
-		mUser.setFaceurl(faceurl);
-		mUser.setSchool_name(school_name);
-		mUser.setAutograph(autograph);
-		mUser.setEmail(email);
+		// mUser.setMobile(mobile);
+		// mUser.setPwd(pwd);
+		// mUser.setUserid(userId);
+		// mUser.setOauth_token(oauth_token);
+		// mUser.setOauth_token_secret(oauth_token_secret);
+		// mUser.setschool_id(school_id);
+		// mUser.setUname(uname);
+		// mUser.setSex(sex);
+		// mUser.setIs_init(is_init);
+		// mUser.setFaceurl(faceurl);
+		// mUser.setSchool_name(school_name);
+		// mUser.setAutograph(autograph);
+		// mUser.setEmail(email);
 		return mUser;
 	}
 
@@ -689,25 +689,25 @@ public class Thinksns extends Application {
 		SharedPreferences preferences = getApplicationContext()
 				.getSharedPreferences(Config.USER_DATA, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
-		if (user.getMobile() != null) {
-			editor.putString(Config.MOBILE, user.getMobile());
-		}
-		if (user.getPwd() != null) {
-			editor.putString(Config.PWD, user.getPwd());
-		}
-
-		editor.putString(Config.USERID, user.getUserid());
-		editor.putString(Config.OAUTH_TOKEN, user.getOauth_token());
-		editor.putString(Config.OAUTH_TOKEN_SECRET,
-				user.getOauth_token_secret());
-		editor.putString(Config.SCHOOL_ID, user.getschool_id());
-		editor.putString(Config.UNAME, user.getUname());
-		editor.putString(Config.SEX, user.getSex());
-		editor.putString(Config.IS_INIT, user.getIs_init());
-		editor.putString(Config.FACEURL, user.getFaceurl());
-		editor.putString(Config.SCHOOL_NAME, user.getSchool_name());
-		editor.putString(Config.AUTOGRAPH, user.getAutograph());
-		editor.putString(Config.EMAIL, user.getEmail());
+		// if (user.getMobile() != null) {
+		// editor.putString(Config.MOBILE, user.getMobile());
+		// }
+		// if (user.getPwd() != null) {
+		// editor.putString(Config.PWD, user.getPwd());
+		// }
+		//
+		// editor.putString(Config.USERID, user.getUserid());
+		// editor.putString(Config.OAUTH_TOKEN, user.getOauth_token());
+		// editor.putString(Config.OAUTH_TOKEN_SECRET,
+		// user.getOauth_token_secret());
+		// editor.putString(Config.SCHOOL_ID, user.getschool_id());
+		// editor.putString(Config.UNAME, user.getUname());
+		// editor.putString(Config.SEX, user.getSex());
+		// editor.putString(Config.IS_INIT, user.getIs_init());
+		// editor.putString(Config.FACEURL, user.getFaceurl());
+		// editor.putString(Config.SCHOOL_NAME, user.getSchool_name());
+		// editor.putString(Config.AUTOGRAPH, user.getAutograph());
+		// editor.putString(Config.EMAIL, user.getEmail());
 		editor.commit();
 	}
 
@@ -797,6 +797,7 @@ public class Thinksns extends Application {
 	private qcjlibrary.api.api.ZhiXunImpl mZhixun;
 	private qcjlibrary.api.api.RequestImpl mRequestImpl;
 	private qcjlibrary.api.api.FoodImpl mFoodImpl;
+	private qcjlibrary.api.api.UserImpl mUserImpl;
 
 	public api.ZhiXunImpl getZhiXunImpl() {
 		if (mZhixun == null) {
@@ -817,6 +818,13 @@ public class Thinksns extends Application {
 			mFoodImpl = new api.FoodImpl();
 		}
 		return mFoodImpl;
+	}
+
+	public api.UserImpl getUserImpl() {
+		if (mUserImpl == null) {
+			mUserImpl = new api.UserImpl();
+		}
+		return mUserImpl;
 	}
 
 	/*************************** 接口部分end ******************************/

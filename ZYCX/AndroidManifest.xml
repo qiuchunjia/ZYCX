@@ -364,6 +364,9 @@
         <activity android:name="qcjlibrary.activity.RequestDetailExpertActivity" />
         <activity android:name="qcjlibrary.activity.RequestAddFlagActivity" />
         <activity android:name="qcjlibrary.activity.RequestMyAskActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseProvinceActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseCityActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseTowerActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->

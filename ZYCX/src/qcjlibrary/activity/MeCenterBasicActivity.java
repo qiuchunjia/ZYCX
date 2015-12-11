@@ -112,8 +112,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 					sendDataToBundle(SettingOneLineEditActivity.BIRTHDAY, null));
 			break;
 		case R.id.rl_address:
-			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
-					sendDataToBundle(SettingOneLineEditActivity.LOCATION, null));
+			mApp.startActivity_qcj(this, MeChooseProvinceActivity.class, null);
 			break;
 		case R.id.rl_cancer_category:
 			mApp.startActivity_qcj(

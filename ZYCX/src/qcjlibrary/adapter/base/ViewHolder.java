@@ -127,5 +127,8 @@ public class ViewHolder {
 	public TextView tv_update;
 	public ImageView iv_vedio;
 	/******************* 轻课堂item end ************************/
+	/******************* 选择地址item ************************/
+	public TextView tv_choose_adress;
+	/******************* 选择地址item end ************************/
 
 }
