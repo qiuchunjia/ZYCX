@@ -1,5 +1,8 @@
 package qcjlibrary.api;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import qcjlibrary.model.ModelFood;
 import qcjlibrary.model.ModelFoodCategory;
 import qcjlibrary.model.ModelFoodSearch;
@@ -419,6 +422,24 @@ public class api {
 			params.add(MOD, PERSONAGE);
 			params.add(ACT, CANCERLIST);
 			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams editavatar(File file) {
+			if (file != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, PERSONAGE);
+				params.add(ACT, EDITAVATAR);
+				try {
+					params.put("file", file);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return getTestToken(params);
+			}
+			return null;
 		}
 	}
 }

@@ -1,11 +1,14 @@
 package qcjlibrary.activity;
 
+import java.io.File;
+
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopUploadIcon;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -124,6 +127,22 @@ public class MeCenterBasicActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		initData();
+	}
+
+	@Override
+	public File getFile(String path) {
+		File file = super.getFile(path);
+		// 上传头像
+		Log.i("file", file.toString());
+		sendRequest(mApp.getUserImpl().editavatar(file), ModelMsg.class,
+				REQUEST_POST);
+		return file;
+	}
+
+	@Override
+	public void onResponseProgress(long bytesWritten, long totalSize) {
+		super.onResponseProgress(bytesWritten, totalSize);
+		Log.i("Progress", bytesWritten + "           " + totalSize);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class PopUploadIcon extends PopView {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.item_upload_icon_item;
+		return R.layout.pop_upload_icon;
 	}
 
 	@Override

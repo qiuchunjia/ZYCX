@@ -1,5 +1,7 @@
 package qcjlibrary.api;
 
+import java.io.File;
+
 import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelUser;
 
@@ -19,6 +21,7 @@ public interface UserIm {
 	public static final String AREALIST = "arealist";
 	public static final String INDEX = "index"; // 获取用户的信息
 	public static final String CANCERLIST = "cancerlist"; // 癌种列表
+	public static final String EDITAVATAR = "editavatar";
 	// 接口需要的操作参数
 	public static final String SEX = "sex";
 	public static final String INTRO = "intro";
@@ -56,4 +59,12 @@ public interface UserIm {
 	 * @return
 	 */
 	public RequestParams cancerlist();
+
+	/**
+	 * 个人资料-上传头像
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public RequestParams editavatar(File file);
 }

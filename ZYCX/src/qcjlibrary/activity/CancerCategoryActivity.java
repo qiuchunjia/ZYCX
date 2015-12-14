@@ -7,12 +7,9 @@ import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelCancerCategory;
-import qcjlibrary.model.ModelRequest;
-import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.zhiyicx.zycx.R;
