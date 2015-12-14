@@ -36,6 +36,7 @@ public class ModelUser extends Model {
 	private String location;
 	private String city_ids;
 	private String uname;
+	private String avatar;
 
 	public String getOauth_token() {
 		return oauth_token;
@@ -111,6 +112,14 @@ public class ModelUser extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

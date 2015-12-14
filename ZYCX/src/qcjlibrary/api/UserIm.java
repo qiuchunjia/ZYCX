@@ -17,6 +17,8 @@ public interface UserIm {
 	public static final String PERSONAGE = "Personage";
 	public static final String EDITUSERDATA = "edituserdata";
 	public static final String AREALIST = "arealist";
+	public static final String INDEX = "index"; // 获取用户的信息
+	public static final String CANCERLIST = "cancerlist"; // 癌种列表
 	// 接口需要的操作参数
 	public static final String SEX = "sex";
 	public static final String INTRO = "intro";
@@ -40,4 +42,18 @@ public interface UserIm {
 	 * @return
 	 */
 	public RequestParams arealist(ModelMeAddress address);
+
+	/**
+	 * 获取用户信息
+	 * 
+	 * @return
+	 */
+	public RequestParams index();
+
+	/**
+	 * 癌种列表
+	 * 
+	 * @return
+	 */
+	public RequestParams cancerlist();
 }

@@ -1,8 +1,12 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.model.base.Model;
+import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.widget.RoundImageView;
+import qcjlibrary.widget.popupview.PopChooseGender;
+import qcjlibrary.widget.popupview.PopUploadIcon;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -71,6 +75,38 @@ public class MeCenterBasicActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
+		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelUser) {
+			ModelUser user = (ModelUser) object;
+			addDataToView(user);
+		}
+		if (judgeTheMsg(object)) {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
+					REQUEST_GET);
+		}
+		return object;
+	}
+
+	/**
+	 * 添加数据到界面上
+	 * 
+	 * @param object
+	 */
+	private void addDataToView(ModelUser user) {
+		if (user != null) {
+			mApp.displayImage(user.getAvatar(), riv_user_icon);
+			tv_mycase_value.setText(user.getIntro());
+			tv_nick_value.setText(user.getUname());
+			tv_gender_value.setText(user.getSex());
+			tv_birth_value.setText(user.getBirthday());
+			tv_address_value.setText(user.getLocation());
+			tv_category_value.setText(user.getCancer());
+		}
 	}
 
 	@Override
@@ -85,10 +121,18 @@ public class MeCenterBasicActivity extends BaseActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		initData();
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_user:
 			// TODO
+			PopUploadIcon popUploadIcon = new PopUploadIcon(this, null, this);
+			popUploadIcon.showPop(rl_user, Gravity.BOTTOM, 0, 0);
 
 			break;
 
@@ -104,8 +148,8 @@ public class MeCenterBasicActivity extends BaseActivity {
 					sendDataToBundle(SettingOneLineEditActivity.NICK, null));
 			break;
 		case R.id.rl_gender:
-			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
-					sendDataToBundle(SettingOneLineEditActivity.GENDER, null));
+			PopChooseGender chooseGender = new PopChooseGender(this, null, this);
+			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_birth:
 			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
@@ -117,12 +161,25 @@ public class MeCenterBasicActivity extends BaseActivity {
 		case R.id.rl_cancer_category:
 			mApp.startActivity_qcj(
 					this,
-					SettingOneLineEditActivity.class,
+					MeChooseCancerActivity.class,
 					sendDataToBundle(SettingOneLineEditActivity.CANCERCATEGORY,
 							null));
 			break;
 		}
 
+	}
+
+	@Override
+	public Object onPopResult(Object object) {
+		Object object2 = super.onPopResult(object);
+		if (object2 instanceof String) {
+			String sex = object2.toString();
+			ModelUser user = new ModelUser();
+			user.setSex(sex);
+			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
+					REQUEST_GET);
+		}
+		return object2;
 	}
 
 }

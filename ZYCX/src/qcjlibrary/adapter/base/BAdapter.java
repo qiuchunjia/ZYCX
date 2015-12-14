@@ -325,6 +325,8 @@ public abstract class BAdapter extends BaseAdapter {
 
 	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
 	private Request mRequst;
+	public static final int REQUEST_GET = 0;
+	public static final int REQUEST_POST = 1;
 
 	public void sendRequest(RequestParams params,
 			Class<? extends Model> modeltype, int requsetType, int RefreshType) {

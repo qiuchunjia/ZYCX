@@ -383,6 +383,7 @@ public class api {
 				params.add(LOCATION, user.getLocation());
 				params.add(CITY_IDS, user.getCity_ids());
 				params.add(UNAME, user.getUname());
+				Log.i("edituserdata", params.toString());
 				return getTestToken(params);
 			}
 			return null;
@@ -400,6 +401,24 @@ public class api {
 				return getTestToken(params);
 			}
 			return null;
+		}
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, PERSONAGE);
+			params.add(ACT, INDEX);
+			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams cancerlist() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, PERSONAGE);
+			params.add(ACT, CANCERLIST);
+			return getTestToken(params);
 		}
 	}
 }
