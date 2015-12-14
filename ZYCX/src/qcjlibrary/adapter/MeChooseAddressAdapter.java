@@ -78,7 +78,8 @@ public class MeChooseAddressAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(mApp.getUserImpl().arealist(mAddressData), null, 1, 1);
+		sendRequest(mApp.getUserImpl().arealist(mAddressData),
+				ModelMeAddress.class, 1, 1);
 	}
 
 	@Override

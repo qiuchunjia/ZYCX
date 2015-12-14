@@ -21,8 +21,8 @@ public class ModelMeAddress extends Model {
 	private String title;
 	private String pid;
 	private String sort;
-	private String wholeAddress; // 拼接完整的地址
-	private String wholeId;// 拼接完整的id
+	private String wholeAddress = ""; // 拼接完整的地址
+	private String wholeId = "";// 拼接完整的id
 
 	public ModelMeAddress() {
 

@@ -33,4 +33,13 @@ public class CommonListView extends BaseListView {
 			mApp.startActivity_qcj(activity, activityClass, data);
 		}
 	}
+
+	public void stepToNextActivity(Model sendData,
+			Class<? extends Activity> activityClass) {
+		if (mActivity instanceof BaseActivity) {
+			BaseActivity activity = ((BaseActivity) mActivity);
+			Bundle data = activity.sendDataToBundle(sendData, null);
+			mApp.startActivity_qcj(activity, activityClass, data);
+		}
+	}
 }

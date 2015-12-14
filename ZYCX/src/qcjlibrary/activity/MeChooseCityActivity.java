@@ -20,6 +20,7 @@ import com.zhiyicx.zycx.R;
 public class MeChooseCityActivity extends BaseActivity {
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
+	private ModelMeAddress mAddress;
 
 	@Override
 	public String setCenterTitle() {
@@ -28,7 +29,7 @@ public class MeChooseCityActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mAddress = (ModelMeAddress) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -40,17 +41,22 @@ public class MeChooseCityActivity extends BaseActivity {
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(0);
-		mAdapter = new MeChooseAddressAdapter(this, new ModelMeAddress());
+		mAdapter = new MeChooseAddressAdapter(this, mAddress);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (position > 0) {
-					mCommonListView.stepToNextActivity(parent, view, position,
-							MeChooseTowerActivity.class);
-				}
+				ModelMeAddress address = (ModelMeAddress) parent
+						.getItemAtPosition(position);
+				address.setWholeAddress(mAddress.getWholeAddress()
+						+ address.getTitle() + " ");
+				address.setWholeId(mAddress.getWholeId() + address.getArea_id()
+						+ ",");
+				mCommonListView.stepToNextActivity(address,
+						MeChooseTowerActivity.class);
+				MeChooseCityActivity.this.finish();
 			}
 		});
 	}

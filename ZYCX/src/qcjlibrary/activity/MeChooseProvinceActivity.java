@@ -1,7 +1,6 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.ExperienceCycleAdapter;
 import qcjlibrary.adapter.MeChooseAddressAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
@@ -47,10 +46,13 @@ public class MeChooseProvinceActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (position > 0) {
-					mCommonListView.stepToNextActivity(parent, view, position,
-							MeChooseCityActivity.class);
-				}
+				ModelMeAddress address = (ModelMeAddress) parent
+						.getItemAtPosition(position);
+				address.setWholeAddress(address.getTitle() + " ");
+				address.setWholeId(address.getArea_id() + ",");
+				mCommonListView.stepToNextActivity(address,
+						MeChooseCityActivity.class);
+				MeChooseProvinceActivity.this.finish();
 			}
 		});
 	}
