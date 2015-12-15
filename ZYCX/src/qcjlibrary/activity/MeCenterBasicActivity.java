@@ -7,6 +7,7 @@ import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
+import qcjlibrary.widget.popupview.PopDatePicker;
 import qcjlibrary.widget.popupview.PopUploadIcon;
 import android.util.Log;
 import android.view.Gravity;
@@ -171,8 +172,8 @@ public class MeCenterBasicActivity extends BaseActivity {
 			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_birth:
-			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
-					sendDataToBundle(SettingOneLineEditActivity.BIRTHDAY, null));
+			PopDatePicker datePicker = new PopDatePicker(this, null, this);
+			datePicker.showPop(rl_birth, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_address:
 			mApp.startActivity_qcj(this, MeChooseProvinceActivity.class, null);
@@ -191,14 +192,11 @@ public class MeCenterBasicActivity extends BaseActivity {
 	@Override
 	public Object onPopResult(Object object) {
 		Object object2 = super.onPopResult(object);
-		if (object2 instanceof String) {
-			String sex = object2.toString();
-			ModelUser user = new ModelUser();
-			user.setSex(sex);
+		if (object2 instanceof ModelUser) {
+			ModelUser user = (ModelUser) object2;
 			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
 					REQUEST_GET);
 		}
 		return object2;
 	}
-
 }

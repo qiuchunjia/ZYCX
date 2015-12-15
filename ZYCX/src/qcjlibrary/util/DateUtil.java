@@ -16,7 +16,7 @@ import android.util.Log;
 
 public class DateUtil {
 	/**
-	 * 将年月日转换为 时间戳 例如 2015-7-12
+	 * 将年月日转换为 时间戳 例如 2015年7月12日
 	 * 
 	 * @param year_month_day
 	 * @return
