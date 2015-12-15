@@ -3,8 +3,9 @@ package qcjlibrary.api;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import qcjlibrary.model.ModelFood;
-import qcjlibrary.model.ModelFoodCategory;
+import qcjlibrary.model.ModelExperience;
+import qcjlibrary.model.ModelExperienceItem1;
+import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
@@ -441,5 +442,76 @@ public class api {
 			}
 			return null;
 		}
+	}
+
+	public static final class ExperienceImpl implements ExperienceIm {
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, EXPERIENCE);
+			params.add(ACT, INDEX);
+			return params;
+		}
+
+		@Override
+		public RequestParams addPost(ModelExperienceSend send) {
+			if (send != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, EXPERIENCE);
+				params.add(ACT, ADD_POST);
+				/**
+				 * weiba_id 微吧id 必填
+				 * 
+				 * parent_id 上级帖子id 选填
+				 * 
+				 * title 标题 必填
+				 * 
+				 * post_time 时间 必填
+				 * 
+				 * body 内容 必填
+				 * 
+				 * tags 标签 多个以逗号隔开 至少一个 必填
+				 * */
+				params.add(WEIBA_ID, send.getWeiba_id());
+				params.add(PARENT_ID, send.getParent_id());
+				params.add(TITLE, send.getTitle());
+				params.add(POST_TIME, send.getPost_time());
+				params.add(BODY, send.getBody());
+				params.add(TAGS, send.getTags());
+				getTestToken(params);
+				return params;
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams detail(ModelExperience experience) {
+			if (experience != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, EXPERIENCE);
+				params.add(ACT, DETAIL);
+				params.add(ID, experience.getWeiba_id());
+				return params;
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams postDetail(ModelExperienceItem1 item1) {
+			if (item1 != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, EXPERIENCE);
+				params.add(ACT, POST_DETAIL);
+				params.add(ID, item1.getPost_id());
+				return params;
+			}
+			return null;
+		}
+
 	}
 }
