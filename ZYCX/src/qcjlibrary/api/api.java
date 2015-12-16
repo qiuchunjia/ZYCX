@@ -520,6 +520,7 @@ public class api {
 				params.add(MOD, EXPERIENCE);
 				params.add(ACT, POST_DETAIL);
 				params.add(ID, item1.getPost_id());
+				Log.i("postDetail", params.toString());
 				return params;
 			}
 			return null;

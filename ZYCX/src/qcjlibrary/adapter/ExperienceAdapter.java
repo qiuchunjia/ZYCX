@@ -94,7 +94,7 @@ public class ExperienceAdapter extends BAdapter {
 							.getFollower_count());
 					holder.tv_cancer_experence2.setText(experience2
 							.getThread_count());
-					holder.rl_2.setTag(experience1);
+					holder.rl_2.setTag(experience2);
 					holder.rl_2.setOnClickListener(new OnClickListener() {
 
 						@Override
