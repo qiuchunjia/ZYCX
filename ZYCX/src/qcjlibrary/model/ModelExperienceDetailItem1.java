@@ -7,7 +7,7 @@ import qcjlibrary.model.base.Model;
  *
  */
 
-public class ModelExperienceItem1 extends Model {
+public class ModelExperienceDetailItem1 extends Model {
 
 	/**
 	 * 
@@ -34,8 +34,9 @@ public class ModelExperienceItem1 extends Model {
 	private String content;
 	private String post_time;
 	private String parent_id;
+	private String recommend;
 
-	public ModelExperienceItem1() {
+	public ModelExperienceDetailItem1() {
 	}
 
 	public String getPost_id() {
@@ -96,6 +97,14 @@ public class ModelExperienceItem1 extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(String recommend) {
+		this.recommend = recommend;
 	}
 
 }

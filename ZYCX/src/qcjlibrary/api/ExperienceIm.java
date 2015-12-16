@@ -1,7 +1,7 @@
 package qcjlibrary.api;
 
 import qcjlibrary.model.ModelExperience;
-import qcjlibrary.model.ModelExperienceItem1;
+import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperienceSend;
 
 import com.loopj.android.http.RequestParams;
@@ -52,6 +52,6 @@ public interface ExperienceIm {
 	 * @param send
 	 * @return
 	 */
-	public RequestParams postDetail(ModelExperienceItem1 item1);
+	public RequestParams postDetail(ModelExperienceDetailItem1 item1);
 
 }

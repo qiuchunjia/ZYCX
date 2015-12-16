@@ -192,8 +192,14 @@ public class MeCenterBasicActivity extends BaseActivity {
 	@Override
 	public Object onPopResult(Object object) {
 		Object object2 = super.onPopResult(object);
-		if (object2 instanceof ModelUser) {
-			ModelUser user = (ModelUser) object2;
+		if (object2 instanceof String) {
+			String data = (String) object2;
+			ModelUser user = new ModelUser();
+			if (data.length() == 1) {
+				user.setSex(data);
+			} else {
+				user.setBirthday(data);
+			}
 			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
 					REQUEST_GET);
 		}

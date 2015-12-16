@@ -368,6 +368,8 @@
         <activity android:name="qcjlibrary.activity.MeChooseCityActivity" />
         <activity android:name="qcjlibrary.activity.MeChooseTowerActivity" />
         <activity android:name="qcjlibrary.activity.MeChooseCancerActivity" />
+        <activity android:name="qcjlibrary.activity.LocalAlbumActivity" />
+        <activity android:name="qcjlibrary.activity.LocalImagListActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->

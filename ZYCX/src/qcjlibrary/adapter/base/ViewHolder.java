@@ -79,6 +79,8 @@ public class ViewHolder {
 	public TextView tv_cancer_name2;
 	public TextView tv_cancer_numer2;
 	public TextView tv_cancer_experence2;
+	public RelativeLayout rl_1;
+	public RelativeLayout rl_2;
 	/******************* 经历item end ************************/
 	/******************* 癌症话题 item ************************/
 	public TextView tv_topic_title;

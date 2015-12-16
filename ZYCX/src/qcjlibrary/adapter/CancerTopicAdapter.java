@@ -1,11 +1,12 @@
 package qcjlibrary.adapter;
 
-import java.util.List;
-
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelExperience;
+import qcjlibrary.model.ModelExperienceDetail;
+import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,18 @@ import com.zhiyicx.zycx.R;
  */
 
 public class CancerTopicAdapter extends BAdapter {
+	private ModelExperience mExperienceData;
 
-	public CancerTopicAdapter(BaseActivity activity, List<Model> list) {
-		super(activity, list);
+	public CancerTopicAdapter(BaseActivity activity,
+			ModelExperience modelExperience) {
+		super(activity, null);
+		mExperienceData = modelExperience;
 	}
 
-	public CancerTopicAdapter(BaseFragment fragment, List<Model> list) {
-		super(fragment, list);
+	public CancerTopicAdapter(BaseFragment fragment,
+			ModelExperience modelExperience) {
+		super(fragment, null);
+		mExperienceData = modelExperience;
 	}
 
 	@Override
@@ -48,6 +54,19 @@ public class CancerTopicAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			Model model = mList.get(position);
+			if (model instanceof ModelExperienceDetailItem1) {
+				ModelExperienceDetailItem1 detailItem1 = (ModelExperienceDetailItem1) model;
+				holder.tv_topic_title.setText(detailItem1.getContent());
+				holder.tv_topic_advice.setVisibility(View.GONE);
+				if (detailItem1.getRecommend().equals("1")) {
+					holder.tv_topic_advice.setVisibility(View.VISIBLE);
+				}
+				// holder.tv_topic_user.setText(detailItem1.get);
+				// holder.tv_topic_update.setText(detailItem1.getContent());
+				holder.tv_topic_date.setText(detailItem1.getPost_time());
+
+			}
 		}
 	}
 
@@ -74,12 +93,12 @@ public class CancerTopicAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getExperienceImpl().detail(mExperienceData),
+				ModelExperienceDetail.class, REQUEST_GET, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
 	}
 
 	@Override
@@ -94,8 +113,11 @@ public class CancerTopicAdapter extends BAdapter {
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
+	public Object getReallyList(Object object, Class type2) {
+		if (object instanceof ModelExperienceDetail) {
+			ModelExperienceDetail detail = (ModelExperienceDetail) object;
+			return detail.getPosts();
+		}
 		return null;
 	}
 

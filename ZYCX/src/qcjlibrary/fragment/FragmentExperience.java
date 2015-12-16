@@ -1,14 +1,11 @@
 package qcjlibrary.fragment;
 
-import qcjlibrary.activity.CancerSingleActivity;
 import qcjlibrary.adapter.ExperienceAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.util.DisplayUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.zhiyicx.zycx.R;
 
@@ -38,16 +35,6 @@ public class FragmentExperience extends BaseFragment {
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mActivity, 1));
 		mAdapter = new ExperienceAdapter(this, null);
 		mCommonListView.setAdapter(mAdapter);
-		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position,
-						CancerSingleActivity.class);
-
-			}
-		});
 
 	}
 

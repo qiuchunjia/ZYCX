@@ -1,5 +1,7 @@
 package qcjlibrary.model;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +44,15 @@ public class ModelExperienceSend extends Model {
 	private String post_time;
 	private String body;
 	private String tags;
+	private List<String> PhotoUrls;
+
+	public List<String> getPhotoUrls() {
+		return PhotoUrls;
+	}
+
+	public void setPhotoUrls(List<String> photoUrls) {
+		PhotoUrls = photoUrls;
+	}
 
 	public String getWeiba_id() {
 		return weiba_id;

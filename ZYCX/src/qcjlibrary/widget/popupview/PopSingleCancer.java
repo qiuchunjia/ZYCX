@@ -1,7 +1,9 @@
 package qcjlibrary.widget.popupview;
 
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelExperienceDetailInfor;
+import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.base.PopView;
-import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +19,7 @@ import com.zhiyicx.zycx.R;
 
 public class PopSingleCancer extends PopView {
 
-	private ImageView iv_cancer_icon;
+	private RoundImageView iv_cancer_icon;
 	private TextView tv_cancer_name;
 	private TextView tv_cancer_bangzhuvalue;
 	private TextView tv_cancer_membervalue;
@@ -37,7 +39,7 @@ public class PopSingleCancer extends PopView {
 
 	@Override
 	public void initPopView() {
-		iv_cancer_icon = (ImageView) findViewbyId(R.id.iv_cancer_icon);
+		iv_cancer_icon = (RoundImageView) findViewbyId(R.id.iv_cancer_icon);
 		tv_cancer_name = (TextView) findViewbyId(R.id.tv_cancer_name);
 		tv_cancer_bangzhuvalue = (TextView) findViewbyId(R.id.tv_cancer_bangzhuvalue);
 		tv_cancer_membervalue = (TextView) findViewbyId(R.id.tv_cancer_membervalue);
@@ -49,7 +51,18 @@ public class PopSingleCancer extends PopView {
 
 	@Override
 	public void initPopData(Object object) {
-		// TODO Auto-generated method stub
+		if (object instanceof ModelExperienceDetailInfor) {
+			ModelExperienceDetailInfor infor = (ModelExperienceDetailInfor) object;
+			if (mActivity instanceof BaseActivity) {
+				BaseActivity activity = (BaseActivity) mActivity;
+				activity.mApp.displayImage(infor.getLogo(), iv_cancer_icon);
+			}
+			tv_cancer_name.setText(infor.getWeiba_name());
+			// tv_cancer_bangzhuvalue.setText(infor.getWeiba_name());
+			tv_cancer_membervalue.setText(infor.getFollower_count());
+			tv_cancer_experiencevalue.setText(infor.getThread_count());
+			tv_cancer_content.setText(infor.getIntro());
+		}
 
 	}
 

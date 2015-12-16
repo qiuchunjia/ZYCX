@@ -33,7 +33,6 @@ public class PopDatePicker extends PopView {
 	private String mCurrentYear; // 当前的年
 	private String mCurrentMonth;// 当前的月
 	private String mCurrentDay;// 当前的日
-	private ModelUser modelUser;
 
 	public PopDatePicker(Activity activity, Object object,
 			PopResultListener resultListener) {
@@ -52,7 +51,6 @@ public class PopDatePicker extends PopView {
 		wv_date_year = (WheelView) findViewbyId(R.id.wv_date_year);
 		wv_date_month = (WheelView) findViewbyId(R.id.wv_date_month);
 		wv_date_day = (WheelView) findViewbyId(R.id.wv_date_day);
-		modelUser = new ModelUser();
 	}
 
 	@Override
@@ -83,8 +81,7 @@ public class PopDatePicker extends PopView {
 			@Override
 			public void onClick(View v) {
 				String pickTime = cacluteDate();
-				modelUser.setBirthday(DateUtil.dateToStr(pickTime.trim()));
-				listener.onPopResult(modelUser);
+				listener.onPopResult(pickTime.trim());
 				mPopWindow.dismiss();
 			}
 		});

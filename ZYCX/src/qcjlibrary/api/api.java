@@ -2,9 +2,10 @@ package qcjlibrary.api;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import qcjlibrary.model.ModelExperience;
-import qcjlibrary.model.ModelExperienceItem1;
+import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
@@ -481,6 +482,17 @@ public class api {
 				params.add(POST_TIME, send.getPost_time());
 				params.add(BODY, send.getBody());
 				params.add(TAGS, send.getTags());
+				if (send.getPhotoUrls() != null) {
+					List<String> photos = send.getPhotoUrls();
+					for (int i = 0; i < photos.size(); i++) {
+						try {
+							params.put("file" + i, new File(photos.get(i)));
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				Log.i("addPost", params.toString());
 				getTestToken(params);
 				return params;
 			}
@@ -501,7 +513,7 @@ public class api {
 		}
 
 		@Override
-		public RequestParams postDetail(ModelExperienceItem1 item1) {
+		public RequestParams postDetail(ModelExperienceDetailItem1 item1) {
 			if (item1 != null) {
 				RequestParams params = new RequestParams();
 				params.add(APP, API);
