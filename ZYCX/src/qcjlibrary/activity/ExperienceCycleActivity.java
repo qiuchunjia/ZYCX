@@ -1,5 +1,7 @@
 package qcjlibrary.activity;
 
+import java.util.List;
+
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.ExperienceCycleAdapter;
@@ -9,11 +11,10 @@ import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperiencePostDetail;
 import qcjlibrary.model.ModelExperiencePostDetailInfo;
 import qcjlibrary.model.ModelExperienceSend;
+import qcjlibrary.util.DateUtil;
 import qcjlibrary.widget.RoundImageView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -34,6 +35,8 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public TextView tv_flag_key;
 	public TextView tv_flag_value;
 	public TextView tv_date;
+
+	private ModelExperiencePostDetail mDetail;
 
 	@Override
 	public String setCenterTitle() {
@@ -60,7 +63,6 @@ public class ExperienceCycleActivity extends BaseActivity {
 		tv_flag_key = (TextView) findViewById(R.id.tv_flag_key);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		tv_date = (TextView) findViewById(R.id.tv_date);
-
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(0);
 		mAdapter = new ExperienceCycleAdapter(this, mItemData);
@@ -79,8 +81,8 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelExperiencePostDetail) {
-			ModelExperiencePostDetail detail = (ModelExperiencePostDetail) object;
-			addDataToHead(detail.getPost_detail());
+			mDetail = (ModelExperiencePostDetail) object;
+			addDataToHead(mDetail.getPost_detail());
 		}
 		return object;
 	}
@@ -98,11 +100,14 @@ public class ExperienceCycleActivity extends BaseActivity {
 			tv_date = (TextView) findViewById(R.id.tv_date);
 			mApp.displayImage(post_detail.getUserface(), iv_cycle_icon);
 			tv_username.setText(post_detail.getTitle());
-			tv_has_update.setText(post_detail.getChildCount());
-			Log.i("tag", post_detail.getTags().toString());
+			tv_has_update.setText("已更新" + post_detail.getChildCount() + "篇");
+			List<String> tags = post_detail.getTags();
+			for (String str : tags) {
+				Log.i("tagtest", post_detail.getTags().toString());
+			}
 			// tv_flag_key.setText(post_detail.getTags());
 			// tv_flag_value.setText(post_detail.getTitle());
-			tv_date.setText(post_detail.getCtime());
+			tv_date.setText(DateUtil.stamp2humanDate(post_detail.getCtime()));
 		}
 	}
 
@@ -115,14 +120,24 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
-			ModelExperienceSend send = new ModelExperienceSend();
-			send.setWeiba_id(mItemData.getWeiba_id());
-			send.setParent_id(mItemData.getParent_id());
-			mApp.startActivity_qcj(this, ExperienceSendActivity.class,
-					sendDataToBundle(send, null));
+			if (mDetail != null) {
+				Log.i("send", mItemData.toString());
+				ModelExperienceSend send = new ModelExperienceSend();
+				send.setWeiba_id(mItemData.getWeiba_id());
+				send.setParent_id(mItemData.getPost_id());
+				String tags = mDetail.getPost_detail().getTags().toString();
+				if (tags.contains("[")) {
+					tags = tags.replace("[", "");
+				}
+				if (tags.contains("]")) {
+					tags = tags.replace("]", "");
+				}
+				send.setTags(tags);
+				mApp.startActivity_qcj(this, ExperienceSendActivity.class,
+						sendDataToBundle(send, null));
+			}
 			break;
 
 		}
 	}
-
 }

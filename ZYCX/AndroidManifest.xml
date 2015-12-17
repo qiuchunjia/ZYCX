@@ -347,6 +347,7 @@
         <activity android:name="qcjlibrary.activity.CancerSingleActivity" />
         <activity android:name="qcjlibrary.activity.ExperienceCycleActivity" />
         <activity android:name="qcjlibrary.activity.ExperienceSendActivity" />
+         <activity android:name="qcjlibrary.activity.ExperienceCycleDetail" />
         <activity android:name="qcjlibrary.activity.RequestSendTopicActivity" />
         <activity android:name="qcjlibrary.activity.RequestSendTopicCommitedActivity" />
         <activity android:name="qcjlibrary.activity.RequestChooseCancerActivity" />

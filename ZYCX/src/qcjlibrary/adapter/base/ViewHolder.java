@@ -98,11 +98,16 @@ public class ViewHolder {
 	// public TextView tv_date;
 	/******************* 经历轨迹title item end ************************/
 	/******************* 经历轨迹 item ************************/
-	public TextView tv_date_mouth;
+	public TextView tv_date_month;
 	public TextView tv_date_day;
 	public TextView tv_date_week;
 	public TextView tv_date_year;
 	public TextView tv_date_content;
+	public TextView tv_more;
+	public TextView tv_howmany;
+	public RelativeLayout rl_zan;
+	public ImageView iv_hand;
+	public TextView tv_zhengnengliang;
 	/******************* 经历轨迹 item end ************************/
 	/******************* 咨询 item ************************/
 	public ImageView iv_photo;

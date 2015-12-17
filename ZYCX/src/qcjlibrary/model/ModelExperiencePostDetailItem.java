@@ -16,9 +16,10 @@ public class ModelExperiencePostDetailItem extends Model {
 
 	/****
 	 * 
-	 "post_id": "7", "ctime": "1447815508", "content": "ddddd", "url":
-	 * "http://demo-qingko.zhiyicx.com/index.php?app=weiba&mod=Index&act=api_post_detail&post_id=7"
-	 * , "childCount": 2
+	 "post_id":"15", "ctime":"1449631445",
+	 * "content":"Dddddd is only one who is the best thing", "url":
+	 * "http://demo-qingko.zhiyicx.com/index.php?app=weiba&mod=Index&act=api_post_detail&post_id=15"
+	 * , "childCount":2, "praiseCount":"1", "is_praise":"0"
 	 * 
 	 * ****/
 	private String post_id;
@@ -26,6 +27,8 @@ public class ModelExperiencePostDetailItem extends Model {
 	private String content;
 	private String url;
 	private String childCount;
+	private String praiseCount;
+	private String is_praise;
 
 	public String getPost_id() {
 		return post_id;
@@ -69,6 +72,22 @@ public class ModelExperiencePostDetailItem extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getPraiseCount() {
+		return praiseCount;
+	}
+
+	public void setPraiseCount(String praiseCount) {
+		this.praiseCount = praiseCount;
+	}
+
+	public String getIs_praise() {
+		return is_praise;
+	}
+
+	public void setIs_praise(String is_praise) {
+		this.is_praise = is_praise;
 	}
 
 }

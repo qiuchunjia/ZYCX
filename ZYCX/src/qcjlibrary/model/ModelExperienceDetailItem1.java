@@ -107,4 +107,12 @@ public class ModelExperienceDetailItem1 extends Model {
 		this.recommend = recommend;
 	}
 
+	@Override
+	public String toString() {
+		return "ModelExperienceDetailItem1 [post_id=" + post_id + ", weiba_id="
+				+ weiba_id + ", post_uid=" + post_uid + ", title=" + title
+				+ ", content=" + content + ", post_time=" + post_time
+				+ ", parent_id=" + parent_id + ", recommend=" + recommend + "]";
+	}
+
 }

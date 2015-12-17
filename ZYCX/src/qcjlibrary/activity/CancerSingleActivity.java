@@ -8,6 +8,7 @@ import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetail;
 import qcjlibrary.model.ModelExperienceDetailInfor;
+import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
@@ -70,8 +71,13 @@ public class CancerSingleActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position,
-						ExperienceCycleActivity.class);
+				if (mDetail != null) {
+					ModelExperienceDetailItem1 detailItem = (ModelExperienceDetailItem1) parent
+							.getItemAtPosition(position);
+					detailItem.setWeiba_id(mDetail.getInfo().getWeiba_id());
+					mCommonListView.stepToNextActivity(detailItem,
+							ExperienceCycleActivity.class);
+				}
 			}
 		});
 

@@ -93,9 +93,9 @@ public class DateUtil {
 	 * @param time
 	 * @return
 	 */
-	public static Date stampToDate(String time) {
-		if (time != null) {
-			Long timestamp = Long.valueOf(time) * 1000;
+	public static Date stampToDate(String stamp) {
+		if (stamp != null) {
+			Long timestamp = Long.valueOf(stamp) * 1000;
 			Timestamp unixTime = new Timestamp(timestamp);
 			return unixTime;
 		}
@@ -112,6 +112,66 @@ public class DateUtil {
 		if (date != null) {
 			long unixTimestamp = date.getTime() / 1000;
 			return String.valueOf(unixTimestamp);
+		}
+		return null;
+	}
+
+	/**
+	 * 从时间戳当中获取当前年
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static String StampToYear(String stamp) {
+		Date date = stampToDate(stamp);
+		if (date != null) {
+			return String.valueOf(1900+date.getYear());
+		}
+		return null;
+	}
+
+	/**
+	 * 从时间戳当中获取当前月
+	 * 
+	 * @return
+	 */
+	public static String StampToMonth(String stamp) {
+		Date date = stampToDate(stamp);
+		if (date != null) {
+			return String.valueOf(date.getMonth());
+		}
+		return null;
+	}
+
+	/**
+	 * 从时间戳当中获取当前日
+	 * 
+	 * @return
+	 */
+	public static String StampToDay(String stamp) {
+		Date date = stampToDate(stamp);
+		if (date != null) {
+			return String.valueOf(date.getDay());
+		}
+		return null;
+	}
+
+	/**
+	 * 通过时间戳获取当前是星期几
+	 * 
+	 * @param stamp
+	 * @return
+	 */
+	public static String StampToWeek(String stamp) {
+		String[] weekDays = { "SUN", "MON", "TUE", " WED", "THU", " FRI", "SAT" };
+		Date date = stampToDate(stamp);
+		if (date != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+			if (w < 0)
+				w = 0;
+			return weekDays[w];
 		}
 		return null;
 	}
