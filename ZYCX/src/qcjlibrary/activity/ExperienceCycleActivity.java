@@ -84,6 +84,9 @@ public class ExperienceCycleActivity extends BaseActivity {
 			mDetail = (ModelExperiencePostDetail) object;
 			addDataToHead(mDetail.getPost_detail());
 		}
+		if (judgeTheMsg(object)) {
+			mAdapter.doRefreshHeader();
+		}
 		return object;
 	}
 

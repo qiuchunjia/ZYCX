@@ -6,6 +6,7 @@ import java.util.List;
 
 import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetailItem1;
+import qcjlibrary.model.ModelExperiencePostDetailItem;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
@@ -521,6 +522,21 @@ public class api {
 				params.add(ACT, POST_DETAIL);
 				params.add(ID, item1.getPost_id());
 				Log.i("postDetail", params.toString());
+				return params;
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams doPraise(ModelExperiencePostDetailItem item1) {
+			if (item1 != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, EXPERIENCE);
+				params.add(ACT, DOPRAISE);
+				params.add(ID, item1.getPost_id());
+				Log.i("doPraise", params.toString());
+				getTestToken(params);
 				return params;
 			}
 			return null;

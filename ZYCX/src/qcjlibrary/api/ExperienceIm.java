@@ -2,6 +2,7 @@ package qcjlibrary.api;
 
 import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetailItem1;
+import qcjlibrary.model.ModelExperiencePostDetailItem;
 import qcjlibrary.model.ModelExperienceSend;
 
 import com.loopj.android.http.RequestParams;
@@ -20,6 +21,7 @@ public interface ExperienceIm {
 	public static final String ADD_POST = "add_post";
 	public static final String POST_DETAIL = "post_detail"; // 经历-主帖详情
 	public static final String DETAIL = "detail";
+	public static final String DOPRAISE = "doPraise"; // 点赞
 	// 接口需要传的值的键
 	public static final String WEIBA_ID = "weiba_id";
 	public static final String PARENT_ID = "parent_id";
@@ -53,5 +55,13 @@ public interface ExperienceIm {
 	 * @return
 	 */
 	public RequestParams postDetail(ModelExperienceDetailItem1 item1);
+
+	/**
+	 * 帖子点赞
+	 * 
+	 * @param item1
+	 * @return
+	 */
+	public RequestParams doPraise(ModelExperiencePostDetailItem item1);
 
 }

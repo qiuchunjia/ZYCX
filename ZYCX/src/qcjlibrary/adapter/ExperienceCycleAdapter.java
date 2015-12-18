@@ -1,5 +1,7 @@
 package qcjlibrary.adapter;
 
+import java.util.List;
+
 import qcjlibrary.activity.ExperienceCycleDetail;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
@@ -8,8 +10,10 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperiencePostDetail;
 import qcjlibrary.model.ModelExperiencePostDetailItem;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DateUtil;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -89,7 +93,10 @@ public class ExperienceCycleAdapter extends BAdapter {
 
 				@Override
 				public void onClick(View v) {
-
+					ModelExperiencePostDetailItem detailItem = (ModelExperiencePostDetailItem) v
+							.getTag();
+					mBaseActivity.sendRequest(mApp.getExperienceImpl()
+							.doPraise(detailItem), ModelMsg.class, REQUEST_GET);
 				}
 			});
 			holder.tv_more.setTag(detailItem.getUrl());
@@ -145,7 +152,14 @@ public class ExperienceCycleAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		// sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getExperienceImpl().postDetail(mData),
+				ModelExperiencePostDetail.class, REQUEST_GET, REFRESH_NEW);
+	}
+
+	@Override
+	public void addHeadList(List<Model> list) {
+		Log.i("mlisttest", "addHeadList");
+		addHeadListWay2(list);
 	}
 
 	@Override

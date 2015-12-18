@@ -23,7 +23,6 @@ public class ExperienceCycleDetail extends BaseActivity {
 	@Override
 	public void initIntent() {
 		mUrl = (String) getDataFromIntent(getIntent(), null);
-
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class ExperienceCycleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		wv_view.loadUrl(mUrl);
 
 	}
 

@@ -166,7 +166,9 @@ public abstract class BAdapter extends BaseAdapter {
 				} else {
 					mList.removeAll(mList); // 清空所有的数据
 				}
+				Log.i("mlisttest", "mlist.size()=" + mList.size());
 				mList.addAll(list);
+				Log.i("mlisttest", "mlist.size()=" + mList.size());
 				this.notifyDataSetChanged();
 			}
 		}
@@ -389,7 +391,7 @@ public abstract class BAdapter extends BaseAdapter {
 							if (objectResult instanceof List<?>) {
 								List<Model> list = (List<Model>) objectResult;
 								if (RefreshType == REFRESH_NEW
-										&& RefreshType == REFRESH_HEADER) {
+										|| RefreshType == REFRESH_HEADER) {
 									addHeadList(list);
 								} else {
 									addFooterList(list);
