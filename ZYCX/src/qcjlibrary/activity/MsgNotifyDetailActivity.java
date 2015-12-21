@@ -1,6 +1,7 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelNotifyNotice;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,8 +15,9 @@ import com.zhiyicx.zycx.R;
 public class MsgNotifyDetailActivity extends BaseActivity {
 	private TextView tv_system_notify;
 	private TextView tv_date;
-	private TextView tv_title;
+	private TextView tv_notify_title;
 	private TextView tv_content;
+	private ModelNotifyNotice mNotice;
 
 	@Override
 	public String setCenterTitle() {
@@ -24,7 +26,7 @@ public class MsgNotifyDetailActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		mNotice = (ModelNotifyNotice) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -36,14 +38,26 @@ public class MsgNotifyDetailActivity extends BaseActivity {
 	public void initView() {
 		tv_system_notify = (TextView) findViewById(R.id.tv_system_notify);
 		tv_date = (TextView) findViewById(R.id.tv_date);
-		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_notify_title = (TextView) findViewById(R.id.tv_notify_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
 
 	}
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		if (mNotice != null) {
+			if (mNotice.getType().equals("answer")) {
+				tv_system_notify.setText("问答通知");
+				tv_notify_title.setText(mNotice.getQuestion_content());
+			} else if (mNotice.getType().equals("weiba")) {
+				tv_system_notify.setText("经历小组通知");
+				tv_notify_title.setText(mNotice.getContent());
+			} else if (mNotice.getType().equals("notice")) {
+				tv_system_notify.setText("系统通知");
+				tv_notify_title.setText(mNotice.getContent());
+			}
+			tv_date.setText(mNotice.getTime());
+		}
 
 	}
 

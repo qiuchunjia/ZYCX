@@ -6,7 +6,9 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelNotifyNotice;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -48,6 +50,21 @@ public class NotifyAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			ModelNotifyNotice notice = (ModelNotifyNotice) mList.get(position);
+			if (notice != null) {
+				if (notice.getType().equals("answer")) {
+					holder.tv_notify.setText("问答通知");
+					holder.tv_notify_content.setText(notice
+							.getQuestion_content());
+				} else if (notice.getType().equals("weiba")) {
+					holder.tv_notify.setText("经历小组通知");
+					holder.tv_notify_content.setText(notice.getContent());
+				} else if (notice.getType().equals("notice")) {
+					holder.tv_notify.setText("系统通知");
+					holder.tv_notify_content.setText(notice.getContent());
+				}
+				holder.tv_notify_date.setText(notice.getTime());
+			}
 		}
 	}
 
@@ -73,7 +90,8 @@ public class NotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getNotifyImpl().noticelist(null),
+				ModelNotifyNotice.class, REQUEST_GET, REFRESH_NEW);
 	}
 
 	@Override
@@ -93,9 +111,13 @@ public class NotifyAdapter extends BAdapter {
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseData(str, class1);
+	}
+
+	@Override
+	public Object getReallyList(Object object, Class type2) {
+		return object;
 	}
 
 }

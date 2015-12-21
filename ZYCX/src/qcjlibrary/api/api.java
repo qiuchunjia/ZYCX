@@ -12,6 +12,9 @@ import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelMeAddress;
+import qcjlibrary.model.ModelNotifyCommment;
+import qcjlibrary.model.ModelNotifyDig;
+import qcjlibrary.model.ModelNotifyNotice;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -538,6 +541,56 @@ public class api {
 				Log.i("doPraise", params.toString());
 				getTestToken(params);
 				return params;
+			}
+			return null;
+		}
+
+	}
+
+	public static final class NotifyImpl implements NotifyIm {
+
+		@Override
+		public RequestParams commentlist(ModelNotifyCommment commment) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, NOTICE);
+			params.add(ACT, COMMENTLIST);
+			getChangePage(params, commment);
+			getTestToken(params);
+			return params;
+		}
+
+		@Override
+		public RequestParams noticelist(ModelNotifyNotice notice) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, NOTICE);
+			params.add(ACT, NOTICELIST);
+			getChangePage(params, notice);
+			getTestToken(params);
+			return params;
+		}
+
+		@Override
+		public RequestParams digglist(ModelNotifyDig dig) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, NOTICE);
+			params.add(ACT, DIGGLIST);
+			getChangePage(params, dig);
+			getTestToken(params);
+			return params;
+		}
+
+		@Override
+		public RequestParams readnotice(ModelNotifyNotice notice) {
+			if (notice != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, NOTICE);
+				params.add(ACT, READNOTICE);
+				params.add(ID, notice.getId());
+				getTestToken(params);
 			}
 			return null;
 		}

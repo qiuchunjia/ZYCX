@@ -799,6 +799,7 @@ public class Thinksns extends Application {
 	private qcjlibrary.api.api.FoodImpl mFoodImpl;
 	private qcjlibrary.api.api.UserImpl mUserImpl;
 	private qcjlibrary.api.api.ExperienceImpl mExperienceImpl;
+	private qcjlibrary.api.api.NotifyImpl mNotifyImpl;
 
 	public api.ZhiXunImpl getZhiXunImpl() {
 		if (mZhixun == null) {
@@ -833,6 +834,13 @@ public class Thinksns extends Application {
 			mExperienceImpl = new api.ExperienceImpl();
 		}
 		return mExperienceImpl;
+	}
+
+	public api.NotifyImpl getNotifyImpl() {
+		if (mNotifyImpl == null) {
+			mNotifyImpl = new api.NotifyImpl();
+		}
+		return mNotifyImpl;
 	}
 
 	/*************************** 接口部分end ******************************/

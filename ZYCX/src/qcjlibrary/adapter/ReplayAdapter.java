@@ -2,13 +2,17 @@ package qcjlibrary.adapter;
 
 import java.util.List;
 
+import qcjlibrary.activity.NotifySingleReplyActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.widget.RoundImageView;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -48,6 +52,29 @@ public class ReplayAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			ModelNotifyCommment commment = (ModelNotifyCommment) mList
+					.get(position);
+			if (commment != null) {
+				mApp.displayImage(commment.getUserface(), holder.riv_msg_icon);
+				holder.tv_user.setText(commment.getUsername());
+				holder.tv_title.setText(commment.getContent());
+				holder.tv_other_replay.setText(commment.getMyname()
+						+ commment.getOriginal_content());
+				holder.tv_date.setText(commment.getTime());
+				holder.tv_replay.setTag(commment);
+				holder.tv_replay.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						ModelNotifyCommment commment = (ModelNotifyCommment) v
+								.getTag();
+						mApp.startActivity_qcj(mBaseActivity,
+								NotifySingleReplyActivity.class,
+								mBaseActivity.sendDataToBundle(commment, null));
+						// 进行评论
+					}
+				});
+			}
 		}
 	}
 
@@ -74,12 +101,12 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getNotifyImpl().commentlist(null),
+				ModelNotifyCommment.class, REQUEST_GET, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
 	}
 
 	@Override
@@ -94,9 +121,12 @@ public class ReplayAdapter extends BAdapter {
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseData(str, class1);
 	}
 
+	@Override
+	public Object getReallyList(Object object, Class type2) {
+		return object;
+	}
 }

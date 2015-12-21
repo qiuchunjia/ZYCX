@@ -24,7 +24,7 @@
         android:textSize="@dimen/text_small" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_notify_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
@@ -40,6 +40,7 @@
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:text="内容"
         android:textColor="@color/text_gray"
-        android:textSize="@dimen/text_small" />
+        android:textSize="@dimen/text_small"
+        android:visibility="gone" />
 
 </LinearLayout>

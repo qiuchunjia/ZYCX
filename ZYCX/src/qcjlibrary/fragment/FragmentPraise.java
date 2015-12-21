@@ -1,6 +1,5 @@
 package qcjlibrary.fragment;
 
-import qcjlibrary.adapter.ExpertRequestAdapter;
 import qcjlibrary.adapter.PraiseAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;

@@ -6,7 +6,9 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,14 @@ public class PraiseAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			ModelNotifyDig dig = (ModelNotifyDig) mList.get(position);
+			if (dig != null) {
+				mApp.displayImage(dig.getUserface(), holder.riv_msg_icon);
+				holder.tv_user.setText(dig.getUsername());
+				holder.tv_date.setText(dig.getTime());
+				holder.tv_other_replay.setText(dig.getMyname() + ":"
+						+ dig.getFeed_data());
+			}
 		}
 	}
 
@@ -72,12 +82,12 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		sendRequest(mApp.getNotifyImpl().digglist(null), ModelNotifyDig.class,
+				REQUEST_GET, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
 	}
 
 	@Override
@@ -87,14 +97,17 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public int getTheCacheType() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseData(str, class1);
+	}
+
+	@Override
+	public Object getReallyList(Object object, Class type2) {
+		return object;
 	}
 
 }
