@@ -10,10 +10,10 @@ import android.util.Log;
 /**
  * 类说明：
  * 
- * @author povol
+ * @author        povol
  * @date Jan 17, 2013
  * @version 1.0
- */
+ */ 
 public class UserApprove extends SociaxItem {
 
 	public static enum ApproveTpye {
