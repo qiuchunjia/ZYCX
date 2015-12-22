@@ -43,6 +43,16 @@ public class ModelRequestAnswerComom extends Model {
 
 	private String type; // 设置为最佳答案的时候需选择
 
+	private boolean shoudGone; // 是否需要隐藏设置最佳答案的按钮，这个主要是用于消息的页面的跳转的时候使用
+
+	public boolean isShoudGone() {
+		return shoudGone;
+	}
+
+	public void setShoudGone(boolean shoudGone) {
+		this.shoudGone = shoudGone;
+	}
+
 	public String getFrom() {
 		return from;
 	}

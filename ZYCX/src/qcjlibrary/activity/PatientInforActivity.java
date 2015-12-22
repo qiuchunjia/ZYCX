@@ -1,12 +1,16 @@
 package qcjlibrary.activity;
 
-import com.zhiyicx.zycx.R;
-
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.widget.popupview.PopChooseGender;
+import qcjlibrary.widget.popupview.PopChooseInsurance;
+import qcjlibrary.widget.popupview.PopChooseMarry;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import qcjlibrary.activity.base.BaseActivity;
+
+import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -82,13 +86,50 @@ public class PatientInforActivity extends BaseActivity {
 
 	@Override
 	public void initListener() {
-		// TODO Auto-generated method stub
+		rl_gender.setOnClickListener(this);
+		rl_marry.setOnClickListener(this);
+		rl_nation.setOnClickListener(this);
+		rl_education.setOnClickListener(this);
+		rl_insurance.setOnClickListener(this);
+		rl_hometown.setOnClickListener(this);
+		rl_address.setOnClickListener(this);
 
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.rl_gender:
+			PopChooseGender chooseGender = new PopChooseGender(this, null, this);
+			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
+			break;
+
+		case R.id.rl_marry:
+			PopChooseMarry chooseMarry = new PopChooseMarry(this, null, this);
+			chooseMarry.showPop(rl_marry, Gravity.BOTTOM, 0, 0);
+			break;
+		case R.id.rl_nation:
+			mApp.startActivityForResult_qcj(this, ChooseNationActivity.class,
+					null);
+			break;
+		case R.id.rl_education:
+			mApp.startActivityForResult_qcj(this,
+					ChooseEducationActivity.class, null);
+			break;
+		case R.id.rl_insurance:
+			PopChooseInsurance chooseInsurance = new PopChooseInsurance(this,
+					null, this);
+			chooseInsurance.showPop(rl_insurance, Gravity.BOTTOM, 0, 0);
+			break;
+		case R.id.rl_hometown:
+			mApp.startActivityForResult_qcj(this,
+					MeChooseProvinceActivity.class, null);
+			break;
+		case R.id.rl_address:
+			mApp.startActivityForResult_qcj(this,
+					MeChooseProvinceActivity.class, null);
+			break;
+		}
 
 	}
 

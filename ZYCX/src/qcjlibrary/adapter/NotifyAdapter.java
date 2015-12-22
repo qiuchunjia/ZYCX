@@ -96,7 +96,7 @@ public class NotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+//		sendRequest(null, null, 1, 1);
 	}
 
 	@Override

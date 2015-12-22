@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import qcjlibrary.model.ModelAddCase;
+import qcjlibrary.model.ModelAddHistoryCase;
+import qcjlibrary.model.ModelAddNowCase;
 import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperiencePostDetailItem;
@@ -595,5 +598,109 @@ public class api {
 			return null;
 		}
 
+	}
+
+	public static final class MedRecordImpl implements MedRecordIm {
+
+		@Override
+		public RequestParams saveInfo(ModelAddCase addCase) {
+			if (addCase != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, MEDRECORD);
+				params.add(ACT, SAVE_INFO);
+				params.add(REALNAME, addCase.getRealname());
+				params.add(SEX, addCase.getSex());
+				params.add(AGE, addCase.getAge());
+				params.add(MARRIAGE, addCase.getMarriage());
+				params.add(NATION, addCase.getNation());
+				params.add(PROFESSION, addCase.getProfession());
+				params.add(EDUCATION, addCase.getEducation());
+				params.add(INSFORM, addCase.getInsform());
+				params.add(NATIVES, addCase.getNation());
+				params.add(DOMICILE, addCase.getDomicile());
+				params.add(HEIGHT, addCase.getHeight());
+				params.add(WEIGHT, addCase.getWeight());
+				getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams saveHistory(ModelAddHistoryCase historyCase) {
+			if (historyCase != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, MEDRECORD);
+				params.add(ACT, SAVE_HISTORY);
+				params.add(MED_HISTORY, historyCase.getMed_history());
+				params.add(ALLERGY_HISTORY, historyCase.getAllergy_history());
+				params.add(PER_HISTORY, historyCase.getPer_history());
+				params.add(EATING_HABIT, historyCase.getEating_habit());
+				params.add(SMOKE, historyCase.getSmoke());
+				params.add(SMOKE_AGE, historyCase.getSmoke_age());
+				params.add(SMOKE_TIME, historyCase.getSmoke_time());
+				params.add(STOP_SMOKE, historyCase.getStop_smoke());
+				params.add(STOP_SMOKE_TIME, historyCase.getStop_smoke_time());
+				params.add(DRINK, historyCase.getDrink());
+				params.add(DRINK_AGE, historyCase.getDrink_age());
+				params.add(DRINK_CONSUMPTION,
+						historyCase.getDrink_consumption());
+				params.add(STOP_DRINK, historyCase.getStop_drink());
+				params.add(STOP_DRINK_TIME, historyCase.getStop_drink_time());
+				params.add(MENARCHE_AGE, historyCase.getMenarche_age());
+				params.add(MENARCHE_ETIME, historyCase.getMenarche_etime());
+				params.add(AMENORRHOEA_AGE, historyCase.getAmenorrhoea_age());
+				params.add(CHILDS, historyCase.getChilds());
+				params.add(FAMILY_HISTORY, historyCase.getFamily_history());
+				getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams savePresent(ModelAddNowCase nowCase) {
+			if (nowCase != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, MEDRECORD);
+				params.add(ACT, SAVE_PRESENT);
+				params.add(DIAGNOSIS_ETIME, nowCase.getDiagnosis_etime());
+				params.add(DIAGNOSIS_HOSPITAL, nowCase.getDiagnosis_hospital());
+				params.add(DIAGNOSIS_WAY, nowCase.getDiagnosis_way());
+				params.add(LAB_EXAM_PROGRAM, nowCase.getLab_exam_program());
+				params.add(LAB_EXAM_TIME, nowCase.getLab_exam_time());
+				params.add(LAB_EXAM_HOSPITAL, nowCase.getLab_exam_hospital());
+				params.add(IMAGE_EXAM_PROGRAM, nowCase.getImage_exam_program());
+				params.add(IMAGE_EXAM_TIME, nowCase.getImage_exam_time());
+				params.add(IMAGE_EXAM_HOSPITAL,
+						nowCase.getImage_exam_hospital());
+				params.add(DIAGNOSIS, nowCase.getDiagnosis());
+				params.add(LAB_EXAM, nowCase.getLab_exam());
+				params.add(IMAGE_EXAM, nowCase.getImage_exam());
+				getTestToken(params);
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDRECORD);
+			params.add(ACT, INDEX);
+			getTestToken(params);
+			return params;
+		}
+
+		@Override
+		public RequestParams myMedRecord() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDRECORD);
+			params.add(ACT, MY_MED_RECORD);
+			getTestToken(params);
+			return params;
+		}
 	}
 }

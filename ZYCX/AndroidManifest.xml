@@ -372,6 +372,8 @@
         <activity android:name="qcjlibrary.activity.LocalAlbumActivity" />
         <activity android:name="qcjlibrary.activity.LocalImagListActivity" />
         <activity android:name="qcjlibrary.activity.NotifySingleReplyActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseNationActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseEducationActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->
