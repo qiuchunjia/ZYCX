@@ -126,4 +126,14 @@
     <string name="footer_hint_load_normal">加载更多</string>
     <string name="footer_hint_load_ready">加载中</string>
     
+  <!-- 用药提醒弹出框文字 -->
+  <string name="alert_daily_everydaty">每天</string>
+  <string name="alert_daily_two">每2天</string>
+  <string name="alert_daily_three">每3天</string>
+  <string name="alert_daily_four">每4天</string>
+  <string name="alert_daily_five">每5天</string>
+  <string name="alert_daily_sex">每6天</string>
+  <string name="alert_daily_seven">每7天</string>
+  
+  <string name="alert_time_list_title">设置用药次数</string>
 </resources>

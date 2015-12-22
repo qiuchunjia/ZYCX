@@ -38,4 +38,16 @@ public class Config {
 	public static final String ISNOT_GUIDE = "ISNOT_GUIDE";
 	public static final String GENDER = "gender";
 
+	/************** 病例需要用到的 *******************/
+	public static final String TYPE_DATE = "type_date";
+	public static final String TYPE_GENDER = "type_gender";
+	public static final String TYPE_MARRY = "type_marry";
+	public static final String TYPE_EDUCATION = "type_education";
+	public static final String TYPE_HOME = "type_home";// 籍贯
+	public static final String TYPE_ADDRESS = "type_address"; // 居住地
+	
+	/************** 用药提醒需要用到的 *******************/
+	public static final String TYPE_DAILY = "type_daily";
+	public static final String TYPE_TIME = "type_time";
+	
 }
