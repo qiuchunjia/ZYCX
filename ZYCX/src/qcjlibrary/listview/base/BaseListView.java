@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.swipelistview.SwipeMenuAdapter;
 import qcjlibrary.listview.base.xlistview.XListView;
@@ -39,6 +38,11 @@ public abstract class BaseListView extends XListView implements
 		initXListView();
 	}
 
+<<<<<<< HEAD
+=======
+	public Context mContext; // 上下文
+
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	// /** mlist數據 */
 	private List<Model> mList;
 	private BAdapter mAdapter;
