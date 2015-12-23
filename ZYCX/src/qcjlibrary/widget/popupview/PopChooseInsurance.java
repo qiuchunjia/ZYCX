@@ -2,6 +2,8 @@ package qcjlibrary.widget.popupview;
 
 import com.zhiyicx.zycx.R;
 
+import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelPop;
 import qcjlibrary.widget.popupview.base.PopView;
 import android.app.Activity;
 import android.view.View;
@@ -19,6 +21,7 @@ public class PopChooseInsurance extends PopView {
 	private TextView tv_3;
 	private TextView tv_4;
 	private TextView tv_5;
+	private ModelPop mPopData;
 
 	public PopChooseInsurance(Activity activity, Object object,
 			PopResultListener resultListener) {
@@ -37,7 +40,8 @@ public class PopChooseInsurance extends PopView {
 		tv_3 = (TextView) findViewbyId(R.id.tv_3);
 		tv_4 = (TextView) findViewbyId(R.id.tv_4);
 		tv_5 = (TextView) findViewbyId(R.id.tv_5);
-
+		mPopData = new ModelPop();
+		mPopData.setType(Config.TYPE_INSURANCE);
 	}
 
 	@Override
@@ -66,25 +70,34 @@ public class PopChooseInsurance extends PopView {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.tv_1:
-
+				mPopData.setDataStr("城保");
+				mListener.onPopResult(mPopData);
+				mPopWindow.dismiss();
 				break;
 
 			case R.id.tv_2:
-
+				mPopData.setDataStr("新农合");
+				mListener.onPopResult(mPopData);
+				mPopWindow.dismiss();
 				break;
 			case R.id.tv_3:
-
+				mPopData.setDataStr("城乡医疗救助");
+				mListener.onPopResult(mPopData);
+				mPopWindow.dismiss();
 				break;
 			case R.id.tv_4:
-
+				mPopData.setDataStr("商业保险");
+				mListener.onPopResult(mPopData);
+				mPopWindow.dismiss();
 				break;
 			case R.id.tv_5:
-
+				mPopData.setDataStr("自费");
+				mListener.onPopResult(mPopData);
+				mPopWindow.dismiss();
 				break;
 			}
 
 		}
-
 	}
 
 }

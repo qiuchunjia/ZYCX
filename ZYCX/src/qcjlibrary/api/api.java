@@ -594,6 +594,7 @@ public class api {
 				params.add(ACT, READNOTICE);
 				params.add(ID, notice.getId());
 				getTestToken(params);
+				return params;
 			}
 			return null;
 		}
@@ -622,6 +623,7 @@ public class api {
 				params.add(HEIGHT, addCase.getHeight());
 				params.add(WEIGHT, addCase.getWeight());
 				getTestToken(params);
+				return params;
 			}
 			return null;
 		}
@@ -654,6 +656,7 @@ public class api {
 				params.add(CHILDS, historyCase.getChilds());
 				params.add(FAMILY_HISTORY, historyCase.getFamily_history());
 				getTestToken(params);
+				return params;
 			}
 			return null;
 		}
@@ -679,6 +682,7 @@ public class api {
 				params.add(LAB_EXAM, nowCase.getLab_exam());
 				params.add(IMAGE_EXAM, nowCase.getImage_exam());
 				getTestToken(params);
+				return params;
 			}
 			return null;
 		}

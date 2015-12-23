@@ -8,6 +8,8 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.StringAdapter;
+import qcjlibrary.config.Config;
+import qcjlibrary.model.base.Model;
 
 /**
  * author：qiuchunjia time：下午3:19:06 类描述：这个类是实现
@@ -62,6 +64,8 @@ public class ChooseNationActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String dataStr = (String) parent.getItemAtPosition(position);
+				setReturnResultSeri(dataStr, Config.TYPE_NATION);
 				onBackPressed();
 			}
 		});

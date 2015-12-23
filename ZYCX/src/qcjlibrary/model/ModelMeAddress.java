@@ -24,6 +24,8 @@ public class ModelMeAddress extends Model {
 	private String wholeAddress = ""; // 拼接完整的地址
 	private String wholeId = "";// 拼接完整的id
 
+	private String type; // activity根据type的类型来判断需要处理的逻辑
+
 	public ModelMeAddress() {
 
 	}
@@ -101,6 +103,14 @@ public class ModelMeAddress extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

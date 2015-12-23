@@ -1,5 +1,7 @@
 package qcjlibrary.widget.popupview;
 
+import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.widget.popupview.base.PopView;
@@ -81,7 +83,10 @@ public class PopDatePicker extends PopView {
 			@Override
 			public void onClick(View v) {
 				String pickTime = cacluteDate();
-				listener.onPopResult(pickTime.trim());
+				ModelPop modelPop = new ModelPop();
+				modelPop.setType(Config.TYPE_DATE);
+				modelPop.setDataStr(pickTime.trim());
+				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
 		});

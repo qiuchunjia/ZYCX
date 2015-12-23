@@ -3,7 +3,9 @@ package qcjlibrary.activity;
 import java.io.File;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
@@ -192,13 +194,13 @@ public class MeCenterBasicActivity extends BaseActivity {
 	@Override
 	public Object onPopResult(Object object) {
 		Object object2 = super.onPopResult(object);
-		if (object2 instanceof String) {
-			String data = (String) object2;
+		if (object2 instanceof ModelPop) {
+			ModelPop data = (ModelPop) object2;
 			ModelUser user = new ModelUser();
-			if (data.length() == 1) {
-				user.setSex(data);
+			if (data.getType().equals(Config.TYPE_GENDER)) {
+				user.setSex(data.getDataStr());
 			} else {
-				user.setBirthday(data);
+				user.setBirthday(data.getDataStr());
 			}
 			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
 					REQUEST_GET);

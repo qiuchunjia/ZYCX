@@ -3,8 +3,11 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.MeChooseAddressAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelMeAddress;
+import qcjlibrary.model.base.Model;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,6 +22,8 @@ import com.zhiyicx.zycx.R;
 public class MeChooseProvinceActivity extends BaseActivity {
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
+	private ModelMeAddress mAddress;
+	private Model mReturnData;
 
 	@Override
 	public String setCenterTitle() {
@@ -27,7 +32,12 @@ public class MeChooseProvinceActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		Object object = getDataFromIntent(getIntent(), null);
+		if (object instanceof ModelMeAddress) {
+			mAddress = (ModelMeAddress) object;
+		} else {
+			mAddress = new ModelMeAddress();
+		}
 	}
 
 	@Override
@@ -48,13 +58,30 @@ public class MeChooseProvinceActivity extends BaseActivity {
 					int position, long id) {
 				ModelMeAddress address = (ModelMeAddress) parent
 						.getItemAtPosition(position);
-				address.setWholeAddress(address.getTitle() + " ");
-				address.setWholeId(address.getArea_id() + ",");
-				mCommonListView.stepToNextActivity(address,
-						MeChooseCityActivity.class);
-				MeChooseProvinceActivity.this.finish();
+				mAddress.setArea_id(address.getArea_id());
+				mAddress.setWholeAddress(address.getTitle() + " ");
+				mAddress.setWholeId(address.getArea_id() + ",");
+				mApp.startActivityForResult_qcj(MeChooseProvinceActivity.this,
+						MeChooseCityActivity.class,
+						sendDataToBundle(mAddress, null));
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mReturnData = (Model) getReturnResultSeri(resultCode, data,
+				Config.TYPE_ADDRESS);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mReturnData != null) {
+			setReturnResultSeri(mReturnData, Config.TYPE_ADDRESS);
+			onBackPressed();
+		}
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package qcjlibrary.widget.popupview;
 
+import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelPop;
 import qcjlibrary.widget.popupview.base.PopView;
 import android.app.Activity;
 import android.view.View;
@@ -41,11 +43,14 @@ public class PopChooseGender extends PopView {
 
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
+		final ModelPop modelPop = new ModelPop();
+		modelPop.setType(Config.TYPE_GENDER);
 		tv_praise.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				listener.onPopResult("1");
+				modelPop.setDataStr("1");
+				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
 		});
@@ -53,7 +58,8 @@ public class PopChooseGender extends PopView {
 
 			@Override
 			public void onClick(View v) {
-				listener.onPopResult("2");
+				modelPop.setDataStr("2");
+				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
 		});
