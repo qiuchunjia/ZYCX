@@ -2,8 +2,6 @@ package qcjlibrary.widget.popupview;
 
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPop;
-import qcjlibrary.model.ModelUser;
-import qcjlibrary.util.DateUtil;
 import qcjlibrary.widget.popupview.base.PopView;
 import qcjlibrary.widget.wheelview.ArrayWheelAdapter;
 import qcjlibrary.widget.wheelview.WheelView;
@@ -35,6 +33,8 @@ public class PopDatePicker extends PopView {
 	private String mCurrentYear; // 当前的年
 	private String mCurrentMonth;// 当前的月
 	private String mCurrentDay;// 当前的日
+
+	private String mDateType;
 
 	public PopDatePicker(Activity activity, Object object,
 			PopResultListener resultListener) {
@@ -69,6 +69,10 @@ public class PopDatePicker extends PopView {
 		wv_date_day.setAdapter(new ArrayWheelAdapter<String>(mDay));
 	}
 
+	public void setType(String type) {
+		mDateType = type;
+	}
+
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
 		tv_date_cancle.setOnClickListener(new OnClickListener() {
@@ -84,7 +88,11 @@ public class PopDatePicker extends PopView {
 			public void onClick(View v) {
 				String pickTime = cacluteDate();
 				ModelPop modelPop = new ModelPop();
-				modelPop.setType(Config.TYPE_DATE);
+				if (mDateType != null) {
+					modelPop.setType(mDateType);
+				} else {
+					modelPop.setType(Config.TYPE_DATE);
+				}
 				modelPop.setDataStr(pickTime.trim());
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();

@@ -203,4 +203,20 @@ public class ModelAddHistoryCase extends Model {
 		this.family_history = family_history;
 	}
 
+	@Override
+	public String toString() {
+		return "ModelAddHistoryCase [med_history=" + med_history
+				+ ", allergy_history=" + allergy_history + ", per_history="
+				+ per_history + ", eating_habit=" + eating_habit + ", smoke="
+				+ smoke + ", smoke_age=" + smoke_age + ", smoke_time="
+				+ smoke_time + ", stop_smoke=" + stop_smoke
+				+ ", stop_smoke_time=" + stop_smoke_time + ", drink=" + drink
+				+ ", drink_age=" + drink_age + ", drink_consumption="
+				+ drink_consumption + ", stop_drink=" + stop_drink
+				+ ", stop_drink_time=" + stop_drink_time + ", menarche_age="
+				+ menarche_age + ", menarche_etime=" + menarche_etime
+				+ ", amenorrhoea_age=" + amenorrhoea_age + ", childs=" + childs
+				+ ", family_history=" + family_history + "]";
+	}
+
 }

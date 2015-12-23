@@ -38,4 +38,13 @@ public class Config {
 	public static final String TYPE_HOME = "type_home";// 籍贯
 	public static final String TYPE_ADDRESS = "type_address"; // 居住地
 
+	public static final String TYPE_SMOKE = "type_smoke";
+	public static final String TYPE_STOP_SMOKE = "type_stop_smoke";
+	public static final String TYPE_STOP_SMOKE_TIME = "type_stop_smoke_time";
+	public static final String TYPE_DRINK = "type_drink";
+	public static final String TYPE_STOP_DRINK = "type_stop_drink";
+	public static final String TYPE_STOP_DRINK_TIME = "type_stop_drink_time";
+	public static final String TYPE_EATING_HABIT = "type_eating_habit";
+	public static final String TYPE_LAST_TIME = "type_last_time";
+
 }
