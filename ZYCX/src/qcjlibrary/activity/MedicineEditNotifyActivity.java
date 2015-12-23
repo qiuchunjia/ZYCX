@@ -3,8 +3,12 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.SharedPreferencesUtil;
+import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopAlertDaily;
 import qcjlibrary.widget.popupview.PopAlertStartTime;
+import qcjlibrary.widget.popupview.PopAlertTime;
+import qcjlibrary.widget.popupview.PopAlertTimeList;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -14,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /**
  * author：qiuchunjia time：
@@ -42,9 +48,17 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	private RelativeLayout rl_alert_repaet_daily;
 	private RelativeLayout rl_alert_repeat_time;
 	private RelativeLayout rl_alert_starttime;
+	private TextView tv_title_right;
 	
+	private int id;
 	private String userName;
 	private String medicineName;
+	private String count;
+	private String day;
+	private String startTime;
+	private String timeList;
+	private boolean isOpen;
+	private boolean isExit;
 
 	@Override
 	public String setCenterTitle() {
@@ -64,8 +78,13 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
-		titleSetRightTitle("确认");
+		if(isExit){
+			titleSetRightTitle("修改");
+		} else{
+			titleSetRightTitle("确认");
+		}
 		et_medicine_name = (EditText) findViewById(R.id.et_medicine_name);
+		et_user = (EditText) findViewById(R.id.et_user);
 		tv_once = (TextView) findViewById(R.id.tv_once);
 		tv_eat_med_repeat = (TextView) findViewById(R.id.tv_eat_med_repeat);
 		tv_eat_med_repeatday = (TextView) findViewById(R.id.tv_eat_med_repeatday);
@@ -78,16 +97,29 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		rl_alert_repaet_daily = (RelativeLayout) findViewById(R.id.rl_alert_repaet_daily);
 		rl_alert_repeat_time = (RelativeLayout) findViewById(R.id.rl_alert_repeat_time);
 		rl_alert_starttime = (RelativeLayout) findViewById(R.id.rl_alert_starttime);
+		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
 	}
 
 	@Override
 	public void initData() {
-		
+		count = "1次";
+		day = "每天";
+		isOpen = false;
+		if(isExit){
+			
+			tv_once.setText(day+count);
+			tv_eat_med_repeatday.setText(day);
+			tv_start_time.setText(startTime);
+		}
 	}
 
 	@Override
 	public void initListener() {
-		
+		rl_alert_repaet_daily.setOnClickListener(this);
+		rl_alert_repeat_time.setOnClickListener(this);
+		rl_alert_starttime.setOnClickListener(this);
+		iv_notify_open.setOnClickListener(this);
+		tv_title_right.setOnClickListener(this);
 	}
 
 	@Override
@@ -100,7 +132,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			break;
 		case R.id.rl_alert_repeat_time:
 			//弹出时间提醒频率框
-			
+			PopAlertTimeList alertTimeList = new PopAlertTimeList(this, null, this);
+			alertTimeList.showPop(rl_alert_repeat_time, Gravity.BOTTOM, 0, 0);
+			Thinksns.medicineAct = this;
 			break;
 		case R.id.rl_alert_starttime:
 			//弹出开始时间选择框
@@ -109,7 +143,28 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			break;
 		case R.id.iv_notify_open:
 			//打开或关闭提醒
-			
+			if(isOpen){
+				iv_notify_open.setImageResource(R.drawable.switch_on);
+			} else{
+				iv_notify_open.setImageResource(R.drawable.switch_off);
+			}
+			break;
+		case R.id.tv_title_right:
+			userName = et_user.getText()+"";
+			medicineName = et_medicine_name.getText()+"";
+			if(!userName.equals("") && !medicineName.equals("")){
+				if(startTime != null){
+					StringBuffer totalData = new StringBuffer();
+					totalData.append(isOpen+",").append(userName+",").append(medicineName+",").
+					append(day+count+",").append(startTime+",").append(timeList);
+					id = ++Thinksns.id;
+					SharedPreferencesUtil.saveData(this, id+"", totalData);
+				} else{
+					ToastUtils.showLongToast(this, R.string.alert_time_starttime);
+				}
+			} else{
+				ToastUtils.showLongToast(this, R.string.alert_time_username);
+			}
 			break;
 		default:
 			break;
@@ -119,15 +174,22 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	@Override
 	public Object onPopResult(Object object) {
 		String type = ((ModelPop)object).getType();
-		String data = ((ModelPop)object).getDataStr();
+		String timeAndCount;
 		if(type.equals(Config.TYPE_DAILY)){
-			tv_once.setText(data+"一次");
-			tv_eat_med_repeatday.setText(data);
-		} else if(type.equals(Config.TYPE_TIME)){
-			tv_eat_time.setText(data);
+			day = ((ModelPop)object).getDataStr();
+			tv_once.setText(day+count);
+			tv_eat_med_repeatday.setText(day);
+		} else if(type.equals(Config.TYPE_TIME_LIST)){
+			timeAndCount = ((ModelPop)object).getDataStr();
+			timeList = timeAndCount.split(",")[0];
+			count = timeAndCount.split(",")[1];
+			tv_eat_time.setText(timeList);
+			tv_once.setText(day+count);
 		} else if(type.equals(Config.TYPE_DATE)){
-			tv_start_time.setText(data);
+			startTime = ((ModelPop)object).getDataStr();
+			tv_start_time.setText(startTime);
 		}
 		return super.onPopResult(object);
 	}
+
 }

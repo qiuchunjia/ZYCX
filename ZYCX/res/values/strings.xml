@@ -136,4 +136,6 @@
   <string name="alert_daily_seven">每7天</string>
   
   <string name="alert_time_list_title">设置用药次数</string>
+  <string name="alert_time_username">用户或药品名为空</string>
+  <string name="alert_time_starttime">开始时间不正确</string>
 </resources>

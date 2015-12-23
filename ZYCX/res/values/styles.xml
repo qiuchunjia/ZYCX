@@ -90,4 +90,16 @@
         <item name="android:button">@drawable/radio_button_selector</item>
     </style>
     
+    <style name="check_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">@dimen/check_button_margin</item>
+        <item name="android:layout_marginRight">@dimen/check_button_margin</item>
+        <item name="android:layout_marginTop">@dimen/check_button_margin</item>
+        <item name="android:background">@drawable/view_border_green_04</item>
+        <item name="android:text">@string/agreement_reigter_back</item>
+        <item name="android:textColor">@color/text_green</item>
+        <item name="android:textSize">@dimen/text_common</item>
+    </style>
+    
 </resources>

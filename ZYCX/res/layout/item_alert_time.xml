@@ -5,13 +5,13 @@
     android:background="@color/main_white_pure_color"
     android:padding="5dp" >
 	
-    <TextView 
-	        android:id="@+id/tv_alert_time"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="8:00"
-	        android:textSize="@dimen/text_common"
-	        />
+    <TextView
+        android:id="@+id/tv_alert_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00"
+        android:textSize="@dimen/text_common" />
+
 	    <Button 
 	        android:id="@+id/btn_alert_addtime"
 	        android:layout_width="@dimen/margin_left"

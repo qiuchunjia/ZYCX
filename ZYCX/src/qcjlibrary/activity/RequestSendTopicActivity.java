@@ -195,4 +195,5 @@ public class RequestSendTopicActivity extends BaseActivity {
 		}
 		return true;
 	}
+
 }

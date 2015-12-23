@@ -88,6 +88,8 @@ public class Thinksns extends Application {
 	private static WeakHashMap<String, Bitmap> imageCache;
 	private static ListData<SociaxItem> lastWeiboList;
 	private CommonLog mCommonLog = LogFactory.createLog();
+	public static Activity medicineAct;
+	public static int id;
 
 	@Override
 	public void onCreate() {
