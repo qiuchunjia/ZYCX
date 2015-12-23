@@ -1,11 +1,15 @@
 package qcjlibrary.activity;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelFoodWayDetailInfo;
+=======
+import qcjlibrary.activity.base.BaseActivity;
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -38,9 +42,12 @@ public class FoodWaySingleDetail extends BaseActivity {
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
 
+<<<<<<< HEAD
 	private ModelFoodSearch1 mFoodData;
 	private ModelFoodWayDetail mDetail;
 
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	@Override
 	public String setCenterTitle() {
 		return "姜汤肚";
@@ -48,7 +55,11 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initIntent() {
+<<<<<<< HEAD
 		mFoodData = (ModelFoodSearch1) getDataFromIntent(getIntent(), null);
+=======
+
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	}
 
 	@Override
@@ -80,6 +91,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
+<<<<<<< HEAD
 		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData),
 				ModelFoodWayDetail.class, REQUEST_GET);
 
@@ -135,10 +147,18 @@ public class FoodWaySingleDetail extends BaseActivity {
 				}
 			}
 		}
+=======
+		// TODO Auto-generated method stub
+
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	}
 
 	@Override
 	public void initListener() {
+<<<<<<< HEAD
+=======
+		// TODO Auto-generated method stub
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 
 	}
 
