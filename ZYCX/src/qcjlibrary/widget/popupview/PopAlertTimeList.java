@@ -79,6 +79,7 @@ public class PopAlertTimeList extends PopView {
 		timeList.add(childItemThree);
 		timeList.add(childItemFour);
 		ll_alert_time_list.addView(childItemOne);
+		count = 1;
 	}
 
 	@Override

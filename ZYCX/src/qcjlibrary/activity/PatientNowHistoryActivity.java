@@ -1,20 +1,24 @@
 package qcjlibrary.activity;
 
+import java.util.ArrayList;
+
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelAddNowCase;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
-import qcjlibrary.model.base.Model;
 import qcjlibrary.util.ToastUtils;
+import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.content.Intent;
-import android.graphics.Shader.TileMode;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +52,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private EditText et_vedio_checkname;
 	private RelativeLayout rl_vedio_check_add;
 	private TextView tv_lab_check_project;
+	private LocalImageManager mImageManager;
 
 	@Override
 	public String setCenterTitle() {
@@ -95,6 +100,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
+		mImageManager = LocalImageManager.from(this);
 	}
 
 	@Override
@@ -305,6 +311,72 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		addCase.setImage_exam_time(image_exam_time);
 		addCase.setImage_exam_hospital(image_exam_hospital);
 		return addCase;
+	}
+
+	/*************************** 添加图片 ***********************************************/
+	/**
+	 * 添加图片到下面布局中
+	 */
+	private final int ADDPHOTO = 0;
+	private final int PHOTO = 1;
+	private ArrayList<String> mPhotoList;
+
+	private void addImageToHsv(String path, int type) {
+		View itemView = mInflater.inflate(R.layout.hsv_img_item, null);
+		ImageView big_image = (ImageView) itemView.findViewById(R.id.big_image);
+		ImageView delete_image = (ImageView) itemView
+				.findViewById(R.id.delete_image);
+		if (type == PHOTO) {
+			if (path != null) {
+				mImageManager.displayImage(big_image, path,
+						R.drawable.default_image_small, 100, 100);
+				delete_image.setTag(itemView);
+				ll_ScrollView.addView(itemView);
+				changeThePosition(ll_ScrollView, itemView);
+				delete_image.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						View view = (View) v.getTag();
+						ll_ScrollView.removeView(view);
+					}
+				});
+			}
+		} else if (type == ADDPHOTO) {
+			big_image.setBackgroundResource(R.drawable.add);
+			itemView.setTag("tag");
+			delete_image.setVisibility(View.GONE);
+			ll_ScrollView.addView(itemView);
+			big_image.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivityForResult_qcj(
+							PatientNowHistoryActivity.this,
+							LocalImagListActivity.class, null);
+				}
+			});
+		}
+	}
+
+	/**
+	 * 交换位置
+	 * 
+	 * @param parent
+	 *            父布局
+	 * @param itemView
+	 * 
+	 */
+	private void changeThePosition(LinearLayout parent, View itemView) {
+		int sum = parent.getChildCount();
+		for (int i = 0; i < sum; i++) {
+			View view = parent.getChildAt(i);
+			String str = (String) view.getTag();
+			if (str != null && str == "tag") {
+				parent.removeView(view);
+				parent.addView(view);
+			}
+		}
 	}
 
 }

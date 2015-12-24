@@ -4,6 +4,7 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.UseMedicineNotifyAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.base.Model;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.baidu.mapapi.search.share.ShareUrlResult;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 
@@ -73,37 +75,43 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			}
 		});
 		mAlertList = new ArrayList<Model>();
-		int count = Thinksns.id;
+		int count = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
 		if(count < 1){
 			return;
 		}
-		for (int i = 1; i < Thinksns.id; i++) {
-			String totalData = SharedPreferencesUtil.getData(this, "i", " ").toString();
-			if(!totalData.equals(" ")){
+		for (int i = 1; i <= count; i++) {
+			String totalData = SharedPreferencesUtil.getData(this, i+"", "null").toString();
+			if(!totalData.equals("null")){
 				String[] mDataArr = totalData.split(",");
 				ModelAlertData mData = new ModelAlertData();
 				boolean isOpen = true;
 				if(mDataArr[0].equals("false")){
-					isOpen = true;
+					isOpen = false;
 				}
 				String userName = mDataArr[1];
 				String medicineName = mDataArr[2];
 				String repeatDaily = mDataArr[3];
-				String startTime = mDataArr[4];
-				String timeList = mDataArr[5];
+				String repeatCount = mDataArr[4];
+				String startTime = mDataArr[5];
+				String timeList = mDataArr[6];
 				mData.setId(i);
 				mData.setExit(true);
 				mData.setOpen(isOpen);
 				mData.setUserName(userName);
 				mData.setMedicineName(medicineName);
 				mData.setRepeatDaily(repeatDaily);
+				mData.setRepeatCount(repeatCount);
 				mData.setStartTime(startTime);
 				mData.setTimeList(timeList);
 				mAlertList.add(mData);
 			}
 		}
-		mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
-		mCommonListView.setAdapter(mAdapter);
+		int len = mAlertList.size();
+		Log.d("Cathy", "len:"+len);
+		if(len > 0){
+			mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
+			mCommonListView.setAdapter(mAdapter);
+		}
 	}
 
 	@Override
