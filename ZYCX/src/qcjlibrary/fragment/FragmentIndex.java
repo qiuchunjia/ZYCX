@@ -2,11 +2,10 @@ package qcjlibrary.fragment;
 
 import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
-<<<<<<< HEAD
+
 import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
-=======
->>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
+
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.base.Model;
 import android.view.View;
@@ -77,13 +76,9 @@ public class FragmentIndex extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_1:
-<<<<<<< HEAD
+
 			setTabFragement(HomeActivity.index_qustion);
-=======
-			// TODO
-			mApp.startActivity_qcj(mActivity, MsgNotifyPraiseActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
->>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
+
 			break;
 
 		case R.id.rl_2:
