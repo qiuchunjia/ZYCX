@@ -59,15 +59,9 @@
     </RadioGroup>
 
     <Button
-        android:background="@drawable/view_border_green_04"
         android:id="@+id/btn_alert_check"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/body_margin_top"
-        android:text="@string/agreement_reigter_back"
-        android:textSize="@dimen/text_common"
-        android:textColor="@color/text_green"
-        android:layout_below="@id/rg_alert_daily" />
+        style="@style/check_button"
+        android:layout_below="@id/rg_alert_daily"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package qcjlibrary.widget.popupview;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.app.Activity;
@@ -81,25 +82,25 @@ public class PopAlertDaily extends PopView {
 				/** 选中的提醒频率**/
 				String checkItem = "";
 				switch (index) {
-				case 0:
+				case 2131362498:
 					checkItem = "每天";
 					break;
-				case 1:
+				case 2131362499:
 					checkItem = "每2天";
 					break;
-				case 2:
+				case 2131362500:
 					checkItem = "每3天";
 					break;
-				case 3:
+				case 2131362501:
 					checkItem = "每4天";
 					break;
-				case 4:
+				case 2131362502:
 					checkItem = "每5天";
 					break;
-				case 5:
+				case 2131362503:
 					checkItem = "每6天";
 					break;
-				case 6:
+				case 2131362504:
 					checkItem = "每7天";
 					break;
 				default:

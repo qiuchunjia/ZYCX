@@ -1,7 +1,10 @@
 package qcjlibrary.widget.popupview.base;
 
+import com.umeng.socialize.utils.Log;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +47,19 @@ public abstract class PopView implements PopInterface {
 		this.mResultListener = resultListener;
 		initPopWindow();
 	}
+
+	
+	
+	public PopView(Context context,Object object,
+			PopResultListener mResultListener) {
+		this.mActivity = (Activity) context;
+		this.mInflater = LayoutInflater.from(context);
+		this.mData = object;
+		this.mResultListener = mResultListener;
+		initPopWindow();
+	}
+
+
 
 	/**
 	 * 初始化popWindow
@@ -163,5 +179,5 @@ public abstract class PopView implements PopInterface {
 		 */
 		Object onPopResult(Object object);
 	}
-
+	
 }

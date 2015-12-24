@@ -3,6 +3,7 @@ package qcjlibrary.widget.popupview;
 import com.zhiyicx.zycx.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -33,7 +34,8 @@ public class PopAlertTime extends PopView{
 	private String mCurrentAm; // 上下午
 	private String mCurrentHour;// 当前的小时数
 	private String mCurrentMin;// 当前的分钟数
-	
+	private String time;
+	private PopAlertTimeList mAlertTimeList;
 	public PopAlertTime(Activity activity, Object object,
 			PopResultListener resultListener) {
 		super(activity, object, resultListener);
@@ -83,10 +85,12 @@ public class PopAlertTime extends PopView{
 			@Override
 			public void onClick(View v) {
 				String pickTime = cacluteDate();
-				ModelPop data = new ModelPop();
-				data.setType(Config.TYPE_TIME);
-				data.setDataStr(pickTime);
-				listener.onPopResult(data);
+				//ModelPop data = new ModelPop();
+				//data.setType(Config.TYPE_TIME);
+				//data.setDataStr(pickTime);
+				//listener.onPopResult(data);
+				time = pickTime;
+				mAlertTimeList.setOtherPopView(time);
 				mPopWindow.dismiss();
 			}
 		});
@@ -116,5 +120,18 @@ public class PopAlertTime extends PopView{
 		mCurrentMin = mMin[wv_date_day.getCurrentItem()];
 		mCurrentMin = mCurrentMin.trim();
 		return mCurrentAm + " " + mCurrentHour + ":" + mCurrentMin;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+	public void setPopalerttime(PopAlertTimeList alertTimeList){
+		
+		this.mAlertTimeList=alertTimeList;
 	}
 }
