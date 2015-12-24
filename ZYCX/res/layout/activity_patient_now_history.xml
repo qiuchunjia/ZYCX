@@ -195,7 +195,7 @@
                 android:textSize="@dimen/text_very_big" />
 
             <RelativeLayout
-                android:id="@+id/rl_lab_check_time"
+                android:id="@+id/rl_lab_check_project"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@color/main_white_pure_color"
@@ -326,7 +326,7 @@
                 android:textSize="@dimen/text_very_big" />
 
             <RelativeLayout
-                android:id="@+id/rl_vedio_check_time"
+                android:id="@+id/rl_vedio_check_project"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@color/main_white_pure_color"
