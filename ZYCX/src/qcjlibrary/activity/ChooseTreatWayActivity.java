@@ -49,7 +49,7 @@ public class ChooseTreatWayActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String data = (String) parent.getItemAtPosition(position);
-				setReturnResultSeri(data, Config.TYPE_EDUCATION);
+				setReturnResultSeri(data, Config.TYPE_VIDEO_PROJECT);
 				onBackPressed();
 			}
 		});

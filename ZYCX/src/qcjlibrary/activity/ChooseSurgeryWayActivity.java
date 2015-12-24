@@ -48,7 +48,7 @@ public class ChooseSurgeryWayActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String data = (String) parent.getItemAtPosition(position);
-				setReturnResultSeri(data, Config.TYPE_VIDEO_PROJECT);
+				setReturnResultSeri(data, Config.TYPE_CHECK_WAY);
 				onBackPressed();
 			}
 		});

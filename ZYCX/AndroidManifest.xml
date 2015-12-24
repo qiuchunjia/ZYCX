@@ -377,6 +377,7 @@
         <activity android:name="qcjlibrary.activity.ChooseLabWayActivity" />
         <activity android:name="qcjlibrary.activity.ChooseSurgeryWayActivity" />
         <activity android:name="qcjlibrary.activity.ChooseTreatWayActivity" />
+        <activity android:name="qcjlibrary.activity.PatientNowHistoryActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->

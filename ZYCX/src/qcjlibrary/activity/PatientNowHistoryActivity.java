@@ -1,12 +1,16 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelAddNowCase;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.content.Intent;
+import android.graphics.Shader.TileMode;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -43,6 +47,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private TextView tv_vedio_check_end_time_name;
 	private EditText et_vedio_checkname;
 	private RelativeLayout rl_vedio_check_add;
+	private TextView tv_lab_check_project;
 
 	@Override
 	public String setCenterTitle() {
@@ -61,6 +66,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		titleSetRightTitle("保存");
 		rl_check_time = (RelativeLayout) findViewById(R.id.rl_check_time);
 		tv_check_time_name = (TextView) findViewById(R.id.tv_check_time_name);
 		rl_check_time1 = (RelativeLayout) findViewById(R.id.rl_check_time1);
@@ -82,12 +88,13 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		tv_vedio_check_end_time_name = (TextView) findViewById(R.id.tv_vedio_check_end_time_name);
 		et_vedio_checkname = (EditText) findViewById(R.id.et_vedio_checkname);
 		rl_vedio_check_add = (RelativeLayout) findViewById(R.id.rl_vedio_check_add);
+		tv_lab_check_project = (TextView) findViewById(R.id.tv_lab_check_project);
 	}
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
-
+		Title title = getTitleClass();
+		title.tv_title_right.setOnClickListener(this);
 	}
 
 	@Override
@@ -105,6 +112,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.tv_title_right:
+			setEditContent();
+			if (checkTheContent()) {
+				ModelAddNowCase addNowCase = addDataToModel();
+				sendRequest(mApp.getMedRecordImpl().savePresent(addNowCase),
+						ModelMsg.class, REQUEST_GET);
+			}
+
+			break;
 		case R.id.rl_check_time:
 			PopDatePicker datePicker = new PopDatePicker(this, null, this);
 			datePicker.setType(Config.TYPE_CHECK_START_TIME);
@@ -113,7 +129,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 
 		case R.id.rl_check_time1:
 			PopDatePicker datePicker1 = new PopDatePicker(this, null, this);
-			datePicker1.setType(Config.TYPE_CHECK_START_TIME);
+			datePicker1.setType(Config.TYPE_CHECK_END_TIME);
 			datePicker1.showPop(rl_check_time1, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_check_way:
@@ -140,6 +156,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			break;
 		}
 
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (judgeTheMsg(object)) {
+			onBackPressed();
+		}
+		return object;
 	}
 
 	@Override
@@ -175,13 +200,13 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		Object object1 = getReturnResultSeri(resultCode, data,
 				Config.TYPE_LAB_PROJECT);
 		if (object1 instanceof String) {
-			tv_check_way_name.setText(object1.toString());
+			tv_lab_check_time_project.setText(object1.toString());
 			lab_exam_program = object1.toString();
 		}
 		Object object2 = getReturnResultSeri(resultCode, data,
 				Config.TYPE_VIDEO_PROJECT);
 		if (object2 instanceof String) {
-			tv_check_way_name.setText(object2.toString());
+			tv_vedio_check_time_project.setText(object2.toString());
 			image_exam_program = object2.toString();
 		}
 	}
