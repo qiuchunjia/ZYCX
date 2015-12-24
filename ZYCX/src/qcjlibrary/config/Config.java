@@ -59,4 +59,5 @@ public class Config {
 	public static final String TYPE_TIME = "type_time";
 	public static final String TYPE_TIME_LIST = "type_time_list";
 
+	
 }
