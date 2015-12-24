@@ -1,6 +1,7 @@
 package qcjlibrary.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
@@ -11,6 +12,7 @@ import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopDatePicker;
+import android.R.string;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -52,7 +55,11 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private EditText et_vedio_checkname;
 	private RelativeLayout rl_vedio_check_add;
 	private TextView tv_lab_check_project;
+	/*************** 添加图片的 **************************/
 	private LocalImageManager mImageManager;
+	private LinearLayout ll_ScrollView1;
+	private LinearLayout ll_ScrollView2;
+	private LinearLayout ll_ScrollView3;
 
 	@Override
 	public String setCenterTitle() {
@@ -94,10 +101,16 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		et_vedio_checkname = (EditText) findViewById(R.id.et_vedio_checkname);
 		rl_vedio_check_add = (RelativeLayout) findViewById(R.id.rl_vedio_check_add);
 		tv_lab_check_project = (TextView) findViewById(R.id.tv_lab_check_project);
+		ll_ScrollView1 = (LinearLayout) findViewById(R.id.ll_ScrollView1);
+		ll_ScrollView2 = (LinearLayout) findViewById(R.id.ll_ScrollView2);
+		ll_ScrollView3 = (LinearLayout) findViewById(R.id.ll_ScrollView3);
 	}
 
 	@Override
 	public void initData() {
+		addImageToHsv(null, ADDPHOTO, ll_ScrollView1, Config.TYPE_CHECK_PHOTO);
+		addImageToHsv(null, ADDPHOTO, ll_ScrollView2, Config.TYPE_LAB_PHOTO);
+		addImageToHsv(null, ADDPHOTO, ll_ScrollView3, Config.TYPE_VIDEO_PHOTO);
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 		mImageManager = LocalImageManager.from(this);
@@ -215,6 +228,48 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			tv_vedio_check_time_project.setText(object2.toString());
 			image_exam_program = object2.toString();
 		}
+		Object photolist1 = getReturnResultSeri(resultCode, data,
+				Config.TYPE_CHECK_PHOTO);
+		if (photolist1 instanceof List<?>) {
+			List<String> lists = (List<String>) photolist1;
+			addDataAndDisplay(ll_ScrollView1, mPhotoList1, lists,
+					Config.TYPE_CHECK_PHOTO);
+		}
+		Object photolist2 = getReturnResultSeri(resultCode, data,
+				Config.TYPE_LAB_PHOTO);
+		if (photolist2 instanceof List<?>) {
+			List<String> lists = (List<String>) photolist2;
+			addDataAndDisplay(ll_ScrollView2, mPhotoList2, lists,
+					Config.TYPE_LAB_PHOTO);
+		}
+		Object photolist3 = getReturnResultSeri(resultCode, data,
+				Config.TYPE_VIDEO_PHOTO);
+		if (photolist3 instanceof List<?>) {
+			List<String> lists = (List<String>) photolist3;
+			addDataAndDisplay(ll_ScrollView3, mPhotoList3, lists,
+					Config.TYPE_VIDEO_PHOTO);
+		}
+	}
+
+	/**
+	 * 
+	 * @param parent
+	 * @param totaldata
+	 * @param data
+	 */
+	public void addDataAndDisplay(LinearLayout parent, List<String> totaldata,
+			List<String> data, String returntype) {
+		if (parent != null && totaldata != null && data != null) {
+			for (String str : data) {
+				if (parent.getChildCount() >= 6) {
+					ToastUtils.showToast("最多只能选六张！");
+					return;
+				}
+				addImageToHsv(str, PHOTO, parent, returntype);
+				totaldata.add(str);
+			}
+		}
+
 	}
 
 	/************************************** 需要上传的参数集合 ***********************/
@@ -319,9 +374,12 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	 */
 	private final int ADDPHOTO = 0;
 	private final int PHOTO = 1;
-	private ArrayList<String> mPhotoList;
+	private ArrayList<String> mPhotoList1 = new ArrayList<String>();
+	private ArrayList<String> mPhotoList2 = new ArrayList<String>();
+	private ArrayList<String> mPhotoList3 = new ArrayList<String>();
 
-	private void addImageToHsv(String path, int type) {
+	private void addImageToHsv(String path, int type,
+			final LinearLayout parent, final String returnType) {
 		View itemView = mInflater.inflate(R.layout.hsv_img_item, null);
 		ImageView big_image = (ImageView) itemView.findViewById(R.id.big_image);
 		ImageView delete_image = (ImageView) itemView
@@ -331,14 +389,14 @@ public class PatientNowHistoryActivity extends BaseActivity {
 				mImageManager.displayImage(big_image, path,
 						R.drawable.default_image_small, 100, 100);
 				delete_image.setTag(itemView);
-				ll_ScrollView.addView(itemView);
-				changeThePosition(ll_ScrollView, itemView);
+				parent.addView(itemView);
+				changeThePosition(parent, itemView);
 				delete_image.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						View view = (View) v.getTag();
-						ll_ScrollView.removeView(view);
+						parent.removeView(view);
 					}
 				});
 			}
@@ -346,14 +404,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			big_image.setBackgroundResource(R.drawable.add);
 			itemView.setTag("tag");
 			delete_image.setVisibility(View.GONE);
-			ll_ScrollView.addView(itemView);
+			parent.addView(itemView);
 			big_image.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					mApp.startActivityForResult_qcj(
 							PatientNowHistoryActivity.this,
-							LocalImagListActivity.class, null);
+							LocalImagListActivity.class,
+							sendDataToBundle(returnType, null));
 				}
 			});
 		}
@@ -361,11 +420,11 @@ public class PatientNowHistoryActivity extends BaseActivity {
 
 	/**
 	 * 交换位置
-	 * 
+	 *
 	 * @param parent
 	 *            父布局
 	 * @param itemView
-	 * 
+	 *
 	 */
 	private void changeThePosition(LinearLayout parent, View itemView) {
 		int sum = parent.getChildCount();
