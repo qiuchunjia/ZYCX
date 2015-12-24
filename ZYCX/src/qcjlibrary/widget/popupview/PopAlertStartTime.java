@@ -97,7 +97,7 @@ public class PopAlertStartTime extends PopView {
 	 */
 	private void genateYearMouthDay() {
 		for (int i = 0; i < mYear.length; i++) {
-			mYear[i] = "  " + (2015 - i) + "  ";
+			mYear[i] = "  " + (2015 + i) + "  ";
 		}
 		for (int i = 0; i < mMonth.length; i++) {
 			mMonth[i] = "  " + ((1 + i)) + "  ";

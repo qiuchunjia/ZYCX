@@ -123,11 +123,15 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		if(isExit){
 			ModelAlertData mData = (ModelAlertData) bundle.get
 					(Config.ACTIVITY_TRANSFER_BUNDLE);
+			userName = mData.getUserName();
+			medicineName = mData.getMedicineName();
 			day = mData.getRepeatDaily();
 			count = mData.getRepeatCount();
 			timeList = mData.getTimeList();
 			startTime = mData.getStartTime();
 			isOpen = mData.isOpen();
+			et_user.setText(userName);
+			et_medicine_name.setText(medicineName);
 			tv_once.setText(day+count);
 			tv_eat_med_repeatday.setText(day);
 			tv_eat_time.setText(timeList);
