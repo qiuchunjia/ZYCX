@@ -54,10 +54,13 @@ public class Config {
 	public static final String TYPE_LAB_CHECK_TIME = "type_lab_check_time";
 	public static final String TYPE_VIDEO_PROJECT = "type_video_project";
 	public static final String TYPE_VIDEO_CHECK_TIME = "type_video_check_time";
+	public static final String TYPE_CHECK_PHOTO = "type_check_photo";
+	public static final String TYPE_LAB_PHOTO = "type_lab_photo";
+	public static final String TYPE_VIDEO_PHOTO = "type_video_photo";
 	/************** 用药提醒需要用到的 *******************/
 	public static final String TYPE_DAILY = "type_daily";
 	public static final String TYPE_TIME = "type_time";
 	public static final String TYPE_TIME_LIST = "type_time_list";
+	public static final String SHARED_SAVE_KEY = "id";
 
-	
 }
