@@ -1,5 +1,7 @@
 package com.zhiyicx.zycx.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
-
-import java.util.ArrayList;
 
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;

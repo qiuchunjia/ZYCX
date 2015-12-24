@@ -158,6 +158,7 @@ public class Title implements TitleInterface {
 	public void titleSetRightTitle(String rightTitle) {
 		if (tv_title_right != null) {
 			if (rightTitle != null && !rightTitle.equals("")) {
+				tv_title_right.setVisibility(View.VISIBLE);
 				tv_title_right.setText(rightTitle);
 			}
 		}
@@ -167,6 +168,7 @@ public class Title implements TitleInterface {
 	@Override
 	public void titleSetRightImage(int resouceId) {
 		if (resouceId > 0) {
+			iv_title_right1.setVisibility(View.VISIBLE);
 			iv_title_right1.setImageResource(resouceId);
 		}
 	}

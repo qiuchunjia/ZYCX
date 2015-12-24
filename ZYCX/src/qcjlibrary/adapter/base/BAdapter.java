@@ -20,6 +20,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.ToastUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 
@@ -93,7 +94,9 @@ public abstract class BAdapter extends BaseAdapter {
 	public void doRefreshNew() {
 		// 先获取缓存
 		// TODO
-		refreshNew();
+		if (mList != null && mList.size() == 0) { // 当为空的时候才请求，其它的都用doRefreshHeader()
+			refreshNew();
+		}
 	}
 
 	/** 真正的刷新数据數據，即調用RefreshHeader() 獲取的數據加載到adapter里面 */
@@ -163,7 +166,9 @@ public abstract class BAdapter extends BaseAdapter {
 				} else {
 					mList.removeAll(mList); // 清空所有的数据
 				}
+				Log.i("mlisttest", "mlist.size()=" + mList.size());
 				mList.addAll(list);
+				Log.i("mlisttest", "mlist.size()=" + mList.size());
 				this.notifyDataSetChanged();
 			}
 		}
@@ -322,6 +327,8 @@ public abstract class BAdapter extends BaseAdapter {
 
 	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
 	private Request mRequst;
+	public static final int REQUEST_GET = 0;
+	public static final int REQUEST_POST = 1;
 
 	public void sendRequest(RequestParams params,
 			Class<? extends Model> modeltype, int requsetType, int RefreshType) {
@@ -374,18 +381,21 @@ public abstract class BAdapter extends BaseAdapter {
 			if (arg2 != null) {
 				String result = new String(arg2);
 				if (result != null) {
-					Object object = DataAnalyze.parseData(result, type);
+					Object object = onResponceSuccess(result, type);
 					if (object != null) {
 						if (object instanceof ModelMsg) {
-							ToastUtils.showToast(((ModelMsg) object).getMsg()
-									+ "");
+							ToastUtils.showToast(((ModelMsg) object)
+									.getMessage() + "");
 						} else {
-							List<Model> list = (List<Model>) object;
-							if (RefreshType == REFRESH_NEW
-									&& RefreshType == REFRESH_HEADER) {
-								addHeadList(list);
-							} else {
-								addFooterList(list);
+							Object objectResult = getReallyList(object, type);
+							if (objectResult instanceof List<?>) {
+								List<Model> list = (List<Model>) objectResult;
+								if (RefreshType == REFRESH_NEW
+										|| RefreshType == REFRESH_HEADER) {
+									addHeadList(list);
+								} else {
+									addFooterList(list);
+								}
 							}
 						}
 					} else {
@@ -396,4 +406,9 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 	}
 
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseDataByGson(str, class1);
+	}
+
+	public abstract Object getReallyList(Object object, Class type2);
 }

@@ -4,8 +4,11 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.fragment.FragmentNotify;
 import qcjlibrary.fragment.FragmentPraise;
 import qcjlibrary.fragment.FragmentReplay;
+<<<<<<< HEAD
+=======
 import qcjlibrary.fragment.base.BaseFragment;
 import android.support.v4.app.FragmentTransaction;
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import android.view.View;
 import android.widget.TextView;
 
@@ -55,6 +58,10 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		}
 		replaceFragment(R.id.rl_content, mReplayFg);
 		tv_msg.setBackgroundResource(R.drawable.view_border_green_left_solid_3);
+<<<<<<< HEAD
+		tv_msg.setTextColor(getResources().getColor(R.color.text_white));
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	}
 
 	@Override

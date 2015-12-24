@@ -1,10 +1,16 @@
 package qcjlibrary.fragment;
 
+import qcjlibrary.activity.ExpertRequestActivity;
+import qcjlibrary.activity.MeAplicationActivity;
 import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.activity.MePerioActivity;
+<<<<<<< HEAD
+import qcjlibrary.activity.RequestMyAskActivity;
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import qcjlibrary.fragment.base.BaseFragment;
-import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.widget.RoundImageView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +23,8 @@ import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.GuideActivity;
+import com.zhiyicx.zycx.activity.HomeActivity;
+import com.zhiyicx.zycx.activity.WebActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.unit.Anim;
 
@@ -29,7 +37,7 @@ public class FragmentMenu extends BaseFragment {
 	private RelativeLayout rl_user;
 	private RoundImageView riv_user_icon;
 	private TextView tv_username;
-	private ImageView iv_edit;
+	private ImageView menu_iv_edit;
 	private RelativeLayout rl_home;
 	private RelativeLayout rl_question;
 	private RelativeLayout rl_app;
@@ -52,7 +60,7 @@ public class FragmentMenu extends BaseFragment {
 		rl_user = (RelativeLayout) findViewById(R.id.rl_user);
 		riv_user_icon = (RoundImageView) findViewById(R.id.riv_user_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
-		iv_edit = (ImageView) findViewById(R.id.iv_edit);
+		menu_iv_edit = (ImageView) findViewById(R.id.menu_iv_edit);
 		rl_home = (RelativeLayout) findViewById(R.id.rl_home);
 		rl_question = (RelativeLayout) findViewById(R.id.rl_question);
 		rl_app = (RelativeLayout) findViewById(R.id.rl_app);
@@ -65,7 +73,7 @@ public class FragmentMenu extends BaseFragment {
 	@Override
 	public void initListener() {
 		riv_user_icon.setOnClickListener(this);
-		iv_edit.setOnClickListener(this);
+		menu_iv_edit.setOnClickListener(this);
 		rl_home.setOnClickListener(this);
 		rl_question.setOnClickListener(this);
 		rl_app.setOnClickListener(this);
@@ -80,22 +88,27 @@ public class FragmentMenu extends BaseFragment {
 		case R.id.riv_user_icon:
 
 			break;
-		case R.id.iv_edit:
+		case R.id.menu_iv_edit:
 			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
 					mActivity.sendDataToBundle(new Model(), null));
 
 			break;
 		case R.id.rl_home:
-
+			mApp.startActivity_qcj(mActivity, HomeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+			mActivity.finish();
 			break;
 		case R.id.rl_question:
-
+			mApp.startActivity_qcj(mActivity, RequestMyAskActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_app:
-
+			mApp.startActivity_qcj(mActivity, MeAplicationActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
-
+			mApp.startActivity_qcj(mActivity, WebActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_periodical:
 			mApp.startActivity_qcj(getActivity(), MePerioActivity.class,

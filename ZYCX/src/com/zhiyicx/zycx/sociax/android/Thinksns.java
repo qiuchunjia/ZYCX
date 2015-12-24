@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.WeakHashMap;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.api.api;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.FileSizeUtil;
@@ -87,6 +88,8 @@ public class Thinksns extends Application {
 	private static WeakHashMap<String, Bitmap> imageCache;
 	private static ListData<SociaxItem> lastWeiboList;
 	private CommonLog mCommonLog = LogFactory.createLog();
+	public static Activity medicineAct;
+	public static int id;
 
 	@Override
 	public void onCreate() {
@@ -508,12 +511,21 @@ public class Thinksns extends Application {
 	/** 定义一个user，整個app都用它 */
 	private static ModelUser mUser;
 	public ImageLoader mImageLoader;
+	private Activity mActivity;
 
 	/**
 	 * 初始化百度定位
 	 */
 	private void initBaidu() {
 		SDKInitializer.initialize(getApplicationContext());
+	}
+
+	public void setActivity(Activity activity) {
+		this.mActivity = activity;
+	}
+
+	public Activity getActivity() {
+		return mActivity;
 	}
 
 	/**
@@ -653,19 +665,19 @@ public class Thinksns extends Application {
 		String school_name = preferences.getString(Config.SCHOOL_NAME, null);
 		String autograph = preferences.getString(Config.AUTOGRAPH, null);
 		String email = preferences.getString(Config.EMAIL, null);
-		mUser.setMobile(mobile);
-		mUser.setPwd(pwd);
-		mUser.setUserid(userId);
-		mUser.setOauth_token(oauth_token);
-		mUser.setOauth_token_secret(oauth_token_secret);
-		mUser.setschool_id(school_id);
-		mUser.setUname(uname);
-		mUser.setSex(sex);
-		mUser.setIs_init(is_init);
-		mUser.setFaceurl(faceurl);
-		mUser.setSchool_name(school_name);
-		mUser.setAutograph(autograph);
-		mUser.setEmail(email);
+		// mUser.setMobile(mobile);
+		// mUser.setPwd(pwd);
+		// mUser.setUserid(userId);
+		// mUser.setOauth_token(oauth_token);
+		// mUser.setOauth_token_secret(oauth_token_secret);
+		// mUser.setschool_id(school_id);
+		// mUser.setUname(uname);
+		// mUser.setSex(sex);
+		// mUser.setIs_init(is_init);
+		// mUser.setFaceurl(faceurl);
+		// mUser.setSchool_name(school_name);
+		// mUser.setAutograph(autograph);
+		// mUser.setEmail(email);
 		return mUser;
 	}
 
@@ -679,25 +691,25 @@ public class Thinksns extends Application {
 		SharedPreferences preferences = getApplicationContext()
 				.getSharedPreferences(Config.USER_DATA, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
-		if (user.getMobile() != null) {
-			editor.putString(Config.MOBILE, user.getMobile());
-		}
-		if (user.getPwd() != null) {
-			editor.putString(Config.PWD, user.getPwd());
-		}
-
-		editor.putString(Config.USERID, user.getUserid());
-		editor.putString(Config.OAUTH_TOKEN, user.getOauth_token());
-		editor.putString(Config.OAUTH_TOKEN_SECRET,
-				user.getOauth_token_secret());
-		editor.putString(Config.SCHOOL_ID, user.getschool_id());
-		editor.putString(Config.UNAME, user.getUname());
-		editor.putString(Config.SEX, user.getSex());
-		editor.putString(Config.IS_INIT, user.getIs_init());
-		editor.putString(Config.FACEURL, user.getFaceurl());
-		editor.putString(Config.SCHOOL_NAME, user.getSchool_name());
-		editor.putString(Config.AUTOGRAPH, user.getAutograph());
-		editor.putString(Config.EMAIL, user.getEmail());
+		// if (user.getMobile() != null) {
+		// editor.putString(Config.MOBILE, user.getMobile());
+		// }
+		// if (user.getPwd() != null) {
+		// editor.putString(Config.PWD, user.getPwd());
+		// }
+		//
+		// editor.putString(Config.USERID, user.getUserid());
+		// editor.putString(Config.OAUTH_TOKEN, user.getOauth_token());
+		// editor.putString(Config.OAUTH_TOKEN_SECRET,
+		// user.getOauth_token_secret());
+		// editor.putString(Config.SCHOOL_ID, user.getschool_id());
+		// editor.putString(Config.UNAME, user.getUname());
+		// editor.putString(Config.SEX, user.getSex());
+		// editor.putString(Config.IS_INIT, user.getIs_init());
+		// editor.putString(Config.FACEURL, user.getFaceurl());
+		// editor.putString(Config.SCHOOL_NAME, user.getSchool_name());
+		// editor.putString(Config.AUTOGRAPH, user.getAutograph());
+		// editor.putString(Config.EMAIL, user.getEmail());
 		editor.commit();
 	}
 
@@ -706,7 +718,7 @@ public class Thinksns extends Application {
 	 */
 	public static String getHostUrl() {
 		// TODO 以后把地址写到xml里面
-		return "http://daxs.zhiyicx.com/index.php";
+		return "http://demo-qingko.zhiyicx.com/index.php?";
 	}
 
 	// -----------------------------获取api------------------------------------------------------
@@ -782,4 +794,64 @@ public class Thinksns extends Application {
 	public static String getCache_path() {
 		return "cache_path";
 	}
+
+	/*************************** 接口部分 ******************************/
+	private qcjlibrary.api.api.ZhiXunImpl mZhixun;
+	private qcjlibrary.api.api.RequestImpl mRequestImpl;
+	private qcjlibrary.api.api.FoodImpl mFoodImpl;
+	private qcjlibrary.api.api.UserImpl mUserImpl;
+	private qcjlibrary.api.api.ExperienceImpl mExperienceImpl;
+	private qcjlibrary.api.api.NotifyImpl mNotifyImpl;
+	private qcjlibrary.api.api.MedRecordImpl mMedRecordImpl;
+
+	public api.ZhiXunImpl getZhiXunImpl() {
+		if (mZhixun == null) {
+			mZhixun = new api.ZhiXunImpl();
+		}
+		return mZhixun;
+	}
+
+	public api.RequestImpl getRequestImpl() {
+		if (mRequestImpl == null) {
+			mRequestImpl = new api.RequestImpl();
+		}
+		return mRequestImpl;
+	}
+
+	public api.FoodImpl getFoodImpl() {
+		if (mFoodImpl == null) {
+			mFoodImpl = new api.FoodImpl();
+		}
+		return mFoodImpl;
+	}
+
+	public api.UserImpl getUserImpl() {
+		if (mUserImpl == null) {
+			mUserImpl = new api.UserImpl();
+		}
+		return mUserImpl;
+	}
+
+	public api.ExperienceImpl getExperienceImpl() {
+		if (mExperienceImpl == null) {
+			mExperienceImpl = new api.ExperienceImpl();
+		}
+		return mExperienceImpl;
+	}
+
+	public api.NotifyImpl getNotifyImpl() {
+		if (mNotifyImpl == null) {
+			mNotifyImpl = new api.NotifyImpl();
+		}
+		return mNotifyImpl;
+	}
+
+	public api.MedRecordImpl getMedRecordImpl() {
+		if (mMedRecordImpl == null) {
+			mMedRecordImpl = new api.MedRecordImpl();
+		}
+		return mMedRecordImpl;
+	}
+
+	/*************************** 接口部分end ******************************/
 }

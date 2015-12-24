@@ -1,14 +1,21 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.widget.RoundImageView;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.GuideActivity;
+import com.zhiyicx.zycx.activity.WebActivity;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.unit.Anim;
 
 /**
  * author：qiuchunjia time：下午5:41:04 类描述：这个类是实现
@@ -33,8 +40,6 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -80,7 +85,8 @@ public class MeCenterActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_mycase:
-
+			mApp.startActivity_qcj(this, PatientMeActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_question:
 			mApp.startActivity_qcj(this, ExpertRequestActivity.class,
@@ -91,16 +97,51 @@ public class MeCenterActivity extends BaseActivity {
 					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
-
+			mApp.startActivity_qcj(this, WebActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_periodical:
-
+			mApp.startActivity_qcj(this, MePerioActivity.class,
+					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
-
+			quitLogin();
 			break;
 		}
 
 	}
 
+	/**
+	 * 退出登录
+	 */
+	public void quitLogin() {
+		final Activity obj = this;
+		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
+		builder.setMessage("确定要注销此帐户吗?");
+		builder.setTitle("提示");
+		builder.setPositiveButton("确认",
+				new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Thinksns app = (Thinksns) obj.getApplicationContext();
+						app.getUserSql().clear();
+						// Thinksns.exitApp();
+						Intent intent = new Intent(obj, GuideActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+								| Intent.FLAG_ACTIVITY_NEW_TASK);
+						obj.startActivity(intent);
+						Anim.in(obj);
+						obj.finish();
+					}
+				});
+		builder.setNegativeButton("取消",
+				new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+	}
 }

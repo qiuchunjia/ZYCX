@@ -3,18 +3,12 @@
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
-
-
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
-
-
         -->
     </style>
 
@@ -70,12 +64,14 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+
     <style name="title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">22dp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
     <style name="cmtedit">
         <item name="android:layout_height">40dp</item>
         <item name="android:textSize">14dp</item>
@@ -85,4 +81,25 @@
         <item name="android:paddingRight">10dp</item>
         <item name="android:background">@drawable/shuru</item>
     </style>
+
+    <style name="radio_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:paddingLeft">@dimen/body_margin_left_new</item>
+        <item name="android:background">@drawable/view_border_gray_white_0</item>
+        <item name="android:button">@drawable/radio_button_selector</item>
+    </style>
+    
+    <style name="check_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">@dimen/check_button_margin</item>
+        <item name="android:layout_marginRight">@dimen/check_button_margin</item>
+        <item name="android:layout_marginTop">@dimen/check_button_margin</item>
+        <item name="android:background">@drawable/view_border_green_04</item>
+        <item name="android:text">@string/agreement_reigter_back</item>
+        <item name="android:textColor">@color/text_green</item>
+        <item name="android:textSize">@dimen/text_common</item>
+    </style>
+    
 </resources>

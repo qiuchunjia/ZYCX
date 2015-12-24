@@ -28,27 +28,27 @@ public abstract class BaseListView extends XListView implements
 
 	public BaseListView(Context context) {
 		super(context, null);
-		mContext = context;
 		initSet(context);
 		initXListView();
 	}
 
 	public BaseListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mContext = context;
 		initSet(context);
 		initXListView();
 	}
 
+<<<<<<< HEAD
+=======
 	public Context mContext; // 上下文
 
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	// /** mlist數據 */
 	private List<Model> mList;
 	private BAdapter mAdapter;
-
 	private SwipeMenuAdapter menuAdapter;
-
 	public Thinksns mApp;
+	public BaseActivity mActivity;
 
 	/** 初始化设置 */
 	public void initSet(Context context) {
@@ -56,6 +56,7 @@ public abstract class BaseListView extends XListView implements
 		this.setDividerHeight(1);
 		this.setVerticalScrollBarEnabled(false);
 		mApp = (Thinksns) context.getApplicationContext();
+		mActivity = (BaseActivity) mApp.getActivity();
 	}
 
 	private void initXListView() {

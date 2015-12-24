@@ -16,38 +16,38 @@ public class ModelMsg extends Model {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int status;
-	private String msg;
+	private int code;
+	private String message;
 
-	public ModelMsg(JSONObject jsonObject) {
+	public ModelMsg(JSONObject data) {
 		try {
+			if (data.has("message")) {
 
-			if (jsonObject.has("status")) {
-				this.setStatus(jsonObject.getInt("status"));
+				setMessage(data.getString("domain"));
 			}
-			if (jsonObject.has("msg")) {
-				this.setMsg(jsonObject.getString("msg"));
+			if (data.has("code")) {
+				setCode(data.getInt("code"));
 			}
-
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public int getStatus() {
-		return status;
+	public int getCode() {
+		return code;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
-	public String getMsg() {
-		return msg;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public static long getSerialversionuid() {

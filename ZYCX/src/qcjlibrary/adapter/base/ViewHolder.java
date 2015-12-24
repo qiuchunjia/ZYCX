@@ -1,6 +1,10 @@
 package qcjlibrary.adapter.base;
 
+<<<<<<< HEAD
+import qcjlibrary.widget.RoundImageView;
+=======
 import qcjlibrary.img.RoundImageView;
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,5 +63,86 @@ public class ViewHolder {
 	public TextView tv_cancer;
 
 	/******************* 食物种类 item end ************************/
+<<<<<<< HEAD
+	/******************* 病例历史item ************************/
+	public TextView tv_content;
+	// public TextView tv_date;
+	/******************* 病例历史item end ************************/
+
+	/******************* 用药提醒item ************************/
+	public ImageView iv_medicine_notify;
+	public TextView tv_user_name;
+	public TextView tv_medicine_name;
+	public TextView tv_user_time;
+	/******************* 病例历史item end ************************/
+	/******************* 经历item ************************/
+	public ImageView iv_cancer_icon;
+	public TextView tv_cancer_name;
+	public TextView tv_cancer_numer;
+	public TextView tv_cancer_experence;
+	public ImageView iv_cancer_icon2;
+	public TextView tv_cancer_name2;
+	public TextView tv_cancer_numer2;
+	public TextView tv_cancer_experence2;
+	public RelativeLayout rl_1;
+	public RelativeLayout rl_2;
+	/******************* 经历item end ************************/
+	/******************* 癌症话题 item ************************/
+	public TextView tv_topic_title;
+	public TextView tv_topic_advice;
+	public TextView tv_topic_user;
+	public TextView tv_topic_update;
+	public TextView tv_topic_date;
+	/******************* 癌症话题item end ************************/
+	/******************* 经历轨迹title item ************************/
+	public RoundImageView iv_cycle_icon;
+	public TextView tv_username;
+	public TextView tv_has_update;
+	public TextView tv_flag_key;
+	public TextView tv_flag_value;
+	// public TextView tv_date;
+	/******************* 经历轨迹title item end ************************/
+	/******************* 经历轨迹 item ************************/
+	public TextView tv_date_month;
+	public TextView tv_date_day;
+	public TextView tv_date_week;
+	public TextView tv_date_year;
+	public TextView tv_date_content;
+	public TextView tv_more;
+	public TextView tv_howmany;
+	public RelativeLayout rl_zan;
+	public ImageView iv_hand;
+	public TextView tv_zhengnengliang;
+	/******************* 经历轨迹 item end ************************/
+	/******************* 咨询 item ************************/
+	public ImageView iv_photo;
+	// public TextView tv_content;
+	// public TextView tv_date;
+	public TextView tv_from;
+	public TextView tv_num;
+
+	/******************* 咨询 item end ************************/
+	/******************* 问答 item ************************/
+	// public TextView tv_title;
+	public TextView tv_advice;
+	public ImageView iv_a;
+	// public TextView tv_answer;
+	// public TextView tv_expert_answer;
+	// public TextView tv_date;
+	// public TextView tv_num;
+
+	/******************* 问答 item end ************************/
+	/******************* 轻课堂item ************************/
+	// public TextView tv_title;
+	// public TextView tv_content;
+	// public TextView tv_num;
+	public TextView tv_update;
+	public ImageView iv_vedio;
+	/******************* 轻课堂item end ************************/
+	/******************* 选择地址item ************************/
+	public TextView tv_choose_adress;
+	/******************* 选择地址item end ************************/
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 
 }

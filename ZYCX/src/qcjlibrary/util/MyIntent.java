@@ -4,8 +4,68 @@ import java.io.File;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 
 public class MyIntent {
+	/**
+	 * 返回一个打开相册的intent
+	 * 
+	 * @return
+	 */
+	public static Intent getGalleyIntent() {
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		return intent;
+	}
+
+	/**
+	 * 返回一个打开相机的intent
+	 * 
+	 * @return
+	 */
+	public static Intent getCameraIntent() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		return intent;
+	}
+
+	/**
+	 * 返回一个获取本地文件的intent
+	 * 
+	 * @return
+	 */
+	public static Intent getLocalFileIntent() {
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("*/*");
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		Intent intentChoose = Intent.createChooser(intent, "请选择文件!");
+		return intentChoose;
+	}
+
+	/**
+	 * 返回一个选择本地视频的intent
+	 * 
+	 * @return
+	 */
+	public static Intent getVideoFileIntent() {
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+		return intent;
+	}
+
+	/**
+	 * 返回一个打开拍摄视频的intent
+	 * 
+	 * @return
+	 */
+	public static Intent getshootVideoIntent() {
+		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		// 设置视频大小
+		intent.putExtra(android.provider.MediaStore.EXTRA_SIZE_LIMIT,
+				20 * 1024 * 1024); // 设置为20M
+		return intent;
+	}
+
+	/*********************************************************************************/
 	// android获取一个用于打开HTML文件的intent
 	public static Intent getHtmlFileIntent(String param) {
 		Uri uri = Uri.parse(param).buildUpon()

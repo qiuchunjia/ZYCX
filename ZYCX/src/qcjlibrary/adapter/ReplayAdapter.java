@@ -2,13 +2,26 @@ package qcjlibrary.adapter;
 
 import java.util.List;
 
+<<<<<<< HEAD
+import qcjlibrary.activity.NotifySingleReplyActivity;
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+<<<<<<< HEAD
+import qcjlibrary.model.ModelNotifyCommment;
+import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.widget.RoundImageView;
+import android.view.View;
+import android.view.View.OnClickListener;
+=======
 import qcjlibrary.img.RoundImageView;
 import qcjlibrary.model.base.Model;
 import android.view.View;
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -48,6 +61,32 @@ public class ReplayAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+<<<<<<< HEAD
+			ModelNotifyCommment commment = (ModelNotifyCommment) mList
+					.get(position);
+			if (commment != null) {
+				mApp.displayImage(commment.getUserface(), holder.riv_msg_icon);
+				holder.tv_user.setText(commment.getUsername());
+				holder.tv_title.setText(commment.getContent());
+				holder.tv_other_replay.setText(commment.getMyname()
+						+ commment.getOriginal_content());
+				holder.tv_date.setText(commment.getTime());
+				holder.tv_replay.setTag(commment);
+				holder.tv_replay.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						ModelNotifyCommment commment = (ModelNotifyCommment) v
+								.getTag();
+						mApp.startActivity_qcj(mBaseActivity,
+								NotifySingleReplyActivity.class,
+								mBaseActivity.sendDataToBundle(commment, null));
+						// 进行评论
+					}
+				});
+			}
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 		}
 	}
 
@@ -74,12 +113,20 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
+<<<<<<< HEAD
+		sendRequest(mApp.getNotifyImpl().commentlist(null),
+				ModelNotifyCommment.class, REQUEST_GET, REFRESH_NEW);
+=======
 		sendRequest(null, null, 1, 1);
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
+<<<<<<< HEAD
+=======
 		sendRequest(null, null, 1, 1);
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 	}
 
 	@Override
@@ -93,4 +140,16 @@ public class ReplayAdapter extends BAdapter {
 		return 0;
 	}
 
+<<<<<<< HEAD
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		return DataAnalyze.parseData(str, class1);
+	}
+
+	@Override
+	public Object getReallyList(Object object, Class type2) {
+		return object;
+	}
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 }

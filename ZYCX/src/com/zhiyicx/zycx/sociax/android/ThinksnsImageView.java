@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
@@ -36,33 +38,36 @@ public class ThinksnsImageView extends ThinksnsAbscractActivity {
 	private SimpleZoomListener mZoomListener;
 	private String url;
 	private ExecutorService executorService = Executors.newFixedThreadPool(5);
+	private RelativeLayout rl_left_1;
+	private TextView tv_title_right;
+	private TextView tv_title;
 	private static LoadingView loadingView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+		super.onCreateNoTitle(savedInstanceState);
 
 		url = getIntentData().getString("url");
 		imageZoomView = (ImageZoomView) findViewById(R.id.image_data);
 		zoomCtrl = (ZoomControls) findViewById(R.id.zoomCtrl);
 
-        NetComTools netComTools = NetComTools.getInstance(this);
-        netComTools.getNetImage(url, new ImgDataListener() {
-            @Override
-            public void OnReceive(Bitmap bmp) {
-                bitmap = bmp;
-                imageZoomView.setImage(bitmap);
-            }
+		NetComTools netComTools = NetComTools.getInstance(this);
+		netComTools.getNetImage(url, new ImgDataListener() {
+			@Override
+			public void OnReceive(Bitmap bmp) {
+				bitmap = bmp;
+				imageZoomView.setImage(bitmap);
+			}
 
-            @Override
-            public void OnError(String error) {
+			@Override
+			public void OnError(String error) {
 
-            }
-        });
-        //Drawable img = AsyncImageLoader.loadImageFromUrl(url);
-        //bitmap = drawableToBitmap(img);
-        //imageZoomView.setImage(bitmap);
+			}
+		});
+		// Drawable img = AsyncImageLoader.loadImageFromUrl(url);
+		// bitmap = drawableToBitmap(img);
+		// imageZoomView.setImage(bitmap);
 
 		mZoomState = new ZoomState();
 		mZoomListener = new SimpleZoomListener();
@@ -79,7 +84,21 @@ public class ThinksnsImageView extends ThinksnsAbscractActivity {
 			}
 
 		});
+		/**** qcj添加title 并初始化 *********/
+		rl_left_1 = (RelativeLayout) findViewById(R.id.rl_left_1);
+		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
+		tv_title_right.setVisibility(View.VISIBLE);
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("图片浏览");
+		tv_title_right.setText("保存");
+		rl_left_1.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		tv_title_right.setOnClickListener(getRightListener());
 		// resetZoomState();
 	}
 

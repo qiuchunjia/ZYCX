@@ -20,6 +20,10 @@ import org.apache.http.Header;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
+<<<<<<< HEAD
+import qcjlibrary.model.ModelMsg;
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
@@ -29,14 +33,14 @@ import qcjlibrary.util.Anim;
 import qcjlibrary.util.BitmapUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Uri2Path;
-import android.annotation.SuppressLint;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,19 +52,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -81,7 +79,8 @@ import com.zhiyicx.zycx.sociax.android.Thinksns;
  * @pdOid
  */
 public abstract class BaseActivity extends FragmentActivity implements
-		OnClickListener, HttpResponceListener, TitleInterface {
+		OnClickListener, HttpResponceListener, TitleInterface,
+		PopResultListener {
 	/**
 	 * activity的总布局，加入mTitleLayout和mBodyLayout
 	 * 
@@ -137,6 +136,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 */
 	public void initSet() {
 		mApp = (Thinksns) getApplication();
+		mApp.setActivity(this);
 		mInflater = LayoutInflater.from(getApplicationContext());
 		initTheCommonLayout();
 		// 把内容和title结合
@@ -698,109 +698,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	// ------------------------------------友盟初始化qq微信，微博，人人end------------------z
-	// --------------------------PopupWindow的界面控件-----------------------------------------
-	private PopupWindow mPopupWindow;
-	private TextView btn_openTheCamera;
-	private TextView btn_openTheGallery;
-	private TextView btn_cancle;
-
-	/**
-	 * 初始化popWindow
-	 * */
-	public void initCameraPopWindow() {
-		if (mPopupWindow == null) {
-			View popView = mInflater.inflate(R.layout.upload_icon_item, null);
-			mPopupWindow = new PopupWindow(popView, LayoutParams.MATCH_PARENT,
-					LayoutParams.WRAP_CONTENT);
-			mPopupWindow.setBackgroundDrawable(new ColorDrawable(0));
-			mPopupWindow.setOnDismissListener(new OnDismissListener() {
-
-				@Override
-				public void onDismiss() {
-					setWindowAlpha(1.0f);
-
-				}
-			});
-			// 设置popwindow出现和消失动画
-			initPopWidge(popView);
-			setPopListener();
-		}
-	}
-
-	/**
-	 * 设置屏幕的透明度
-	 * 
-	 * @param alpha
-	 *            需要设置透明度
-	 */
-	private void setWindowAlpha(float alpha) {
-		WindowManager.LayoutParams params = getWindow().getAttributes();
-		params.alpha = alpha;
-		getWindow().setAttributes(params);
-	}
-
-	/**
-	 * 设置popWindow监听器
-	 */
-	private void setPopListener() {
-		PopWindowItemListener listener = new PopWindowItemListener();
-		btn_openTheCamera.setOnClickListener(listener);
-		btn_openTheGallery.setOnClickListener(listener);
-		btn_cancle.setOnClickListener(listener);
-	}
-
-	/**
-	 * 初始化popwindow里面的控件
-	 * 
-	 * @param popView
-	 */
-	private void initPopWidge(View popView) {
-		btn_openTheCamera = (TextView) popView
-				.findViewById(R.id.btn_openTheCamera);
-		btn_openTheGallery = (TextView) popView
-				.findViewById(R.id.btn_openTheGallery);
-		btn_cancle = (TextView) popView.findViewById(R.id.btn_cancle);
-
-	}
-
-	private class PopWindowItemListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.btn_openTheCamera:
-				openTheCamera();
-				mPopupWindow.dismiss();
-				break;
-
-			case R.id.btn_openTheGallery:
-				mPopupWindow.dismiss();
-				openTheGalley();
-				break;
-			case R.id.btn_cancle:
-				mPopupWindow.dismiss();
-				break;
-
-			}
-		}
-
-	}
-
-	/**
-	 * 显示popWindow
-	 * */
-	@SuppressLint("NewApi")
-	public void showCameraPop(View parent, int x, int y) {
-		// 设置popwindow显示位置
-		mPopupWindow.showAtLocation(parent, Gravity.BOTTOM, x, y);
-		// 获取popwindow焦点
-		mPopupWindow.setFocusable(true);
-		// 设置popwindow如果点击外面区域，便关闭。
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
-		mPopupWindow.update();
-		setWindowAlpha(0.7f);
-	}
 
 	/**************************** uri 与 filepath互转 *********************************************/
 	/**
@@ -847,6 +744,8 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
 	private Request mRequst;
+	public static final int REQUEST_GET = 0;
+	public static final int REQUEST_POST = 1;
 
 	public void sendRequest(RequestParams params,
 			Class<? extends Model> modeltype, int requsetType) {
@@ -854,7 +753,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
-			if (requsetType == 0) {
+			if (requsetType == REQUEST_GET) {
 				mRequst.get(mApp.getHostUrl(), params,
 						new MyAsyncHttpResponseHandler(modeltype));
 			} else {
@@ -884,7 +783,25 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 */
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		return DataAnalyze.parseData(str, class1);
+		return DataAnalyze.parseDataByGson(str, class1);
+	}
+
+	/**
+	 * 判断返回的网络数据是否成功
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public boolean judgeTheMsg(Object object) {
+		if (object instanceof ModelMsg) {
+			ModelMsg msg = (ModelMsg) object;
+			if (msg.getCode() == 0) {
+				return true;
+			}
+			ToastUtils.showToast(msg.getMessage());
+			return false;
+		}
+		return false;
 	}
 
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
@@ -897,7 +814,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
 				Throwable arg3) {
-			Log.i("test", "请求异常");
 			ToastUtils.showToast("请求异常");
 		}
 
@@ -919,4 +835,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	/************************************ 网络请求传递，以及返回数据解析end ***************************************/
+	/************** popWindow返回的数据 *******************************/
+	public Object onPopResult(Object object) {
+		return object;
+	}
+	/************** popWindow返回的数据 end *******************************/
 }

@@ -1,14 +1,19 @@
 package com.zhiyicx.zycx.activity;
 
+import qcjlibrary.activity.MsgNotifyPraiseActivity;
+import qcjlibrary.activity.RequestWayActivity;
+import qcjlibrary.activity.SearchNewActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.fragment.FragmentCaseIndex;
+import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import qcjlibrary.fragment.FragmentRequestAnwer;
+import qcjlibrary.fragment.FragmentZhixun;
+import qcjlibrary.model.base.Model;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
@@ -17,8 +22,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -27,21 +34,19 @@ import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.QClassFragment;
-import com.zhiyicx.zycx.fragment.QiKanFragment;
-import com.zhiyicx.zycx.fragment.QuestionFragment;
-import com.zhiyicx.zycx.fragment.WebFragment;
-import com.zhiyicx.zycx.fragment.ZiXunFragment;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
-import com.zhiyicx.zycx.sociax.unit.Anim;
 
 public class HomeActivity extends BaseActivity {
-	private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
+	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
+	private FragmentZhixun mZiXunFgmt; // 咨询fragment qcj
 	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
-	private QuestionFragment mQustionFgmt;// 问答fragment qcj
-	private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
-	private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
-
+	// private QuestionFragment mQustionFgmt;// 问答fragment qcj
+	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
+	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
+	private FragmentCaseIndex mCaseFgmt;
+	private FragmentExperience mExpegmt;
+	private FragmentRequestAnwer mAnwergmt;
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
 	public static final int index_zhixun = 0;
@@ -53,35 +58,42 @@ public class HomeActivity extends BaseActivity {
 
 	private RelativeLayout mZixunLayout, mClassLayout, mQuestionLayout,
 			mQikanLayout, mWebLayout;
+	private ImageView index_message, IB_home_bottom_class,
+			IB_home_bottom_question, IB_home_bottom_qikan, IB_home_bottom_web;
+
 	private BDInterstitialAd appxInterstitialAdView;
 	private String TAG = "HomeActivity";
 	private DrawerLayout mDrawer;
 	private FragmentMenu mMenu;
+
+	private Title mTitle; // 标题
 
 	@Override
 	public void initSet() {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mApp = (Thinksns) getApplication();
+		mApp.setActivity(this);
 		mInflater = LayoutInflater.from(getApplicationContext());
 		setContentView(R.layout.comom_layout_drawer);
 		initParentView();
 		// 把内容和title结合
 		combineTheLayout();
+		initEvents();
 		initIntent();
 		initView();
 		initData();
 		initListener();
-		initEvents();
 	}
 
 	private void initEvents() {
-		Title title = getTitleClass();
-		if (title != null) {
-			title.rl_left_1.setVisibility(View.GONE);
-			title.rl_left_2.setVisibility(View.VISIBLE);
+		mTitle = getTitleClass();
+		if (mTitle != null) {
+			mTitle.rl_left_1.setVisibility(View.GONE);
+			mTitle.rl_left_2.setVisibility(View.VISIBLE);
 		}
 		titleSlideMenu(mDrawer);
+		mDrawer.setScrimColor(Color.TRANSPARENT); // 去掉滑动的时候阴影
 		mDrawer.setDrawerListener(new DrawerListener() {
 			@Override
 			public void onDrawerStateChanged(int newState) {
@@ -130,6 +142,7 @@ public class HomeActivity extends BaseActivity {
 		mTitlell = (LinearLayout) mLayout.findViewById(R.id.ll_Title);
 		mContentll = (FrameLayout) mLayout.findViewById(R.id.ll_content);
 		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
+
 	}
 
 	@Override
@@ -154,6 +167,12 @@ public class HomeActivity extends BaseActivity {
 		mQikanLayout = (RelativeLayout) findViewById(R.id.qikan_layout);
 		mQuestionLayout = (RelativeLayout) findViewById(R.id.question_layout);
 		mWebLayout = (RelativeLayout) findViewById(R.id.weibo_layout);
+
+		index_message = (ImageView) findViewById(R.id.index_message);
+		IB_home_bottom_class = (ImageView) findViewById(R.id.IB_home_bottom_class);
+		IB_home_bottom_question = (ImageView) findViewById(R.id.IB_home_bottom_question);
+		IB_home_bottom_qikan = (ImageView) findViewById(R.id.IB_home_bottom_qikan);
+		IB_home_bottom_web = (ImageView) findViewById(R.id.IB_home_bottom_web);
 	}
 
 	@Override
@@ -235,38 +254,6 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
-		if (item.getItemId() == R.id.action_settings) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			final Activity obj = this;
-			builder.setMessage("确定要注销此帐户吗?");
-			builder.setTitle("提示");
-			builder.setPositiveButton("确认",
-					new android.content.DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							Thinksns app = (Thinksns) obj
-									.getApplicationContext();
-							app.getUserSql().clear();
-							// Thinksns.exitApp();
-							Intent intent = new Intent(HomeActivity.this,
-									GuideActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							HomeActivity.this.startActivity(intent);
-							Anim.in(HomeActivity.this);
-							finish();
-						}
-					});
-			builder.setNegativeButton("取消",
-					new android.content.DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
-			builder.create().show();
-		}
 		return true;
 	}
 
@@ -275,9 +262,11 @@ public class HomeActivity extends BaseActivity {
 
 		case R.id.zixun_layout:
 			setTabSelection(index_zhixun);
+			index_message.setImageResource(R.drawable.zixun_press);
 			break;
 		case R.id.class_layout:
 			setTabSelection(index_qclass);
+			IB_home_bottom_class.setImageResource(R.drawable.qingketang_press);
 			// 展示插屏广告前先请先检查下广告是否加载完毕
 			// if (appxInterstitialAdView.isLoaded()) {
 			// appxInterstitialAdView.showAd();
@@ -292,9 +281,11 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case R.id.qikan_layout:
 			setTabSelection(index_qikan);
+			IB_home_bottom_qikan.setImageResource(R.drawable.jingli_press);
 			break;
 		case R.id.weibo_layout:
 			setTabSelection(index_web);
+			IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
 			// Intent intent = new Intent(this, WeiboAppActivity.class);
 			// startActivity(intent);
 			// Anim.in(activity);
@@ -302,12 +293,14 @@ public class HomeActivity extends BaseActivity {
 		}
 	}
 
-	private void setTabSelection(int index) {
+	public void setTabSelection(int index) {
 
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
+		setChangeTitle(index);
+		resetBottomImage();
 		switch (index) {
 		case index_Default:
 			if (mDefaultFragment == null) {
@@ -320,7 +313,7 @@ public class HomeActivity extends BaseActivity {
 		case index_zhixun:
 			if (mZiXunFgmt == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
-				mZiXunFgmt = new ZiXunFragment();
+				mZiXunFgmt = new FragmentZhixun();
 				transaction.add(R.id.content, mZiXunFgmt);
 			} else {
 				// 如果MessageFragment不为空，则直接将它显示出来
@@ -338,34 +331,149 @@ public class HomeActivity extends BaseActivity {
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
-			if (mQustionFgmt == null) {
-				mQustionFgmt = new QuestionFragment();
-				transaction.add(R.id.content, mQustionFgmt);
+			if (mAnwergmt == null) {
+				mAnwergmt = new FragmentRequestAnwer();
+				transaction.add(R.id.content, mAnwergmt);
 			} else {
-				transaction.show(mQustionFgmt);
+				transaction.show(mAnwergmt);
 			}
+			// if (mQustionFgmt == null) {
+			// mQustionFgmt = new QuestionFragment();
+			// transaction.add(R.id.content, mQustionFgmt);
+			// } else {
+			// transaction.show(mQustionFgmt);
+			// }
 			// mQuestionLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qikan:
-			if (mQiKanFgmt == null) {
-				mQiKanFgmt = new QiKanFragment();
-				transaction.add(R.id.content, mQiKanFgmt);
+			if (mExpegmt == null) {
+				mExpegmt = new FragmentExperience();
+				transaction.add(R.id.content, mExpegmt);
 			} else {
-				transaction.show(mQiKanFgmt);
+				transaction.show(mExpegmt);
 			}
+			// if (mQiKanFgmt == null) {
+			// mQiKanFgmt = new QiKanFragment();
+			// transaction.add(R.id.content, mQiKanFgmt);
+			// } else {
+			// transaction.show(mQiKanFgmt);
+			// }
 			// mQikanLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_web:
-			if (mWebFgmt == null) {
-				mWebFgmt = new WebFragment();
-				transaction.add(R.id.content, mWebFgmt);
+			if (mCaseFgmt == null) {
+				mCaseFgmt = new FragmentCaseIndex();
+				transaction.add(R.id.content, mCaseFgmt);
 			} else {
-				transaction.show(mWebFgmt);
+				transaction.show(mCaseFgmt);
 			}
+			// if (mWebFgmt == null) {
+			// mWebFgmt = new WebFragment();
+			// transaction.add(R.id.content, mWebFgmt);
+			// } else {
+			// transaction.show(mWebFgmt);
+			// }
 			// mWebLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		}
 		transaction.commit();
+	}
+
+	/**
+	 * 根据点击的fragment，设置可变的title，以及title右边需要实现的功能
+	 * 
+	 * @param index
+	 */
+
+	private void setChangeTitle(int index) {
+		mTitle.iv_title_right1.setVisibility(View.GONE);
+		switch (index) {
+		case index_Default:
+			titleSetCenterTitle("癌友帮");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.index);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							MsgNotifyPraiseActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_zhixun:
+			titleSetCenterTitle("资讯");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qclass:
+			titleSetCenterTitle("最新");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qustion:
+			titleSetCenterTitle("问答");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1
+					.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							RequestWayActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		case index_qikan:
+			titleSetCenterTitle("经历");
+			break;
+		case index_web:
+			titleSetCenterTitle("病例");
+			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
+			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mApp.startActivity_qcj(HomeActivity.this,
+							SearchNewActivity.class,
+							sendDataToBundle(new Model(), null));
+				}
+			});
+			break;
+		}
+
+	}
+
+	/**
+	 * 重置底部image
+	 */
+	private void resetBottomImage() {
+		index_message.setImageResource(R.drawable.zixun);
+		IB_home_bottom_class.setImageResource(R.drawable.qingketang);
+		IB_home_bottom_qikan.setImageResource(R.drawable.jingli);
+		IB_home_bottom_web.setImageResource(R.drawable.bingli);
 	}
 
 	private void hideFragments(FragmentTransaction transaction) {
@@ -375,14 +483,22 @@ public class HomeActivity extends BaseActivity {
 		if (mQClassFgmt != null) {
 			transaction.hide(mQClassFgmt);
 		}
-		if (mQustionFgmt != null) {
-			transaction.hide(mQustionFgmt);
+		if (mAnwergmt != null) {
+			transaction.hide(mAnwergmt);
 		}
-		if (mQiKanFgmt != null) {
-			transaction.hide(mQiKanFgmt);
+		// if (mQustionFgmt != null) {
+		// transaction.hide(mQustionFgmt);
+		// }
+		if (mExpegmt != null) {
+			transaction.hide(mExpegmt);
 		}
-		if (mWebFgmt != null)
-			transaction.hide(mWebFgmt);
+		// if (mQiKanFgmt != null) {
+		// transaction.hide(mQiKanFgmt);
+		// }
+		if (mCaseFgmt != null)
+			transaction.hide(mCaseFgmt);
+		// if (mWebFgmt != null)
+		// transaction.hide(mWebFgmt);
 	}
 
 	@Override

@@ -1,6 +1,16 @@
 package qcjlibrary.fragment;
 
+<<<<<<< HEAD
+import qcjlibrary.activity.CaseHistoryActivity;
+import qcjlibrary.activity.FoodWayActivity;
+import qcjlibrary.activity.MePerioActivity;
+import qcjlibrary.activity.PatientMeActivity;
+import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.base.Model;
+=======
+import qcjlibrary.fragment.base.BaseFragment;
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -80,19 +90,42 @@ public class FragmentCaseIndex extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_mycase:
+<<<<<<< HEAD
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+=======
 
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 			break;
 
 		case R.id.rl_down:
 
 			break;
 		case R.id.rl_history:
+<<<<<<< HEAD
+			mApp.startActivity_qcj(getActivity(), CaseHistoryActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+=======
 
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 			break;
 		case R.id.tv_look:
 
 			break;
 		case R.id.tv_edit:
+<<<<<<< HEAD
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+			break;
+		case R.id.ll_notify:
+			mApp.startActivity_qcj(getActivity(),
+					UseMedicineNotifyActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+			break;
+		case R.id.ll_food:
+			mApp.startActivity_qcj(mActivity, FoodWayActivity.class,
+					mActivity.sendDataToBundle(new Model(), null));
+=======
 
 			break;
 		case R.id.ll_notify:
@@ -100,6 +133,7 @@ public class FragmentCaseIndex extends BaseFragment {
 			break;
 		case R.id.ll_food:
 
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 			break;
 
 		}

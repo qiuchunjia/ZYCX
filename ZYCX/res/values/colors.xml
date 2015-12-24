@@ -21,7 +21,8 @@
     <!-- 主题颜色紅色 -->
     <color name="main_color">#349342</color>
     <!-- 辅助颜色 -->
-
+	<color name="bg_green_light">#EBF0F0</color> 
+	
 
     <!-- 辅助黑色 -->
     <color name="main_black_color">#333333</color>
@@ -37,11 +38,15 @@
     <color name="main_white_bg_color">#f1f4f2</color>
     <!-- 特殊链接色 -->
     <color name="main_href_color">#2f7dff</color>
-
+    <color name="main_white_other_color">#f9fbfb</color>
     <!-- 字体颜色 -->
     <color name="text_white">#fff</color>
     <!-- 标题正文 -->
     <color name="text_green">#349342</color>
+<<<<<<< HEAD
+    <color name="text_blue">#5cc5f0</color>
+=======
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
     <color name="text_user">#2f5e2f</color>
     <color name="text_yellow">#e39925</color>
     <color name="text_red">#f46565</color>

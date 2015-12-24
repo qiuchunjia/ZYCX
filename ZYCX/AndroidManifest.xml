@@ -102,7 +102,6 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity1"
@@ -337,9 +336,52 @@
         <activity android:name="qcjlibrary.activity.FoodWayActivity" />
         <activity android:name="qcjlibrary.activity.FoodCategoryActivity" />
         <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
+<<<<<<< HEAD
+        <activity android:name="qcjlibrary.activity.FoodSingleDetailActivity" />
+        <activity android:name="qcjlibrary.activity.CaseHistoryActivity" />
+        <activity android:name="qcjlibrary.activity.CaseHistoryDetailActivity" />
+        <activity android:name="qcjlibrary.activity.PatientHistoryActivity" />
+        <activity android:name="qcjlibrary.activity.PatientInforActivity" />
+        <activity android:name="qcjlibrary.activity.PatientMeActivity" />
+        <activity android:name="qcjlibrary.activity.UseMedicineNotifyActivity" />
+        <activity android:name="qcjlibrary.activity.MedicineEditNotifyActivity" />
+        <activity android:name="qcjlibrary.activity.CancerSingleActivity" />
+        <activity android:name="qcjlibrary.activity.ExperienceCycleActivity" />
+        <activity android:name="qcjlibrary.activity.ExperienceSendActivity" />
+        <activity android:name="qcjlibrary.activity.ExperienceCycleDetail" />
+        <activity android:name="qcjlibrary.activity.RequestSendTopicActivity" />
+        <activity android:name="qcjlibrary.activity.RequestSendTopicCommitedActivity" />
+        <activity android:name="qcjlibrary.activity.RequestChooseCancerActivity" />
+        <activity android:name="qcjlibrary.activity.RequestWayActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailCommonActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailResponceActivity" />
+        <activity android:name="qcjlibrary.activity.RequestFlagActivity" />
+        <activity android:name="qcjlibrary.activity.RequestSearchActivity" />
+        <activity android:name="qcjlibrary.activity.ZhiXunFlagActivity" />
+        <activity android:name="qcjlibrary.activity.SearchNewActivity" />
+        <activity android:name="qcjlibrary.activity.UserAgreenmentActivity" />
+        <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
+        <activity android:name="qcjlibrary.activity.CancerCategoryActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailReponceSingleActivity" />
+        <activity android:name="qcjlibrary.activity.RequestDetailExpertActivity" />
+        <activity android:name="qcjlibrary.activity.RequestAddFlagActivity" />
+        <activity android:name="qcjlibrary.activity.RequestMyAskActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseProvinceActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseCityActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseTowerActivity" />
+        <activity android:name="qcjlibrary.activity.MeChooseCancerActivity" />
+        <activity android:name="qcjlibrary.activity.LocalAlbumActivity" />
+        <activity android:name="qcjlibrary.activity.LocalImagListActivity" />
+        <activity android:name="qcjlibrary.activity.NotifySingleReplyActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseNationActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseEducationActivity" />
+        <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
+=======
         <activity android:name="qcjlibrary.activity.FoodCategorySingleDetail" />
+>>>>>>> 4bf5ea73991a31620f795e33af940c8d90a95782
 
-        <!-- 癌友帮二期开发新增加页面end -->
+            <!-- 癌友帮二期开发新增加页面end -->
+        </activity>
     </application>
 
 </manifest>

@@ -24,4 +24,6 @@
     <dimen name="bottom_tab_padding_up">2.0dip</dimen>
     <dimen name="bottom_tab_padding_drawable">2.0dip</dimen>
     <dimen name="switch_logo_bottom_padding">30.0sp</dimen>
+    
+    <dimen name="check_button_margin">20dp</dimen>
 </resources>
