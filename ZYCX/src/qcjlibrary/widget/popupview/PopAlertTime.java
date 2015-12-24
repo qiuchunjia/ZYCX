@@ -119,7 +119,10 @@ public class PopAlertTime extends PopView{
 		mCurrentHour = mCurrentHour.trim();
 		mCurrentMin = mMin[wv_date_day.getCurrentItem()];
 		mCurrentMin = mCurrentMin.trim();
-		return mCurrentAm + " " + mCurrentHour + ":" + mCurrentMin;
+		if(mCurrentAm.equals("下午")){
+			mCurrentHour = wv_date_month.getCurrentItem() + 13 +"";
+		}
+		return mCurrentHour + ":" + mCurrentMin;
 	}
 
 	public String getTime() {
@@ -134,4 +137,12 @@ public class PopAlertTime extends PopView{
 		
 		this.mAlertTimeList=alertTimeList;
 	}
+	
+	private String setHour(String selectTime,int resultTime){
+		if(mCurrentHour.equals(selectTime)){
+			return mCurrentHour = resultTime+"";
+		}
+		return null;
+	}
+	
 }
