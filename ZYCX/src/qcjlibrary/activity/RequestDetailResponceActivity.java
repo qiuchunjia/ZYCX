@@ -7,7 +7,6 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestCommmetCommon;
-import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopDealAnwer;
 import android.text.TextUtils;
@@ -54,7 +53,9 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
-		titleSetRightImage(R.drawable.more3);
+		if (!mAnswerCommon.isShoudGone()) {
+			titleSetRightImage(R.drawable.more3);
+		}
 		riv_other_icon = (RoundImageView) findViewById(R.id.riv_other_icon);
 		tv_other_username = (TextView) findViewById(R.id.tv_other_username);
 		tv_other_date = (TextView) findViewById(R.id.tv_other_date);
@@ -73,7 +74,6 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		title.iv_title_right1.setOnClickListener(this);
 		if (mAnswerCommon != null) {
-			titleSetCenterTitle(mAnswerCommon.getUser_name() + "的解答");
 			addDataToHead(mAnswerCommon);
 			sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon),
 					ModelRequestCommmetCommon.class, REQUEST_GET);
@@ -87,6 +87,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	 */
 	private void addDataToHead(ModelRequestAnswerComom mAnswerCommon2) {
 		if (mAnswerCommon2 != null) {
+			titleSetCenterTitle(mAnswerCommon2.getUser_name() + "的解答");
 			mApp.displayImage(mAnswerCommon2.getUser_face(), riv_other_icon);
 			tv_other_username.setText(mAnswerCommon2.getUser_name());
 			tv_other_date.setText(mAnswerCommon2.getTime());
@@ -101,6 +102,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestCommmetCommon) {
 			ModelRequestCommmetCommon common = (ModelRequestCommmetCommon) object;
+			addDataToHead(common.getAnswer());
 			addDataToll(common.getCommentList());
 		}
 		if (object instanceof ModelMsg) {

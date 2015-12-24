@@ -400,7 +400,7 @@
                 android:id="@+id/tv_stop_drink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="戒酒时间"
+                android:text="是否已戒酒"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -410,7 +410,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_stop_drink"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="2015-6"
+                android:text="已戒酒"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -419,6 +419,41 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignTop="@id/tv_stop_drink_name"
+                android:src="@drawable/arrows_right" />
+        </RelativeLayout>
+
+        <include layout="@layout/view_line_vertical_margin_10" />
+
+        <RelativeLayout
+            android:id="@+id/rl_stop_drink_time"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/main_white_pure_color"
+            android:padding="@dimen/margin_left_small" >
+
+            <TextView
+                android:id="@+id/tv_stop_drink_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="戒酒时间"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_common" />
+
+            <TextView
+                android:id="@+id/tv_stop_drink_name_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_stop_drink_time"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="2015-6"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_common" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_stop_drink_name_time"
                 android:src="@drawable/arrows_right" />
         </RelativeLayout>
 

@@ -15,11 +15,11 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class PopChooseGender extends PopView {
+public class PopChooseDrink extends PopView {
 	private TextView tv_praise;
 	private TextView tv_cancle;
 
-	public PopChooseGender(Activity activity, Object object,
+	public PopChooseDrink(Activity activity, Object object,
 			PopResultListener resultListener) {
 		super(activity, object, resultListener);
 	}
@@ -37,19 +37,19 @@ public class PopChooseGender extends PopView {
 
 	@Override
 	public void initPopData(Object object) {
-		tv_praise.setText("男");
-		tv_cancle.setText("女");
+		tv_praise.setText("不饮酒");
+		tv_cancle.setText("饮酒");
 	}
 
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
 		final ModelPop modelPop = new ModelPop();
-		modelPop.setType(Config.TYPE_GENDER);
+		modelPop.setType(Config.TYPE_DRINK);
 		tv_praise.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("1");
+				modelPop.setDataStr("0");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
@@ -58,7 +58,7 @@ public class PopChooseGender extends PopView {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("2");
+				modelPop.setDataStr("1");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}

@@ -1,11 +1,13 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.ExperienceCycleAdapter;
 import qcjlibrary.adapter.MeChooseAddressAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelMeAddress;
+import qcjlibrary.model.base.Model;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,6 +23,7 @@ public class MeChooseCityActivity extends BaseActivity {
 	private CommonListView mCommonListView;
 	private BAdapter mAdapter;
 	private ModelMeAddress mAddress;
+	private Model mReturnData;
 
 	@Override
 	public String setCenterTitle() {
@@ -50,15 +53,32 @@ public class MeChooseCityActivity extends BaseActivity {
 					int position, long id) {
 				ModelMeAddress address = (ModelMeAddress) parent
 						.getItemAtPosition(position);
-				address.setWholeAddress(mAddress.getWholeAddress()
+				mAddress.setArea_id(address.getArea_id());
+				mAddress.setWholeAddress(mAddress.getWholeAddress()
 						+ address.getTitle() + " ");
-				address.setWholeId(mAddress.getWholeId() + address.getArea_id()
-						+ ",");
-				mCommonListView.stepToNextActivity(address,
-						MeChooseTowerActivity.class);
-				MeChooseCityActivity.this.finish();
+				mAddress.setWholeId(mAddress.getWholeId()
+						+ address.getArea_id() + ",");
+				mApp.startActivityForResult_qcj(MeChooseCityActivity.this,
+						MeChooseTowerActivity.class,
+						sendDataToBundle(mAddress, null));
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mReturnData = (Model) getReturnResultSeri(resultCode, data,
+				Config.TYPE_ADDRESS);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mReturnData != null) {
+			setReturnResultSeri(mReturnData, Config.TYPE_ADDRESS);
+			onBackPressed();
+		}
 	}
 
 	@Override

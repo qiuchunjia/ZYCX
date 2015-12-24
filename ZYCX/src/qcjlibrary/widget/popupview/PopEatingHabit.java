@@ -11,58 +11,72 @@ import android.widget.TextView;
 import com.zhiyicx.zycx.R;
 
 /**
- * author：qiuchunjia time：下午3:48:51 类描述：这个类是实现
+ * author：qiuchunjia time：下午3:01:15 类描述：这个类是实现
  *
  */
 
-public class PopChooseGender extends PopView {
-	private TextView tv_praise;
-	private TextView tv_cancle;
+public class PopEatingHabit extends PopView {
+	private TextView tv_1;
+	private TextView tv_2;
+	private TextView tv_3;
 
-	public PopChooseGender(Activity activity, Object object,
+	public PopEatingHabit(Activity activity, Object object,
 			PopResultListener resultListener) {
 		super(activity, object, resultListener);
 	}
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.pop_deal_anwer;
+		return R.layout.pop_eating_habits;
 	}
 
 	@Override
 	public void initPopView() {
-		tv_praise = (TextView) findViewbyId(R.id.tv_praise);
-		tv_cancle = (TextView) findViewbyId(R.id.tv_cancle);
+		tv_1 = (TextView) findViewbyId(R.id.tv_1);
+		tv_2 = (TextView) findViewbyId(R.id.tv_2);
+		tv_3 = (TextView) findViewbyId(R.id.tv_3);
+
 	}
 
 	@Override
 	public void initPopData(Object object) {
-		tv_praise.setText("男");
-		tv_cancle.setText("女");
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
 		final ModelPop modelPop = new ModelPop();
-		modelPop.setType(Config.TYPE_GENDER);
-		tv_praise.setOnClickListener(new OnClickListener() {
+		modelPop.setType(Config.TYPE_EATING_HABIT);
+		tv_1.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("1");
+				modelPop.setDataStr("荤");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
 		});
-		tv_cancle.setOnClickListener(new OnClickListener() {
+		tv_2.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("2");
+				modelPop.setDataStr("素");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
 		});
+
+		tv_3.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				modelPop.setDataStr("荤素搭配");
+				listener.onPopResult(modelPop);
+				mPopWindow.dismiss();
+			}
+		});
+
 	}
 
 }

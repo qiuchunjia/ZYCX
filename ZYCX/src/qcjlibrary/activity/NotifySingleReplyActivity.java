@@ -2,7 +2,10 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelNotifyCommment;
+import qcjlibrary.model.ModelRequestAnswerComom;
+import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +20,8 @@ import com.zhiyicx.zycx.R;
 public class NotifySingleReplyActivity extends BaseActivity {
 	private ModelNotifyCommment mComment;
 	private EditText et_content;
+
+	private ModelRequestAnswerComom mSendComment; // 需要发送的comment
 
 	@Override
 	public String setCenterTitle() {
@@ -44,7 +49,10 @@ public class NotifySingleReplyActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		if (mComment != null) {
+			mSendComment = new ModelRequestAnswerComom();
+			mSendComment.setComment_id(mComment.getComment_id());
+		}
 
 	}
 
@@ -59,7 +67,9 @@ public class NotifySingleReplyActivity extends BaseActivity {
 		case R.id.tv_title_right:
 			String content = et_content.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
-
+				mSendComment.setContent(content);
+				sendRequest(mApp.getRequestImpl().addComment(mSendComment),
+						ModelMsg.class, REQUEST_GET);
 			}
 			break;
 
@@ -67,6 +77,16 @@ public class NotifySingleReplyActivity extends BaseActivity {
 			break;
 		}
 
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelMsg) {
+			ToastUtils.showToast("回复成功");
+			onBackPressed();
+		}
+		return object;
 	}
 
 }

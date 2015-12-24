@@ -3,12 +3,12 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.MeChooseAddressAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
-import qcjlibrary.model.base.Model;
-import qcjlibrary.util.ToastUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,7 +57,13 @@ public class MeChooseTowerActivity extends BaseActivity {
 						+ address.getTitle());
 				mAddress.setWholeId(mAddress.getWholeId()
 						+ address.getArea_id());
-				modifyTheUserInfor(mAddress);
+				if (TextUtils.isEmpty(mAddress.getType())) {
+					modifyTheUserInfor(mAddress);
+				} else {
+					setReturnResultSeri(mAddress, Config.TYPE_ADDRESS);
+					onBackPressed();
+				}
+
 			}
 
 		});
