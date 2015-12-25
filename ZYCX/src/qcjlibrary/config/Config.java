@@ -62,5 +62,5 @@ public class Config {
 	public static final String TYPE_TIME = "type_time";
 	public static final String TYPE_TIME_LIST = "type_time_list";
 	public static final String SHARED_SAVE_KEY = "id";
-
+	public static final String ACTION_BOOT = "android.intent.action.BOOT_COMPLETED";
 }

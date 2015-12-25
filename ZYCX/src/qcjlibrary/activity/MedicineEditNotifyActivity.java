@@ -182,7 +182,6 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 					StringBuffer totalData = new StringBuffer();
 					totalData.append(isOpen+",").append(userName+",").append(medicineName+",").
 					append(day+",").append(count+",").append(startTime+",").append(timeList);
-					Log.d("Cathy", ",,,,totalData:"+totalData);
 					SharedPreferencesUtil.saveData(this, (++id)+"", totalData.toString());
 					SharedPreferencesUtil.saveData(this, Config.SHARED_SAVE_KEY, id);
 					mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
@@ -207,7 +206,6 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			tv_once.setText(day+count);
 			tv_eat_med_repeatday.setText(day);
 		} else if(type.equals(Config.TYPE_TIME_LIST)){
-			//bug:多次修改不会取最后一次，之后修复
 			timeAndCount = ((ModelPop)object).getDataStr();
 			timeList = timeAndCount.split(",")[0];
 			count = timeAndCount.split(",")[1];
