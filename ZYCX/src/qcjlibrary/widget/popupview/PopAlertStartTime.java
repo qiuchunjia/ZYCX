@@ -118,7 +118,7 @@ public class PopAlertStartTime extends PopView {
 		mCurrentMonth = mCurrentMonth.trim();
 		mCurrentDay = mDay[wv_date_day.getCurrentItem()];
 		mCurrentDay = mCurrentDay.trim();
-		return mCurrentYear + "年" + mCurrentMonth + "月" + mCurrentDay + "号";
+		return mCurrentYear + "-" + mCurrentMonth + "-" + mCurrentDay;
 	}
 
 }

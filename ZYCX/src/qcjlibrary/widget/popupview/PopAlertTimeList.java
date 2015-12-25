@@ -127,7 +127,7 @@ public class PopAlertTimeList extends PopView {
 				String timeStr = "8: 00";
 				time.append(item_1).append(item_2).append(item_3).append(item_4);
 				if (time.length() > 4) {
-					timeStr = (String) time.subSequence(0, time.length() - 1);
+					timeStr = (String) time.subSequence(0, time.length() - 2);
 				}
 				data.setType(Config.TYPE_TIME_LIST);
 				data.setDataStr(timeStr+","+count+"次");
