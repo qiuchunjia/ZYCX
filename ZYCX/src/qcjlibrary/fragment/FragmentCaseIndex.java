@@ -2,12 +2,11 @@ package qcjlibrary.fragment;
 
 import qcjlibrary.activity.CaseHistoryActivity;
 import qcjlibrary.activity.FoodWayActivity;
-import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelCaseIndex;
 import qcjlibrary.model.base.Model;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -60,7 +59,6 @@ public class FragmentCaseIndex extends BaseFragment {
 		tv_look = (TextView) findViewById(R.id.tv_look);
 		rl_nodata = (RelativeLayout) findViewById(R.id.rl_nodata);
 		tv_edit = (TextView) findViewById(R.id.tv_edit);
-		rl_mycase = (RelativeLayout) findViewById(R.id.rl_mycase);
 		ll_notify = (LinearLayout) findViewById(R.id.ll_notify);
 		ll_food = (LinearLayout) findViewById(R.id.ll_food);
 
@@ -68,13 +66,43 @@ public class FragmentCaseIndex extends BaseFragment {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+		sendRequest(mApp.getMedRecordImpl().index(), ModelCaseIndex.class,
+				REQUEST_GET);
+	}
 
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelCaseIndex) {
+			ModelCaseIndex caseIndex = (ModelCaseIndex) object;
+			rl_nodata.setVisibility(View.GONE);
+			rl_my.setVisibility(View.VISIBLE);
+			addUserDataToView(caseIndex);
+		} else {
+			judgeTheMsg(object);
+		}
+		return object;
+	}
+
+	/**
+	 * 添加用户数据到界面
+	 * 
+	 * @param caseIndex
+	 */
+	private void addUserDataToView(ModelCaseIndex caseIndex) {
+		if (caseIndex != null) {
+			tv_name.setText(caseIndex.getRealname());
+			tv_gender.setText(caseIndex.getSex());
+			tv_age.setText(caseIndex.getAge());
+			tv_update_day.setText(caseIndex.getUtime());
+			tv_create_day.setText(caseIndex.getCtime());
+		}
 	}
 
 	@Override
 	public void initListener() {
 		rl_mycase.setOnClickListener(this);
+		rl_my.setOnClickListener(this);
 		rl_down.setOnClickListener(this);
 		rl_history.setOnClickListener(this);
 		tv_look.setOnClickListener(this);
@@ -87,10 +115,10 @@ public class FragmentCaseIndex extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_mycase:
-
-			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
-
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class, null);
+			break;
+		case R.id.rl_my:
+			mApp.startActivity_qcj(getActivity(), PatientMeActivity.class, null);
 			break;
 
 		case R.id.rl_down:
