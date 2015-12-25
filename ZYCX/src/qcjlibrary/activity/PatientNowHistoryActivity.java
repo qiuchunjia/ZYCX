@@ -9,12 +9,14 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelAddNowCase;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.R.string;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -192,16 +194,16 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ModelPop modelPop = (ModelPop) object;
 			if (modelPop.getType().equals(Config.TYPE_CHECK_START_TIME)) {
 				tv_check_time_name.setText(modelPop.getDataStr());
-				diagnosis_stime = modelPop.getDataStr();
+				diagnosis_stime = DateUtil.dateToStr(modelPop.getDataStr());
 			} else if (modelPop.getType().equals(Config.TYPE_CHECK_END_TIME)) {
 				tv_check_end_time_name.setText(modelPop.getDataStr());
-				diagnosis_etime = modelPop.getDataStr();
+				diagnosis_etime = DateUtil.dateToStr(modelPop.getDataStr());
 			} else if (modelPop.getType().equals(Config.TYPE_LAB_CHECK_TIME)) {
 				tv_lab_check_end_time_name.setText(modelPop.getDataStr());
-				lab_exam_time = modelPop.getDataStr();
+				lab_exam_time = DateUtil.dateToStr(modelPop.getDataStr());
 			} else if (modelPop.getType().equals(Config.TYPE_VIDEO_CHECK_TIME)) {
 				tv_vedio_check_end_time_name.setText(modelPop.getDataStr());
-				image_exam_time = modelPop.getDataStr();
+				image_exam_time = DateUtil.dateToStr(modelPop.getDataStr());
 			}
 		}
 		return super.onPopResult(object);
@@ -232,6 +234,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 				Config.TYPE_CHECK_PHOTO);
 		if (photolist1 instanceof List<?>) {
 			List<String> lists = (List<String>) photolist1;
+			Log.i("photolist", lists.toString());
 			addDataAndDisplay(ll_ScrollView1, mPhotoList1, lists,
 					Config.TYPE_CHECK_PHOTO);
 		}
@@ -239,6 +242,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 				Config.TYPE_LAB_PHOTO);
 		if (photolist2 instanceof List<?>) {
 			List<String> lists = (List<String>) photolist2;
+			Log.i("photolist", lists.toString());
 			addDataAndDisplay(ll_ScrollView2, mPhotoList2, lists,
 					Config.TYPE_LAB_PHOTO);
 		}
@@ -246,6 +250,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 				Config.TYPE_VIDEO_PHOTO);
 		if (photolist3 instanceof List<?>) {
 			List<String> lists = (List<String>) photolist3;
+			Log.i("photolist", lists.toString());
 			addDataAndDisplay(ll_ScrollView3, mPhotoList3, lists,
 					Config.TYPE_VIDEO_PHOTO);
 		}
@@ -365,6 +370,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		addCase.setImage_exam_program(image_exam_program);
 		addCase.setImage_exam_time(image_exam_time);
 		addCase.setImage_exam_hospital(image_exam_hospital);
+		// 图片待添加
 		return addCase;
 	}
 
