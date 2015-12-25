@@ -20,7 +20,8 @@ public class AlarmBroadCastReciever extends BaseBroadCast{
 			Log.d("Cathy", "short alert: 吃药");
 			//发送通知
 			sendNotification(context);
-			//播放短提示音
+			//播放短提示音,由于service只能开启一次，所有需要先stop
+			context.stopService(new Intent("alert_music"));
 			context.startService(new Intent("alert_music"));
 		}
 	}

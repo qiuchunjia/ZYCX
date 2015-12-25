@@ -1,12 +1,12 @@
 package qcjlibrary.service;
 
 import com.zhiyicx.zycx.R;
-
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
+import android.os.Message;
 
 public class AlertService extends Service{
 
@@ -21,7 +21,6 @@ public class AlertService extends Service{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Log.d("Cathy", "AlertService onCreate");
 		mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.alert_1);
 		mPlayer.setLooping(false);
 		mPlayer.start();
