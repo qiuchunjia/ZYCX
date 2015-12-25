@@ -7,6 +7,8 @@ import java.util.List;
 import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelAddNowCase;
+import qcjlibrary.model.ModelCasePresent;
+import qcjlibrary.model.ModelCaseRecord;
 import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperiencePostDetailItem;
@@ -705,6 +707,33 @@ public class api {
 			params.add(ACT, MY_MED_RECORD);
 			getTestToken(params);
 			return params;
+		}
+
+		@Override
+		public RequestParams presentHistory(ModelCaseRecord record) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDRECORD);
+			params.add(ACT, PRESENT_HISTORY);
+			if (record != null) {
+				getChangePage(params, record);
+			}
+			getTestToken(params);
+			return params;
+		}
+
+		@Override
+		public RequestParams resultInfo(ModelCaseRecord record) {
+			if (record != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, MEDRECORD);
+				params.add(ACT, RESULT_INFO);
+				params.add(ID, record.getId());
+				getTestToken(params);
+				return params;
+			}
+			return null;
 		}
 	}
 }
