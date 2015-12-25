@@ -13,7 +13,6 @@ import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopDatePicker;
-import android.R.string;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.zhiyicx.zycx.R;
 
 /**

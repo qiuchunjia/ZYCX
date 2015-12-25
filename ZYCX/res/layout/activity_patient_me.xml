@@ -282,11 +282,38 @@
                 android:textSize="@dimen/text_common" />
 
             <TextView
+                android:id="@+id/tv_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="饮酒：饮酒，18岁开始，270ml/日，已戒酒，戒酒时间 2013-12"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_common" />
+
+            <TextView
                 android:id="@+id/tv_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="月经年纪12岁，末次月经时间2012-12-16"
+                android:text="月经史：月经年纪12岁，末次月经时间2012-12-16"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_common" />
+
+            <TextView
+                android:id="@+id/tv_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="子女："
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_common" />
+
+            <TextView
+                android:id="@+id/tv_family"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="家族史："
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </LinearLayout>
