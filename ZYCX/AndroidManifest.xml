@@ -386,7 +386,6 @@
             <!-- 癌友帮二期开发新增加页面end -->
         </activity>
         
-        
         <receiver android:name="qcjlibrary.broadcast.BootCompletedBroadCast">
             <intent-filter >
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

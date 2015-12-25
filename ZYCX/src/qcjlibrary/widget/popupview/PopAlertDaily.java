@@ -70,6 +70,7 @@ public class PopAlertDaily extends PopView {
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				//记录当前选择的item的id
 				index = checkedId;
 			}
 		});

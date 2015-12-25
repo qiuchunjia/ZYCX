@@ -138,11 +138,4 @@ public class PopAlertTime extends PopView{
 		this.mAlertTimeList=alertTimeList;
 	}
 	
-	private String setHour(String selectTime,int resultTime){
-		if(mCurrentHour.equals(selectTime)){
-			return mCurrentHour = resultTime+"";
-		}
-		return null;
-	}
-	
 }
