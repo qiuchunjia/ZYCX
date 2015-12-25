@@ -15,10 +15,9 @@ import android.widget.TextView;
 import com.zhiyicx.zycx.R;
 
 /**
- * author：qiuchunjia time：上午10:57:44 类描述：
- * 
- * 这个类是实现时间选择器
- *
+ * author：tanxiaomin 
+ * time：上午11:30:44 
+ * 类描述：开始日期提醒弹出框
  */
 
 public class PopAlertStartTime extends PopView {
