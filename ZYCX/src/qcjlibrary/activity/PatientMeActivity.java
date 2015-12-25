@@ -34,6 +34,9 @@ public class PatientMeActivity extends BaseActivity {
 	private TextView tv_smoke;
 	private TextView tv_first;
 
+	/*************** 添加现病史的控件 **************************/
+	private TextView tv_now_edit2;
+
 	@Override
 	public String setCenterTitle() {
 		return "患者信息";
@@ -71,6 +74,7 @@ public class PatientMeActivity extends BaseActivity {
 		tv_food_habit = (TextView) findViewById(R.id.tv_food_habit);
 		tv_smoke = (TextView) findViewById(R.id.tv_smoke);
 		tv_first = (TextView) findViewById(R.id.tv_first);
+		tv_now_edit2 = (TextView) findViewById(R.id.tv_now_edit2);
 	}
 
 	@Override
@@ -83,6 +87,7 @@ public class PatientMeActivity extends BaseActivity {
 	public void initListener() {
 		tv_edit.setOnClickListener(this);
 		tv_edit2.setOnClickListener(this);
+		tv_now_edit2.setOnClickListener(this);
 	}
 
 	@Override
@@ -96,6 +101,10 @@ public class PatientMeActivity extends BaseActivity {
 		case R.id.tv_edit2:
 			mApp.startActivity_qcj(this, PatientHistoryActivity.class,
 					sendDataToBundle(new Model(), null));
+			break;
+		case R.id.tv_now_edit2:
+			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class,
+					sendDataToBundle(null, null));
 			break;
 
 		}

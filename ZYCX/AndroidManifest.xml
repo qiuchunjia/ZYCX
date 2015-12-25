@@ -339,7 +339,6 @@
         <activity android:name="qcjlibrary.activity.FoodWayActivity" />
         <activity android:name="qcjlibrary.activity.FoodCategoryActivity" />
         <activity android:name="qcjlibrary.activity.FoodWaySingleDetail" />
-
         <activity android:name="qcjlibrary.activity.FoodSingleDetailActivity" />
         <activity android:name="qcjlibrary.activity.CaseHistoryActivity" />
         <activity android:name="qcjlibrary.activity.CaseHistoryDetailActivity" />
@@ -378,8 +377,11 @@
         <activity android:name="qcjlibrary.activity.NotifySingleReplyActivity" />
         <activity android:name="qcjlibrary.activity.ChooseNationActivity" />
         <activity android:name="qcjlibrary.activity.ChooseEducationActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseLabWayActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseSurgeryWayActivity" />
+        <activity android:name="qcjlibrary.activity.ChooseTreatWayActivity" />
+        <activity android:name="qcjlibrary.activity.PatientNowHistoryActivity" />
         <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
-
 
             <!-- 癌友帮二期开发新增加页面end -->
         </activity>
