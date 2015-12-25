@@ -30,7 +30,6 @@ public class CommonListView extends BaseListView {
 
 		if (mActivity instanceof BaseActivity) {
 			BaseActivity activity = ((BaseActivity) mActivity);
-
 			Bundle data = activity.sendDataToBundle(model, null);
 			mApp.startActivity_qcj(activity, activityClass, data);
 		}
