@@ -1,8 +1,13 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.fragment.FragmentInfor;
+import qcjlibrary.fragment.FragmentQclass;
+import qcjlibrary.fragment.FragmentRequest;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,7 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import java.util.ArrayList;
+
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.fragment.WebAtomFragment;
 
 /**
  * author：qiuchunjia time：下午4:07:29 类描述：这个类是实现
@@ -31,6 +39,12 @@ public class SearchNewActivity extends BaseActivity {
 	private TextView tv_line;
 	private ViewPager mViewpager;
 	private ImageView iv_search;
+	
+	private ArrayList<Fragment> mFragList;
+	private WebAtomFragment mWeiboFrag;
+	private FragmentRequest mRequestFrag;
+	private FragmentInfor mInfoFrag;
+	private FragmentQclass mQclassFrag;
 	
 
 	@Override
@@ -67,7 +81,9 @@ public class SearchNewActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		
+		mFragList = new ArrayList<Fragment>();
+		mWeiboFrag = new WebAtomFragment();
+		mRequestFrag = new FragmentRequest();
 	}
 
 	@Override
