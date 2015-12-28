@@ -152,10 +152,11 @@ public class api {
 
 		public RequestParams appBanner() {
 			RequestParams params = new RequestParams();
-			params.add(APP, APPNAME);
+			params.add(APP, API);
 			params.add(MOD, SYSTEM);
 			params.add(ACT, APP_BANNER);
-			return params;
+			Log.i("appBanner", params.toString());
+			return getTestToken(params);
 		}
 	}
 
