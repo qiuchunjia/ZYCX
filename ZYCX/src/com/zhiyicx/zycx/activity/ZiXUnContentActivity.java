@@ -7,10 +7,8 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.util.ToastUtils;
-import qcjlibrary.util.UIUtils;
 import qcjlibrary.widget.popupview.PopSizeChoose;
 import qcjlibrary.widget.popupview.base.PopView;
-
 import android.content.Intent;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -55,6 +53,8 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	private ModelZiXunDetail mDetail = null;
 	private Title mTitleLayout;
+
+	private String mChangeSizeUrl; // 改变字体的url
 
 	@Override
 	public String setCenterTitle() {
@@ -134,8 +134,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 			finish();
 			break;
 		case R.id.iv_title_right3:
-			PopView popView = new PopSizeChoose(this, null, this);
-			popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
+			if (!TextUtils.isEmpty(mChangeSizeUrl)) {
+				PopView popView = new PopSizeChoose(this, mChangeSizeUrl, this);
+				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
+			} else {
+				ToastUtils.showToast("请稍后。。。");
+				loadData();
+			}
 			break;
 		case R.id.iv_title_right1:
 			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
@@ -301,6 +306,12 @@ public class ZiXUnContentActivity extends BaseActivity {
 		}
 	};
 
+	public Object onPopResult(Object object) {
+		mChangeSizeUrl = object.toString();
+		mContent.loadUrl(mChangeSizeUrl);
+		return object;
+	};
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -325,10 +336,9 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
-						String wholeUrl = mUrl
+						mChangeSizeUrl = mUrl
 								+ Utils.getTokenString(ZiXUnContentActivity.this);
-						ToastUtils.showToast(wholeUrl);
-						mContent.loadUrl(wholeUrl);
+						mContent.loadUrl(mChangeSizeUrl);
 						mIsColl = data.getInt("isColl");
 						if (mIsColl == 1)
 							mCollBtn.setText("不收藏");
