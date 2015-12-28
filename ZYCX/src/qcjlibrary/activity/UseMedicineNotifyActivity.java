@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
@@ -151,8 +152,19 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					// 为每一个时间设置广播
 					for (int j = 0; j < mTimeArr.length; j++) {
 						if (mTimeArr[j] != null) {
-							long triggerAtMillis = changeStr2Long(startTime + " " + mTimeArr[j] + ":0");
 							long currentMillis = System.currentTimeMillis();
+							if(getYearMonDay(startTime) < currentMillis){
+								startTime = getYearMonDay(currentMillis);
+							}
+							//Log.d("Cathy", "开始年月日转换long:"+ getYearMonDay(startTime) +
+									//"当前时间："+ currentMillis + "转换后："+ startTime);
+							long triggerAtMillis = changeStr2Long(startTime + " " + mTimeArr[j] + ":00");
+							//Log.d("Cathy", "开始时间："+ startTime + " " + mTimeArr[j] + ":00" + " 换算前："+ triggerAtMillis);
+							//如果开始时间已经早于当前时间，则将当前时间设为开始时间
+							if(currentMillis > triggerAtMillis){
+								triggerAtMillis = triggerAtMillis + intervalMillis;
+								//Log.d("Cathy", "下次提醒时间： "+changeLong2Str(triggerAtMillis));
+							}
 							/**
 							 * 三种获取PendingIntent对象的方法 getActivity(Context, int,
 							 * Intent, int) 启动一个activity getBroadcast(Context,
@@ -208,7 +220,29 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	 */
 	@SuppressLint("SimpleDateFormat")
 	private long changeStr2Long(String time) {
-		SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-M-D H:m:s");
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss",Locale.CHINA);
+		Date mDate;
+		try {
+			mDate = mFormat.parse(time);
+			return mDate.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.d("Cathy", e.toString());
+		}
+		return 0;
+	}
+	
+	private String changeLong2Str(long time){
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+		Date date = new Date(time);
+		return mFormat.format(date);
+	}
+	
+	private long getYearMonDay(String time){
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd", Locale.CHINA);
 		Date mDate;
 		try {
 			mDate = mFormat.parse(time);
@@ -220,4 +254,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		return 0;
 	}
 
+	private String getYearMonDay(long time){
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd", Locale.CHINA);
+		Date date = new Date(time);
+		return mFormat.format(date);
+	}
 }
