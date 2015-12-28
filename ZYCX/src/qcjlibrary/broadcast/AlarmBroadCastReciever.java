@@ -1,14 +1,19 @@
 package qcjlibrary.broadcast;
 
 import com.umeng.socialize.utils.Log;
-
+import com.zhiyicx.zycx.R;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.broadcast.base.BaseBroadCast;
-import qcjlibrary.util.ToastUtils;
 
 public class AlarmBroadCastReciever extends BaseBroadCast{
 
+	int count;
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -26,8 +31,26 @@ public class AlarmBroadCastReciever extends BaseBroadCast{
 		}
 	}
 
+	//通知
+	@SuppressWarnings("deprecation")
 	private void sendNotification(Context context) {
-		//推送？
+		count ++;
+		NotificationManager mManager = (NotificationManager) context.getSystemService(
+				Context.NOTIFICATION_SERVICE);
+		Notification mNotification = new Notification(R.drawable.morentouxiang02,"吃药",System.currentTimeMillis());
+		mNotification.flags = Notification.FLAG_AUTO_CANCEL;
+		mNotification.number = count;
+		//跳转到用药提醒界面
+		Intent intent = new Intent(context,UseMedicineNotifyActivity.class);
+		intent.setComponent(new ComponentName("qcjlibrary.broadcast", 
+				"qcjlibrary.activity.UseMedicineNotifyActivity"));
+		//关键的一步，设置启动模式
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK| 
+        		Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        PendingIntent mPi = PendingIntent.getActivity(
+        		context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+        mNotification.setLatestEventInfo(context, "该吃药了", "点击查看详情",mPi); 
+        mManager.notify(1, mNotification);
 	}
 	
 }
