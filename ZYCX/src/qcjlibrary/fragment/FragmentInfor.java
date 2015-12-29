@@ -3,7 +3,7 @@ package qcjlibrary.fragment;
 import android.view.View;
 import qcjlibrary.fragment.base.BaseFragment;
 
-public class FragmentConsultative extends BaseFragment{
+public class FragmentInfor extends BaseFragment{
 
 	@Override
 	public void onClick(View v) {
