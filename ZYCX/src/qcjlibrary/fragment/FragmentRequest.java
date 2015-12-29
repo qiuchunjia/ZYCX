@@ -87,8 +87,9 @@ public class FragmentRequest extends BaseFragment{
 			@Override
 			public void onSearchTouch(String key, int searchType) {
 				// TODO 自动生成的方法存根
+				Log.d("Cathy", "request:"+key+" searchType:"+ searchType);
 				if(searchType == Config.TYPE_REQUEST){
-					Log.d("Cathy", "key:"+key);
+					Log.d("Cathy", "request:"+key);
 					mRequestSearch.setKey(key);
 					sendRequest(mApp.getRequestImpl().search(mRequestSearch),
 							ModelRequest.class, REQUEST_GET);
@@ -111,4 +112,11 @@ public class FragmentRequest extends BaseFragment{
 		return object;
 	}
 
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		initData();
+	}
+	
 }

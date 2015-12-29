@@ -2,6 +2,7 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.view.View;
@@ -73,7 +74,9 @@ public class FragmentSearchFood extends BaseFragment{
 			@Override
 			public void onSearchTouch(String key, int searchType) {
 				// TODO 自动生成的方法存根
+				Log.d("Cathy", "food:"+key+" searchType:"+ searchType);
 				if(searchType == Config.TYPE_FOOD){
+					Log.d("Cathy", "food:"+key);
 					mFoodSearchAll = new ModelFoodSearchAll();
 					mFoodSearchAll.setKey(key);
 					sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
@@ -95,4 +98,11 @@ public class FragmentSearchFood extends BaseFragment{
 		return object;
 	}
 
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		initData();
+	}
+	
 }
