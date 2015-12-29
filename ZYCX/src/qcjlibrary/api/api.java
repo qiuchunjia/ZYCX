@@ -411,13 +411,6 @@ public class api {
 				params.add(APP, API);
 				params.add(MOD, PERSONAGE);
 				params.add(ACT, EDITUSERDATA);
-				params.add(SEX, user.getSex());
-				params.add(INTRO, user.getIntro());
-				params.add(CANCER, user.getCancer());
-				params.add(BIRTHDAY, user.getBirthday());
-				params.add(LOCATION, user.getLocation());
-				params.add(CITY_IDS, user.getCity_ids());
-				params.add(UNAME, user.getUname());
 				Log.i("edituserdata", params.toString());
 				return getTestToken(params);
 			}
