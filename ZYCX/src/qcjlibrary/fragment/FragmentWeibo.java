@@ -6,21 +6,24 @@ import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 import android.view.View;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
+import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.listview.base.CommonListView;
 
-public class FragmentInfor extends BaseFragment{
+public class FragmentWeibo extends BaseFragment {
 
-	
+	private CommonListView mCommonListView;
+
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		
+
 	}
 
 	@Override
 	public void initIntentData() {
 		// TODO 自动生成的方法存根
-		
+
 	}
 
 	@Override
@@ -31,19 +34,27 @@ public class FragmentInfor extends BaseFragment{
 
 	@Override
 	public void initView() {
-		// TODO 自动生成的方法存根
-		
+		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 	}
 
 	@Override
 	public void initListener() {
 		// TODO 自动生成的方法存根
-		
+
 	}
 
 	@Override
 	public void initData() {
-		
+		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
+
+			@Override
+			public void onSearchTouch(String key, int searchType) {
+				// TODO 自动生成的方法存根
+				if (searchType == Config.TYPE_WEIBO) {
+
+				}
+			}
+		});
 	}
 
 }
