@@ -29,6 +29,15 @@ public class ModelUser extends Model {
 	private static final long serialVersionUID = 1L;
 	private String oauth_token;
 	private String oauth_token_secret;
+	private String sex;
+	private String intro;
+	private String cancer;
+	private String birthday;
+	private String location;
+	private String city_ids;
+	private String uname;
+	private String avatar;
+	/*************************** 登录注册需要用的 ***************************************/
 	private String mobile; // 手机号码
 	private String pwd; // 密码
 	private String vetifyCode; // 验证码
@@ -102,6 +111,70 @@ public class ModelUser extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public String getCancer() {
+		return cancer;
+	}
+
+	public void setCancer(String cancer) {
+		this.cancer = cancer;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getCity_ids() {
+		return city_ids;
+	}
+
+	public void setCity_ids(String city_ids) {
+		this.city_ids = city_ids;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

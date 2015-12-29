@@ -130,11 +130,11 @@ public class RegisterActivity1 extends BaseActivity {
 	}
 
 	private boolean checkThePhoneAndCode(String phone, String vetifyCode) {
-		if (!TextUtils.isEmpty(phone)) {
+		if (TextUtils.isEmpty(phone)) {
 			ToastUtils.showToast("手机号码不能为空");
 			return false;
 		}
-		if (!TextUtils.isEmpty(vetifyCode)) {
+		if (TextUtils.isEmpty(vetifyCode)) {
 			ToastUtils.showToast("验证码不能为空");
 			return false;
 		}

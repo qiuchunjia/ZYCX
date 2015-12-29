@@ -79,6 +79,7 @@ public class RegisterActivity2 extends BaseActivity implements JsonDataListener 
 
 	@Override
 	public void initData() {
+		
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class RegisterActivity2 extends BaseActivity implements JsonDataListener 
 		switch (v.getId()) {
 
 		case R.id.btn_register:
-			// TODO
+			register();
 			break;
 		}
 
