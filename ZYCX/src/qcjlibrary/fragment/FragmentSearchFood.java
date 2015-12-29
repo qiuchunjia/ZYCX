@@ -1,5 +1,7 @@
 package qcjlibrary.fragment;
 
+import java.util.ArrayList;
+
 import com.zhiyicx.zycx.R;
 
 import android.view.View;
@@ -13,11 +15,13 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearchAll;
+import qcjlibrary.model.base.Model;
 
 public class FragmentSearchFood extends BaseFragment{
 
 	private CommonListView mCommonListView;
 	private ModelFoodSearchAll mFoodSearchAll;
+	private ArrayList<Model> mSearchList;
 	
 	@Override
 	public void onClick(View v) {
@@ -63,6 +67,7 @@ public class FragmentSearchFood extends BaseFragment{
 
 	@Override
 	public void initData() {
+		
 		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
 			
 			@Override
@@ -83,7 +88,8 @@ public class FragmentSearchFood extends BaseFragment{
 		// TODO 自动生成的方法存根
 		Object object =  super.onResponceSuccess(str, class1);
 		if(object instanceof ModelFoodSearchAll){
-			ModelFoodSearchAll mdata = new ModelFoodSearchAll();
+			ModelFoodSearchAll mData = new ModelFoodSearchAll();
+			
 		}
 		judgeTheMsg(object);
 		return object;
