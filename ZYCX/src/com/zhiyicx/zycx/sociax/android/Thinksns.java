@@ -826,6 +826,8 @@ public class Thinksns extends Application {
 		}
 		return mFoodImpl;
 	}
+	
+	
 
 	public api.UserImpl getUserImpl() {
 		if (mUserImpl == null) {

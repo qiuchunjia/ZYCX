@@ -14,6 +14,7 @@ import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -243,8 +244,6 @@ public class SearchNewActivity extends BaseActivity {
 	 * 				目标X位置
 	 * */
 	private void setLineAnimator(float fromX,float toX){
-		TranslateAnimation mAnim = new TranslateAnimation(fromX, toX, 0, 0);
-		mAnim.setDuration(500);
-		tv_line.startAnimation(mAnim);
+		ObjectAnimator.ofFloat(tv_line, "translateX", fromX, toX).setDuration(500).start();
 	}
 }
