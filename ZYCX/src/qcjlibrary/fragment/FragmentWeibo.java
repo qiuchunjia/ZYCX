@@ -1,8 +1,9 @@
 package qcjlibrary.fragment;
+import java.util.ArrayList;
 
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.modle.SociaxItem;
+import com.zhiyicx.zycx.widget.WeiboList;
 
 import android.view.View;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
@@ -10,9 +11,11 @@ import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 
-public class FragmentQclass extends BaseFragment {
+public class FragmentWeibo extends BaseFragment {
 
-	private CommonListView mCommonListView;
+	private WeiboList weiboList_search;
+	private SociaxItem mItem;
+	private ArrayList<SociaxItem> mItemList;
 
 	@Override
 	public void onClick(View v) {
@@ -29,12 +32,12 @@ public class FragmentQclass extends BaseFragment {
 	@Override
 	public int getLayoutId() {
 		// TODO 自动生成的方法存根
-		return R.layout.fragment_search;
+		return R.layout.fragment_search_web;
 	}
 
 	@Override
 	public void initView() {
-		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
+		weiboList_search = (WeiboList) findViewById(R.id.weiboList_search);
 	}
 
 	@Override
@@ -45,16 +48,19 @@ public class FragmentQclass extends BaseFragment {
 
 	@Override
 	public void initData() {
+		mItemList = new ArrayList<SociaxItem>();
+		
 		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
-			
+
 			@Override
 			public void onSearchTouch(String key, int searchType) {
-				if(searchType == Config.TYPE_QCLASS){
-					
+				// TODO 自动生成的方法存根
+				if (searchType == Config.TYPE_WEIBO) {
+
 				}
-				
 			}
 		});
 	}
 
+	
 }

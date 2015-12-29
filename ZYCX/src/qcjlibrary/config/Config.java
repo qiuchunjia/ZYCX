@@ -63,4 +63,12 @@ public class Config {
 	public static final String TYPE_TIME_LIST = "type_time_list";
 	public static final String SHARED_SAVE_KEY = "id";
 	public static final String ACTION_BOOT = "android.intent.action.BOOT_COMPLETED";
+	
+	/*************** 搜索 **************************/
+	public static final int TYPE_WEIBO = 0;
+	public static final int TYPE_REQUEST = 1;
+	public static final int TYPE_INFO = 2;
+	public static final int TYPE_QCLASS = 3;
+	public static final int TYPE_FOOD = 4;
+	
 }

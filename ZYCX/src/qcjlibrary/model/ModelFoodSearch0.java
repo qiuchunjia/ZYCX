@@ -14,7 +14,7 @@ public class ModelFoodSearch0 extends Model {
 	 */
 	private String food_name;
 	private String id;
-	private String imgSrc;
+	private String imgSrc; 
 	private String food_forcancer;
 	private String food_effect;
 
