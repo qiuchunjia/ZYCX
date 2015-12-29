@@ -4,11 +4,14 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.fragment.FragmentInfor;
 import qcjlibrary.fragment.FragmentQclass;
 import qcjlibrary.fragment.FragmentRequest;
+import qcjlibrary.model.ModelFoodSearch;
+import qcjlibrary.model.ModelFoodSearchIndex;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -45,6 +48,10 @@ public class SearchNewActivity extends BaseActivity {
 	private FragmentRequest mRequestFrag;
 	private FragmentInfor mInfoFrag;
 	private FragmentQclass mQclassFrag;
+	
+	ModelFoodSearch mFoodSearch;
+	/** 搜索的种类**/
+	private boolean isSecond = false;
 	
 
 	@Override
@@ -84,6 +91,8 @@ public class SearchNewActivity extends BaseActivity {
 		mFragList = new ArrayList<Fragment>();
 		mWeiboFrag = new WebAtomFragment();
 		mRequestFrag = new FragmentRequest();
+		mInfoFrag = new FragmentInfor();
+		mQclassFrag = new FragmentQclass();
 	}
 
 	@Override
@@ -107,6 +116,27 @@ public class SearchNewActivity extends BaseActivity {
 				return false;
 			}
 		});
+		
+		mViewpager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO 自动生成的方法存根
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO 自动生成的方法存根
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO 自动生成的方法存根
+				
+			}
+		});
 	}
 
 	@Override
@@ -119,7 +149,16 @@ public class SearchNewActivity extends BaseActivity {
 			//搜索按钮
 			String key = et_search.getText().toString();
 			if(key != null){
-				
+				mViewpager.getCurrentItem();
+				mFoodSearch = new ModelFoodSearch();
+				mFoodSearch.setKey(key);
+				if (isSecond) {
+					mFoodSearch.setState(1);
+				} else {
+					mFoodSearch.setState(0);
+				}
+				sendRequest(mApp.getFoodImpl().food_search(mFoodSearch),
+						ModelFoodSearchIndex.class, REQUEST_GET);
 			} else{
 				ToastUtils.showLongToast(this, "请输入关键字");
 			}
@@ -142,5 +181,11 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		return super.onResponceSuccess(str, class1);
 	}
 }
