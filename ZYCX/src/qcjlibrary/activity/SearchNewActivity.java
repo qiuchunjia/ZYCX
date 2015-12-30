@@ -1,42 +1,28 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.fragment.FragmentInfor;
 import qcjlibrary.fragment.FragmentQclass;
 import qcjlibrary.fragment.FragmentRequest;
 import qcjlibrary.fragment.FragmentSearchFood;
 import qcjlibrary.fragment.FragmentWeibo;
-import qcjlibrary.model.ModelFoodSearch;
-import qcjlibrary.model.ModelFoodSearchIndex;
-import qcjlibrary.model.ModelRequest;
-import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import java.util.ArrayList;
-
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.fragment.WebAtomFragment;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /**
  * author：qiuchunjia time：下午4:07:29 类描述：这个类是实现
@@ -155,12 +141,14 @@ public class SearchNewActivity extends BaseActivity {
 			}
 		});
 
+		//根据ViewPager改变导航栏指示
 		mViewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int arg0) {
-				// TODO 自动生成的方法存根
-
+				toX = offset * arg0;
+				setLineAnimator(fromX,toX);
+				fromX = toX;
 			}
 
 			@Override
@@ -210,7 +198,6 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
-		//Log.d("Cathy", "fromX = "+fromX+" toX = "+toX);
 		setLineAnimator(fromX,toX);
 		fromX = toX;
 	}
@@ -244,6 +231,6 @@ public class SearchNewActivity extends BaseActivity {
 	 * 				目标X位置
 	 * */
 	private void setLineAnimator(float fromX,float toX){
-		ObjectAnimator.ofFloat(tv_line, "translateX", fromX, toX).setDuration(500).start();
+		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX).setDuration(500).start();
 	}
 }
