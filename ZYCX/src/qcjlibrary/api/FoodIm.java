@@ -3,6 +3,7 @@ package qcjlibrary.api;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelFoodSearchAll;
 
 import com.loopj.android.http.RequestParams;
 
@@ -85,4 +86,14 @@ public interface FoodIm {
 	 * @return
 	 */
 	public RequestParams food_side_detail(ModelFoodSearch1 search1);
+	
+	/**
+	 * demo-qingko.zhiyicx.com/index.php?app=api&mod=Shiliao&act=all_search&key=枣
+	 * 
+	 * 食疗全搜索 key关键字
+	 * 
+	 * 
+	 * */
+	
+	public RequestParams food_search_all(ModelFoodSearchAll searchAll);
 }

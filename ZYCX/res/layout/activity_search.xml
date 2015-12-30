@@ -50,6 +50,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/iv_search"
                 android:background="@null"
+                android:imeOptions="actionSearch"
                 android:hint="搜索关键词"
                 android:src="@drawable/search_icon"
                 android:textColor="@color/text_white"
@@ -97,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="咨询"
+                android:text="资讯"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/text_common" />
 
