@@ -105,8 +105,4 @@ public class FragmentSearchFood extends BaseFragment{
 		initData();
 	}
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 331c546ae04d428a73d509d6dba4e18436cf2f69
