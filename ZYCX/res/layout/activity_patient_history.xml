@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_smoke"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="抽烟"
+                android:text="不抽烟"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -282,7 +282,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_stop_smoke_time"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="2015-03"
+                android:text="请选择时间"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -317,7 +317,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_drink"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="饮酒"
+                android:text="不饮酒"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -445,7 +445,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_stop_drink_time"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="2015-6"
+                android:text="请选择时间"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 
@@ -509,7 +509,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_last_time"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="2015-03"
+                android:text="请选择时间"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
 

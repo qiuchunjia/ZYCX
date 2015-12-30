@@ -6,6 +6,7 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopChooseDrink;
 import qcjlibrary.widget.popupview.PopChooseSmoke;
@@ -56,9 +57,17 @@ public class PatientHistoryActivity extends BaseActivity {
 	private RelativeLayout rl_children;
 	private TextView tv_children_name;
 	private EditText et_family_historys;
-
 	private RelativeLayout rl_stop_drink_time;
 	private TextView tv_stop_drink_name_time;
+
+	// --------------判断是否抽烟喝酒以及。。。需要初始化的控件-------------------
+	private RelativeLayout rl_smoke_year;
+	private RelativeLayout rl_smoke_gen;
+	private RelativeLayout rl_drink_year;
+	private RelativeLayout rl_drink_much;
+	private RelativeLayout rl_first;
+	private RelativeLayout rl_stop_yuejin;
+	private ModelUser modelUser;
 
 	@Override
 	public String setCenterTitle() {
@@ -105,16 +114,30 @@ public class PatientHistoryActivity extends BaseActivity {
 		rl_children = (RelativeLayout) findViewById(R.id.rl_children);
 		tv_children_name = (TextView) findViewById(R.id.tv_children_name);
 		et_family_historys = (EditText) findViewById(R.id.et_family_historys);
-
 		rl_stop_drink_time = (RelativeLayout) findViewById(R.id.rl_stop_drink_time);
 		tv_stop_drink_name_time = (TextView) findViewById(R.id.tv_stop_drink_name_time);
+
+		rl_smoke_year = (RelativeLayout) findViewById(R.id.rl_smoke_year);
+		rl_smoke_gen = (RelativeLayout) findViewById(R.id.rl_smoke_gen);
+		rl_drink_year = (RelativeLayout) findViewById(R.id.rl_drink_year);
+		rl_drink_much = (RelativeLayout) findViewById(R.id.rl_drink_much);
+		rl_first = (RelativeLayout) findViewById(R.id.rl_first);
+		rl_stop_yuejin = (RelativeLayout) findViewById(R.id.rl_stop_yuejin);
 	}
 
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-
+		// 根据数据设置原始的布局
+		isSmoke(false);
+		isDrink(false);
+		modelUser = mApp.getUser();
+		if (modelUser.getSex().equals("男")) {
+			isGirl(false);
+		} else {
+			isGirl(true);
+		}
 	}
 
 	@Override
@@ -212,18 +235,22 @@ public class PatientHistoryActivity extends BaseActivity {
 				if (modelPop.getDataStr().equals("0")) {
 					smoke = "0";
 					tv_smoke_name.setText("抽烟");
+					isSmoke(true);
 				} else {
 					smoke = "1";
 					tv_smoke_name.setText("不抽烟");
+					isSmoke(false);
 				}
 
 			} else if (modelPop.getType().equals(Config.TYPE_STOP_SMOKE)) {
 				if (modelPop.getDataStr().equals("0")) {
 					stop_smoke = "0";
 					tv_stop_smoke_name.setText("未戒烟");
+					isStopSmoke(false);
 				} else {
 					stop_smoke = "1";
 					tv_stop_smoke_name.setText("已戒烟");
+					isStopSmoke(true);
 				}
 
 			} else if (modelPop.getType().equals(Config.TYPE_STOP_SMOKE_TIME)) {
@@ -234,18 +261,22 @@ public class PatientHistoryActivity extends BaseActivity {
 				if (modelPop.getDataStr().equals("0")) {
 					drink = "0";
 					tv_drink_name.setText("不饮酒");
+					isDrink(false);
 				} else {
 					drink = "1";
 					tv_drink_name.setText("饮酒");
+					isDrink(true);
 				}
 
 			} else if (modelPop.getType().equals(Config.TYPE_STOP_DRINK)) {
 				if (modelPop.getDataStr().equals("0")) {
 					stop_drink = "0";
 					tv_stop_drink_name.setText("未戒酒");
+					isStopDrink(false);
 				} else {
 					stop_drink = "1";
 					tv_stop_drink_name.setText("已戒酒");
+					isStopDrink(true);
 				}
 
 			} else if (modelPop.getType().equals(Config.TYPE_STOP_DRINK_TIME)) {
@@ -265,15 +296,15 @@ public class PatientHistoryActivity extends BaseActivity {
 	private String allergy_history; // 过敏史
 	private String per_history; // 个人史
 	private String eating_habit;// 饮食习惯
-	private String smoke;// 抽烟 0不抽 1抽
+	private String smoke = "0";// 抽烟 0不抽 1抽
 	private String smoke_age;// 抽烟年龄
 	private String smoke_time;// 每日抽烟根数
-	private String stop_smoke;// 否戒烟 0-未戒 1-已戒
+	private String stop_smoke = "1";// 否戒烟 0-未戒 1-已戒
 	private String stop_smoke_time;// 戒烟时间
-	private String drink;// 是否饮酒 0不饮酒 1饮酒
+	private String drink = "0";// 是否饮酒 0不饮酒 1饮酒
 	private String drink_age;// 饮酒年龄
 	private String drink_consumption;// 饮酒量
-	private String stop_drink;// 是否戒酒 0-未戒 1-已戒
+	private String stop_drink = "1";// 是否戒酒 0-未戒 1-已戒
 	private String stop_drink_time;// 戒酒时间
 	private String menarche_age;// 初潮年纪
 	private String menarche_etime;// 末次月经时间
@@ -325,49 +356,59 @@ public class PatientHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请选择是否抽烟");
 			return false;
 		}
-		if (TextUtils.isEmpty(smoke_age)) {
-			ToastUtils.showToast("请输入抽烟年龄");
-			return false;
-		}
-		if (TextUtils.isEmpty(stop_smoke)) {
-			ToastUtils.showToast("请选择是否戒烟");
-			return false;
-		}
-		if (TextUtils.isEmpty(stop_smoke_time)) {
-			ToastUtils.showToast("选择戒烟年龄");
-			return false;
+		if (smoke.equals("1")) {
+			if (TextUtils.isEmpty(smoke_age)) {
+				ToastUtils.showToast("请输入抽烟年龄");
+				return false;
+			}
+			if (TextUtils.isEmpty(stop_smoke)) {
+				ToastUtils.showToast("请选择是否戒烟");
+				return false;
+			}
+			if (stop_smoke.equals("1")) {
+				if (TextUtils.isEmpty(stop_smoke_time)) {
+					ToastUtils.showToast("选择戒烟年龄");
+					return false;
+				}
+			}
 		}
 		if (TextUtils.isEmpty(drink)) {
 			ToastUtils.showToast("请选择是否饮酒");
 			return false;
 		}
-		if (TextUtils.isEmpty(drink_age)) {
-			ToastUtils.showToast("请输入饮酒年龄");
-			return false;
+		if (drink.equals("1")) {
+			if (TextUtils.isEmpty(drink_age)) {
+				ToastUtils.showToast("请输入饮酒年龄");
+				return false;
+			}
+			if (TextUtils.isEmpty(drink_consumption)) {
+				ToastUtils.showToast("请输入饮酒量");
+				return false;
+			}
+			if (TextUtils.isEmpty(stop_drink)) {
+				ToastUtils.showToast("请选择是否戒酒");
+				return false;
+			}
+			if (stop_drink.equals("1")) {
+				if (TextUtils.isEmpty(stop_drink_time)) {
+					ToastUtils.showToast("请选择戒酒时间");
+					return false;
+				}
+			}
 		}
-		if (TextUtils.isEmpty(drink_consumption)) {
-			ToastUtils.showToast("请输入饮酒量");
-			return false;
-		}
-		if (TextUtils.isEmpty(stop_drink)) {
-			ToastUtils.showToast("请选择是否戒酒");
-			return false;
-		}
-		if (TextUtils.isEmpty(stop_drink_time)) {
-			ToastUtils.showToast("请选择戒酒时间");
-			return false;
-		}
-		if (TextUtils.isEmpty(menarche_age)) {
-			ToastUtils.showToast("请输入初潮年纪");
-			return false;
-		}
-		if (TextUtils.isEmpty(menarche_etime)) {
-			ToastUtils.showToast("请选择末次月经时间");
-			return false;
-		}
-		if (TextUtils.isEmpty(amenorrhoea_age)) {
-			ToastUtils.showToast("请输入闭经年龄");
-			return false;
+		if (modelUser.getSex().equals("女")) {
+			if (TextUtils.isEmpty(menarche_age)) {
+				ToastUtils.showToast("请输入初潮年纪");
+				return false;
+			}
+			if (TextUtils.isEmpty(menarche_etime)) {
+				ToastUtils.showToast("请选择末次月经时间");
+				return false;
+			}
+			if (TextUtils.isEmpty(amenorrhoea_age)) {
+				ToastUtils.showToast("请输入闭经年龄");
+				return false;
+			}
 		}
 		if (TextUtils.isEmpty(childs)) {
 			ToastUtils.showToast("请选择子女情况");
@@ -408,4 +449,88 @@ public class PatientHistoryActivity extends BaseActivity {
 		HistoryCase.setFamily_history(family_history);
 		return HistoryCase;
 	}
+
+	/*************************** 增加交互 ***********************************/
+	/**
+	 * 判断是否抽烟
+	 * 
+	 * @param flag
+	 *            true 表示抽烟，false表示不抽烟
+	 */
+	private void isSmoke(boolean flag) {
+		if (flag) {
+			rl_smoke_year.setVisibility(View.VISIBLE);
+			rl_smoke_gen.setVisibility(View.VISIBLE);
+			rl_stop_smoke.setVisibility(View.VISIBLE);
+			rl_stop_smoke_time.setVisibility(View.VISIBLE);
+		} else {
+			rl_smoke_year.setVisibility(View.GONE);
+			rl_smoke_gen.setVisibility(View.GONE);
+			rl_stop_smoke.setVisibility(View.GONE);
+			rl_stop_smoke_time.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 是否停止抽烟
+	 * 
+	 * @param flag
+	 */
+	private void isStopSmoke(boolean flag) {
+		if (flag) {
+			rl_stop_smoke_time.setVisibility(View.VISIBLE);
+		} else {
+			rl_stop_smoke_time.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 是否饮酒
+	 * 
+	 * @param flag
+	 */
+	private void isDrink(boolean flag) {
+		if (flag) {
+			rl_drink_year.setVisibility(View.VISIBLE);
+			rl_drink_much.setVisibility(View.VISIBLE);
+			rl_stop_drink.setVisibility(View.VISIBLE);
+			rl_stop_drink_time.setVisibility(View.VISIBLE);
+		} else {
+			rl_drink_year.setVisibility(View.GONE);
+			rl_drink_much.setVisibility(View.GONE);
+			rl_stop_drink.setVisibility(View.GONE);
+			rl_stop_drink_time.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 是否停止抽烟
+	 * 
+	 * @param flag
+	 */
+	private void isStopDrink(boolean flag) {
+		if (flag) {
+			rl_stop_drink_time.setVisibility(View.VISIBLE);
+		} else {
+			rl_stop_drink_time.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 是否是女生
+	 * 
+	 * @param flag
+	 */
+	private void isGirl(boolean flag) {
+		if (flag) {
+			rl_first.setVisibility(View.VISIBLE);
+			rl_last_time.setVisibility(View.VISIBLE);
+			rl_stop_yuejin.setVisibility(View.VISIBLE);
+		} else {
+			rl_first.setVisibility(View.GONE);
+			rl_last_time.setVisibility(View.GONE);
+			rl_stop_yuejin.setVisibility(View.GONE);
+		}
+	}
+	/*************************** 增加交互 end ***********************************/
 }

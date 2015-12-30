@@ -22,9 +22,9 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-import cn.jpush.android.api.JPushInterface;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -92,12 +92,12 @@ public class Thinksns extends Application {
 	public static Activity medicineAct;
 	public static int id;
 	public static SearchNewActivity searchAct;
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		// JPushInterface.setDebugMode(true);
-//		JPushInterface.init(this);
+		// JPushInterface.init(this);
 		/********** qcj 2015-11-6添加 **************************/
 		mApp = this;
 		initImageLoader();
@@ -653,33 +653,22 @@ public class Thinksns extends Application {
 		mUser = new ModelUser();
 		SharedPreferences preferences = getContext().getSharedPreferences(
 				Config.USER_DATA, MODE_PRIVATE);
-		String mobile = preferences.getString(Config.MOBILE, null);
-		String pwd = preferences.getString(Config.PWD, null);
-		String userId = preferences.getString(Config.USERID, null);
-		String oauth_token = preferences.getString(Config.OAUTH_TOKEN, null);
-		String oauth_token_secret = preferences.getString(
-				Config.OAUTH_TOKEN_SECRET, null);
-		String school_id = preferences.getString(Config.SCHOOL_ID, null);
+		String sex = preferences.getString(Config.SEX, "男");
+		String intro = preferences.getString(Config.INTRO, null);
+		String cancer = preferences.getString(Config.CANCER, null);
+		String birthday = preferences.getString(Config.BIRTHDAY, null);
+		String location = preferences.getString(Config.LOCATION, null);
+		String city_ids = preferences.getString(Config.CITY_IDS, null);
 		String uname = preferences.getString(Config.UNAME, null);
-		String sex = preferences.getString(Config.SEX, null);
-		String is_init = preferences.getString(Config.IS_INIT, null);
-		String faceurl = preferences.getString(Config.FACEURL, null);
-		String school_name = preferences.getString(Config.SCHOOL_NAME, null);
-		String autograph = preferences.getString(Config.AUTOGRAPH, null);
-		String email = preferences.getString(Config.EMAIL, null);
-		// mUser.setMobile(mobile);
-		// mUser.setPwd(pwd);
-		// mUser.setUserid(userId);
-		// mUser.setOauth_token(oauth_token);
-		// mUser.setOauth_token_secret(oauth_token_secret);
-		// mUser.setschool_id(school_id);
-		// mUser.setUname(uname);
-		// mUser.setSex(sex);
-		// mUser.setIs_init(is_init);
-		// mUser.setFaceurl(faceurl);
-		// mUser.setSchool_name(school_name);
-		// mUser.setAutograph(autograph);
-		// mUser.setEmail(email);
+		String avatar = preferences.getString(Config.AVATAR, null);
+		mUser.setSex(sex);
+		mUser.setIntro(intro);
+		mUser.setCancer(cancer);
+		mUser.setBirthday(birthday);
+		mUser.setLocation(location);
+		mUser.setCity_ids(city_ids);
+		mUser.setUname(uname);
+		mUser.setAvatar(avatar);
 		return mUser;
 	}
 
@@ -693,6 +682,42 @@ public class Thinksns extends Application {
 		SharedPreferences preferences = getApplicationContext()
 				.getSharedPreferences(Config.USER_DATA, Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
+		// public static final String SEX = "sex";
+		// public static final String INTRO = "intro";
+		// public static final String CANCER = "cancer";
+		// public static final String BIRTHDAY = "birthday";
+		// public static final String LOCATION = "location";
+		// public static final String CITY_IDS = "city_ids";
+		// public static final String UNAME = "uname";
+		// public static final String AVATAR = "avatar";
+		if (user != null) {
+			if (!TextUtils.isEmpty(user.getSex())) {
+				editor.putString(Config.SEX, user.getSex());
+			}
+			if (!TextUtils.isEmpty(user.getIntro())) {
+				editor.putString(Config.INTRO, user.getIntro());
+			}
+			if (!TextUtils.isEmpty(user.getCancer())) {
+				editor.putString(Config.CANCER, user.getCancer());
+			}
+			if (!TextUtils.isEmpty(user.getBirthday())) {
+				editor.putString(Config.BIRTHDAY, user.getBirthday());
+			}
+			if (!TextUtils.isEmpty(user.getLocation())) {
+				editor.putString(Config.LOCATION, user.getLocation());
+			}
+			if (!TextUtils.isEmpty(user.getCity_ids())) {
+				editor.putString(Config.CITY_IDS, user.getCity_ids());
+			}
+			if (!TextUtils.isEmpty(user.getUname())) {
+				editor.putString(Config.UNAME, user.getUname());
+			}
+
+			if (!TextUtils.isEmpty(user.getAvatar())) {
+				editor.putString(Config.AVATAR, user.getAvatar());
+			}
+		}
+		editor.commit();
 		// if (user.getMobile() != null) {
 		// editor.putString(Config.MOBILE, user.getMobile());
 		// }
@@ -712,7 +737,6 @@ public class Thinksns extends Application {
 		// editor.putString(Config.SCHOOL_NAME, user.getSchool_name());
 		// editor.putString(Config.AUTOGRAPH, user.getAutograph());
 		// editor.putString(Config.EMAIL, user.getEmail());
-		editor.commit();
 	}
 
 	/**
@@ -826,8 +850,6 @@ public class Thinksns extends Application {
 		}
 		return mFoodImpl;
 	}
-	
-	
 
 	public api.UserImpl getUserImpl() {
 		if (mUserImpl == null) {

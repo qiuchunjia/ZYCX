@@ -148,23 +148,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * 判断这个用户是否登录过
-	 * 
-	 * 如果个别fragement对用户开发的话，就重新这个方法，然后return true就可以了
-	 * 
-	 * @return
-	 */
-	public boolean checkTheUser() {
-		ModelUser user = mApp.getUser();
-		user.toString();
-		if (user != null && user.getOauth_token() != null) {
-			return true;
-		}
-		ToastUtils.showToast("请先登录");
-		return false;
-	}
-
-	/**
 	 * 根据布局id替换 fragment
 	 * 
 	 * @param layoutid
@@ -377,19 +360,6 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 */
 	public void setBottomGone() {
 		mBottomll.setVisibility(View.GONE);
-	}
-
-	/**
-	 * 退出登录
-	 */
-	public void quitLogin() {
-		SharedPreferences preferences = this.getSharedPreferences(
-				Config.USER_DATA, Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.remove(Config.OAUTH_TOKEN);
-		editor.remove(Config.OAUTH_TOKEN_SECRET);
-		editor.remove(Config.UID);
-		editor.commit();
 	}
 
 	// ----------------------------------调用本地的图片，摄像机，文件之类的操作------------------------------------------------------

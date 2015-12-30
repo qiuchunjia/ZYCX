@@ -1,12 +1,13 @@
 package qcjlibrary.activity;
 
+import java.util.ArrayList;
+
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.fragment.FragmentInfor;
 import qcjlibrary.fragment.FragmentQclass;
 import qcjlibrary.fragment.FragmentRequest;
 import qcjlibrary.fragment.FragmentSearchFood;
 import qcjlibrary.fragment.FragmentWeibo;
-import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.animation.ObjectAnimator;
@@ -23,10 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import cn.jpush.android.data.l;
 
-import java.util.ArrayList;
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 
@@ -55,14 +53,15 @@ public class SearchNewActivity extends BaseActivity {
 	private FragmentInfor mInfoFrag;
 	private FragmentQclass mQclassFrag;
 	private FragmentSearchFood mFoodFrag;
-	
+
 	private OnSearchTouchListerer mSearchListener;
-	//导航栏宽度
+	// 导航栏宽度
 	private int offset;
-	/** 导航栏指示位移起始X**/
+	/** 导航栏指示位移起始X **/
 	private float fromX;
-	/** 导航栏指示位移结束X**/
+	/** 导航栏指示位移结束X **/
 	private float toX;
+
 	@Override
 	public String setCenterTitle() {
 		// TODO Auto-generated method stub
@@ -111,13 +110,14 @@ public class SearchNewActivity extends BaseActivity {
 		mFragList.add(mInfoFrag);
 		mFragList.add(mQclassFrag);
 		mFragList.add(mFoodFrag);
-		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-			
+		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(
+				getSupportFragmentManager()) {
+
 			@Override
 			public int getCount() {
 				return mFragList.size();
 			}
-			
+
 			@Override
 			public Fragment getItem(int position) {
 				return mFragList.get(position);
@@ -140,7 +140,8 @@ public class SearchNewActivity extends BaseActivity {
 		et_search.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH
 						|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 					searchData();
@@ -148,38 +149,40 @@ public class SearchNewActivity extends BaseActivity {
 				return true;
 			}
 		});
-		
-		//监听输入，如果输入内容不为空，则显示清除按钮
+
+		// 监听输入，如果输入内容不为空，则显示清除按钮
 		et_search.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				String key = et_search.getText().toString();
-				if(key == null || key.equals("")){
+				if (key == null || key.equals("")) {
 					iv_quxiao.setVisibility(View.GONE);
 					tv_sure.setText("取消");
-				} else{
+				} else {
 					iv_quxiao.setVisibility(View.VISIBLE);
 					tv_sure.setText("搜索");
 				}
 			}
-			
+
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
 			}
 		});
 
-		//根据ViewPager改变导航栏指示
+		// 根据ViewPager改变导航栏指示
 		mViewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int arg0) {
 				toX = offset * arg0;
-				setLineAnimator(fromX,toX);
+				setLineAnimator(fromX, toX);
 				fromX = toX;
 			}
 
@@ -202,11 +205,11 @@ public class SearchNewActivity extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.tv_sure:
 			String key = et_search.getText().toString();
-			if(key == null || key.equals("")){
-				//退出搜索界面
+			if (key == null || key.equals("")) {
+				// 退出搜索界面
 				finish();
-			} else{
-				//搜素
+			} else {
+				// 搜素
 				searchData();
 			}
 			break;
@@ -240,9 +243,9 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
-		//传入起止位置，开启动画
-		setLineAnimator(fromX,toX);
-		//将前一个结束位置重置为开始位置
+		// 传入起止位置，开启动画
+		setLineAnimator(fromX, toX);
+		// 将前一个结束位置重置为开始位置
 		fromX = toX;
 	}
 
@@ -250,7 +253,7 @@ public class SearchNewActivity extends BaseActivity {
 		String key = et_search.getText().toString();
 		if (key != null || !key.equals(" ")) {
 			ToastUtils.showToast("搜索中...");
-			if(mSearchListener != null){
+			if (mSearchListener != null) {
 				switch (mViewpager.getCurrentItem()) {
 				case 0:
 					mSearchListener.onSearchTouch_Weibo(key);
@@ -265,7 +268,8 @@ public class SearchNewActivity extends BaseActivity {
 					mSearchListener.onSearchTouch_Qclass(key);
 					break;
 				case 4:
-					mSearchListener.onSearchTouch_Food(key);;
+					mSearchListener.onSearchTouch_Food(key);
+					;
 					break;
 
 				default:
@@ -280,31 +284,35 @@ public class SearchNewActivity extends BaseActivity {
 	/**
 	 * 点击搜索接口，将关键字传给实现方法的地方
 	 * */
-	public interface OnSearchTouchListerer{
-		//微博搜索
+	public interface OnSearchTouchListerer {
+		// 微博搜索
 		void onSearchTouch_Weibo(String key);
-		//问答搜索
+
+		// 问答搜索
 		void onSearchTouch_Request(String key);
-		//资讯搜索
+
+		// 资讯搜索
 		void onSearchTouch_Info(String key);
-		//轻课堂搜索
+
+		// 轻课堂搜索
 		void onSearchTouch_Qclass(String key);
-		//食疗搜索
+
+		// 食疗搜索
 		void onSearchTouch_Food(String key);
 	}
-	
-	public void setOnSearchListener(OnSearchTouchListerer mSearchListener){
+
+	public void setOnSearchListener(OnSearchTouchListerer mSearchListener) {
 		this.mSearchListener = mSearchListener;
 	}
-	
+
 	/**
 	 * 导航栏指示线
-	 * @param float fromX
-	 * 				起始X位置
-	 * @param float toX
-	 * 				目标X位置
+	 * 
+	 * @param float fromX 起始X位置
+	 * @param float toX 目标X位置
 	 * */
-	private void setLineAnimator(float fromX,float toX){
-		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX).setDuration(500).start();
+	private void setLineAnimator(float fromX, float toX) {
+		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX)
+				.setDuration(500).start();
 	}
 }

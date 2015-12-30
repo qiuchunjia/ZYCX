@@ -1,6 +1,7 @@
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.widget.RoundImageView;
 import android.app.Activity;
@@ -31,6 +32,7 @@ public class MeCenterActivity extends BaseActivity {
 	private RelativeLayout rl_cycle;
 	private RelativeLayout rl_periodical;
 	private Button btn_quit;
+	private ModelUser mUser;
 
 	@Override
 	public String setCenterTitle() {
@@ -40,6 +42,7 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
+		mUser = (ModelUser) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -62,6 +65,22 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
+		if (mUser != null) {
+			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
+		} else {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
+					REQUEST_GET);
+		}
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelUser) {
+			mUser = (ModelUser) object;
+			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
+		}
+		return object;
 	}
 
 	@Override
@@ -81,7 +100,7 @@ public class MeCenterActivity extends BaseActivity {
 		case R.id.rl_user:
 			// TODO
 			mApp.startActivity_qcj(this, MeCenterBasicActivity.class,
-					sendDataToBundle(new Model(), null));
+					sendDataToBundle(mUser, null));
 			break;
 
 		case R.id.rl_mycase:
