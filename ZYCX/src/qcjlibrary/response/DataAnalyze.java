@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.util.JsonUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -18,7 +17,8 @@ import com.google.gson.Gson;
  */
 
 public class DataAnalyze {
-	public static final String[] flag = { "data", "result", "other" }; // 获取json里面想要的数据，这里面可以添加，然后实现循环获取东西
+	public static final String DATA = "data";
+	public static final String CODE = "code"; // 识别码
 
 	/**
 	 * 该方法通过传递进来的类型，来解析相应的数据对象，当为数组就解析为数据对象，为单个的就是解析为单个的
@@ -29,39 +29,42 @@ public class DataAnalyze {
 	 *            需要解析的数据类型
 	 * @return
 	 */
-	public static Object parseData(String str, Class class1) {
+	public static Object parseData(String str, Class classType) {
+
 		if (str != null) {
 			try {
-				Log.i("parseData", str);
 				JSONObject jsonObject = new JSONObject(str);
-				for (int i = 0; i < flag.length; i++) {
-					if (jsonObject.has(flag[i])) {
-						Object judgeObject = jsonObject.get((flag[i]));
-						if (!(judgeObject instanceof Boolean)) {
-							String judgeStr = jsonObject.getString(flag[i]);
-							if (judgeStr != null) {
-								if (judgeStr.indexOf("[") == 0) {
-									JSONArray dataArray = jsonObject
-											.getJSONArray(flag[i]);
-									// 当为数组的时候就返回
-									if (dataArray != null) {
-										return JsonUtils.parseJsonArray(
-												dataArray, class1);
-									}
-								}
-								JSONObject dataJson = jsonObject
-										.getJSONObject(flag[i]);
-								if (dataJson != null) {
-									return JsonUtils.parseJsonObject(dataJson,
-											class1);
-								}
-
-							}
-						}
+				// 如果只想想获取modelmsg类型就直接返回
+				if (classType.equals(ModelMsg.class)) {
+					return JsonUtils
+							.parseJsonObject(jsonObject, ModelMsg.class);
+				}
+				if (jsonObject.has(CODE)) {
+					int code = jsonObject.getInt(CODE);
+					// 如果code==0就表示正常的反馈就可以获取数据了，不然的话就还是获取modelmsg类型
+					if (code != 0) {
+						// TODO 获取modelmsg
 						return JsonUtils.parseJsonObject(jsonObject,
 								ModelMsg.class);
+					} else {
+						// TODO 获取数据
+						if (jsonObject.has(DATA)) {
+							String result = jsonObject.getString(DATA);
+							// 根据情况转为jsonarray或者jsonobject;
+							if (result.indexOf("[") == 0) {
+								JSONArray dataArray = jsonObject
+										.getJSONArray(DATA);
+								return JsonUtils.parseJsonArray(dataArray,
+										classType);
+							} else {
+								return JsonUtils.parseJsonObject(
+										jsonObject.getJSONObject(DATA),
+										classType);
+							}
+						}
 					}
 				}
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -77,25 +80,32 @@ public class DataAnalyze {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Object parseDataByGson(String str, Class class1) {
+	public static Object parseDataByGson(String str, Class classType) {
 		if (str != null) {
 			try {
-				Log.i("Result", str);
 				JSONObject jsonObject = new JSONObject(str);
-				for (int i = 0; i < flag.length; i++) {
-					if (jsonObject.has(flag[i])) {
-						Gson gson = new Gson();
-						Object judgeObject = jsonObject.get((flag[i]));
-						if (!(judgeObject instanceof Boolean)) {
-							String judgeStr = judgeObject.toString();
-							if (judgeStr != null) {
-								return gson.fromJson(judgeStr, class1);
-							}
-						}
-						return gson.fromJson(jsonObject.toString(),
+				// 如果只想想获取modelmsg类型就直接返回
+				if (classType.equals(ModelMsg.class)) {
+					Gson gson = new Gson();
+					return gson.fromJson(jsonObject.toString(), classType);
+				}
+				if (jsonObject.has(CODE)) {
+					int code = jsonObject.getInt(CODE);
+					// 如果code==0就表示正常的反馈就可以获取数据了，不然的话就还是获取modelmsg类型
+					Gson dataGson = new Gson();
+					if (code != 0) {
+						// TODO 获取modelmsg
+						return dataGson.fromJson(jsonObject.toString(),
 								ModelMsg.class);
+					} else {
+						// TODO 获取数据
+						if (jsonObject.has(DATA)) {
+							String result = jsonObject.getString(DATA);
+							return dataGson.fromJson(result, classType);
+						}
 					}
 				}
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
