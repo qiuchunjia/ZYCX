@@ -24,6 +24,7 @@ public class FragmentWeibo extends BaseListFragment {
 	private String key = null;
 	private boolean isLoad = false;
 	private Thinksns mApp = new Thinksns();
+	private boolean isCreate = false;
 
 	@Override
 	public OnTouchListListener getListView() {
@@ -56,8 +57,8 @@ public class FragmentWeibo extends BaseListFragment {
 	public void onResume() {
 		super.onResume();
 		Log.d("Cathy", "weibo:onResume");
-		if (!isLoad)
-			loadData(false);
+		/*if (!isLoad)
+			loadData(false);*/
 	}
 
 	@Override
@@ -73,6 +74,7 @@ public class FragmentWeibo extends BaseListFragment {
 				// TODO 自动生成的方法存根
 				Log.d("Cathy", "weibo:" + key + " searchType:" + searchType);
 				if (searchType == Config.TYPE_WEIBO) {
+					setKey(key);
 					Log.d("Cathy", "weibo:" + key);
 					mWeiboAdapter.loadSearchData(key);
 					mWeibolist.setSelectionFromTop(0, 20);
@@ -91,4 +93,29 @@ public class FragmentWeibo extends BaseListFragment {
 		}
 	}
 
+	private void setKey(String key){
+    	this.key = key;
+    }
+	
+	 //仅当可见时才加载内容
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+    	// TODO 自动生成的方法存根
+    	super.setUserVisibleHint(isVisibleToUser);
+    	
+    	if(!isCreate){
+    		return;
+    	}
+    	
+    	if(isVisibleToUser){
+    		loadData(true);
+    	}
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	// TODO 自动生成的方法存根
+    	super.onCreate(savedInstanceState);
+    	isCreate = true;
+    }
 }

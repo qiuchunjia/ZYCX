@@ -32,6 +32,7 @@ public class FragmentInfor extends BaseListFragment {
     private String key = null;
     private boolean isLoad = false;
     private Thinksns mApp = new Thinksns();
+    private boolean isCreate = false;
 
     @Override
     public OnTouchListListener getListView() {
@@ -78,9 +79,9 @@ public class FragmentInfor extends BaseListFragment {
     public void onResume() {
         super.onResume();
         Log.d("Cathy", "info:onResume");
-        if(!isLoad){
+        /*if(!isLoad){
         	loadData(false);
-        }
+        }*/
     }
 
     public void doSearch(String key)
@@ -105,6 +106,7 @@ public class FragmentInfor extends BaseListFragment {
 				// TODO 自动生成的方法存根
 				Log.d("Cathy", "info:"+key+" searchType:"+ searchType);
 				if(searchType == Config.TYPE_INFO){
+					setKey(key);
 					Log.d("Cathy", "info:"+key);
 					mAdapter.loadSearchData(key);
 			        mListView.setSelectionFromTop(0, 20);
@@ -113,5 +115,31 @@ public class FragmentInfor extends BaseListFragment {
 			}
 		});
         
+    }
+    
+    private void setKey(String key){
+    	this.key = key;
+    }
+    
+    //仅当可见时才加载内容
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+    	// TODO 自动生成的方法存根
+    	super.setUserVisibleHint(isVisibleToUser);
+    	
+    	if(!isCreate){
+    		return;
+    	}
+    	
+    	if(isVisibleToUser){
+    		loadData(true);
+    	}
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	// TODO 自动生成的方法存根
+    	super.onCreate(savedInstanceState);
+    	isCreate = true;
     }
 }
