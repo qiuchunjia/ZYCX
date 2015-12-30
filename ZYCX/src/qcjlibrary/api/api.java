@@ -16,6 +16,7 @@ import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelFoodSearchAll;
 import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.ModelNotifyDig;
@@ -405,6 +406,23 @@ public class api {
 			return null;
 		}
 
+		@Override
+		public RequestParams food_search_all(ModelFoodSearchAll searchAll) {
+			if(searchAll != null){
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, SHILIAO);
+				params.add(ACT, FOOD_SEARCH);
+				if(!TextUtils.isEmpty(searchAll.getKey())){
+					params.add(KEY, searchAll.getKey());
+				}
+				return getTestToken(params);
+			}
+			return null;
+		}
+
+		
+		
 	}
 
 	public static final class UserImpl implements UserIm {
