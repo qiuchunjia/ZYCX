@@ -26,9 +26,6 @@ public class ModelUser extends Model {
 	 * 
 	 * uname 昵称
 	 */
-	private static final long serialVersionUID = 1L;
-	private String oauth_token;
-	private String oauth_token_secret;
 	private String sex;
 	private String intro;
 	private String cancer;
@@ -44,22 +41,6 @@ public class ModelUser extends Model {
 	private String type; // 第三方登录需要时用来判断
 	private String type_uid; // 第三方登录的uid
 	private String token; // 第三方登录的token
-
-	public String getOauth_token() {
-		return oauth_token;
-	}
-
-	public void setOauth_token(String oauth_token) {
-		this.oauth_token = oauth_token;
-	}
-
-	public String getOauth_token_secret() {
-		return oauth_token_secret;
-	}
-
-	public void setOauth_token_secret(String oauth_token_secret) {
-		this.oauth_token_secret = oauth_token_secret;
-	}
 
 	public String getMobile() {
 		return mobile;
@@ -107,10 +88,6 @@ public class ModelUser extends Model {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public String getSex() {

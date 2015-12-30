@@ -408,12 +408,12 @@ public class api {
 
 		@Override
 		public RequestParams food_search_all(ModelFoodSearchAll searchAll) {
-			if(searchAll != null){
+			if (searchAll != null) {
 				RequestParams params = new RequestParams();
 				params.add(APP, API);
 				params.add(MOD, SHILIAO);
 				params.add(ACT, FOOD_SEARCH);
-				if(!TextUtils.isEmpty(searchAll.getKey())){
+				if (!TextUtils.isEmpty(searchAll.getKey())) {
 					params.add(KEY, searchAll.getKey());
 				}
 				return getTestToken(params);
@@ -421,8 +421,6 @@ public class api {
 			return null;
 		}
 
-		
-		
 	}
 
 	public static final class UserImpl implements UserIm {

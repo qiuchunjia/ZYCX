@@ -48,14 +48,15 @@ public class SearchNewActivity extends BaseActivity {
 	private FragmentInfor mInfoFrag;
 	private FragmentQclass mQclassFrag;
 	private FragmentSearchFood mFoodFrag;
-	
+
 	private OnSearchTouchListerer mSearchListener;
-	//导航栏宽度
+	// 导航栏宽度
 	private int offset;
-	/** 导航栏指示位移起始X**/
+	/** 导航栏指示位移起始X **/
 	private float fromX;
-	/** 导航栏指示位移起始Y**/
+	/** 导航栏指示位移起始Y **/
 	private float toX;
+
 	@Override
 	public String setCenterTitle() {
 		// TODO Auto-generated method stub
@@ -102,13 +103,14 @@ public class SearchNewActivity extends BaseActivity {
 		mFragList.add(mInfoFrag);
 		mFragList.add(mQclassFrag);
 		mFragList.add(mFoodFrag);
-		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-			
+		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(
+				getSupportFragmentManager()) {
+
 			@Override
 			public int getCount() {
 				return mFragList.size();
 			}
-			
+
 			@Override
 			public Fragment getItem(int position) {
 				return mFragList.get(position);
@@ -130,24 +132,25 @@ public class SearchNewActivity extends BaseActivity {
 		et_search.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				Log.d("Cathy", "actionId = "+actionId);
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				Log.d("Cathy", "actionId = " + actionId);
 				if (actionId == EditorInfo.IME_ACTION_SEARCH
 						|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					Log.d("Cathy", "actionId = "+actionId);
+					Log.d("Cathy", "actionId = " + actionId);
 					searchData();
 				}
 				return true;
 			}
 		});
 
-		//根据ViewPager改变导航栏指示
+		// 根据ViewPager改变导航栏指示
 		mViewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int arg0) {
 				toX = offset * arg0;
-				setLineAnimator(fromX,toX);
+				setLineAnimator(fromX, toX);
 				fromX = toX;
 			}
 
@@ -169,7 +172,7 @@ public class SearchNewActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_sure:
-			
+
 			break;
 		case R.id.iv_search:
 			// 搜索按钮
@@ -198,7 +201,7 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
-		setLineAnimator(fromX,toX);
+		setLineAnimator(fromX, toX);
 		fromX = toX;
 	}
 
@@ -206,7 +209,7 @@ public class SearchNewActivity extends BaseActivity {
 		String key = et_search.getText().toString();
 		if (key != null || !key.equals(" ")) {
 			ToastUtils.showToast("搜索中...");
-			mSearchListener.onSearchTouch(key,mViewpager.getCurrentItem());
+			mSearchListener.onSearchTouch(key, mViewpager.getCurrentItem());
 		} else {
 			ToastUtils.showLongToast(this, "请输入关键字");
 		}
@@ -215,22 +218,22 @@ public class SearchNewActivity extends BaseActivity {
 	/**
 	 * 点击搜索接口，将关键字传给实现方法的地方
 	 * */
-	public interface OnSearchTouchListerer{
-		void onSearchTouch(String key,int searchType);
+	public interface OnSearchTouchListerer {
+		void onSearchTouch(String key, int searchType);
 	}
-	
-	public void setOnSearchListener(OnSearchTouchListerer mSearchListener){
+
+	public void setOnSearchListener(OnSearchTouchListerer mSearchListener) {
 		this.mSearchListener = mSearchListener;
 	}
-	
+
 	/**
 	 * 导航栏指示线
-	 * @param float fromX
-	 * 				起始X位置
-	 * @param float toX
-	 * 				目标X位置
+	 * 
+	 * @param float fromX 起始X位置
+	 * @param float toX 目标X位置
 	 * */
-	private void setLineAnimator(float fromX,float toX){
-		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX).setDuration(500).start();
+	private void setLineAnimator(float fromX, float toX) {
+		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX)
+				.setDuration(500).start();
 	}
 }

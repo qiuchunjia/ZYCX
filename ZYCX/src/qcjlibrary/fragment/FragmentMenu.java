@@ -1,19 +1,18 @@
 package qcjlibrary.fragment;
 
-import qcjlibrary.activity.ExpertRequestActivity;
 import qcjlibrary.activity.MeAplicationActivity;
 import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.activity.MePerioActivity;
-
 import qcjlibrary.activity.RequestMyAskActivity;
-
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.widget.RoundImageView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,6 +43,8 @@ public class FragmentMenu extends BaseFragment {
 	private RelativeLayout rl_periodical;
 	private Button btn_quit;
 
+	private ModelUser mUser;
+
 	@Override
 	public void initIntentData() {
 
@@ -70,6 +71,34 @@ public class FragmentMenu extends BaseFragment {
 	}
 
 	@Override
+	public void initData() {
+		mUser = mApp.getUser();
+		if (TextUtils.isEmpty(mUser.getAvatar())) {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
+					REQUEST_GET);
+		} else {
+			addDataToIcon(mUser);
+		}
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelUser) {
+			mUser = (ModelUser) object;
+			addDataToIcon(mUser);
+		}
+		return object;
+	}
+
+	private void addDataToIcon(ModelUser mUser2) {
+		if (mUser2 != null) {
+			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
+			tv_username.setText(mUser2.getUname());
+		}
+	}
+
+	@Override
 	public void initListener() {
 		riv_user_icon.setOnClickListener(this);
 		menu_iv_edit.setOnClickListener(this);
@@ -89,7 +118,7 @@ public class FragmentMenu extends BaseFragment {
 			break;
 		case R.id.menu_iv_edit:
 			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+					mActivity.sendDataToBundle(mUser, null));
 
 			break;
 		case R.id.rl_home:
@@ -151,11 +180,6 @@ public class FragmentMenu extends BaseFragment {
 					}
 				});
 		builder.create().show();
-	}
-
-	@Override
-	public void initData() {
-
 	}
 
 }

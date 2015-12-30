@@ -7,6 +7,7 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.util.DateUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
@@ -90,6 +91,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 		if (object instanceof ModelUser) {
 			ModelUser user = (ModelUser) object;
 			addDataToView(user);
+			mApp.saveUser(user); // 保存数据到shareprefrence中
 		}
 		if (judgeTheMsg(object)) {
 			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
@@ -200,7 +202,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 			if (data.getType().equals(Config.TYPE_GENDER)) {
 				user.setSex(data.getDataStr());
 			} else {
-				user.setBirthday(data.getDataStr());
+				user.setBirthday(DateUtil.dateToStr(data.getDataStr()));
 			}
 			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
 					REQUEST_GET);
