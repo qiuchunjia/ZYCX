@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="确认"
+            android:text="取消"
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_big" />
 

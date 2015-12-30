@@ -149,15 +149,18 @@ public class SearchNewActivity extends BaseActivity {
 			}
 		});
 		
-		//监听输入，如果输入内容不为空，则显示清楚按钮
+		//监听输入，如果输入内容不为空，则显示清除按钮
 		et_search.addTextChangedListener(new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(s == null || s.equals("")){
+				String key = et_search.getText().toString();
+				if(key == null || key.equals("")){
 					iv_quxiao.setVisibility(View.GONE);
+					tv_sure.setText("取消");
 				} else{
 					iv_quxiao.setVisibility(View.VISIBLE);
+					tv_sure.setText("搜索");
 				}
 			}
 			
@@ -198,7 +201,14 @@ public class SearchNewActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_sure:
-			
+			String key = et_search.getText().toString();
+			if(key == null || key.equals("")){
+				//退出搜索界面
+				finish();
+			} else{
+				//搜素
+				searchData();
+			}
 			break;
 		case R.id.iv_search:
 			// 搜索按钮
