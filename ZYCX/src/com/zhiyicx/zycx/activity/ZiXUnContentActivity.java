@@ -4,8 +4,9 @@ import org.json.JSONObject;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelZiXunDetail;
-import qcjlibrary.util.UIUtils;
+import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopSizeChoose;
 import qcjlibrary.widget.popupview.base.PopView;
 import android.content.Intent;
@@ -53,6 +54,8 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private ModelZiXunDetail mDetail = null;
 	private Title mTitleLayout;
 
+	private String mChangeSizeUrl; // 改变字体的url
+
 	@Override
 	public String setCenterTitle() {
 		return "咨询详情";
@@ -93,6 +96,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		findViewById(R.id.btn_share).setOnClickListener(this);
 		findViewById(R.id.btn_comment).setOnClickListener(this);
 		findViewById(R.id.btn_collect).setOnClickListener(this);
+		findViewById(R.id.btn_praise).setOnClickListener(this);
 		mCollBtn = (Button) findViewById(R.id.btn_collect);
 		mCmtEdit = (EditText) findViewById(R.id.edit_cmt);
 
@@ -122,12 +126,21 @@ public class ZiXUnContentActivity extends BaseActivity {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.btn_praise:
+			sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class,
+					BaseActivity.REQUEST_GET);
+			break;
 		case R.id.btn_back:
 			finish();
 			break;
 		case R.id.iv_title_right3:
-			PopView popView = new PopSizeChoose(this, null, this);
-			popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
+			if (!TextUtils.isEmpty(mChangeSizeUrl)) {
+				PopView popView = new PopSizeChoose(this, mChangeSizeUrl, this);
+				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
+			} else {
+				ToastUtils.showToast("请稍后。。。");
+				loadData();
+			}
 			break;
 		case R.id.iv_title_right1:
 			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
@@ -154,6 +167,16 @@ public class ZiXUnContentActivity extends BaseActivity {
 				collect(1);
 			break;
 		}
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (judgeTheMsg(object)) {
+			ModelMsg modelMsg = (ModelMsg) object;
+			ToastUtils.showToast(modelMsg.getMessage());
+		}
+		return object;
 	}
 
 	private void comment() {
@@ -283,6 +306,12 @@ public class ZiXUnContentActivity extends BaseActivity {
 		}
 	};
 
+	public Object onPopResult(Object object) {
+		mChangeSizeUrl = object.toString();
+		mContent.loadUrl(mChangeSizeUrl);
+		return object;
+	};
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -307,8 +336,9 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
-						mContent.loadUrl(mUrl
-								+ Utils.getTokenString(ZiXUnContentActivity.this));
+						mChangeSizeUrl = mUrl
+								+ Utils.getTokenString(ZiXUnContentActivity.this);
+						mContent.loadUrl(mChangeSizeUrl);
 						mIsColl = data.getInt("isColl");
 						if (mIsColl == 1)
 							mCollBtn.setText("不收藏");

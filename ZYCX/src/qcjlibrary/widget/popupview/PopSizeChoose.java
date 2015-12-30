@@ -23,6 +23,8 @@ public class PopSizeChoose extends PopView {
 	private TextView tv_small;
 	private ImageView iv_cancle;
 
+	private String mUrl;
+
 	public PopSizeChoose(Activity activity, Object object,
 			PopResultListener resultListener) {
 		super(activity, object, resultListener);
@@ -44,7 +46,7 @@ public class PopSizeChoose extends PopView {
 
 	@Override
 	public void initPopData(Object object) {
-
+		mUrl = (String) object;
 	}
 
 	@Override
@@ -53,14 +55,32 @@ public class PopSizeChoose extends PopView {
 	}
 
 	@Override
-	public void setPopLisenter(PopResultListener listener) {
+	public void setPopLisenter(final PopResultListener listener) {
+		tv_big.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!mUrl.contains("&size=large")) {
+					mUrl = mUrl + "&size=large";
+				}
+			}
+		});
+		tv_small.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mUrl.contains("&size=large")) {
+					mUrl = mUrl.replace("&size=large", "");
+				}
+			}
+		});
 		iv_cancle.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				listener.onPopResult(mUrl);
 				mPopWindow.dismiss();
 			}
 		});
 	}
-
 }

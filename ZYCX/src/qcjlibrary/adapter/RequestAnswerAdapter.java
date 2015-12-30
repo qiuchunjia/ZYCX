@@ -45,6 +45,11 @@ public class RequestAnswerAdapter extends BAdapter {
 		super(fragment, null);
 		this.mRequestData = data;
 	}
+	
+	public RequestAnswerAdapter(BaseFragment fragment, List<Model> list,Model data) {
+		super(fragment, list);
+		this.mRequestData = data;
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

@@ -1,6 +1,4 @@
 package com.zhiyicx.zycx.fragment;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.adapter.SearchWeiboListAdapter;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.listener.OnTouchListListener;
 import com.zhiyicx.zycx.sociax.modle.ListData;
 import com.zhiyicx.zycx.sociax.modle.SociaxItem;
-import com.zhiyicx.zycx.util.Utils;
 import com.zhiyicx.zycx.widget.WeiboList;
 
 public class WebSearchFragment extends BaseListFragment
@@ -20,6 +18,7 @@ public class WebSearchFragment extends BaseListFragment
     private WeiboList mWeibolist;
     private String key = null;
     private boolean isLoad = false;
+    
     @Override
     public OnTouchListListener getListView() {
         return mWeibolist;

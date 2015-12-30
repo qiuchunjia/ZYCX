@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.WeakHashMap;
 
+import qcjlibrary.activity.SearchNewActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.api.api;
 import qcjlibrary.config.Config;
@@ -90,12 +91,13 @@ public class Thinksns extends Application {
 	private CommonLog mCommonLog = LogFactory.createLog();
 	public static Activity medicineAct;
 	public static int id;
-
+	public static SearchNewActivity searchAct;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		// JPushInterface.setDebugMode(true);
-		JPushInterface.init(this);
+//		JPushInterface.init(this);
 		/********** qcj 2015-11-6添加 **************************/
 		mApp = this;
 		initImageLoader();
@@ -824,6 +826,8 @@ public class Thinksns extends Application {
 		}
 		return mFoodImpl;
 	}
+	
+	
 
 	public api.UserImpl getUserImpl() {
 		if (mUserImpl == null) {
