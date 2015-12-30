@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.config.Config;
+import qcjlibrary.util.L;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
@@ -23,7 +24,7 @@ public class FragmentWeibo extends BaseListFragment {
 	private WeiboList mWeibolist;
 	private String key = null;
 	private boolean isLoad = false;
-	private Thinksns mApp = new Thinksns();
+	private boolean isCreate = false;
 
 	@Override
 	public OnTouchListListener getListView() {
@@ -55,28 +56,38 @@ public class FragmentWeibo extends BaseListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!isLoad)
-			loadData(false);
+		/*if (!isLoad)
+			loadData(false);*/
 	}
 
 	@Override
 	public void loadData(boolean isLoadNew) {
-
-		if(mApp.searchAct == null){
-			return;
-		}
-		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
-
+		
+		Thinksns.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
+			
 			@Override
-			public void onSearchTouch(String key, int searchType) {
+			public void onSearchTouch_Weibo(String key) {
 				// TODO 自动生成的方法存根
-				Log.d("Cathy", "weibo:" + key + " searchType:" + searchType);
-				if (searchType == Config.TYPE_WEIBO) {
-					Log.d("Cathy", "weibo:" + key);
-					mWeiboAdapter.loadSearchData(key);
-					mWeibolist.setSelectionFromTop(0, 20);
-					isLoad = true;
-				}
+				setKey(key);
+				mWeiboAdapter.loadSearchData(key);
+				mWeibolist.setSelectionFromTop(0, 20);
+				isLoad = true;
+			}
+			
+			@Override
+			public void onSearchTouch_Request(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Qclass(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Info(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Food(String key) {
 			}
 		});
 	}
@@ -90,4 +101,28 @@ public class FragmentWeibo extends BaseListFragment {
 		}
 	}
 
+	private void setKey(String key){
+    	this.key = key;
+    }
+	
+	 //仅当可见时才加载内容，防止fragment在不可见时加载内容，消耗资源
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+    	// TODO 自动生成的方法存根
+    	super.setUserVisibleHint(isVisibleToUser);
+    	
+    	if(!isCreate){
+    		return;
+    	}
+    	if(isVisibleToUser){
+    		loadData(true);
+    	}
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	// TODO 自动生成的方法存根
+    	super.onCreate(savedInstanceState);
+    	isCreate = true;
+    }
 }
