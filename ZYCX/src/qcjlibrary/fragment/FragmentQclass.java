@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.config.Config;
+import qcjlibrary.util.L;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
@@ -30,7 +31,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     private LoadListView mList;
     private String key = null;
     private boolean isLoad = false;
-    private Thinksns mApp = new Thinksns();
+    private boolean isCreate = false;
 
     @Override
     public OnTouchListListener getListView() {
@@ -75,29 +76,41 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     @Override
     public void onResume() {
         super.onResume();
-        if(!isLoad){
+        L.d("Cathy", "Qclass:onResume");
+        /*if(!isLoad){
         	loadData(false);
-        }
+        }*/
     }
 
     @Override
     public void loadData(boolean isLoadNew) {
     	
-    	if(mApp.searchAct == null){
-			return;
-		}
-    	mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
+    	Thinksns.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
 			
 			@Override
-			public void onSearchTouch(String key, int searchType) {
-				// TODO 自动生成的方法存根
-				Log.d("Cathy", "Qclass:"+key+" searchType:"+ searchType);
-				if(searchType == Config.TYPE_QCLASS){
-					Log.d("Cathy", "Qclass:"+key);
-					mAdapter.loadSearchData(key);
-					mList.setSelectionFromTop(0, 20);
-					isLoad = true;
-				}
+			public void onSearchTouch_Weibo(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Request(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Qclass(String key) {
+				setKey(key);
+				L.d("Cathy", "Qclass"+key);
+				mAdapter.loadSearchData(key);
+				mList.setSelectionFromTop(0, 20);
+				isLoad = true;
+				
+			}
+			
+			@Override
+			public void onSearchTouch_Info(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Food(String key) {
 			}
 		});
         
@@ -111,5 +124,31 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
         if(mContext != null) {
             loadData(false);
         }
+    }
+    
+    private void setKey(String key){
+    	this.key = key;
+    }
+    
+    //仅当可见时才加载内容
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+    	// TODO 自动生成的方法存根
+    	super.setUserVisibleHint(isVisibleToUser);
+    	
+    	if(!isCreate){
+    		return;
+    	}
+    	L.d("Cathy", "Qclass isVisibleToUser = "+isVisibleToUser);
+    	if(isVisibleToUser){
+    		loadData(true);
+    	}
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	// TODO 自动生成的方法存根
+    	super.onCreate(savedInstanceState);
+    	isCreate = true;
     }
 }

@@ -8,6 +8,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearch1;
+import qcjlibrary.model.ModelFoodSearchAll;
 import qcjlibrary.model.ModelFoodSearchIndex;
 import qcjlibrary.model.base.Model;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class FoodCategoryAdapter extends BAdapter {
 		this.mSearch = search;
 
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;

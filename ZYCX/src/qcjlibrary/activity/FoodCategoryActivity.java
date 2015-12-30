@@ -7,6 +7,7 @@ import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelFood;
 import qcjlibrary.model.ModelFoodCategory;
 import qcjlibrary.model.ModelFoodSearch;
+import qcjlibrary.model.ModelFoodSearchAll;
 import qcjlibrary.model.base.Model;
 
 import android.view.View;
@@ -54,7 +55,7 @@ public class FoodCategoryActivity extends BaseActivity {
 		} else if (model instanceof ModelFoodSearch) {
 			mSearch = (ModelFoodSearch) model;
 			titleSetCenterTitle(mSearch.getKey());
-		}
+		} 
 
 	}
 
