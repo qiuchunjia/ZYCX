@@ -14,6 +14,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -45,6 +47,7 @@ public class SearchNewActivity extends BaseActivity {
 	private TextView tv_line;
 	private ViewPager mViewpager;
 	private ImageView iv_search;
+	private ImageView iv_quxiao;
 
 	private ArrayList<Fragment> mFragList;
 	private FragmentWeibo mWeiboFrag;
@@ -88,8 +91,10 @@ public class SearchNewActivity extends BaseActivity {
 		tv_line = (TextView) findViewById(R.id.tv_line);
 		mViewpager = (ViewPager) findViewById(R.id.mViewpager);
 		iv_search = (ImageView) findViewById(R.id.iv_search);
+		iv_quxiao = (ImageView) findViewById(R.id.iv_quxiao);
 		offset = UIUtils.getWindowWidth(getApplicationContext()) / 5;
 		tv_line.getLayoutParams().width = offset;
+		et_search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 	}
 
 	@Override
@@ -130,18 +135,40 @@ public class SearchNewActivity extends BaseActivity {
 		tv_qclass.setOnClickListener(this);
 		tv_food.setOnClickListener(this);
 		iv_search.setOnClickListener(this);
+		iv_quxiao.setOnClickListener(this);
 		// 监听回车按钮,将回车按钮改为搜索按钮
 		et_search.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				Log.d("Cathy", "actionId = "+actionId);
+				L.d("Cathy", "actionId = "+actionId);
 				if (actionId == EditorInfo.IME_ACTION_SEARCH
 						|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					Log.d("Cathy", "actionId = "+actionId);
+					L.d("Cathy", "actionId = "+actionId);
 					searchData();
 				}
 				return true;
+			}
+		});
+		
+		//监听输入
+		et_search.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(s == null || s.equals("")){
+					iv_quxiao.setVisibility(View.GONE);
+				} else{
+					iv_quxiao.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
 			}
 		});
 
@@ -198,6 +225,9 @@ public class SearchNewActivity extends BaseActivity {
 		case R.id.tv_food:
 			mViewpager.setCurrentItem(4);
 			toX = offset * 4;
+			break;
+		case R.id.iv_quxiao:
+			et_search.setText("");
 			break;
 		default:
 			break;

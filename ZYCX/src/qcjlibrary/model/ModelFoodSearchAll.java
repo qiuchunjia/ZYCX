@@ -8,16 +8,16 @@ public class ModelFoodSearchAll extends Model{
 
 	/**
 	 * http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Shiliao&act=all_search&key=%E6%9E%A3
-	 * String key 搜索关键字 必填
+	 * String key 搜索关键字 
 	 */
 	private static final long serialVersionUID = -8717391845439447075L;
 	
 	private List<ModelFoodSearch0> foodList;
 	private List<ModelFoodSearch1> sideList;
-
 	private String key;
 	private String message;
 	private int code;
+	
 	public String getKey() {
 		return key;
 	}
@@ -48,8 +48,5 @@ public class ModelFoodSearchAll extends Model{
 	public void setCode(int code) {
 		this.code = code;
 	}
-	
-	
-	
 	
 }

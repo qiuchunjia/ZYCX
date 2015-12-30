@@ -55,6 +55,17 @@
                 android:src="@drawable/search_icon"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_common" />
+
+            <ImageView
+                android:id="@+id/iv_quxiao"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:visibility="gone"
+                android:background="@drawable/quxiao02" />
+
         </RelativeLayout>
     </RelativeLayout>
     <!-- 下面5个标题 -->

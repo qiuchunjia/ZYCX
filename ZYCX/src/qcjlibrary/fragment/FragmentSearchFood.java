@@ -1,31 +1,31 @@
 package qcjlibrary.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import qcjlibrary.activity.FoodSingleDetailActivity;
 import qcjlibrary.activity.FoodWaySingleDetail;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
-import qcjlibrary.config.Config;
+import qcjlibrary.adapter.FoodSearchAllAdapter;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.model.ModelFoodIdDetail;
+import qcjlibrary.model.ModelFoodIdDetailInfo;
+import qcjlibrary.model.ModelFoodSearch0;
 import qcjlibrary.model.ModelFoodSearchAll;
+import qcjlibrary.model.ModelFoodSearchIndex;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
+import qcjlibrary.util.ToastUtils;
 
 public class FragmentSearchFood extends BaseFragment {
 
 	private CommonListView mCommonListView;
-	private ModelFoodSearchAll mFoodSearchAll;
-	private ArrayList<Model> mSearchList;
 	private boolean isCreate = false;
-	private List<Model> mFoodList;
+	private FoodSearchAllAdapter mAdapter;
+	private ModelFoodSearchAll mFoodSearchAll;
 	
 	@Override
 	public void onClick(View v) {
@@ -47,6 +47,7 @@ public class FragmentSearchFood extends BaseFragment {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
+		mCommonListView.setDividerHeight(0);
 	}
 
 	@Override
@@ -55,12 +56,14 @@ public class FragmentSearchFood extends BaseFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-				// 食材详情
-				// mCommonListView.stepToNextActivity(parent, view, position,
-				// FoodSingleDetailActivity.class);
-				// 食疗方详情
-				mCommonListView.stepToNextActivity(parent, view, position, FoodWaySingleDetail.class);
+				
+				Model model = (Model) parent.getItemAtPosition(position);
+				Bundle data = mActivity.sendDataToBundle(model, null);
+				if(model instanceof ModelFoodSearch0){
+					mApp.startActivity_qcj(getActivity(), FoodSingleDetailActivity.class, data);
+				} else{
+					mApp.startActivity_qcj(getActivity(), FoodWaySingleDetail.class, data);
+				}
 
 			}
 		});
@@ -76,9 +79,11 @@ public class FragmentSearchFood extends BaseFragment {
 	public Object onResponceSuccess(String str, Class class1) {
 		// TODO 自动生成的方法存根
 		Object object = super.onResponceSuccess(str, class1);
-		if (object instanceof ModelFoodSearchAll) {
-			ModelFoodSearchAll mData = new ModelFoodSearchAll();
-			
+		if (object instanceof ModelFoodSearchIndex) {
+			mAdapter = new FoodSearchAllAdapter(this, mFoodSearchAll);
+			mCommonListView.setAdapter(mAdapter);
+		} else {
+			ToastUtils.showToast("暂时没有相关内容！");
 		}
 		judgeTheMsg(object);
 		return object;
@@ -88,7 +93,6 @@ public class FragmentSearchFood extends BaseFragment {
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		Log.d("Cathy", "food:onResume");
 		// initData();
 	}
 
@@ -101,7 +105,6 @@ public class FragmentSearchFood extends BaseFragment {
 		if (!isCreate) {
 			return;
 		}
-		L.d("Cathy", "food isVisibleToUser = "+isVisibleToUser);
 		if (isVisibleToUser) {
 			getData();
 		}
@@ -137,11 +140,12 @@ public class FragmentSearchFood extends BaseFragment {
 			@Override
 			public void onSearchTouch_Food(String key) {
 				// TODO 自动生成的方法存根
-				Log.d("Cathy", "food:" + key);
+				L.d("Cathy", "food key:"+key);
 				mFoodSearchAll = new ModelFoodSearchAll();
 				mFoodSearchAll.setKey(key);
-				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), ModelFoodSearchAll.class, 0);
+				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
+						ModelFoodSearchIndex.class, 0);
 			}
 		});
-	}
+	} 
 }
