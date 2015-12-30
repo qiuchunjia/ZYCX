@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import com.baidu.location.LLSInterface;
 import com.zhiyicx.zycx.R;
 
@@ -36,9 +38,8 @@ public class FoodSearchAllAdapter extends BAdapter {
 		this.mSearch = search;
 	}
 
-	public FoodSearchAllAdapter(BaseFragment fragment, ModelFoodSearchAll search) {
-		super(fragment, null);
-		this.mSearch = search;
+	public FoodSearchAllAdapter(BaseFragment fragment, List<Model> mList) {
+		super(fragment, mList);
 		L.d("Cathy", "mList:"+mList.size());
 	}
 	

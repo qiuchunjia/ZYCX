@@ -56,7 +56,6 @@ public class FragmentWeibo extends BaseListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("Cathy", "weibo:onResume");
 		/*if (!isLoad)
 			loadData(false);*/
 	}
@@ -70,7 +69,6 @@ public class FragmentWeibo extends BaseListFragment {
 			public void onSearchTouch_Weibo(String key) {
 				// TODO 自动生成的方法存根
 				setKey(key);
-				Log.d("Cathy", "weibo:" + key);
 				mWeiboAdapter.loadSearchData(key);
 				mWeibolist.setSelectionFromTop(0, 20);
 				isLoad = true;
@@ -107,7 +105,7 @@ public class FragmentWeibo extends BaseListFragment {
     	this.key = key;
     }
 	
-	 //仅当可见时才加载内容
+	 //仅当可见时才加载内容，防止fragment在不可见时加载内容，消耗资源
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
     	// TODO 自动生成的方法存根

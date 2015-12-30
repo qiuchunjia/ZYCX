@@ -1,5 +1,8 @@
 package qcjlibrary.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zhiyicx.zycx.R;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +29,7 @@ public class FragmentSearchFood extends BaseFragment {
 	private boolean isCreate = false;
 	private FoodSearchAllAdapter mAdapter;
 	private ModelFoodSearchAll mFoodSearchAll;
+	private List<Model> mList;
 	
 	@Override
 	public void onClick(View v) {
@@ -72,7 +76,7 @@ public class FragmentSearchFood extends BaseFragment {
 
 	@Override
 	public void initData() {
-
+		mList = new ArrayList<Model>();
 	}
 
 	@Override
@@ -80,7 +84,14 @@ public class FragmentSearchFood extends BaseFragment {
 		// TODO 自动生成的方法存根
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelFoodSearchIndex) {
-			mAdapter = new FoodSearchAllAdapter(this, mFoodSearchAll);
+			ModelFoodSearchIndex mSearch = (ModelFoodSearchIndex) object;
+			if(mSearch.getFoodList() !=null){
+				mList.addAll(mSearch.getFoodList());
+			}
+			if(mSearch.getSideList() != null){
+				mList.addAll(mSearch.getSideList());
+			}
+			mAdapter = new FoodSearchAllAdapter(this, mList);
 			mCommonListView.setAdapter(mAdapter);
 		} else {
 			ToastUtils.showToast("暂时没有相关内容！");
@@ -140,7 +151,6 @@ public class FragmentSearchFood extends BaseFragment {
 			@Override
 			public void onSearchTouch_Food(String key) {
 				// TODO 自动生成的方法存根
-				L.d("Cathy", "food key:"+key);
 				mFoodSearchAll = new ModelFoodSearchAll();
 				mFoodSearchAll.setKey(key);
 				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 

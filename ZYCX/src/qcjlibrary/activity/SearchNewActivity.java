@@ -61,7 +61,7 @@ public class SearchNewActivity extends BaseActivity {
 	private int offset;
 	/** 导航栏指示位移起始X**/
 	private float fromX;
-	/** 导航栏指示位移起始Y**/
+	/** 导航栏指示位移结束X**/
 	private float toX;
 	@Override
 	public String setCenterTitle() {
@@ -141,17 +141,15 @@ public class SearchNewActivity extends BaseActivity {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				L.d("Cathy", "actionId = "+actionId);
 				if (actionId == EditorInfo.IME_ACTION_SEARCH
 						|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					L.d("Cathy", "actionId = "+actionId);
 					searchData();
 				}
 				return true;
 			}
 		});
 		
-		//监听输入
+		//监听输入，如果输入内容不为空，则显示清楚按钮
 		et_search.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -232,16 +230,16 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
+		//传入起止位置，开启动画
 		setLineAnimator(fromX,toX);
+		//将前一个结束位置重置为开始位置
 		fromX = toX;
 	}
 
 	private void searchData() {
-		L.d("Cathy", "searchData");
 		String key = et_search.getText().toString();
 		if (key != null || !key.equals(" ")) {
 			ToastUtils.showToast("搜索中...");
-			L.d("Cathy", "mSearchListener = "+(mSearchListener == null));
 			if(mSearchListener != null){
 				switch (mViewpager.getCurrentItem()) {
 				case 0:
@@ -273,10 +271,15 @@ public class SearchNewActivity extends BaseActivity {
 	 * 点击搜索接口，将关键字传给实现方法的地方
 	 * */
 	public interface OnSearchTouchListerer{
+		//微博搜索
 		void onSearchTouch_Weibo(String key);
+		//问答搜索
 		void onSearchTouch_Request(String key);
+		//资讯搜索
 		void onSearchTouch_Info(String key);
+		//轻课堂搜索
 		void onSearchTouch_Qclass(String key);
+		//食疗搜索
 		void onSearchTouch_Food(String key);
 	}
 	
