@@ -14,6 +14,8 @@ import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.base.Model;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.opengl.Visibility;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
@@ -22,12 +24,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baidu.appx.BDInterstitialAd;
 import com.nineoldandroids.view.ViewHelper;
@@ -67,6 +72,9 @@ public class HomeActivity extends BaseActivity {
 	private FragmentMenu mMenu;
 
 	private Title mTitle; // 标题
+	/** 轻课堂界面排序方法下标**/
+	private int QIndex;
+	private PopupWindow mSortMenu;
 
 	@Override
 	public void initSet() {
@@ -390,6 +398,7 @@ public class HomeActivity extends BaseActivity {
 		switch (index) {
 		case index_Default:
 			titleSetCenterTitle("癌友帮");
+			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.index);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -404,6 +413,7 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case index_zhixun:
 			titleSetCenterTitle("资讯");
+			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -417,7 +427,9 @@ public class HomeActivity extends BaseActivity {
 			});
 			break;
 		case index_qclass:
-			titleSetCenterTitle("最新");
+			titleSetCenterTitle(" ");
+			//mTitle.tv_title.setVisibility(View.GONE);
+			mTitle.rl_textandpic.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -429,9 +441,20 @@ public class HomeActivity extends BaseActivity {
 							sendDataToBundle(new Model(), null));
 				}
 			});
+			/**
+			 * 点击弹出下拉PopWindow
+			 * */
+			mTitle.rl_textandpic.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					showMenu(v);
+				}
+			});
 			break;
 		case index_qustion:
 			titleSetCenterTitle("问答");
+			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1
 					.setImageResource(R.drawable.chuangjianjingli);
@@ -447,9 +470,11 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case index_qikan:
 			titleSetCenterTitle("经历");
+			mTitle.rl_textandpic.setVisibility(View.GONE);
 			break;
 		case index_web:
 			titleSetCenterTitle("病例");
+			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -513,4 +538,60 @@ public class HomeActivity extends BaseActivity {
 		MobclickAgent.onPause(this);
 	}
 
+	//展示排序下拉列表
+	private void showMenu(View v) {
+		TextView textNew = null;
+		TextView textHot = null;
+		TextView textMy = null;
+		if(mSortMenu == null){
+			View menuView = LayoutInflater.from(HomeActivity.this).
+					inflate(R.layout.popmenu, null);
+			textNew = (TextView) menuView.findViewById(R.id.txt_new);
+			textHot = (TextView) menuView.findViewById(R.id.txt_hot);
+			textMy = (TextView) menuView.findViewById(R.id.txt_my);
+			mSortMenu = new PopupWindow(menuView, ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+			textNew.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					QIndex = 0;
+					mTitle.txt_status_1.setText("最新");
+					mSortMenu.dismiss();
+				}
+			});
+			textHot.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					QIndex = 1;
+					mTitle.txt_status_1.setText("最热");
+					mSortMenu.dismiss();
+				}
+			});
+			textMy.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					QIndex = 2;
+					mTitle.txt_status_1.setText("我的");
+					mSortMenu.dismiss();
+				}
+			});
+		}
+		mSortMenu.setAnimationStyle(R.style.popwin_anim_style);
+		mSortMenu.setFocusable(true);
+		mSortMenu.setOutsideTouchable(true);
+		mSortMenu.update();
+		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
+		mSortMenu.showAsDropDown(v);
+        mTitle.arrow_img_1.setImageResource(R.drawable.arrow_up);
+        mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+            	mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
+            }
+        });
+	}
+	
 }
