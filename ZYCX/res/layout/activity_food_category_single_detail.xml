@@ -108,18 +108,17 @@
 
             <RelativeLayout
                 android:id="@+id/rl_funtion"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_function_value"
                 android:layout_marginTop="30dp" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <qcjlibrary.widget.MyGridView
+                    android:id="@+id/gv_function"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/view_border_gray_50"
-                    android:text="调中健胃"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/text_common" />
+                    android:numColumns="3"
+                    android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
 

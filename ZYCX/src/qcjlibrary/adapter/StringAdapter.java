@@ -1,15 +1,14 @@
 package qcjlibrary.adapter;
 
-import com.zhiyicx.zycx.R;
-
 import qcjlibrary.adapter.base.ViewHolder;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午2:59:55 类描述：这个类是实现

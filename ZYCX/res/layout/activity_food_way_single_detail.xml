@@ -60,18 +60,17 @@
 
             <RelativeLayout
                 android:id="@+id/rl_contain"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_food_main"
                 android:layout_marginTop="@dimen/margin_top" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <qcjlibrary.widget.MyGridView
+                    android:id="@+id/gv_contain"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/view_border_gray_50"
-                    android:text="生姜"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/text_common" />
+                    android:numColumns="3"
+                    android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -104,13 +103,12 @@
                 android:layout_below="@id/tv_function_main"
                 android:layout_marginTop="@dimen/margin_top" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <qcjlibrary.widget.MyGridView
+                    android:id="@+id/gv_function"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/view_border_gray_50"
-                    android:text="调中健胃"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/text_common" />
+                    android:numColumns="3"
+                    android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -353,9 +351,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/view_border_gray_3"
-
                         android:scaleType="centerCrop"
-
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -388,9 +384,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/view_border_gray_3"
-
                         android:scaleType="centerCrop"
-
                         android:src="@drawable/default_image_small" />
 
                     <TextView
