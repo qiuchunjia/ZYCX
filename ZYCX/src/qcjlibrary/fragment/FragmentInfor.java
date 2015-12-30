@@ -77,6 +77,7 @@ public class FragmentInfor extends BaseListFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("Cathy", "info:onResume");
         if(!isLoad){
         	loadData(false);
         }

@@ -116,6 +116,7 @@ public class FragmentRequest extends BaseFragment{
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
+		Log.d("Cathy", "request:onResume");
 		initData();
 	}
 	

@@ -1,20 +1,16 @@
 package qcjlibrary.fragment;
 
 import java.util.ArrayList;
-
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import qcjlibrary.activity.FoodSingleDetailActivity;
 import qcjlibrary.activity.FoodWaySingleDetail;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
-import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearchAll;
 import qcjlibrary.model.base.Model;
 
@@ -102,6 +98,7 @@ public class FragmentSearchFood extends BaseFragment{
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
+		Log.d("Cathy", "food:onResume");
 		initData();
 	}
 	

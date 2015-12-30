@@ -75,6 +75,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("Cathy", "Qclass:onResume");
         if(!isLoad){
         	loadData(false);
         }

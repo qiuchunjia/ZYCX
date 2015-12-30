@@ -55,6 +55,7 @@ public class FragmentWeibo extends BaseListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("Cathy", "weibo:onResume");
 		if (!isLoad)
 			loadData(false);
 	}
