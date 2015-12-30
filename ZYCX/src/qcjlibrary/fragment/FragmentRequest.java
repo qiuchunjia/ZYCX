@@ -23,6 +23,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
+import qcjlibrary.util.L;
 
 public class FragmentRequest extends BaseFragment{
 
@@ -118,7 +119,7 @@ public class FragmentRequest extends BaseFragment{
     	if(!isCreate){
     		return;
     	}
-    	
+    	L.d("Cathy", "request isVisibleToUser = "+isVisibleToUser);
     	if(isVisibleToUser){
     		getData();
     	}
@@ -136,15 +137,27 @@ public class FragmentRequest extends BaseFragment{
 		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
 			
 			@Override
-			public void onSearchTouch(String key, int searchType) {
-				// TODO 自动生成的方法存根
-				Log.d("Cathy", "request:"+key+" searchType:"+ searchType);
-				if(searchType == Config.TYPE_REQUEST){
-					Log.d("Cathy", "request:"+key);
-					mRequestSearch.setKey(key);
-					sendRequest(mApp.getRequestImpl().search(mRequestSearch),
-							ModelRequest.class, REQUEST_GET);
-				}
+			public void onSearchTouch_Weibo(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Request(String key) {
+				Log.d("Cathy", "request:"+key);
+				mRequestSearch.setKey(key);
+				sendRequest(mApp.getRequestImpl().search(mRequestSearch),
+						ModelRequest.class, REQUEST_GET);
+			}
+			
+			@Override
+			public void onSearchTouch_Qclass(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Info(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Food(String key) {
 			}
 		});
 	}

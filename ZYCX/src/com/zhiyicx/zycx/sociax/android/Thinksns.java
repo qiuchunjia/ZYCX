@@ -91,7 +91,7 @@ public class Thinksns extends Application {
 	private CommonLog mCommonLog = LogFactory.createLog();
 	public static Activity medicineAct;
 	public static int id;
-	public SearchNewActivity searchAct;
+	public static SearchNewActivity searchAct;
 	
 	@Override
 	public void onCreate() {

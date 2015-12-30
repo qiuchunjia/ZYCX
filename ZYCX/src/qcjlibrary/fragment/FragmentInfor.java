@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.config.Config;
+import qcjlibrary.util.L;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
@@ -31,7 +32,6 @@ public class FragmentInfor extends BaseListFragment {
     private LoadListView mListView;
     private String key = null;
     private boolean isLoad = false;
-    private Thinksns mApp = new Thinksns();
     private boolean isCreate = false;
 
     @Override
@@ -96,22 +96,31 @@ public class FragmentInfor extends BaseListFragment {
 
     @Override
     public void loadData(boolean isLoadNew) {
-    	if(mApp.searchAct == null){
-			return;
-		}
-    	mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
+    	Thinksns.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
 			
 			@Override
-			public void onSearchTouch(String key, int searchType) {
-				// TODO 自动生成的方法存根
-				Log.d("Cathy", "info:"+key+" searchType:"+ searchType);
-				if(searchType == Config.TYPE_INFO){
-					setKey(key);
-					Log.d("Cathy", "info:"+key);
-					mAdapter.loadSearchData(key);
-			        mListView.setSelectionFromTop(0, 20);
-			        isLoad = true;
-				}
+			public void onSearchTouch_Weibo(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Request(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Qclass(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Info(String key) {
+				setKey(key);
+				Log.d("Cathy", "info:"+key);
+				mAdapter.loadSearchData(key);
+		        mListView.setSelectionFromTop(0, 20);
+		        isLoad = true;
+			}
+			
+			@Override
+			public void onSearchTouch_Food(String key) {
 			}
 		});
         
@@ -130,7 +139,7 @@ public class FragmentInfor extends BaseListFragment {
     	if(!isCreate){
     		return;
     	}
-    	
+    	L.d("Cathy", "info isVisibleToUser = "+isVisibleToUser);
     	if(isVisibleToUser){
     		loadData(true);
     	}

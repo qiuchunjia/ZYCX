@@ -1,6 +1,8 @@
 package qcjlibrary.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
@@ -15,6 +17,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelFoodSearchAll;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 
 public class FragmentSearchFood extends BaseFragment {
 
@@ -22,7 +25,8 @@ public class FragmentSearchFood extends BaseFragment {
 	private ModelFoodSearchAll mFoodSearchAll;
 	private ArrayList<Model> mSearchList;
 	private boolean isCreate = false;
-
+	private List<Model> mFoodList;
+	
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
@@ -74,7 +78,7 @@ public class FragmentSearchFood extends BaseFragment {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelFoodSearchAll) {
 			ModelFoodSearchAll mData = new ModelFoodSearchAll();
-
+			
 		}
 		judgeTheMsg(object);
 		return object;
@@ -97,7 +101,7 @@ public class FragmentSearchFood extends BaseFragment {
 		if (!isCreate) {
 			return;
 		}
-
+		L.d("Cathy", "food isVisibleToUser = "+isVisibleToUser);
 		if (isVisibleToUser) {
 			getData();
 		}
@@ -113,17 +117,30 @@ public class FragmentSearchFood extends BaseFragment {
 	private void getData() {
 		// TODO 自动生成的方法存根
 		mApp.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
-
+			
 			@Override
-			public void onSearchTouch(String key, int searchType) {
+			public void onSearchTouch_Weibo(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Request(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Qclass(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Info(String key) {
+			}
+			
+			@Override
+			public void onSearchTouch_Food(String key) {
 				// TODO 自动生成的方法存根
-				Log.d("Cathy", "food:" + key + " searchType:" + searchType);
-				if (searchType == Config.TYPE_FOOD) {
-					Log.d("Cathy", "food:" + key);
-					mFoodSearchAll = new ModelFoodSearchAll();
-					mFoodSearchAll.setKey(key);
-					sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), ModelFoodSearchAll.class, 0);
-				}
+				Log.d("Cathy", "food:" + key);
+				mFoodSearchAll = new ModelFoodSearchAll();
+				mFoodSearchAll.setKey(key);
+				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), ModelFoodSearchAll.class, 0);
 			}
 		});
 	}

@@ -6,6 +6,7 @@ import qcjlibrary.fragment.FragmentQclass;
 import qcjlibrary.fragment.FragmentRequest;
 import qcjlibrary.fragment.FragmentSearchFood;
 import qcjlibrary.fragment.FragmentWeibo;
+import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.animation.ObjectAnimator;
@@ -20,9 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import cn.jpush.android.data.l;
+
 import java.util.ArrayList;
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /**
  * author：qiuchunjia time：下午4:07:29 类描述：这个类是实现
@@ -90,7 +94,7 @@ public class SearchNewActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		mApp.searchAct = this;
+		Thinksns.searchAct = this;
 		mFragList = new ArrayList<Fragment>();
 		mWeiboFrag = new FragmentWeibo();
 		mRequestFrag = new FragmentRequest();
@@ -203,10 +207,33 @@ public class SearchNewActivity extends BaseActivity {
 	}
 
 	private void searchData() {
+		L.d("Cathy", "searchData");
 		String key = et_search.getText().toString();
 		if (key != null || !key.equals(" ")) {
 			ToastUtils.showToast("搜索中...");
-			mSearchListener.onSearchTouch(key,mViewpager.getCurrentItem());
+			L.d("Cathy", "mSearchListener = "+(mSearchListener == null));
+			if(mSearchListener != null){
+				switch (mViewpager.getCurrentItem()) {
+				case 0:
+					mSearchListener.onSearchTouch_Weibo(key);
+					break;
+				case 1:
+					mSearchListener.onSearchTouch_Request(key);
+					break;
+				case 2:
+					mSearchListener.onSearchTouch_Info(key);
+					break;
+				case 3:
+					mSearchListener.onSearchTouch_Qclass(key);
+					break;
+				case 4:
+					mSearchListener.onSearchTouch_Food(key);;
+					break;
+
+				default:
+					break;
+				}
+			}
 		} else {
 			ToastUtils.showLongToast(this, "请输入关键字");
 		}
@@ -216,7 +243,11 @@ public class SearchNewActivity extends BaseActivity {
 	 * 点击搜索接口，将关键字传给实现方法的地方
 	 * */
 	public interface OnSearchTouchListerer{
-		void onSearchTouch(String key,int searchType);
+		void onSearchTouch_Weibo(String key);
+		void onSearchTouch_Request(String key);
+		void onSearchTouch_Info(String key);
+		void onSearchTouch_Qclass(String key);
+		void onSearchTouch_Food(String key);
 	}
 	
 	public void setOnSearchListener(OnSearchTouchListerer mSearchListener){

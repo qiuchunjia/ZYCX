@@ -16,6 +16,8 @@ public class ModelFoodSearchAll extends Model{
 	private List<ModelFoodSearch1> sideList;
 
 	private String key;
+	private String message;
+	private int code;
 	public String getKey() {
 		return key;
 	}
@@ -33,6 +35,18 @@ public class ModelFoodSearchAll extends Model{
 	}
 	public void setSideList(List<ModelFoodSearch1> sideList) {
 		this.sideList = sideList;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
 	}
 	
 	
