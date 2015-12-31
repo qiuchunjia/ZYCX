@@ -37,6 +37,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.HomeActivity;
 import com.zhiyicx.zycx.sociax.api.Api;
 import com.zhiyicx.zycx.sociax.db.AtMeSqlHelper;
 import com.zhiyicx.zycx.sociax.db.AttachSqlHelper;
@@ -92,6 +93,7 @@ public class Thinksns extends Application {
 	public static Activity medicineAct;
 	public static int id;
 	public static SearchNewActivity searchAct;
+	public static HomeActivity homeAct;
 
 	@Override
 	public void onCreate() {

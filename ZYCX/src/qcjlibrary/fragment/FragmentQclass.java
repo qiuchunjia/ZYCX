@@ -22,7 +22,9 @@ import com.zhiyicx.zycx.util.Utils;
 import com.zhiyicx.zycx.widget.LoadListView;
 
 /**
- * Created by Administrator on 2015/1/17.
+ * 轻课堂 搜索
+ * @author Tan
+ * @since 12.30
  */
 public class FragmentQclass extends BaseListFragment implements LoadListView.OnItemListener
 {

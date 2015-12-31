@@ -1,34 +1,43 @@
 package qcjlibrary.adapter;
 
 import java.util.List;
-
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
+import qcjlibrary.api.api.QclassImpl;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelQclass;
+import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.zhiyicx.zycx.R;
 
 /**
- * author：qiuchunjia time：下午5:06:10
- * 
- * 类描述：这个类是实现专家提问列表
- *
+ * 轻课堂分类数据适配器
+ * @author Tan
+ * @since 12.31
  */
 
 public class QclassAdapter extends BAdapter {
+	
+	private ModelQclassDetail detail;
+	private String update_head;
+	private String update_tail;
+	private int status;
 
 	public QclassAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 	}
 
-	public QclassAdapter(BaseFragment fragment, List<Model> list) {
-		super(fragment, list);
+	public QclassAdapter(BaseFragment fragment, List<Model> mList,
+			ModelQclassDetail detail) {
+		super(fragment, mList);
+		this.detail = detail;
+		update_head = "已更新";
+		update_tail = "课";
 	}
 
 	@Override
@@ -48,6 +57,14 @@ public class QclassAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			ModelQclassDetail mDetail = (ModelQclassDetail) mList.get(position);
+			if(mDetail != null){
+				holder.tv_title.setText(mDetail.getCourse_name());
+				holder.tv_content.setText(mDetail.getContent());
+				holder.tv_num.setText(mDetail.getWatch_num()+"");
+				holder.tv_update.setText(update_head+mDetail.getVideo_num()+update_tail);
+				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
+			}
 		}
 	}
 
@@ -68,23 +85,33 @@ public class QclassAdapter extends BAdapter {
 					.findViewById(R.id.tv_update);
 			holder.iv_vedio = (ImageView) convertView
 					.findViewById(R.id.iv_vedio);
-
 		}
 	}
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		detail.setStatus(status);
+		requstMessage(detail, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+		if (item instanceof ModelQclassDetail) {
+			ModelQclassDetail detail = (ModelQclassDetail) item;
+			detail.setStatus(status);
+			detail.setLastid(detail.getCourse_id()+"");
+			requstMessage(detail, REFRESH_HEADER);
+		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		// TODO Auto-generated method stub
+		if(item instanceof ModelQclassDetail){
+			ModelQclassDetail detail = (ModelQclassDetail) item;
+			detail.setStatus(status);
+			detail.setMaxid(detail.getCourse_id()+"");
+			requstMessage(detail, REFRESH_FOOTER);
+		}
 	}
 
 	@Override
@@ -94,9 +121,27 @@ public class QclassAdapter extends BAdapter {
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
+	public Object getReallyList(Object object, Class type2) {
+		if(object instanceof ModelQclass){
+			ModelQclass mQclass = (ModelQclass)object;
+			return mQclass.getList();
+		}
 		return null;
+	}
+	
+	/**
+	 * 请求咨询内容
+	 * 
+	 * @param data
+	 * @param type
+	 */
+	private void requstMessage(ModelQclassDetail data, int type) {
+		QclassImpl qClassImpl = new QclassImpl();
+		sendRequest(qClassImpl.indexItem(detail), ModelQclass.class, 0, type);
+	}
+	
+	public void setStatus(int status){
+		this.status = status;
 	}
 
 }

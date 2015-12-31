@@ -9,9 +9,11 @@ import qcjlibrary.fragment.FragmentCaseIndex;
 import qcjlibrary.fragment.FragmentExperience;
 import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
+import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
 import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -45,7 +47,8 @@ import com.zhiyicx.zycx.sociax.net.HttpHelper;
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
 	private FragmentZhixun mZiXunFgmt; // 咨询fragment qcj
-	private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
+	//private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
+	private FragmentQclassIndex mQClassFgmt;//轻课堂fragment tan
 	// private QuestionFragment mQustionFgmt;// 问答fragment qcj
 	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
@@ -75,6 +78,8 @@ public class HomeActivity extends BaseActivity {
 	/** 轻课堂界面排序方法下标**/
 	private int QIndex;
 	private PopupWindow mSortMenu;
+	/** 轻课堂排序改变监听器**/
+	private onStatusChangedListener mStatusListener;
 
 	@Override
 	public void initSet() {
@@ -189,6 +194,7 @@ public class HomeActivity extends BaseActivity {
 		setTabSelection(mCurrentIndex);
 		// 曹立该添加，百度广告，点击 Tab 时第二项时弹出广告
 		initBDAD();
+		Thinksns.homeAct = this;
 	}
 
 	@Override
@@ -331,11 +337,17 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case index_qclass:
 			if (mQClassFgmt == null) {
-				mQClassFgmt = new QClassFragment();
+				mQClassFgmt = new FragmentQclassIndex();
 				transaction.add(R.id.content, mQClassFgmt);
 			} else {
 				transaction.show(mQClassFgmt);
 			}
+			/*if (mQClassFgmt == null) {
+				mQClassFgmt = new QClassFragment();
+				transaction.add(R.id.content, mQClassFgmt);
+			} else {
+				transaction.show(mQClassFgmt);
+			}*/
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
@@ -554,6 +566,9 @@ public class HomeActivity extends BaseActivity {
 				public void onClick(View v) {
 					QIndex = 0;
 					mTitle.txt_status_1.setText("最新");
+					if(mStatusListener != null){
+						mStatusListener.onStatusChange(QIndex);
+					}
 					mSortMenu.dismiss();
 				}
 			});
@@ -563,6 +578,9 @@ public class HomeActivity extends BaseActivity {
 				public void onClick(View v) {
 					QIndex = 1;
 					mTitle.txt_status_1.setText("最热");
+					if(mStatusListener != null){
+						mStatusListener.onStatusChange(QIndex);
+					}
 					mSortMenu.dismiss();
 				}
 			});
@@ -572,6 +590,9 @@ public class HomeActivity extends BaseActivity {
 				public void onClick(View v) {
 					QIndex = 2;
 					mTitle.txt_status_1.setText("我的");
+					if(mStatusListener != null){
+						mStatusListener.onStatusChange(QIndex);
+					}
 					mSortMenu.dismiss();
 				}
 			});
@@ -591,4 +612,12 @@ public class HomeActivity extends BaseActivity {
         });
 	}
 	
+	public interface onStatusChangedListener{
+		void onStatusChange(int status);
+	}
+	
+	public void setOnStatusChangedListener(
+			onStatusChangedListener mStatusListener){
+		this.mStatusListener = mStatusListener;
+	}
 }
