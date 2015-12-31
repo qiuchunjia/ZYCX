@@ -32,6 +32,7 @@ public class FragmentQclassList extends BaseFragment{
 	private List<Model> mList;
 	private ModelQclassDetail detail;
 	private QclassImpl qclassImpl;
+	private boolean isCreate = false;
 	
 	public FragmentQclassList newInstanse(int type){
 		FragmentQclassList f = new FragmentQclassList();
@@ -73,23 +74,12 @@ public class FragmentQclassList extends BaseFragment{
 
 	@Override
 	public void initData() {
+		isCreate = true;
 		mList = new ArrayList<Model>();
 		detail = new ModelQclassDetail();
 		qclassImpl = new QclassImpl();
 		detail.setClass_id(mType);
 		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
-		Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
-			
-			@Override
-			public void onStatusChange(int status) {
-				if(mAdapter != null){
-					mAdapter.setStatus(status);
-				}
-				detail.setStatus(status);
-				L.d("Cathy", "status: "+status);
-				sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
-			}
-		});
 	}
 
 	@Override
@@ -102,7 +92,8 @@ public class FragmentQclassList extends BaseFragment{
 				mList.clear();
 				if(mQclass.getList() != null){
 					mList.addAll(mQclass.getList());
-					L.d("Cathy", "null mList:"+mList.size()+" "+mQclass.getList().get(0).getCourse_name());
+					L.d("Cathy", "mList:"+mList.size()+" mQclass:"+mQclass.getList().size()
+							+" "+mQclass.getList().get(0).getCourse_name()+" mType:"+mType);
 					if(mAdapter == null){
 						mAdapter = new QclassAdapter(this, mList, detail);
 						mCommonListView.setAdapter(mAdapter);
@@ -119,4 +110,33 @@ public class FragmentQclassList extends BaseFragment{
 		return object;
 	}
 	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		// TODO 自动生成的方法存根
+		super.setUserVisibleHint(isVisibleToUser);
+		if(!isCreate){
+			return;
+		}
+		if(isVisibleToUser){
+			Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
+				
+				@Override
+				public void onStatusChange(int status) {
+					if(mAdapter != null){
+						mAdapter.setStatus(status);
+					}
+					detail.setStatus(status);
+					L.d("Cathy", "status: "+status);
+					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+				}
+			});
+		}
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO 自动生成的方法存根
+		super.onCreate(savedInstanceState);
+		//isCreate = true;
+	}
 }
