@@ -74,7 +74,6 @@ public class FragmentQclassList extends BaseFragment{
 
 	@Override
 	public void initData() {
-		isCreate = true;
 		mList = new ArrayList<Model>();
 		detail = new ModelQclassDetail();
 		qclassImpl = new QclassImpl();
@@ -137,6 +136,6 @@ public class FragmentQclassList extends BaseFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		//isCreate = true;
+		isCreate = true;
 	}
 }
