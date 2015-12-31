@@ -102,12 +102,11 @@ public class FragmentQclassList extends BaseFragment{
 				mList.clear();
 				if(mQclass.getList() != null){
 					mList.addAll(mQclass.getList());
+					L.d("Cathy", "null mList:"+mList.size()+" "+mQclass.getList().get(0).getCourse_name());
 					if(mAdapter == null){
-						L.d("Cathy", "onResponceSuccess mAdapter = null");
 						mAdapter = new QclassAdapter(this, mList, detail);
 						mCommonListView.setAdapter(mAdapter);
 					} else{
-						L.d("Cathy", "onResponceSuccess mAdapter != null");
 						mList.clear();
 						mList.addAll(mQclass.getList());
 						mAdapter.notifyDataSetChanged();

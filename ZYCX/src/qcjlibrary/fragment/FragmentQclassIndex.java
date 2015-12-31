@@ -44,6 +44,7 @@ public class FragmentQclassIndex extends BaseFragment {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelQclass) {
+			//手动添加分类推荐
 			ModelQclass result = (ModelQclass)object;
 			ModelQclassCategory recommend = new ModelQclassCategory();
 			recommend.setClass_id(0);
@@ -69,6 +70,7 @@ public class FragmentQclassIndex extends BaseFragment {
 	@Override
 	public void initData() {
 		mCategoryList = new ArrayList<ModelQclassCategory>();
+		//发送请求
 		sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 	}
 
