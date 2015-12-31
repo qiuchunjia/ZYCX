@@ -21,6 +21,7 @@ import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.ModelNotifyNotice;
+import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -30,7 +31,7 @@ import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
-
+import qcjlibrary.util.L;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -164,6 +165,42 @@ public class api {
 			Log.i("appBanner", params.toString());
 			return getTestToken(params);
 		}
+	}
+	
+	public static final class QclassImpl implements QclassIm{
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, COURSE);
+			params.add(ACT, INDEX);
+			L.i("param", params.toString());
+			return params;
+		}
+
+		@Override
+		public RequestParams indexItem(ModelQclassDetail detail) {
+			if(detail != null){
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, COURSE);
+				params.add(ACT, INDEX);
+				params.add(CID, String.valueOf(detail.getClass_id()));
+				if (detail.getLastid() != null
+						&& !detail.getLastid().equals("")) {
+					params.add(LASTID, detail.getLastid());
+					params.add(WATCH_NUM, String.valueOf(detail.getWatch_num()));
+				}
+				if (detail.getMaxid() != null && !detail.getMaxid().equals("")) {
+					params.add(MAXID, detail.getMaxid());
+				}
+				params.add(STATUS, String.valueOf(detail.getStatus()));
+				return getTestToken(params);
+			}
+			return null;
+		}
+		
 	}
 
 	public static final class RequestImpl implements RequestIm {
