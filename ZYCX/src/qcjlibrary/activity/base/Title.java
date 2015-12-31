@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +36,10 @@ public class Title implements TitleInterface {
 	public RelativeLayout rl_twoButton;
 	public TextView tv_1;
 	public TextView tv_2;
+	//中间一个图片一个文本
+	public RelativeLayout rl_textandpic;
+	public TextView txt_status_1;
+	public ImageView arrow_img_1;
 	public RelativeLayout rl_1_image; // 中间一个图片空间的情况
 	public ImageView iv_1_choose;
 
@@ -69,6 +74,11 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.rl_twoButton);
 			tv_1 = (TextView) mTitleView.findViewById(R.id.tv_1);
 			tv_2 = (TextView) mTitleView.findViewById(R.id.tv_2);
+			
+			rl_textandpic = (RelativeLayout) mTitleView.
+					findViewById(R.id.rl_textandpic);
+			txt_status_1 = (TextView) mTitleView.findViewById(R.id.txt_status_1);
+			arrow_img_1 = (ImageView) mTitleView.findViewById(R.id.arrow_img_1);
 
 			tv_title_right = (TextView) mTitleView
 					.findViewById(R.id.tv_title_right);
