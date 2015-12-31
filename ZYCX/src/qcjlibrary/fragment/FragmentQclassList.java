@@ -15,6 +15,7 @@ import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
+import qcjlibrary.util.ToastUtils;
 
 public class FragmentQclassList extends BaseFragment{
 
@@ -101,10 +102,20 @@ public class FragmentQclassList extends BaseFragment{
 				mList.clear();
 				if(mQclass.getList() != null){
 					mList.addAll(mQclass.getList());
-					mAdapter = new QclassAdapter(this, mList, detail);
-					mCommonListView.setAdapter(mAdapter);
+					if(mAdapter == null){
+						L.d("Cathy", "onResponceSuccess mAdapter = null");
+						mAdapter = new QclassAdapter(this, mList, detail);
+						mCommonListView.setAdapter(mAdapter);
+					} else{
+						L.d("Cathy", "onResponceSuccess mAdapter != null");
+						mList.clear();
+						mList.addAll(mQclass.getList());
+						mAdapter.notifyDataSetChanged();
+					}
+				} else{
+					ToastUtils.showLongToast(getActivity(), "没有相关数据");
 				}
-			}
+			} 
 		}
 		return object;
 	}

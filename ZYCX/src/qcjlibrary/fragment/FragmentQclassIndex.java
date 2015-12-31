@@ -38,7 +38,6 @@ public class FragmentQclassIndex extends BaseFragment {
 	public void initView() {
 		tabpagerIndicator = (TabPageIndicator) findViewById(R.id.tabpagerIndicator);
 		vPager = (ViewPager) findViewById(R.id.vPager);
-		sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 	}
 
 	@Override

@@ -137,7 +137,7 @@ public class QclassAdapter extends BAdapter {
 	 */
 	private void requstMessage(ModelQclassDetail data, int type) {
 		QclassImpl qClassImpl = new QclassImpl();
-		sendRequest(qClassImpl.indexItem(detail), ModelQclass.class, 0, type);
+		sendRequest(qClassImpl.indexItem(data), ModelQclass.class, 0, type);
 	}
 	
 	public void setStatus(int status){
