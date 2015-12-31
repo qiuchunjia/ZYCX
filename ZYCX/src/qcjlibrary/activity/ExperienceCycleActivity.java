@@ -13,6 +13,7 @@ import qcjlibrary.model.ModelExperiencePostDetailInfo;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.widget.RoundImageView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,9 +33,10 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public RoundImageView iv_cycle_icon;
 	public TextView tv_username;
 	public TextView tv_has_update;
-	public TextView tv_flag_key;
-	public TextView tv_flag_value;
 	public TextView tv_date;
+	public TextView tv_flag_value1;
+	public TextView tv_flag_value2;
+	public TextView tv_flag_value3;
 
 	private ModelExperiencePostDetail mDetail;
 
@@ -60,8 +62,10 @@ public class ExperienceCycleActivity extends BaseActivity {
 		iv_cycle_icon = (RoundImageView) findViewById(R.id.iv_cycle_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_has_update = (TextView) findViewById(R.id.tv_has_update);
-		tv_flag_key = (TextView) findViewById(R.id.tv_flag_key);
-		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
+		tv_flag_value1 = (TextView) findViewById(R.id.tv_flag_value1);
+		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
+		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
+
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(0);
@@ -75,6 +79,13 @@ public class ExperienceCycleActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		sendRequest(mApp.getExperienceImpl().postDetail(mItemData),
 				ModelExperiencePostDetail.class, REQUEST_GET);
+		setTagViewGone();
+	}
+
+	private void setTagViewGone() {
+		tv_flag_value1.setVisibility(View.GONE);
+		tv_flag_value2.setVisibility(View.GONE);
+		tv_flag_value3.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -97,19 +108,31 @@ public class ExperienceCycleActivity extends BaseActivity {
 	 */
 	private void addDataToHead(ModelExperiencePostDetailInfo post_detail) {
 		if (post_detail != null) {
-			tv_has_update = (TextView) findViewById(R.id.tv_has_update);
-			tv_flag_key = (TextView) findViewById(R.id.tv_flag_key);
-			tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 			tv_date = (TextView) findViewById(R.id.tv_date);
 			mApp.displayImage(post_detail.getUserface(), iv_cycle_icon);
 			tv_username.setText(post_detail.getTitle());
 			tv_has_update.setText("已更新" + post_detail.getChildCount() + "篇");
 			List<String> tags = post_detail.getTags();
-			for (String str : tags) {
-				Log.i("tagtest", post_detail.getTags().toString());
+			if (tags != null && tags.size() >= 0) {
+				String result = tags.get(0);
+				String[] array = result.split("，");
+				for (int i = 0; i < array.length; i++) {
+					if (i == 0) {
+						tv_flag_value1.setText(array[i]);
+						tv_flag_value1.setVisibility(View.VISIBLE);
+					}
+					if (i == 1) {
+						tv_flag_value2.setText(array[i]);
+						tv_flag_value2.setVisibility(View.VISIBLE);
+					}
+					if (i == 2) {
+						tv_flag_value3.setText(array[i]);
+						tv_flag_value3.setVisibility(View.VISIBLE);
+					}
+
+				}
+
 			}
-			// tv_flag_key.setText(post_detail.getTags());
-			// tv_flag_value.setText(post_detail.getTitle());
 			tv_date.setText(DateUtil.stamp2humanDate(post_detail.getCtime()));
 		}
 	}

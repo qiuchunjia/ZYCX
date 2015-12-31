@@ -18,13 +18,13 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class FoodFuctionGvAdapter extends BaseAdapter {
+public class ExperienceTagGvAdapter extends BaseAdapter {
 	private Context mContext;
 	private String[] mData;
 	private LayoutInflater mInflater;
 	private int mSingleWidth;
 
-	public FoodFuctionGvAdapter(Context context, String[] strings) {
+	public ExperienceTagGvAdapter(Context context, String[] strings) {
 		this.mContext = context;
 		this.mData = strings;
 		mInflater = LayoutInflater.from(mContext);
@@ -49,11 +49,12 @@ public class FoodFuctionGvAdapter extends BaseAdapter {
 		GridView.LayoutParams params = new GridView.LayoutParams(mSingleWidth,
 				GridView.LayoutParams.WRAP_CONTENT);
 		textView.setLayoutParams(params);
+		textView.setPadding(0, 10, 0, 10);
 		textView.setGravity(Gravity.CENTER);
-		textView.setBackgroundResource(R.drawable.view_border_gray_50);
+		textView.setBackgroundResource(R.color.text_white);
 		textView.setTextColor(mContext.getResources().getColor(
-				R.color.text_gray));
-		textView.setTextSize(17);
+				R.color.text_black));
+		textView.setTextSize(16);
 		textView.setText(mData[position]);
 		return textView;
 	}
