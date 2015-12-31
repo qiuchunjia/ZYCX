@@ -15,8 +15,8 @@
         android:background="@drawable/menu_item_bg"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="@dimen/text_very_big"
         android:text="最新"/>
     <View android:layout_width="10dp"
         android:layout_height="1dp"
@@ -32,8 +32,8 @@
         android:background="@drawable/menu_item_bg"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="@dimen/text_very_big"
         android:text="最热"/>
     <View android:layout_width="10dp"
         android:layout_height="1dp"
@@ -49,8 +49,8 @@
         android:background="@drawable/menu_item_bg"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textColor="@android:color/background_dark"
+        android:textSize="@dimen/text_very_big"
         android:text="我的"/>
 
 </LinearLayout>
