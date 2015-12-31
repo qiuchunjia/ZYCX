@@ -36,7 +36,7 @@ public class Title implements TitleInterface {
 	public RelativeLayout rl_twoButton;
 	public TextView tv_1;
 	public TextView tv_2;
-	//中间一个图片一个文本
+	// 中间一个图片一个文本
 	public RelativeLayout rl_textandpic;
 	public TextView txt_status_1;
 	public ImageView arrow_img_1;
@@ -74,10 +74,11 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.rl_twoButton);
 			tv_1 = (TextView) mTitleView.findViewById(R.id.tv_1);
 			tv_2 = (TextView) mTitleView.findViewById(R.id.tv_2);
-			
-			rl_textandpic = (RelativeLayout) mTitleView.
-					findViewById(R.id.rl_textandpic);
-			txt_status_1 = (TextView) mTitleView.findViewById(R.id.txt_status_1);
+
+			rl_textandpic = (RelativeLayout) mTitleView
+					.findViewById(R.id.rl_textandpic);
+			txt_status_1 = (TextView) mTitleView
+					.findViewById(R.id.txt_status_1);
 			arrow_img_1 = (ImageView) mTitleView.findViewById(R.id.arrow_img_1);
 
 			tv_title_right = (TextView) mTitleView

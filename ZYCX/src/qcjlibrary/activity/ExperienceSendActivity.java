@@ -5,17 +5,22 @@ import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.adapter.ExperienceTagGvAdapter;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
+import qcjlibrary.widget.MyGridView;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,10 +40,11 @@ public class ExperienceSendActivity extends BaseActivity {
 	private TextView tv_choosedate;
 	private EditText et_content;
 	private RelativeLayout rl_choose;
+	private MyGridView gv_choose_flag;
 	private LinearLayout ll_ScrollView;
-
 	private ModelExperienceSend mSendData;
 	private LocalImageManager mImageManager;
+	private List<String> tagsList = new ArrayList<String>(); // 选中的标签
 
 	@Override
 	public String setCenterTitle() {
@@ -63,6 +69,7 @@ public class ExperienceSendActivity extends BaseActivity {
 		et_content = (EditText) findViewById(R.id.et_content);
 		rl_choose = (RelativeLayout) findViewById(R.id.rl_choose);
 		ll_ScrollView = (LinearLayout) findViewById(R.id.ll_ScrollView);
+		gv_choose_flag = (MyGridView) findViewById(R.id.gv_choose_flag);
 		mImageManager = LocalImageManager.from(mApp);
 		addImageToHsv(null, ADDPHOTO);
 	}
@@ -71,7 +78,37 @@ public class ExperienceSendActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
+		String tags = mSendData.getTags();
+		if (tags != null) {
+			final String[] dataArray = tags.split(",");
+			ExperienceTagGvAdapter adapter = new ExperienceTagGvAdapter(this,
+					dataArray);
+			gv_choose_flag.setAdapter(adapter);
+			gv_choose_flag.setOnItemClickListener(new OnItemClickListener() {
 
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					judgeChooseOrCancle(arg1, dataArray[arg2]);
+				}
+
+			});
+		}
+	}
+
+	/**
+	 * 判断是选中还是取消
+	 */
+	public void judgeChooseOrCancle(View view, String tag) {
+		for (int i = 0; i < tagsList.size(); i++) {
+			if (tagsList.get(i).equals(tag)) {
+				view.setBackgroundResource(R.color.text_white);
+				tagsList.remove(tag);
+				return;
+			}
+		}
+		view.setBackgroundResource(R.drawable.view_border_green_pure_0);
+		tagsList.add(tag);
 	}
 
 	@Override
@@ -86,11 +123,13 @@ public class ExperienceSendActivity extends BaseActivity {
 			String title = et_title.getText().toString();
 			String content = et_content.getText().toString();
 			String date = tv_choosedate.getText().toString();
-			if (judgeTheSend(title, date, content)) {
+			String chooseTags = getTagsFromList(tagsList);
+			if (judgeTheSend(title, date, content, chooseTags)) {
 				mSendData.setTitle(title);
 				mSendData.setBody(content);
 				mSendData.setPost_time(DateUtil.dateToStr(date));
 				mSendData.setPhotoUrls(mPhotoList);
+				mSendData.setTags(chooseTags);
 				sendRequest(mApp.getExperienceImpl().addPost(mSendData),
 						ModelMsg.class, REQUEST_GET);
 			}
@@ -100,6 +139,18 @@ public class ExperienceSendActivity extends BaseActivity {
 			datePicker.showPop(tv_choosedate, Gravity.BOTTOM, 0, 0);
 			break;
 		}
+	}
+
+	private String getTagsFromList(List<String> tagsList2) {
+		String tags = "";
+		if (tagsList2 != null && tagsList2.size() > 0) {
+			for (int i = 0; i < tagsList2.size(); i++) {
+				tags = tags + tagsList2.get(i) + ",";
+			}
+			tags = tags.substring(0, tags.length() - 2);
+			return tags;
+		}
+		return null;
 	}
 
 	@Override
@@ -113,7 +164,10 @@ public class ExperienceSendActivity extends BaseActivity {
 
 	@Override
 	public Object onPopResult(Object object) {
-		tv_choosedate.setText(object.toString());
+		if (object instanceof ModelPop) {
+			ModelPop modelPop = (ModelPop) object;
+			tv_choosedate.setText(modelPop.getDataStr());
+		}
 		return super.onPopResult(object);
 	}
 
@@ -124,7 +178,8 @@ public class ExperienceSendActivity extends BaseActivity {
 	 * @param content
 	 * @return
 	 */
-	private boolean judgeTheSend(String title, String date, String content) {
+	private boolean judgeTheSend(String title, String date, String content,
+			String tags) {
 		if (TextUtils.isEmpty(title)) {
 			ToastUtils.showToast("标题不能为空");
 			return false;
@@ -135,6 +190,10 @@ public class ExperienceSendActivity extends BaseActivity {
 		}
 		if (TextUtils.isEmpty(content)) {
 			ToastUtils.showToast("内容不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(tags)) {
+			ToastUtils.showToast("请选择标签");
 			return false;
 		}
 		return true;
