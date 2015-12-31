@@ -3,9 +3,13 @@ package qcjlibrary.activity;
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.adapter.FoodFuctionGvAdapter;
 import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelFoodIdDetailInfo;
 import qcjlibrary.model.ModelFoodSearch0;
+import qcjlibrary.widget.MyGridView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -38,6 +42,7 @@ public class FoodSingleDetailActivity extends BaseActivity {
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
 
+	private MyGridView gv_function; // 添加功效的布局
 	private ModelFoodSearch0 mFoodData;
 	private ModelFoodIdDetail mDetail;
 
@@ -76,6 +81,7 @@ public class FoodSingleDetailActivity extends BaseActivity {
 		tv_relate3 = (TextView) findViewById(R.id.tv_relate3);
 		iv_relate4 = (ImageView) findViewById(R.id.iv_relate4);
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
+		gv_function = (MyGridView) findViewById(R.id.gv_function);
 
 	}
 
@@ -135,7 +141,15 @@ public class FoodSingleDetailActivity extends BaseActivity {
 			tv_food_main_value.setText(info.getFood_anticancer());
 			tv_function_value.setText(info.getFood_tumor());
 			// TODO 添加圆形的控件
+			String foodeffect = info.getFood_effect();
+			if (!TextUtils.isEmpty(foodeffect)) {
 
+				String[] dataArray = foodeffect.split("，");
+				Log.i("effect", dataArray.toString());
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
+						dataArray);
+				gv_function.setAdapter(adapter);
+			}
 			tv_category_value.setText(info.getFood_forcancer());
 		}
 	}

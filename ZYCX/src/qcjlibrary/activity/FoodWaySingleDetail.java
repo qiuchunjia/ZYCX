@@ -1,14 +1,17 @@
 package qcjlibrary.activity;
 
-
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.adapter.FoodFuctionGvAdapter;
 import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelFoodWayDetailInfo;
-
+import qcjlibrary.widget.MyGridView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,11 +42,12 @@ public class FoodWaySingleDetail extends BaseActivity {
 	private TextView tv_relate3;
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
-
+	// gridview
+	private MyGridView gv_contain;
+	private MyGridView gv_function;
 
 	private ModelFoodSearch1 mFoodData;
 	private ModelFoodWayDetail mDetail;
-
 
 	@Override
 	public String setCenterTitle() {
@@ -81,6 +85,8 @@ public class FoodWaySingleDetail extends BaseActivity {
 		tv_relate3 = (TextView) findViewById(R.id.tv_relate3);
 		iv_relate4 = (ImageView) findViewById(R.id.iv_relate4);
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
+		gv_contain = (MyGridView) findViewById(R.id.gv_contain);
+		gv_function = (MyGridView) findViewById(R.id.gv_function);
 
 	}
 
@@ -113,8 +119,24 @@ public class FoodWaySingleDetail extends BaseActivity {
 			tv_food_name.setText(info.getSide_name());
 			mApp.displayImage(info.getImgSrc(), iv_food_icon);
 			// TODO 添加圆形的控件
+			String zucheng = info.getZucheng();
+			if (!TextUtils.isEmpty(zucheng)) {
+				String[] dataArray = zucheng.split("，");
+				Log.i("effect", dataArray.toString());
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
+						dataArray);
+				gv_contain.setAdapter(adapter);
+			}
 			tv_food_way_value.setText(info.getZuofa());
 			tv_category_value.setText(info.getFangzhi_cancer());
+			String foodeffect = info.getGongxiao();
+			if (!TextUtils.isEmpty(foodeffect)) {
+				String[] dataArray = foodeffect.split("，");
+				Log.i("effect", dataArray.toString());
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
+						dataArray);
+				gv_function.setAdapter(adapter);
+			}
 		}
 	}
 
@@ -147,7 +169,6 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initListener() {
-
 
 	}
 
