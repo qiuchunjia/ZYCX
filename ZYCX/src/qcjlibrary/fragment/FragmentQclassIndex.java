@@ -40,14 +40,18 @@ public class FragmentQclassIndex extends BaseFragment {
 	public void initView() {
 		tabpagerIndicator = (TabPageIndicator) findViewById(R.id.tabpagerIndicator);
 		vPager = (ViewPager) findViewById(R.id.vPager);
-		sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 	}
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelQclass) {
+<<<<<<< HEAD
 			ModelQclass result = (ModelQclass) object;
+=======
+			//手动添加分类推荐
+			ModelQclass result = (ModelQclass)object;
+>>>>>>> 438fd8a9b5bfb6ba6fed63c15dba69cbc621bccb
 			ModelQclassCategory recommend = new ModelQclassCategory();
 			recommend.setClass_id(0);
 			recommend.setImooc_class_name("推荐");
@@ -72,6 +76,11 @@ public class FragmentQclassIndex extends BaseFragment {
 	@Override
 	public void initData() {
 		mCategoryList = new ArrayList<ModelQclassCategory>();
+<<<<<<< HEAD
+=======
+		//发送请求
+		sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
+>>>>>>> 438fd8a9b5bfb6ba6fed63c15dba69cbc621bccb
 	}
 
 	@Override
