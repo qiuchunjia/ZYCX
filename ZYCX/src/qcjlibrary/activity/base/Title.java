@@ -29,6 +29,7 @@ public class Title implements TitleInterface {
 
 	public RelativeLayout rl_left_2; // 左边只有一个图片控件的 距离左10dp
 	public ImageView iv_title_left2;
+	public ImageView iv_title_left2_dot;
 	// 中间部分控件
 	public TextView tv_title; // 中间只有一个控件的时候
 	// 中间有两个控件控件的时候 通常这两个控件是可以切换的
@@ -67,7 +68,8 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.rl_left_2);
 			iv_title_left2 = (ImageView) mTitleView
 					.findViewById(R.id.iv_title_left2);
-
+			iv_title_left2_dot = (ImageView) mTitleView
+			.findViewById(R.id.iv_title_left2_dot);
 			tv_title = (TextView) mTitleView.findViewById(R.id.tv_title);
 			rl_twoButton = (RelativeLayout) mTitleView
 					.findViewById(R.id.rl_twoButton);

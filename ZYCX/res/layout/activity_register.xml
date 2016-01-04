@@ -31,6 +31,7 @@
                 android:layout_toRightOf="@id/iv_user"
                 android:background="@null"
                 android:hint="请输入手机号码"
+                android:textColor="@color/text_black"
                 android:textColorHint="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -64,6 +65,7 @@
                 android:layout_toLeftOf="@id/tv_vertify_code"
                 android:background="@null"
                 android:hint="请输入手机验证码"
+                android:textColor="@color/text_black"
                 android:textColorHint="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
