@@ -2,16 +2,16 @@ package qcjlibrary.fragment;
 
 import java.util.List;
 
+import com.viewpagerindicator.TabPageIndicator;
+import com.zhiyicx.zycx.R;
+
+import android.support.v4.view.ViewPager;
+import android.view.View;
 import qcjlibrary.adapter.FragmentAdapter;
 import qcjlibrary.api.api;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelZiXun;
 import qcjlibrary.model.ModelZiXunCategory;
-import qcjlibrary.widget.viewpagerindicator.TabPageIndicator;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：上午10:23:36 类描述：这个类是实现
@@ -44,8 +44,7 @@ public class FragmentZhixun extends BaseFragment {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelZiXun) {
 			Object result = ((ModelZiXun) object).getFenlei();
-			FragmentAdapter fadapter = new FragmentAdapter(
-					getChildFragmentManager(),
+			FragmentAdapter fadapter = new FragmentAdapter(getChildFragmentManager(),
 					(List<ModelZiXunCategory>) result);
 			vPager.setAdapter(fadapter);
 			tabpagerIndicator.setViewPager(vPager);

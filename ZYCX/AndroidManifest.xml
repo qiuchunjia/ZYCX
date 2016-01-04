@@ -110,7 +110,8 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators" />
         <activity
             android:name=".RegisterActivity1"
             android:launchMode="singleTask"
