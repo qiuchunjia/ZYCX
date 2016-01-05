@@ -185,7 +185,8 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void initIntent() {
 		Bundle bundle = getIntent().getExtras();
-		ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
+		ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable
+				(Config.ACTIVITY_TRANSFER_BUNDLE);
 		mCid = mDetail.getCourse_id();
 		cover = mDetail.getCover();
 		if (mCid == -1) {

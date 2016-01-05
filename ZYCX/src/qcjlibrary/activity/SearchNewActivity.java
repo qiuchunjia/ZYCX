@@ -8,6 +8,7 @@ import qcjlibrary.fragment.FragmentQclass;
 import qcjlibrary.fragment.FragmentRequest;
 import qcjlibrary.fragment.FragmentSearchFood;
 import qcjlibrary.fragment.FragmentWeibo;
+import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.animation.ObjectAnimator;
@@ -61,6 +62,9 @@ public class SearchNewActivity extends BaseActivity {
 	private float fromX;
 	/** 导航栏指示位移结束X **/
 	private float toX;
+	/** 导航栏下标，不同的页面跳转到搜索页面导航栏指示不同**/
+	private int index;
+	private boolean isChanged = true;
 
 	@Override
 	public String setCenterTitle() {
@@ -70,7 +74,9 @@ public class SearchNewActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		ModelSearchIndex mData = (ModelSearchIndex)
+				getDataFromIntent(getIntent(), "index");
+		index = mData.getIndex();
 	}
 
 	@Override
@@ -124,6 +130,12 @@ public class SearchNewActivity extends BaseActivity {
 			}
 		};
 		mViewpager.setAdapter(mAdapter);
+		/**
+		 * 根据传入的index，修改导航栏以及ViewPager的默认选项
+		 * */
+		mViewpager.setCurrentItem(index);
+		toX = offset * index;
+		setLineAnimator(fromX, toX);
 	}
 
 	@Override
@@ -209,33 +221,35 @@ public class SearchNewActivity extends BaseActivity {
 				// 退出搜索界面
 				finish();
 			} else {
-				// 搜素
+				isChanged = false;
+				// 搜索
 				searchData();
 			}
 			break;
 		case R.id.iv_search:
+			isChanged = false;
 			// 搜索按钮
 			searchData();
 			break;
 		case R.id.tv_webo:
-			mViewpager.setCurrentItem(0);
-			toX = 0;
+			index = 0;
+			isChanged = true;
 			break;
 		case R.id.tv_request:
-			mViewpager.setCurrentItem(1);
-			toX = offset;
+			index = 1;
+			isChanged = true;
 			break;
 		case R.id.tv_zhixun:
-			mViewpager.setCurrentItem(2);
-			toX = offset * 2;
+			index = 2;
+			isChanged = true;
 			break;
 		case R.id.tv_qclass:
-			mViewpager.setCurrentItem(3);
-			toX = offset * 3;
+			index = 3;
+			isChanged = true;
 			break;
 		case R.id.tv_food:
-			mViewpager.setCurrentItem(4);
-			toX = offset * 4;
+			index = 4;
+			isChanged = true;
 			break;
 		case R.id.iv_quxiao:
 			et_search.setText("");
@@ -243,10 +257,15 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
-		// 传入起止位置，开启动画
-		setLineAnimator(fromX, toX);
-		// 将前一个结束位置重置为开始位置
-		fromX = toX;
+		if(isChanged){
+			// 设置导航栏选项
+			mViewpager.setCurrentItem(index);
+			// 传入起止位置，开启动画
+			toX = offset * index;
+			setLineAnimator(fromX, toX);
+			// 将前一个结束位置重置为开始位置
+			fromX = toX;
+		}
 	}
 
 	private void searchData() {
@@ -269,7 +288,6 @@ public class SearchNewActivity extends BaseActivity {
 					break;
 				case 4:
 					mSearchListener.onSearchTouch_Food(key);
-					;
 					break;
 
 				default:
