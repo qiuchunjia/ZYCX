@@ -330,7 +330,7 @@
         <!-- 癌友帮二期开发新增加页面 -->
 
         <activity
-            android:name="com.zhiyicx.zycx.RegisterActivity2"
+            android:name=".RegisterActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -392,10 +392,11 @@
         <activity
             android:name="qcjlibrary.activity.PatientNowHistoryActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name="com.zhiyicx.zycx.activity.WebActivity" >
+        <activity android:name=".activity.WebActivity" >
 
             <!-- 癌友帮二期开发新增加页面end -->
         </activity>
+        <activity android:name="qcjlibrary.activity.QclassDetailActivity"/>
 
         <receiver android:name="qcjlibrary.broadcast.AlarmBroadCastReciever" >
             <intent-filter android:priority="1000" >
@@ -418,6 +419,7 @@
                 <action android:name="alert_music" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>
