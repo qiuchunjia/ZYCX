@@ -207,7 +207,7 @@ public class ForgetPwdActivity1 extends BaseActivity {
 						if (success) {
 							// Log.d(TAG,
 							// "Send code to phone success!");
-//							countTime();
+							countTime();
 							Utils.showToast(ForgetPwdActivity1.this, "验证码发送成功");
 						} else {
 							// Log.d(TAG, "Send code to phone fail," +
@@ -232,7 +232,8 @@ public class ForgetPwdActivity1 extends BaseActivity {
 	private Handler mHandle = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg.arg1 > 1) {
-				mIB_forget_getcode.setText(msg.what + "s");
+				String time = String.valueOf(msg.arg1);
+				mIB_forget_getcode.setText(time + "s");
 			} else {
 				mIB_forget_getcode.setText("获取验证码");
 			}
@@ -254,7 +255,6 @@ public class ForgetPwdActivity1 extends BaseActivity {
 					time = time - 1;
 					Message message = Message.obtain();
 					message.arg1 = time;
-					ToastUtils.showToast(time + "s");
 					mHandle.sendMessage(message);
 					try {
 						sleep(1000);
