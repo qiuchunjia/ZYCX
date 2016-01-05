@@ -1,21 +1,19 @@
 package qcjlibrary.adapter;
 
-import java.util.List;
+import com.zhiyicx.zycx.R;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.api.api.ZhiXunImpl;
 import qcjlibrary.fragment.base.BaseFragment;
-import qcjlibrary.model.ModelZiXun;
 import qcjlibrary.model.ModelZiXunDetail;
+import qcjlibrary.model.ModelZixunTagIndex;
 import qcjlibrary.model.base.Model;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午5:06:10
@@ -24,15 +22,18 @@ import com.zhiyicx.zycx.R;
  *
  */
 
-public class ZhiXunAdapter extends BAdapter {
+public class ZhiXunFlagAdapter extends BAdapter {
 
 	private ModelZiXunDetail mDetail;
+	private ZixunFlagResult mResult;
 
-	public ZhiXunAdapter(BaseActivity activity, List<Model> list) {
-		super(activity, list);
+	public ZhiXunFlagAdapter(BaseActivity activity, ModelZiXunDetail data, ZixunFlagResult result) {
+		super(activity, null);
+		mDetail = data;
+		this.mResult = result;
 	}
 
-	public ZhiXunAdapter(BaseFragment fragment, ModelZiXunDetail data) {
+	public ZhiXunFlagAdapter(BaseFragment fragment, ModelZiXunDetail data) {
 		super(fragment, null);
 		mDetail = data;
 	}
@@ -91,6 +92,7 @@ public class ZhiXunAdapter extends BAdapter {
 	public void refreshHeader(Model item, int count) {
 		if (item instanceof ModelZiXunDetail) {
 			ModelZiXunDetail detail = (ModelZiXunDetail) item;
+			detail.setTag_id(mDetail.getTag_id());
 			detail.setLastid(detail.getId());
 			requstMessage(detail, REFRESH_HEADER);
 		}
@@ -100,6 +102,7 @@ public class ZhiXunAdapter extends BAdapter {
 	public void refreshFooter(Model item, int count) {
 		if (item instanceof ModelZiXunDetail) {
 			ModelZiXunDetail detail = (ModelZiXunDetail) item;
+			detail.setTag_id(mDetail.getTag_id());
 			detail.setMaxid(detail.getId());
 			requstMessage(detail, REFRESH_FOOTER);
 		}
@@ -112,8 +115,10 @@ public class ZhiXunAdapter extends BAdapter {
 	 * @param type
 	 */
 	private void requstMessage(ModelZiXunDetail data, int type) {
-		ZhiXunImpl xunImpl = new ZhiXunImpl();
-		sendRequest(xunImpl.indexItem(data), ModelZiXun.class, 0, type);
+		if (data != null) {
+			ZhiXunImpl xunImpl = new ZhiXunImpl();
+			sendRequest(xunImpl.searchtag(data), ModelZixunTagIndex.class, 0, type);
+		}
 	}
 
 	@Override
@@ -124,11 +129,16 @@ public class ZhiXunAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-		if (object instanceof ModelZiXun) {
-			ModelZiXun modelZiXun = (ModelZiXun) object;
+		if (object instanceof ModelZixunTagIndex) {
+			ModelZixunTagIndex modelZiXun = (ModelZixunTagIndex) object;
 			modelZiXun.getList();
+			mResult.onreturnResult(modelZiXun.getTag_name());
 			return modelZiXun.getList();
 		}
 		return null;
+	}
+
+	public interface ZixunFlagResult {
+		void onreturnResult(Object object);
 	}
 }

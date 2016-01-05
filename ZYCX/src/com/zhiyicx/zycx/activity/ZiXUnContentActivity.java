@@ -3,6 +3,7 @@ package com.zhiyicx.zycx.activity;
 import org.json.JSONObject;
 
 import qcjlibrary.activity.RequestFlagActivity;
+import qcjlibrary.activity.ZhiXunFlagActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
@@ -46,8 +47,7 @@ import com.zhiyicx.zycx.util.Utils;
 public class ZiXUnContentActivity extends BaseActivity {
 
 	final private static String TAG = "ZiXUnContentActivity";
-	private final UMSocialService mController = UMServiceFactory
-			.getUMSocialService("com.umeng.share");
+	private final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	private WebView mContent;
 	private int mId, mUid, mCid;
 	private String mTitle;
@@ -96,16 +96,15 @@ public class ZiXUnContentActivity extends BaseActivity {
 		mTitleLayout = getTitleClass();
 		mContent = (WebView) findViewById(R.id.content_view);
 		mContent.getSettings().setJavaScriptEnabled(true);
-		mContent.setWebViewClient(new WebViewClient(){
+		mContent.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				ToastUtils.showToast("url="+url);
-				if(url.contains("tag_id=")){
-					String id=url.substring(url.indexOf("tag_id=")+7,url.length());
-					ToastUtils.showToast("id="+id);
-					ModelRequestFlag flag=new ModelRequestFlag();
-					flag.setDomain(id);
-					mApp.startActivity_qcj(ZiXUnContentActivity.this, RequestFlagActivity.class, sendDataToBundle(flag, null));
+				if (url.contains("tag_id=")) {
+					String id = url.substring(url.indexOf("tag_id=") + 7, url.length());
+					ModelZiXunDetail detail = new ModelZiXunDetail();
+					detail.setTag_id(id);
+					mApp.startActivity_qcj(ZiXUnContentActivity.this, ZhiXunFlagActivity.class,
+							sendDataToBundle(detail, null));
 				}
 				return true;
 			}
@@ -148,8 +147,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_praise:
-			sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class,
-					BaseActivity.REQUEST_GET);
+			sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class, BaseActivity.REQUEST_GET);
 			break;
 		case R.id.btn_back:
 			finish();
@@ -164,8 +162,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			}
 			break;
 		case R.id.iv_title_right1:
-			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
-					mUrl);
+			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
 			break;
 		case R.id.btn_share:
 			/*
@@ -175,8 +172,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			 * intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			 * startActivity(Intent.createChooser(intent, "分享到"));
 			 */
-			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
-					mUrl);
+			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
 			break;
 		case R.id.btn_comment:
 			comment();
@@ -204,8 +200,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt))
 			return;
-		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid
-				+ "&content=" + Utils.getUTF8String(txt)
+		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)
 				+ Utils.getTokenString(this);
 		NetComTools.getInstance(this).getNetJson(url, new JsonDataListener() {
 			@Override
@@ -221,8 +216,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
 						// mCmtEdit);
 					} else
-						Utils.showToast(ZiXUnContentActivity.this, "评论失败，原因："
-								+ jsonObject.get("message").toString());
+						Utils.showToast(ZiXUnContentActivity.this, "评论失败，原因：" + jsonObject.get("message").toString());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -237,8 +231,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 	}
 
 	private void collect(final int coll) {
-		String url = MyConfig.ZIXUN_COLLECT_URL + Utils.getTokenString(this)
-				+ "&id=" + mId + "&isColl=" + coll;
+		String url = MyConfig.ZIXUN_COLLECT_URL + Utils.getTokenString(this) + "&id=" + mId + "&isColl=" + coll;
 		NetComTools netComTools = NetComTools.getInstance(this);
 		netComTools.getNetJson(url, new JsonDataListener() {
 			@Override
@@ -252,8 +245,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 							mCollBtn.setText("不收藏");
 							mIsColl = 1;
 						} else {
-							Utils.showToast(ZiXUnContentActivity.this,
-									"取消收藏成功！");
+							Utils.showToast(ZiXUnContentActivity.this, "取消收藏成功！");
 							mCollBtn.setText("收藏");
 							mIsColl = 0;
 						}
@@ -279,13 +271,11 @@ public class ZiXUnContentActivity extends BaseActivity {
 				if (mFaceView.getVisibility() == View.GONE) {
 					mFaceView.setVisibility(View.VISIBLE);
 					mFace.setImageResource(R.drawable.key_bar);
-					SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
-							mCmtEdit);
+					SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this, mCmtEdit);
 				} else if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
 					mFace.setImageResource(R.drawable.face_bar);
-					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this,
-							mCmtEdit);
+					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}
 		});
@@ -297,8 +287,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 				if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
 					mFace.setImageResource(R.drawable.key_bar);
-					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this,
-							mCmtEdit);
+					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}
 		});
@@ -318,10 +307,8 @@ public class ZiXUnContentActivity extends BaseActivity {
 			localSpannableStringBuilder.append(str2, 0, i);
 			localSpannableStringBuilder.append(str1);
 			localSpannableStringBuilder.append(str2, j, str2.length());
-			SociaxUIUtils.highlightContent(ZiXUnContentActivity.this,
-					localSpannableStringBuilder);
-			localEditBlogView.setText(localSpannableStringBuilder,
-					TextView.BufferType.SPANNABLE);
+			SociaxUIUtils.highlightContent(ZiXUnContentActivity.this, localSpannableStringBuilder);
+			localEditBlogView.setText(localSpannableStringBuilder, TextView.BufferType.SPANNABLE);
 			localEditBlogView.setSelection(i + str1.length());
 			Log.v("Tag", localEditBlogView.getText().toString());
 		}
@@ -337,16 +324,14 @@ public class ZiXUnContentActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		/** 使用SSO授权必须添加如下代码 */
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
-				requestCode);
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
 	}
 
 	private void loadData() {
-		final String url = MyConfig.ZIXUN_GET_URL + Utils.getTokenString(this)
-				+ "&id=" + mId + "&uid=" + mUid;
+		final String url = MyConfig.ZIXUN_GET_URL + Utils.getTokenString(this) + "&id=" + mId + "&uid=" + mUid;
 		NetComTools netComTools = NetComTools.getInstance(this);
 		netComTools.getNetJson(url, new JsonDataListener() {
 			@Override
@@ -357,8 +342,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
-						mChangeSizeUrl = mUrl
-								+ Utils.getTokenString(ZiXUnContentActivity.this);
+						mChangeSizeUrl = mUrl + Utils.getTokenString(ZiXUnContentActivity.this);
 						mContent.loadUrl(mChangeSizeUrl);
 						mIsColl = data.getInt("isColl");
 						if (mIsColl == 1)

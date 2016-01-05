@@ -62,11 +62,9 @@ public class api {
 	 * @return
 	 */
 	public static RequestParams getToken(RequestParams params) {
-		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns
-				.getContext());
+		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns.getContext());
 		params.add("oauth_token", preferenceUtil.getString("oauth_token", ""));
-		params.add("oauth_token_secret",
-				preferenceUtil.getString("oauth_token_secret", ""));
+		params.add("oauth_token_secret", preferenceUtil.getString("oauth_token_secret", ""));
 		return params;
 	}
 
@@ -79,11 +77,9 @@ public class api {
 	public static RequestParams getTestToken(RequestParams params) {
 		// params.add("oauth_token", "18e22c9690b5e01ce224a58f401eb995");
 		// params.add("oauth_token_secret", "be826a6243b7f9c0800ac82ce692c2f7");
-		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns
-				.getContext());
+		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns.getContext());
 		params.add("oauth_token", preferenceUtil.getString("oauth_token", ""));
-		params.add("oauth_token_secret",
-				preferenceUtil.getString("oauth_token_secret", ""));
+		params.add("oauth_token_secret", preferenceUtil.getString("oauth_token_secret", ""));
 		return params;
 	}
 
@@ -134,8 +130,7 @@ public class api {
 				params.add(MOD, NEWS);
 				params.add(ACT, INDEX);
 				params.add(CID, String.valueOf(detail.getFenlei_id()));
-				if (detail.getLastid() != null
-						&& !detail.getLastid().equals("")) {
+				if (detail.getLastid() != null && !detail.getLastid().equals("")) {
 					params.add(LASTID, detail.getLastid());
 				}
 				if (detail.getMaxid() != null && !detail.getMaxid().equals("")) {
@@ -166,9 +161,24 @@ public class api {
 			Log.i("appBanner", params.toString());
 			return getTestToken(params);
 		}
+
+		@Override
+		public RequestParams searchtag(ModelZiXunDetail detail) {
+			if (detail != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, APPNAME);
+				params.add(MOD, NEWS);
+				params.add(ACT, SEARCHTAG);
+				params.add(TAG_ID, detail.getTag_id());
+				getChangePage(params, detail);
+				Log.i("searchtag", params.toString());
+				return params;
+			}
+			return null;
+		}
 	}
-	
-	public static final class QclassImpl implements QclassIm{
+
+	public static final class QclassImpl implements QclassIm {
 
 		@Override
 		public RequestParams index() {
@@ -182,14 +192,13 @@ public class api {
 
 		@Override
 		public RequestParams indexItem(ModelQclassDetail detail) {
-			if(detail != null){
+			if (detail != null) {
 				RequestParams params = new RequestParams();
 				params.add(APP, API);
 				params.add(MOD, COURSE);
 				params.add(ACT, INDEX);
 				params.add(CID, String.valueOf(detail.getClass_id()));
-				if (detail.getLastid() != null
-						&& !detail.getLastid().equals("")) {
+				if (detail.getLastid() != null && !detail.getLastid().equals("")) {
 					params.add(LASTID, detail.getLastid());
 					params.add(WATCH_NUM, String.valueOf(detail.getWatch_num()));
 				}
@@ -617,7 +626,7 @@ public class api {
 				 * body 内容 必填
 				 *
 				 * tags 标签 多个以逗号隔开 至少一个 必填
-				 * */
+				 */
 				params.add(WEIBA_ID, send.getWeiba_id());
 				params.add(PARENT_ID, send.getParent_id());
 				params.add(TITLE, send.getTitle());
@@ -781,8 +790,7 @@ public class api {
 				params.add(STOP_SMOKE_TIME, historyCase.getStop_smoke_time());
 				params.add(DRINK, historyCase.getDrink());
 				params.add(DRINK_AGE, historyCase.getDrink_age());
-				params.add(DRINK_CONSUMPTION,
-						historyCase.getDrink_consumption());
+				params.add(DRINK_CONSUMPTION, historyCase.getDrink_consumption());
 				params.add(STOP_DRINK, historyCase.getStop_drink());
 				params.add(STOP_DRINK_TIME, historyCase.getStop_drink_time());
 				params.add(MENARCHE_AGE, historyCase.getMenarche_age());
@@ -811,8 +819,7 @@ public class api {
 				params.add(LAB_EXAM_HOSPITAL, nowCase.getLab_exam_hospital());
 				params.add(IMAGE_EXAM_PROGRAM, nowCase.getImage_exam_program());
 				params.add(IMAGE_EXAM_TIME, nowCase.getImage_exam_time());
-				params.add(IMAGE_EXAM_HOSPITAL,
-						nowCase.getImage_exam_hospital());
+				params.add(IMAGE_EXAM_HOSPITAL, nowCase.getImage_exam_hospital());
 				params.add(DIAGNOSIS, nowCase.getDiagnosis());
 				params.add(LAB_EXAM, nowCase.getLab_exam());
 				params.add(IMAGE_EXAM, nowCase.getImage_exam());
