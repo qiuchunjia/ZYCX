@@ -155,14 +155,14 @@
                 android:id="@+id/tv_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left_small"
+                android:padding="@dimen/margin_left_small"
                 android:background="@color/main_white_pure_color"
                 android:drawableLeft="@drawable/a"
                 android:drawablePadding="5dp"
                 android:ellipsize="end"
                 android:gravity="left"
                 android:text="1条解答"
-                android:textColor="@color/text_yellow"
+                android:textColor="@color/text_black"
                 android:textSize="@dimen/text_big" />
 
             <LinearLayout

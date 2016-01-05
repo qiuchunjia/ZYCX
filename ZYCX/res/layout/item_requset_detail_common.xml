@@ -70,6 +70,7 @@
             android:layout_marginTop="@dimen/margin_left_small"
             android:drawableLeft="@drawable/pinglunicon_request"
             android:drawablePadding="5dp"
+            android:gravity="center"
             android:text="1"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />

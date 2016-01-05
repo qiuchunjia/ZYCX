@@ -143,7 +143,6 @@ public class FragmentCaseIndex extends BaseFragment {
                 break;
             case R.id.ll_food:
                 mApp.startActivity_qcj(mActivity, FoodWayActivity.class, null);
-
                 break;
 
         }

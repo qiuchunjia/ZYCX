@@ -62,6 +62,7 @@ public class PopSizeChoose extends PopView {
 			public void onClick(View v) {
 				if (!mUrl.contains("&size=large")) {
 					mUrl = mUrl + "&size=large";
+					setSelectedText(tv_big, tv_small);
 				}
 			}
 		});
@@ -71,6 +72,7 @@ public class PopSizeChoose extends PopView {
 			public void onClick(View v) {
 				if (mUrl.contains("&size=large")) {
 					mUrl = mUrl.replace("&size=large", "");
+					setSelectedText(tv_small, tv_big);
 				}
 			}
 		});
@@ -82,5 +84,15 @@ public class PopSizeChoose extends PopView {
 				mPopWindow.dismiss();
 			}
 		});
+	}
+	
+	/**
+	 * 改变选中字体颜色
+	 * @param TextView selected
+	 * @param TextView another
+	 * */
+	private void setSelectedText(TextView selected, TextView another){
+		selected.setTextColor(mActivity.getResources().getColor(R.color.text_green));
+		another.setTextColor(mActivity.getResources().getColor(R.color.text_black));
 	}
 }
