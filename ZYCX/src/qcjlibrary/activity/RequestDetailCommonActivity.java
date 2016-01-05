@@ -10,8 +10,10 @@ import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -206,7 +208,10 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	private void addDataToHeadAndFlag(ModelRequestItem question,
 			List<ModelRequestFlag> topic_list) {
 		if (question != null) {
-			request_tv_title.setText(question.getQuestion_content());
+			request_tv_title.setText("");
+			Drawable drawable = getResources().getDrawable(R.drawable.q);
+			request_tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
+			request_tv_title.append("  "+question.getQuestion_content());
 			tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
 			tv_username.setText(question.getUser_name());
