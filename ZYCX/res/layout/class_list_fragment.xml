@@ -12,14 +12,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:textSize="@dimen/text_common"
+                android:textColor="@color/text_more_gray"
                 android:text="title"
+                android:background="@color/main_gray_bg_color"
                 android:visibility="visible"/>
-            <View
-	            android:layout_width="match_parent"
-	            android:layout_height="1dp"
-	            android:background="@drawable/line"/>
+            
             <ListView
                 android:id="@+id/list_class"
                 android:layout_width="match_parent"

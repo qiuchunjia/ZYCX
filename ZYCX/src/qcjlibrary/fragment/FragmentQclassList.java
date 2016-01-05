@@ -66,7 +66,7 @@ public class FragmentQclassList extends BaseFragment{
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(2);
+		mCommonListView.setDividerHeight(15);
 	}
 
 	@Override
