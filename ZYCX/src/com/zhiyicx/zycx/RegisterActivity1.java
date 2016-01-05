@@ -6,11 +6,12 @@ import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.net.JsonDataListener;
 import com.zhiyicx.zycx.net.NetComTools;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,16 +39,18 @@ public class RegisterActivity1 extends BaseActivity {
 	private TextView tv_user_agreenment;
 
 	private ModelUser mUser;
+	@SuppressLint("HandlerLeak")
 	private Handler mHandle = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg.arg1 > 1) {
-				tv_vertify_code.setText(msg.what + "s");
+				String time = String.valueOf(msg.arg1);
+				tv_vertify_code.setText(time + "s");
 			} else {
 				tv_vertify_code.setText("获取验证码");
 			}
 
 		};
-	};
+	};;
 
 	@Override
 	public String setCenterTitle() {
@@ -161,7 +164,7 @@ public class RegisterActivity1 extends BaseActivity {
 					boolean success = (Boolean) jsonObject.get("data");
 					if (success) {
 						Toast.makeText(RegisterActivity1.this, "短信发送成功!", 1).show();
-//						countTime();
+						countTime();
 					} else {
 						Toast.makeText(RegisterActivity1.this, "发送失败," + jsonObject.getString("message"), 1).show();
 					}
@@ -191,7 +194,7 @@ public class RegisterActivity1 extends BaseActivity {
 					time = time - 1;
 					Message message = Message.obtain();
 					message.arg1 = time;
-					ToastUtils.showToast(time + "s");
+					Log.i("time", "剩余时间" + time);
 					mHandle.sendMessage(message);
 					try {
 						sleep(1000);
