@@ -7,7 +7,7 @@
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="14" />
+        android:targetSdkVersion="19" />
 
     <permission
         android:name="com.zhiyicx.zycx.permission.JPUSH_MESSAGE"
@@ -110,7 +110,8 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators" />
         <activity
             android:name=".RegisterActivity1"
             android:launchMode="singleTask"

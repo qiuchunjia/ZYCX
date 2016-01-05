@@ -44,7 +44,6 @@
             <enum name="circle" value="0" />
             <enum name="round" value="1" />
         </attr>
-        <attr name="radius" format="dimension" />
         <attr name="src" format="reference" />
     </declare-styleable>
     <declare-styleable name="PowerImageView">

@@ -1,4 +1,4 @@
-package qcjlibrary.widget.viewpagerindicator;
+package com.viewpagerindicator;
 
 public interface IconPagerAdapter {
     /**

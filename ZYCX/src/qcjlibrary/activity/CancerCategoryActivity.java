@@ -2,6 +2,9 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.zhiyicx.zycx.R;
+
+import android.view.View;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
@@ -10,9 +13,6 @@ import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
-import android.view.View;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：上午11:56:18 类描述：这个类是实现

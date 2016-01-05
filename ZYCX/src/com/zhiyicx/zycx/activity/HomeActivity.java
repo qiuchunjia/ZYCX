@@ -1,5 +1,33 @@
 package com.zhiyicx.zycx.activity;
 
+import com.baidu.appx.BDInterstitialAd;
+import com.nineoldandroids.view.ViewHelper;
+import com.umeng.analytics.MobclickAgent;
+import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.net.HttpHelper;
+
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestWayActivity;
 import qcjlibrary.activity.SearchNewActivity;
@@ -12,43 +40,14 @@ import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
 import qcjlibrary.fragment.FragmentZhixun;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.L;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.opengl.Visibility;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.DrawerListener;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.baidu.appx.BDInterstitialAd;
-import com.nineoldandroids.view.ViewHelper;
-import com.umeng.analytics.MobclickAgent;
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.fragment.QClassFragment;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
-import com.zhiyicx.zycx.sociax.net.HttpHelper;
 
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
 	private FragmentZhixun mZiXunFgmt; // 咨询fragment qcj
-	//private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
-	private FragmentQclassIndex mQClassFgmt;//轻课堂fragment tan
+	// private QClassFragment mQClassFgmt; // 轻课堂fragment qcj
+	private FragmentQclassIndex mQClassFgmt;// 轻课堂fragment tan
 	// private QuestionFragment mQustionFgmt;// 问答fragment qcj
 	// private QiKanFragment mQiKanFgmt;// 期刊fragment qcj
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
@@ -64,10 +63,9 @@ public class HomeActivity extends BaseActivity {
 	public static final int index_web = 4;
 	private int mCurrentIndex = index_Default; // 当前所处的位置 默认为-1
 
-	private RelativeLayout mZixunLayout, mClassLayout, mQuestionLayout,
-			mQikanLayout, mWebLayout;
-	private ImageView index_message, IB_home_bottom_class,
-			IB_home_bottom_question, IB_home_bottom_qikan, IB_home_bottom_web;
+	private RelativeLayout mZixunLayout, mClassLayout, mQuestionLayout, mQikanLayout, mWebLayout;
+	private ImageView index_message, IB_home_bottom_class, IB_home_bottom_question, IB_home_bottom_qikan,
+			IB_home_bottom_web;
 
 	private BDInterstitialAd appxInterstitialAdView;
 	private String TAG = "HomeActivity";
@@ -75,10 +73,10 @@ public class HomeActivity extends BaseActivity {
 	private FragmentMenu mMenu;
 
 	private Title mTitle; // 标题
-	/** 轻课堂界面排序方法下标**/
+	/** 轻课堂界面排序方法下标 **/
 	private int QIndex;
 	private PopupWindow mSortMenu;
-	/** 轻课堂排序改变监听器**/
+	/** 轻课堂排序改变监听器 **/
 	private onStatusChangedListener mStatusListener;
 
 	@Override
@@ -124,11 +122,9 @@ public class HomeActivity extends BaseActivity {
 					ViewHelper.setScaleX(mMenu, leftScale);
 					ViewHelper.setScaleY(mMenu, leftScale);
 					ViewHelper.setAlpha(mMenu, 0.6f + 0.4f * (1 - scale));
-					ViewHelper.setTranslationX(mContent,
-							mMenu.getMeasuredWidth() * (1 - scale));
+					ViewHelper.setTranslationX(mContent, mMenu.getMeasuredWidth() * (1 - scale));
 					ViewHelper.setPivotX(mContent, 0);
-					ViewHelper.setPivotY(mContent,
-							mContent.getMeasuredHeight() / 2);
+					ViewHelper.setPivotY(mContent, mContent.getMeasuredHeight() / 2);
 					mContent.invalidate();
 					ViewHelper.setScaleX(mContent, rightScale);
 					ViewHelper.setScaleY(mContent, rightScale);
@@ -195,6 +191,36 @@ public class HomeActivity extends BaseActivity {
 		// 曹立该添加，百度广告，点击 Tab 时第二项时弹出广告
 		initBDAD();
 		Thinksns.homeAct = this;
+		initIcon(mTitle);
+	}
+
+	/**
+	 * 初始化title
+	 * 
+	 * @param mTitle2
+	 */
+	private void initIcon(Title mTitle2) {
+		if (mTitle2 != null) {
+			ModelUser user = mApp.getUser();
+			String iconUrl = user.getAvatar();
+			if (!TextUtils.isEmpty(iconUrl)) {
+				mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+			} else {
+				sendRequest(mApp.getUserImpl().index(),ModelUser.class, REQUEST_GET);
+			}
+		}
+	}
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object= super.onResponceSuccess(str, class1);
+		if(object instanceof ModelUser){
+			ModelUser obUser=(ModelUser) object;
+			mApp.displayImage(obUser.getAvatar(), mTitle.iv_title_left2);
+			mApp.saveUser(obUser);
+		}else{
+			judgeTheMsg(object);
+		}
+		return object;
 	}
 
 	@Override
@@ -216,44 +242,42 @@ public class HomeActivity extends BaseActivity {
 		// 此处ApiKey和推广位ID均是测试用的
 		// 您在正式提交应用的时候，请确认代码中已经更换为您应用对应的Key和ID
 		// 具体获取方法请查阅《百度开发者中心交叉换量产品介绍.pdf》
-		appxInterstitialAdView = new BDInterstitialAd(this,
-				"T8A7nrKyOEkzFzGqA5zeBABq", "6qI0TX8NSv8Enq74iuNRy0X2");
+		appxInterstitialAdView = new BDInterstitialAd(this, "T8A7nrKyOEkzFzGqA5zeBABq", "6qI0TX8NSv8Enq74iuNRy0X2");
 
 		// 设置插屏广告行为监听器
-		appxInterstitialAdView
-				.setAdListener(new BDInterstitialAd.InterstitialAdListener() {
+		appxInterstitialAdView.setAdListener(new BDInterstitialAd.InterstitialAdListener() {
 
-					@Override
-					public void onAdvertisementDataDidLoadFailure() {
-						Log.e(TAG, "load failure");
-					}
+			@Override
+			public void onAdvertisementDataDidLoadFailure() {
+				Log.e(TAG, "load failure");
+			}
 
-					@Override
-					public void onAdvertisementDataDidLoadSuccess() {
-						Log.e(TAG, "load success");
-					}
+			@Override
+			public void onAdvertisementDataDidLoadSuccess() {
+				Log.e(TAG, "load success");
+			}
 
-					@Override
-					public void onAdvertisementViewDidClick() {
-						Log.e(TAG, "on click");
-					}
+			@Override
+			public void onAdvertisementViewDidClick() {
+				Log.e(TAG, "on click");
+			}
 
-					@Override
-					public void onAdvertisementViewDidHide() {
-						Log.e(TAG, "on hide");
-					}
+			@Override
+			public void onAdvertisementViewDidHide() {
+				Log.e(TAG, "on hide");
+			}
 
-					@Override
-					public void onAdvertisementViewDidShow() {
-						Log.e(TAG, "on show");
-					}
+			@Override
+			public void onAdvertisementViewDidShow() {
+				Log.e(TAG, "on show");
+			}
 
-					@Override
-					public void onAdvertisementViewWillStartNewIntent() {
-						Log.e(TAG, "leave");
-					}
+			@Override
+			public void onAdvertisementViewWillStartNewIntent() {
+				Log.e(TAG, "leave");
+			}
 
-				});
+		});
 
 		// 加载广告
 		appxInterstitialAdView.loadAd();
@@ -342,12 +366,11 @@ public class HomeActivity extends BaseActivity {
 			} else {
 				transaction.show(mQClassFgmt);
 			}
-			/*if (mQClassFgmt == null) {
-				mQClassFgmt = new QClassFragment();
-				transaction.add(R.id.content, mQClassFgmt);
-			} else {
-				transaction.show(mQClassFgmt);
-			}*/
+			/*
+			 * if (mQClassFgmt == null) { mQClassFgmt = new QClassFragment();
+			 * transaction.add(R.id.content, mQClassFgmt); } else {
+			 * transaction.show(mQClassFgmt); }
+			 */
 			// mClassLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qustion:
@@ -417,8 +440,7 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							MsgNotifyPraiseActivity.class,
+					mApp.startActivity_qcj(HomeActivity.this, MsgNotifyPraiseActivity.class,
 							sendDataToBundle(new Model(), null));
 				}
 			});
@@ -432,15 +454,14 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							SearchNewActivity.class,
+					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
 							sendDataToBundle(new Model(), null));
 				}
 			});
 			break;
 		case index_qclass:
 			titleSetCenterTitle(" ");
-			//mTitle.tv_title.setVisibility(View.GONE);
+			// mTitle.tv_title.setVisibility(View.GONE);
 			mTitle.rl_textandpic.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
@@ -448,16 +469,15 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							SearchNewActivity.class,
+					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
 							sendDataToBundle(new Model(), null));
 				}
 			});
 			/**
 			 * 点击弹出下拉PopWindow
-			 * */
+			 */
 			mTitle.rl_textandpic.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					showMenu(v);
@@ -468,14 +488,12 @@ public class HomeActivity extends BaseActivity {
 			titleSetCenterTitle("问答");
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
-			mTitle.iv_title_right1
-					.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setImageResource(R.drawable.chuangjianjingli);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							RequestWayActivity.class,
+					mApp.startActivity_qcj(HomeActivity.this, RequestWayActivity.class,
 							sendDataToBundle(new Model(), null));
 				}
 			});
@@ -493,8 +511,7 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this,
-							SearchNewActivity.class,
+					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
 							sendDataToBundle(new Model(), null));
 				}
 			});
@@ -550,47 +567,46 @@ public class HomeActivity extends BaseActivity {
 		MobclickAgent.onPause(this);
 	}
 
-	//展示排序下拉列表
+	// 展示排序下拉列表
 	private void showMenu(View v) {
-		if(mSortMenu == null){
-			View menuView = LayoutInflater.from(HomeActivity.this).
-					inflate(R.layout.popmenu, null);
+		if (mSortMenu == null) {
+			View menuView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.popmenu, null);
 			TextView textNew = (TextView) menuView.findViewById(R.id.txt_new);
 			TextView textHot = (TextView) menuView.findViewById(R.id.txt_hot);
 			TextView textMy = (TextView) menuView.findViewById(R.id.txt_my);
 			mSortMenu = new PopupWindow(menuView, ViewGroup.LayoutParams.WRAP_CONTENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 			textNew.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					QIndex = 0;
 					mTitle.txt_status_1.setText("最新");
-					if(mStatusListener != null){
+					if (mStatusListener != null) {
 						mStatusListener.onStatusChange(QIndex);
 					}
 					mSortMenu.dismiss();
 				}
 			});
 			textHot.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					QIndex = 1;
 					mTitle.txt_status_1.setText("最热");
-					if(mStatusListener != null){
+					if (mStatusListener != null) {
 						mStatusListener.onStatusChange(QIndex);
 					}
 					mSortMenu.dismiss();
 				}
 			});
 			textMy.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					QIndex = 2;
 					mTitle.txt_status_1.setText("我的");
-					if(mStatusListener != null){
+					if (mStatusListener != null) {
 						mStatusListener.onStatusChange(QIndex);
 					}
 					mSortMenu.dismiss();
@@ -603,21 +619,20 @@ public class HomeActivity extends BaseActivity {
 		mSortMenu.update();
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
 		mSortMenu.showAsDropDown(v);
-        mTitle.arrow_img_1.setImageResource(R.drawable.arrow_up);
-        mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-            	mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
-            }
-        });
+		mTitle.arrow_img_1.setImageResource(R.drawable.arrow_up);
+		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
+			}
+		});
 	}
-	
-	public interface onStatusChangedListener{
+
+	public interface onStatusChangedListener {
 		void onStatusChange(int status);
 	}
-	
-	public void setOnStatusChangedListener(
-			onStatusChangedListener mStatusListener){
+
+	public void setOnStatusChangedListener(onStatusChangedListener mStatusListener) {
 		this.mStatusListener = mStatusListener;
 	}
 }

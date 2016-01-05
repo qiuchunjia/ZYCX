@@ -3,6 +3,12 @@ package qcjlibrary.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.HomeActivity;
+
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
@@ -14,12 +20,6 @@ import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.ads.MyADView;
 import qcjlibrary.widget.ads.MyADViewModel;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.activity.HomeActivity;
 
 /**
  * author：qiuchunjia time：上午10:32:51 类描述：这个类是实现

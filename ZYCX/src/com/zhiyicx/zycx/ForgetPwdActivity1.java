@@ -4,21 +4,25 @@ import java.net.URLEncoder;
 
 import org.json.JSONObject;
 
-import qcjlibrary.activity.base.BaseActivity;
+import com.zhiyicx.zycx.config.MyConfig;
+import com.zhiyicx.zycx.modle.HttpReturnData;
+import com.zhiyicx.zycx.net.JsonDataListener;
+import com.zhiyicx.zycx.net.NetComTools;
+import com.zhiyicx.zycx.util.Utils;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.zhiyicx.zycx.config.MyConfig;
-import com.zhiyicx.zycx.modle.HttpReturnData;
-import com.zhiyicx.zycx.net.JsonDataListener;
-import com.zhiyicx.zycx.net.NetComTools;
-import com.zhiyicx.zycx.util.Utils;
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.util.L;
+import qcjlibrary.util.ToastUtils;
 
 /**
  * 设置新密码类
@@ -94,8 +98,7 @@ public class ForgetPwdActivity1 extends BaseActivity {
 		httpReturnData.setStrForgetAccountNum(accountNumber);
 		codeNumber = et_forget_phonecode.getText().toString().trim();
 		// httpReturnData.setStrForgetPhoneCode(codeNumber);
-		String path = MyConfig.FORGET_BTN_NEXT_URL + "&uid="
-				+ URLEncoder.encode(accountNumber) + "&verify="
+		String path = MyConfig.FORGET_BTN_NEXT_URL + "&uid=" + URLEncoder.encode(accountNumber) + "&verify="
 				+ URLEncoder.encode(codeNumber);
 
 		NetComTools.getInstance(this).getNetJson(path, new JsonDataListener() {
@@ -135,10 +138,8 @@ public class ForgetPwdActivity1 extends BaseActivity {
 			Intent intent = new Intent();
 			intent.setClass(ForgetPwdActivity1.this, ForgetPwdActivity2.class);
 			Bundle bundle = new Bundle();
-			bundle.putString("accountNum", et_phoneOrmail.getText().toString()
-					.trim());
-			bundle.putString("accountCode", et_forget_phonecode.getText()
-					.toString().trim());
+			bundle.putString("accountNum", et_phoneOrmail.getText().toString().trim());
+			bundle.putString("accountCode", et_forget_phonecode.getText().toString().trim());
 			intent.putExtras(bundle);
 			startActivity(intent);
 			Toast.makeText(getApplicationContext(), "跳转重新设置密码界面", 0).show();
@@ -160,39 +161,33 @@ public class ForgetPwdActivity1 extends BaseActivity {
 			// + URLEncoder.encode(accountNumber) + "&notify=mail_code"
 			// + "&type=recover" + "&verify=" + pictureCodeString
 			// + "&_debug=hequanli";
-			String path = MyConfig.FORGETMAIL_URL + "&email="
-					+ URLEncoder.encode(accountNumber) + "&notify=mail_code"
+			String path = MyConfig.FORGETMAIL_URL + "&email=" + URLEncoder.encode(accountNumber) + "&notify=mail_code"
 					+ "&type=recover" + "&_debug=hequanli";
-			NetComTools.getInstance(this).getNetJson(path,
-					new JsonDataListener() {
-						@Override
-						public void OnReceive(JSONObject jsonObject) {
-							try {
-								boolean success = (Boolean) jsonObject
-										.get("data");
-								if (success) {
-									// Log.d(TAG, "Send code to mail success!");
-									Utils.showToast(ForgetPwdActivity1.this,
-											"验证码发送成功");
-								} else {
-									String txt = jsonObject.optString(
-											"message", "验证码发送失败");
-									Utils.showToast(ForgetPwdActivity1.this,
-											txt);
-									// Log.d(TAG, "Send code to mail fail," +
-									// (String)jsonObject.get("message"));
-								}
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+			NetComTools.getInstance(this).getNetJson(path, new JsonDataListener() {
+				@Override
+				public void OnReceive(JSONObject jsonObject) {
+					try {
+						boolean success = (Boolean) jsonObject.get("data");
+						if (success) {
+							// Log.d(TAG, "Send code to mail success!");
+							Utils.showToast(ForgetPwdActivity1.this, "验证码发送成功");
+						} else {
+							String txt = jsonObject.optString("message", "验证码发送失败");
+							Utils.showToast(ForgetPwdActivity1.this, txt);
+							// Log.d(TAG, "Send code to mail fail," +
+							// (String)jsonObject.get("message"));
 						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
-						@Override
-						public void OnError(String error) {
-							Utils.showToast(ForgetPwdActivity1.this, "验证码发送失败");
-							Log.d(TAG, "Send code to mail error, " + error);
-						}
-					});
+				@Override
+				public void OnError(String error) {
+					Utils.showToast(ForgetPwdActivity1.this, "验证码发送失败");
+					Log.d(TAG, "Send code to mail error, " + error);
+				}
+			});
 		} else {
 			accountNumber = et_phoneOrmail.getText().toString().trim();
 			// String pictureCodeString = et_forget_picturecode.getText()
@@ -201,41 +196,75 @@ public class ForgetPwdActivity1 extends BaseActivity {
 			// + URLEncoder.encode(accountNumber) + "&notify=SEND_CODE"
 			// + "&type=recover" + "&verify=" + pictureCodeString
 			// + "&_debug=hequanli";
-			String path = MyConfig.FORGETPHONE_URL + "&mobile="
-					+ URLEncoder.encode(accountNumber) + "&notify=SEND_CODE"
+			String path = MyConfig.FORGETPHONE_URL + "&mobile=" + URLEncoder.encode(accountNumber) + "&notify=SEND_CODE"
 					+ "&type=recover" + "&_debug=hequanli";
-			NetComTools.getInstance(this).getNetJson(path,
-					new JsonDataListener() {
-						@Override
-						public void OnReceive(JSONObject jsonObject) {
-							try {
-								boolean success = (Boolean) jsonObject
-										.get("data");
-								if (success) {
-									// Log.d(TAG,
-									// "Send code to phone success!");
-									Utils.showToast(ForgetPwdActivity1.this,
-											"验证码发送成功");
-								} else {
-									// Log.d(TAG, "Send code to phone fail," +
-									// (String)jsonObject.get("message"));
-									String txt = jsonObject.optString(
-											"message", "验证码发送失败");
-									Utils.showToast(ForgetPwdActivity1.this,
-											txt);
-								}
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
+			NetComTools.getInstance(this).getNetJson(path, new JsonDataListener() {
 
-						@Override
-						public void OnError(String error) {
-							Utils.showToast(ForgetPwdActivity1.this, "验证码发送失败");
-							Log.d(TAG, "Send code to phone error, " + error);
+				@Override
+				public void OnReceive(JSONObject jsonObject) {
+					try {
+						boolean success = (Boolean) jsonObject.get("data");
+						if (success) {
+							// Log.d(TAG,
+							// "Send code to phone success!");
+//							countTime();
+							Utils.showToast(ForgetPwdActivity1.this, "验证码发送成功");
+						} else {
+							// Log.d(TAG, "Send code to phone fail," +
+							// (String)jsonObject.get("message"));
+							String txt = jsonObject.optString("message", "验证码发送失败");
+							Utils.showToast(ForgetPwdActivity1.this, txt);
 						}
-					});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void OnError(String error) {
+					Utils.showToast(ForgetPwdActivity1.this, "验证码发送失败");
+					Log.d(TAG, "Send code to phone error, " + error);
+				}
+			});
 		}
+	}
+
+	private Handler mHandle = new Handler() {
+		public void handleMessage(Message msg) {
+			if (msg.arg1 > 1) {
+				mIB_forget_getcode.setText(msg.what + "s");
+			} else {
+				mIB_forget_getcode.setText("获取验证码");
+			}
+
+		};
+	};
+
+	/**
+	 * 开启倒计时
+	 */
+	public void countTime() {
+
+		new Thread() {
+			int time = 60;// 默认为60秒 每隔一秒就减一
+
+			@Override
+			public void run() {
+				while (time > 0) {
+					time = time - 1;
+					Message message = Message.obtain();
+					message.arg1 = time;
+					ToastUtils.showToast(time + "s");
+					mHandle.sendMessage(message);
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 
 }
