@@ -73,13 +73,14 @@ public class QClassDetailsActivity extends BaseActivity
 	// private PopupWindow mCmdWindow = null;
 	// private EditText mCmtEdit = null;
 
+	private ImageView iv_qclass_play;
+	private TextView tv_title_right;
+	
 	private String mDefVurl = null;
 	private String mDefId = null;
 	private String mDefVid = null;
 	private int mCid;
 	private String mTitle = null;
-	private ImageView iv_qclass_play;
-	private TextView tv_title_right;
 	private String cover;
 	private Title title;
 
@@ -145,8 +146,9 @@ public class QClassDetailsActivity extends BaseActivity
 
 	@Override
 	public void onPageSelected(int i) {
-		if (i == 1)
+		if (i == 1){
 			mCmtFgmt.loadCmtData(mDefId);
+		}
 	}
 
 	@Override

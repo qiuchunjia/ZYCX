@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/main_white_pure_color" >
 
     <LinearLayout
         android:id="@+id/ll_all"
@@ -19,14 +20,14 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/xuxian" />
 
         <RelativeLayout
             android:id="@+id/rl_cancer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height_50"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top_big"
             android:background="@color/main_white_pure_color"
             android:paddingLeft="@dimen/margin_left_small" >
 

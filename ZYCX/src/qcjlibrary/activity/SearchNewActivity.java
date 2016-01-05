@@ -253,6 +253,7 @@ public class SearchNewActivity extends BaseActivity {
 			break;
 		case R.id.iv_quxiao:
 			et_search.setText("");
+			isChanged = false;
 			break;
 		default:
 			break;
