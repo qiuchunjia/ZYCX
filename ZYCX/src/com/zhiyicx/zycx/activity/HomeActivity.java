@@ -40,6 +40,7 @@ import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
 import qcjlibrary.fragment.FragmentZhixun;
+import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 
@@ -454,8 +455,10 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
+					ModelSearchIndex mData = new ModelSearchIndex();
+					mData.setIndex(2);
 					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
-							sendDataToBundle(new Model(), null));
+							sendDataToBundle(mData, "index"));
 				}
 			});
 			break;
@@ -469,8 +472,10 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
+					ModelSearchIndex mData = new ModelSearchIndex();
+					mData.setIndex(3);
 					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
-							sendDataToBundle(new Model(), null));
+							sendDataToBundle(mData, "index"));
 				}
 			});
 			/**

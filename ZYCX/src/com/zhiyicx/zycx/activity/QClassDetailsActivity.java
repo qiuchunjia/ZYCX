@@ -3,6 +3,7 @@ package com.zhiyicx.zycx.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -46,11 +47,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-	/**
-	 * 轻课堂详细界面
-	 * @author Tan
-	 * @since 1.4
-	 */
+/**
+ * 轻课堂详细界面
+ * 
+ * @author Tan
+ * @since 1.4
+ */
 public class QClassDetailsActivity extends BaseActivity
 		implements View.OnClickListener, ClassListFragment.PlayListener, ViewPager.OnPageChangeListener {
 
@@ -61,15 +63,15 @@ public class QClassDetailsActivity extends BaseActivity
 	// private WebView mWebview = null;
 	private ImageView mPreview = null;
 
-	/** 课程列表Fragment**/
+	/** 课程列表Fragment **/
 	private ClassListFragment mListfgmt = null;
-	/** 评论列表Fragment**/
+	/** 评论列表Fragment **/
 	private ClassCmtFragment mCmtFgmt = null;
-	/** 课程详情Fragment**/
+	/** 课程详情Fragment **/
 	private ClassDetailsFragment mDetailsFgmt = null;
 	private JSONObject mClassData = null;
-	//private PopupWindow mCmdWindow = null;
-	//private EditText mCmtEdit = null;
+	// private PopupWindow mCmdWindow = null;
+	// private EditText mCmtEdit = null;
 
 	private String mDefVurl = null;
 	private String mDefId = null;
@@ -78,15 +80,14 @@ public class QClassDetailsActivity extends BaseActivity
 	private String mTitle = null;
 	private ImageView iv_qclass_play;
 	private TextView tv_title_right;
-	private Title title;
 	private String cover;
+	private Title title;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//** 使用SSO授权必须添加如下代码 *//*
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
-				requestCode);
+		// ** 使用SSO授权必须添加如下代码 *//*
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
@@ -95,50 +96,51 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_share:
+		case R.id.iv_title_right3:
 			Utils.shareVidoe(this, mController, mTitle, mDefVurl);
 			break;
 		case R.id.tv_title_right:
-			//弹出评论PopWindow
+			// 弹出评论PopWindow
 			PopQclassCmt mCmt = new PopQclassCmt(this, null, this);
 			mCmt.showPop(iv_qclass_play, Gravity.CENTER, 0, 0);
 			break;
 		case R.id.iv_qclass_play:
-			//跳转网页播放
+			// 跳转播放
+			String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" 
+					+ mDefId + "&uid=" + Utils.getUid(this);
+			//Intent intent = new Intent(this, QClassPlayActivity.class);
+			//intent.putExtra("vurl", urlStr);
+			//startActivity(intent);
+			Uri uri = Uri.parse(urlStr);
+			Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+			startActivity(it);
 			break;
 		}
 	}
 
-	/*private void showCmtWindow() {
-		if (mCmdWindow == null) {
-			View view = getLayoutInflater().inflate(R.layout.class_cmt_edit, null);
-			mCmtEdit = (EditText) view.findViewById(R.id.edit_cmt);
-			view.findViewById(R.id.btn_comment).setOnClickListener(this);
-			// view.findViewById(R.id.txt_my).setOnClickListener(this);
-			mCmdWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-			// mCmdWindow.setAnimationStyle(R.style.popwin_anim_style);
-			mCmdWindow.setFocusable(true);
-			// mCmdWindow.setOutsideTouchable(true);
-			mCmdWindow.update();
-			mCmdWindow.setBackgroundDrawable(new BitmapDrawable());
-		}
-		if (mCmdWindow.isShowing()) {
-			mCmdWindow.dismiss();
-			SociaxUIUtils.hideSoftKeyboard(this, mCmtEdit);
-		} else {
-			mCmdWindow.showAtLocation(mYoukuPlayerView, Gravity.BOTTOM, 0, 0);
-			SociaxUIUtils.showSoftKeyborad(this, mCmtEdit);
-		}
-	}*/
-
+	/*
+	 * private void showCmtWindow() { if (mCmdWindow == null) { View view =
+	 * getLayoutInflater().inflate(R.layout.class_cmt_edit, null); mCmtEdit =
+	 * (EditText) view.findViewById(R.id.edit_cmt);
+	 * view.findViewById(R.id.btn_comment).setOnClickListener(this); //
+	 * view.findViewById(R.id.txt_my).setOnClickListener(this); mCmdWindow = new
+	 * PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
+	 * ViewGroup.LayoutParams.WRAP_CONTENT); //
+	 * mCmdWindow.setAnimationStyle(R.style.popwin_anim_style);
+	 * mCmdWindow.setFocusable(true); // mCmdWindow.setOutsideTouchable(true);
+	 * mCmdWindow.update(); mCmdWindow.setBackgroundDrawable(new
+	 * BitmapDrawable()); } if (mCmdWindow.isShowing()) { mCmdWindow.dismiss();
+	 * SociaxUIUtils.hideSoftKeyboard(this, mCmtEdit); } else {
+	 * mCmdWindow.showAtLocation(mYoukuPlayerView, Gravity.BOTTOM, 0, 0);
+	 * SociaxUIUtils.showSoftKeyborad(this, mCmtEdit); } }
+	 */
 
 	@Override
 	public void OnPlay(String url, String id, String vid) {
 		mDefVurl = url;
 		mDefId = id;
 		mDefVid = vid;
-		//toPlay();
+		// toPlay();
 	}
 
 	@Override
@@ -155,29 +157,24 @@ public class QClassDetailsActivity extends BaseActivity
 	public void onPageScrollStateChanged(int i) {
 	}
 
-	/*// 记录
-	private void toPlay() {
-		try {
-			if (mYoukuPlayer != null)
-				mYoukuPlayer.playVideo(mDefVid);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		String url = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid=" + Utils.getUid(this);
-		NetComTools netComTools = NetComTools.getInstance(this);
-		netComTools.getNetString(url, new StringDataListener() {
-			@Override
-			public void OnReceive(String data) {
-
-			}
-
-			@Override
-			public void OnError(String error) {
-
-			}
-		});
-	}*/
+	/*
+	 * // 记录 private void toPlay() { try { if (mYoukuPlayer != null)
+	 * mYoukuPlayer.playVideo(mDefVid); } catch (Exception e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * String url = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid="
+	 * + Utils.getUid(this); NetComTools netComTools =
+	 * NetComTools.getInstance(this); netComTools.getNetString(url, new
+	 * StringDataListener() {
+	 * 
+	 * @Override public void OnReceive(String data) {
+	 * 
+	 * }
+	 * 
+	 * @Override public void OnError(String error) {
+	 * 
+	 * } }); }
+	 */
 
 	@Override
 	public String setCenterTitle() {
@@ -188,11 +185,10 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void initIntent() {
 		Bundle bundle = getIntent().getExtras();
-		ModelQclassDetail mDetail = (ModelQclassDetail) 
-				bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
+		ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable
+				(Config.ACTIVITY_TRANSFER_BUNDLE);
 		mCid = mDetail.getCourse_id();
 		cover = mDetail.getCover();
-		L.d("Cathy", "Qclass detail mCid = "+mCid);
 		if (mCid == -1) {
 			finish();
 		}
@@ -207,6 +203,8 @@ public class QClassDetailsActivity extends BaseActivity
 	public void initView() {
 		titleSetRightTitle("评论");
 		title = getTitleClass();
+		title.iv_title_right3.setVisibility(View.VISIBLE);
+		title.iv_title_right3.setImageResource(R.drawable.fenxiang);
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
 		iv_qclass_play = (ImageView) findViewById(R.id.iv_qclass_play);
@@ -218,7 +216,7 @@ public class QClassDetailsActivity extends BaseActivity
 		if (!TextUtils.isEmpty(cover)) {
 			mPreview = (ImageView) findViewById(R.id.img_preview);
 			mApp.displayImage(cover, iv_qclass_play);
-			L.d("Cathy", "cover : "+cover);
+			L.d("Cathy", "cover : " + cover);
 		}
 		loadInfo(mCid);
 	}
@@ -228,6 +226,7 @@ public class QClassDetailsActivity extends BaseActivity
 		mTabs.setOnPageChangeListener(this);
 		iv_qclass_play.setOnClickListener(this);
 		tv_title_right.setOnClickListener(this);
+		title.iv_title_right3.setOnClickListener(this);
 	}
 
 	@Override
@@ -235,12 +234,13 @@ public class QClassDetailsActivity extends BaseActivity
 		sendCmt(object.toString());
 		return super.onPopResult(object);
 	}
-	
+
 	/**
 	 * 发送评论到服务器
-	 * @param String content
-	 * 				评论内容
-	 * */
+	 * 
+	 * @param String
+	 *            content 评论内容
+	 */
 	private void sendCmt(String content) {
 		String url = MyConfig.QCLASS_ADDCMT_URL + Utils.getTokenString(this) + "&id=" + mDefId;
 		url += "&content=" + Utils.getUTF8String(content);
@@ -253,7 +253,7 @@ public class QClassDetailsActivity extends BaseActivity
 					int code = jsonObject.getInt("code");
 					if (code == 0) {
 						Utils.showToast(QClassDetailsActivity.this, "评论成功!");
-						//mCmtEdit.setText("");
+						// mCmtEdit.setText("");
 						mCmtFgmt.loadCmtData(mDefId);
 					} else {
 						String msg = jsonObject.getString("message");
@@ -268,7 +268,7 @@ public class QClassDetailsActivity extends BaseActivity
 			public void OnError(String error) {
 			}
 		});
-		//mCmdWindow.dismiss();
+		// mCmdWindow.dismiss();
 	}
 
 	private void initViewPager() throws Exception {
@@ -284,7 +284,7 @@ public class QClassDetailsActivity extends BaseActivity
 			mDefVid = jsonObject.optString("default_vid");
 		}
 
-		//toPlay();
+		// toPlay();
 		mListfgmt = ClassListFragment.newInstance(mTitle, array, mDefId);
 		mListfgmt.setPlayListener(this);
 		mCmtFgmt = ClassCmtFragment.newInstance(mDefId);
@@ -303,7 +303,7 @@ public class QClassDetailsActivity extends BaseActivity
 		mTabs.setViewPager(mPager);
 		setTabsValue();
 	}
-	
+
 	private void loadInfo(int id) {
 		String url = MyConfig.QCLASS_DETAILs_URL + Utils.getTokenString(this) + "&cid=" + id;
 		NetComTools netComTools = NetComTools.getInstance(this);
@@ -328,7 +328,7 @@ public class QClassDetailsActivity extends BaseActivity
 			}
 		});
 	}
-	
+
 	private void setTabsValue() {
 		mTabs.setShouldExpand(true);
 		mTabs.setDividerColor(Color.TRANSPARENT);
