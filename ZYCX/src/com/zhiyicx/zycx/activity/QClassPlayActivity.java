@@ -62,7 +62,6 @@ public class QClassPlayActivity extends Activity {
             finish();
         String data = String.format(mHtmlData,"100%","100%", vid, embsig);*/
         String url = getIntent().getStringExtra("vurl");
-        L.d("Cathy", url);
         mPlayView.getSettings().setJavaScriptEnabled(true);
         mPlayView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mPlayView.loadUrl(url + Utils.getTokenString(this));
