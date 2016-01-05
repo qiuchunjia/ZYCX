@@ -22,6 +22,7 @@ import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.ModelNotifyNotice;
 import qcjlibrary.model.ModelQclassDetail;
+import qcjlibrary.model.ModelQclassPlay;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
@@ -210,6 +211,36 @@ public class api {
 			return null;
 		}
 
+		@Override
+		public RequestParams detail(ModelQclassPlay detail) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, COURSE);
+			params.add(ACT, GET_DETAIL);
+			params.add(CID, String.valueOf(detail.getCourse_id()));
+			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams sendCmt(ModelQclassPlay detail) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, COURSE);
+			params.add(ACT, ADD_COMMENT);
+			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams getCmt(ModelQclassPlay detail) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, COURSE);
+			params.add(ACT, GET_COMMENT);
+			params.add(DEFAULT_ID, String.valueOf(detail.getDefault_id()));
+			params.add(CONTENT, detail.getSendContent());
+			return getTestToken(params);
+		}
+		
 	}
 
 	public static final class RequestImpl implements RequestIm {

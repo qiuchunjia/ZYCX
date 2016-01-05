@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity.onStatusChangedListener;
+import com.zhiyicx.zycx.activity.QClassDetailsActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.adapter.QclassAdapter;
 import qcjlibrary.api.api.QclassImpl;
 import qcjlibrary.fragment.base.BaseFragment;
@@ -79,6 +82,14 @@ public class FragmentQclassList extends BaseFragment{
 		qclassImpl = new QclassImpl();
 		detail.setClass_id(mType);
 		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position, 
+						QClassDetailsActivity.class);
+			}
+		});
 	}
 
 	@Override
