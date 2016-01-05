@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import qcjlibrary.util.L;
 
 import com.zhiyicx.zycx.util.Utils;
 
@@ -61,6 +62,7 @@ public class QClassPlayActivity extends Activity {
             finish();
         String data = String.format(mHtmlData,"100%","100%", vid, embsig);*/
         String url = getIntent().getStringExtra("vurl");
+        L.d("Cathy", url);
         mPlayView.getSettings().setJavaScriptEnabled(true);
         mPlayView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mPlayView.loadUrl(url + Utils.getTokenString(this));

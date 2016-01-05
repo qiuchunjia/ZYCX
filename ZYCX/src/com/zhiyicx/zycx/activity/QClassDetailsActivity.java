@@ -78,8 +78,8 @@ public class QClassDetailsActivity extends BaseActivity
 	private String mTitle = null;
 	private ImageView iv_qclass_play;
 	private TextView tv_title_right;
-	private Title title;
 	private String cover;
+	private Title title;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,7 +95,7 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_share:
+		case R.id.iv_title_right3:
 			Utils.shareVidoe(this, mController, mTitle, mDefVurl);
 			break;
 		case R.id.tv_title_right:
@@ -139,6 +139,11 @@ public class QClassDetailsActivity extends BaseActivity
 		mDefId = id;
 		mDefVid = vid;
 		//toPlay();
+		String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + 
+				"&uid=" + Utils.getUid(this);
+		Intent intent = new Intent(this,QClassPlayActivity.class);
+		intent.putExtra("vurl", urlStr);
+		startActivity(intent);
 	}
 
 	@Override
@@ -192,7 +197,6 @@ public class QClassDetailsActivity extends BaseActivity
 				bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
 		mCid = mDetail.getCourse_id();
 		cover = mDetail.getCover();
-		L.d("Cathy", "Qclass detail mCid = "+mCid);
 		if (mCid == -1) {
 			finish();
 		}
@@ -207,6 +211,8 @@ public class QClassDetailsActivity extends BaseActivity
 	public void initView() {
 		titleSetRightTitle("评论");
 		title = getTitleClass();
+		title.iv_title_right3.setVisibility(View.VISIBLE);
+		title.iv_title_right3.setImageResource(R.drawable.fenxiang);
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
 		iv_qclass_play = (ImageView) findViewById(R.id.iv_qclass_play);
@@ -228,6 +234,7 @@ public class QClassDetailsActivity extends BaseActivity
 		mTabs.setOnPageChangeListener(this);
 		iv_qclass_play.setOnClickListener(this);
 		tv_title_right.setOnClickListener(this);
+		title.iv_title_right3.setOnClickListener(this);
 	}
 
 	@Override
