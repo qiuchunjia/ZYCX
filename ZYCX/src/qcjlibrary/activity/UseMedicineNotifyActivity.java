@@ -76,7 +76,8 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				mApp.startActivity_qcj(UseMedicineNotifyActivity.this, MedicineEditNotifyActivity.class, null);
+				mApp.startActivity_qcj(UseMedicineNotifyActivity.this, 
+						MedicineEditNotifyActivity.class, null);
 			}
 		});
 		mAlertList = new ArrayList<Model>();
@@ -127,7 +128,8 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position, MedicineEditNotifyActivity.class);
+				mCommonListView.stepToNextActivity(parent, view, position, 
+						MedicineEditNotifyActivity.class);
 
 			}
 		});
