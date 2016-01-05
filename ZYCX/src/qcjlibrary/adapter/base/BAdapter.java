@@ -386,6 +386,7 @@ public abstract class BAdapter extends BaseAdapter {
 						if (object instanceof ModelMsg) {
 							ToastUtils.showToast(((ModelMsg) object)
 									.getMessage() + "");
+							dismissTheProgress();
 						} else {
 							Object objectResult = getReallyList(object, type);
 							if (objectResult instanceof List<?>) {
@@ -399,6 +400,7 @@ public abstract class BAdapter extends BaseAdapter {
 							}
 						}
 					} else {
+						dismissTheProgress();
 						ToastUtils.showToast("加载数据失败");
 					}
 				}

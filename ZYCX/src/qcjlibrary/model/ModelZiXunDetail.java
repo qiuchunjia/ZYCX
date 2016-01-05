@@ -20,6 +20,7 @@ public class ModelZiXunDetail extends Model {
 	private String cTime;
 	// 更具需要多添加的属性
 	private int fenlei_id;
+	private String tag_id;  //用于标签搜索
 
 	public ModelZiXunDetail() {
 		// try {
@@ -108,12 +109,20 @@ public class ModelZiXunDetail extends Model {
 		this.fenlei_id = fenlei_id;
 	}
 
-	@Override
-	public String toString() {
-		return "ModelZiXunDetail [uid=" + uid + ", id=" + id + ", title="
-				+ title + ", cover=" + cover + ", readCount=" + readCount
-				+ ", cTime=" + cTime + ", fenlei_id=" + fenlei_id + ", lastid="
-				+ lastid + ", maxid=" + maxid + "]";
+	
+	public String getTag_id() {
+		return tag_id;
 	}
 
+	public void setTag_id(String tag_id) {
+		this.tag_id = tag_id;
+	}
+
+	@Override
+	public String toString() {
+		return "ModelZiXunDetail [uid=" + uid + ", id=" + id + ", title=" + title + ", cover=" + cover + ", readCount="
+				+ readCount + ", cTime=" + cTime + ", fenlei_id=" + fenlei_id + ", tag_id=" + tag_id + "]";
+	}
+
+	
 }

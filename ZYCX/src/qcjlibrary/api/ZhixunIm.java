@@ -15,11 +15,13 @@ public interface ZhixunIm {
 	public static final String APP_BANNER = "app_banner";
 	public static final String INDEX = "index";
 	public static final String DOPRAISE = "doPraise"; // 点赞
+	public static final String SEARCHTAG = "searchtag";
 
 	public static final String AID = "id"; // 点赞的id
 	public static final String CID = "cid";
 	public static final String LASTID = "lastid"; // 上拉加载，最下面资讯的id
 	public static final String MAXID = "maxid";// 下拉刷新，最上面的资讯id
+	public static final String TAG_ID = "tag_id";
 
 	/**
 	 * 获取咨询新闻
@@ -40,5 +42,7 @@ public interface ZhixunIm {
 
 	// 添加一个首页接口
 	public RequestParams appBanner();
+
+	public RequestParams searchtag(ModelZiXunDetail detail);
 
 }
