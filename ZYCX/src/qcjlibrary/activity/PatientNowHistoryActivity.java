@@ -61,7 +61,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private LinearLayout ll_ScrollView1;
 	private LinearLayout ll_ScrollView2;
 	private LinearLayout ll_ScrollView3;
-	
+
 	private PopCommonProgress mProgress;
 
 	@Override
@@ -117,7 +117,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 		mImageManager = LocalImageManager.from(this);
-		mProgress=new PopCommonProgress(this, null, this);
+		mProgress = new PopCommonProgress(this, null, this);
 	}
 
 	@Override
@@ -140,6 +140,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			if (checkTheContent()) {
 				ModelAddNowCase addNowCase = addDataToModel();
 				sendRequest(mApp.getMedRecordImpl().savePresent(addNowCase), ModelMsg.class, REQUEST_POST);
+				ToastUtils.showToast("提交中...");
 			}
 
 			break;
@@ -206,15 +207,17 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		}
 		return super.onPopResult(object);
 	}
-	private boolean isFirst=true;
+
+	private boolean isFirst = true;
+
 	@Override
 	public void onResponseProgress(long bytesWritten, long totalSize) {
 		super.onResponseProgress(bytesWritten, totalSize);
-		if(isFirst){
-			isFirst=false;
+		if (isFirst) {
+			isFirst = false;
 			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
 			mProgress.setProgress(bytesWritten, totalSize);
-		}else{
+		} else {
 			mProgress.setProgress(bytesWritten, totalSize);
 		}
 	}
