@@ -46,9 +46,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by Administrator on 2014/12/31.
- */
+	/**
+	 * 轻课堂详细界面
+	 * @author Tan
+	 * @since 1.4
+	 */
 public class QClassDetailsActivity extends BaseActivity
 		implements View.OnClickListener, ClassListFragment.PlayListener, ViewPager.OnPageChangeListener {
 
@@ -59,8 +61,11 @@ public class QClassDetailsActivity extends BaseActivity
 	// private WebView mWebview = null;
 	private ImageView mPreview = null;
 
+	/** 课程列表Fragment**/
 	private ClassListFragment mListfgmt = null;
+	/** 评论列表Fragment**/
 	private ClassCmtFragment mCmtFgmt = null;
+	/** 课程详情Fragment**/
 	private ClassDetailsFragment mDetailsFgmt = null;
 	private JSONObject mClassData = null;
 	//private PopupWindow mCmdWindow = null;
