@@ -2,9 +2,13 @@ package com.zhiyicx.zycx.activity;
 
 import org.json.JSONObject;
 
+import qcjlibrary.activity.RequestFlagActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestFlag;
+import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopSizeChoose;
@@ -15,7 +19,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -89,6 +96,20 @@ public class ZiXUnContentActivity extends BaseActivity {
 		mTitleLayout = getTitleClass();
 		mContent = (WebView) findViewById(R.id.content_view);
 		mContent.getSettings().setJavaScriptEnabled(true);
+		mContent.setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				ToastUtils.showToast("url="+url);
+				if(url.contains("tag_id=")){
+					String id=url.substring(url.indexOf("tag_id=")+7,url.length());
+					ToastUtils.showToast("id="+id);
+					ModelRequestFlag flag=new ModelRequestFlag();
+					flag.setDomain(id);
+					mApp.startActivity_qcj(ZiXUnContentActivity.this, RequestFlagActivity.class, sendDataToBundle(flag, null));
+				}
+				return true;
+			}
+		});
 		// mContent.loadUrl(mUrl);
 		// mContent.loadUrl("javascript:getComment()");
 		loadData();
