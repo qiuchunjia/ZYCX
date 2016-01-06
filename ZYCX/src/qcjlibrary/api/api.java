@@ -21,6 +21,7 @@ import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.ModelNotifyNotice;
+import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.ModelQclassPlay;
 import qcjlibrary.model.ModelRequestAnswerComom;
@@ -239,6 +240,25 @@ public class api {
 			params.add(DEFAULT_ID, String.valueOf(detail.getDefault_id()));
 			params.add(CONTENT, detail.getSendContent());
 			return getTestToken(params);
+		}
+		
+	}
+	
+	public static final class PeriodicalImpl implements PeriodicalIm{
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, APPNAME);
+			params.add(MOD, PERIODICAL);
+			params.add(ACT, INDEX);
+			return params;
+		}
+
+		@Override
+		public RequestParams detail() {
+			// TODO 自动生成的方法存根
+			return null;
 		}
 		
 	}

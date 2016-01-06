@@ -1,12 +1,14 @@
 package qcjlibrary.adapter;
 
 import java.util.List;
-
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelPeriodical;
+import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,12 +19,13 @@ import com.zhiyicx.zycx.R;
 /**
  * author：qiuchunjia time：下午5:06:10
  * 
- * 类描述：这个类是实现专家提问列表
+ * 类描述：期刊首页数据适配器
  *
  */
 
 public class MePerioAdapter extends BAdapter {
 
+	
 	public MePerioAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 	}
@@ -48,6 +51,12 @@ public class MePerioAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
+			L.d("Cathy", "mList adapter:"+mList.size());
+			ModelPeriodical mData = (ModelPeriodical) mList.get(position);
+			mApp.displayImage(mData.getCover(), holder.iv_perio_icon);
+			holder.tv_title.setText(mData.getPeriodical_name());
+			holder.tv_date.setText(mData.getCtime());
+			holder.tv_title_flag.setText(mData.getPeriodical_num());
 		}
 	}
 
