@@ -115,7 +115,7 @@
         <RelativeLayout
             android:id="@+id/rl_textandpic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:visibility="gone" >
 
@@ -136,7 +136,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/txt_status_1"
-                android:src="@drawable/arrow_do" />
+                android:src="@drawable/moreicon" />
         </RelativeLayout>
         <!-- 中间一个图片控件的情况 -->
 

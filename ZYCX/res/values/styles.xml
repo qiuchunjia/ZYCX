@@ -113,7 +113,23 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    
+    <style name="share_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/margin_top</item>
+    </style>
+    
+    <style name="share_ll_item">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
 
+<<<<<<< HEAD
     <style name="pop_anim_style_up_and_down">
         <item name="android:windowEnterAnimation">@anim/pop_ver_up</item>
         <item name="android:windowExitAnimation">@anim/pop_ver_down</item>
@@ -128,4 +144,10 @@
         <item name="android:windowExitAnimation">@anim/pop_hor_right</item>
     </style>
 
+=======
+    <style name="share_textview" parent="qclass_cmd_send">
+        <item name="android:layout_marginTop">@dimen/margin_top</item>
+        <item name="android:textSize">@dimen/text_common</item>
+    </style>
+>>>>>>> 6cacf0c98f93240528f3e98879f79b4cccb89835
 </resources>
