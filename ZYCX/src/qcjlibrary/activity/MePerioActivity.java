@@ -81,14 +81,14 @@ public class MePerioActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		Object object = super.onResponceSuccess(str, class1);
 		if(object instanceof ModelPeriodicalIndex){
-			List<ModelPeriodical> list = ((ModelPeriodicalIndex) object).getData();
+			/*//List<ModelPeriodical> list = ((ModelPeriodicalIndex) object).getData();
 			if(mList != null && list != null){
 				mList.clear();
 				mList.addAll(list);
 				L.d("Cathy", "mList:"+mList.size());
 				mAdapter = new MePerioAdapter(this, mList);
 				mCommonListView.setAdapter(mAdapter);
-			}
+			}*/
 		}
 		return object;
 	}
