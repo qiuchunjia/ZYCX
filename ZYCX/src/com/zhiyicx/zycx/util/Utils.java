@@ -54,13 +54,8 @@ public class Utils {
 	public static String getTokenString(Context context) {
 		String token = null;
 		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(context);
-<<<<<<< HEAD
 //		token = "&oauth_token=" + "18e22c9690b5e01ce224a58f401eb995";
 //		token += "&oauth_token_secret=" + "be826a6243b7f9c0800ac82ce692c2f7";
-=======
-		/*token = "&oauth_token=" + "18e22c9690b5e01ce224a58f401eb995";
-		token += "&oauth_token_secret=" + "be826a6243b7f9c0800ac82ce692c2f7";*/
->>>>>>> 8cef743608ca70f61149181da19fcd4f7c2ba903
 		 token = "&oauth_token=" + preferenceUtil.getString("oauth_token",
 		 "");
 		 token += "&oauth_token_secret=" +
