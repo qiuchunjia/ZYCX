@@ -624,13 +624,13 @@ public class HomeActivity extends BaseActivity {
 		mSortMenu.update();
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
 		mSortMenu.showAsDropDown(v);
-		mTitle.arrow_img_1.setImageResource(R.drawable.arrow_up);
-		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+		mTitle.arrow_img_1.setImageResource(R.drawable.moreicon);
+		/*mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
 				mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
 			}
-		});
+		});*/
 	}
 
 	public interface onStatusChangedListener {

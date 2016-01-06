@@ -34,7 +34,6 @@
                 android:id="@+id/iv_q"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_small"
                 android:src="@drawable/q" />
 
