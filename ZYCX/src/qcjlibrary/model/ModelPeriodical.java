@@ -10,10 +10,12 @@ public class ModelPeriodical extends Model {
 	private String cover;// 首页图片
 	private String periodical_num;
 	private String ctime;
-	private int pid;
+	private String pid;
 	private String periodical_name;
-	private int sort;
+	private String sort;
 
+	
+	
 	public String getCover() {
 		return cover;
 	}
@@ -38,14 +40,6 @@ public class ModelPeriodical extends Model {
 		this.ctime = ctime;
 	}
 
-	public int getPid() {
-		return pid;
-	}
-
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-
 	public String getPeriodical_name() {
 		return periodical_name;
 	}
@@ -54,11 +48,20 @@ public class ModelPeriodical extends Model {
 		this.periodical_name = periodical_name;
 	}
 
-	public int getSort() {
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
+
+	public String getSort() {
 		return sort;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(String sort) {
 		this.sort = sort;
 	}
+	
 }

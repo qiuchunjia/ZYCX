@@ -8,6 +8,7 @@ import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelPeriodical;
 import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.L;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,7 +64,7 @@ public class MePerioActivity extends BaseActivity {
 		mData = new ModelPeriodical();
 		mList = new ArrayList<Model>();
 		PeriodicalImpl params = new PeriodicalImpl();
-		sendRequest(params.index(mData), ModelPeriodicalIndex.class, 0);
+		sendRequest(params.index(mData), ModelPeriodical.class, 0);
 	}
 
 	@Override
@@ -81,9 +82,9 @@ public class MePerioActivity extends BaseActivity {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		// TODO 自动生成的方法存根
-		Object object = super.onResponceSuccess(str, class1);
-		if(object instanceof ModelPeriodicalIndex){
-			List<ModelPeriodical> list = ((ModelPeriodicalIndex) object).getData();
+		Object object = DataAnalyze.parseData(str, class1);
+		if(object instanceof List<?>){
+			List<ModelPeriodical> list = (List<ModelPeriodical>) object;
 			if(mList != null && list != null){
 				mList.clear();
 				mList.addAll(list);
