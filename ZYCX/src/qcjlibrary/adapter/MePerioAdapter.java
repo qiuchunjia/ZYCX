@@ -4,9 +4,13 @@ import java.util.List;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
+import qcjlibrary.api.api.PeriodicalImpl;
+import qcjlibrary.api.api.ZhiXunImpl;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelPeriodical;
 import qcjlibrary.model.ModelPeriodicalIndex;
+import qcjlibrary.model.ModelZiXun;
+import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
 import android.view.View;
@@ -80,17 +84,25 @@ public class MePerioAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		sendRequest(null, null, 1, 1);
+		requstMessage(new ModelPeriodical(), REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		sendRequest(null, null, 1, 1);
+		if(item instanceof ModelPeriodical){
+			ModelPeriodical mData = (ModelPeriodical) item;
+			mData.setLastid(mData.getSort()+"");
+			requstMessage(mData, REFRESH_HEADER);
+		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		// TODO Auto-generated method stub
+		if(item instanceof ModelPeriodical){
+			ModelPeriodical mData = (ModelPeriodical) item;
+			mData.setMaxid(mData.getSort()+"");
+			requstMessage(mData, REFRESH_FOOTER);
+		}
 	}
 
 	@Override
@@ -101,10 +113,17 @@ public class MePerioAdapter extends BAdapter {
 
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
-		// TODO Auto-generated method stub
+	public Object getReallyList(Object object, Class type2) {
+		if(object instanceof ModelPeriodicalIndex){
+			ModelPeriodicalIndex index = (ModelPeriodicalIndex) object;
+			return index.getData();
+		}
 		return null;
 	}
 
+	private void requstMessage(ModelPeriodical mData, int type) {
+		PeriodicalImpl impl = new PeriodicalImpl();
+		sendRequest(impl.index(mData), ModelPeriodicalIndex.class, 0, type);
+	}
 
 }

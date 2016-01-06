@@ -2,6 +2,7 @@ package qcjlibrary.api;
 
 import com.loopj.android.http.RequestParams;
 
+import qcjlibrary.model.ModelPeriodical;
 import qcjlibrary.model.ModelPeriodicalIndex;
 
 public interface PeriodicalIm {
@@ -19,7 +20,7 @@ public interface PeriodicalIm {
 	 * mod Periodical
 	 * act index
 	 * */
-	public RequestParams index();
+	public RequestParams index(ModelPeriodical mData);
 	
 	/**
 	 * 期刊详情
