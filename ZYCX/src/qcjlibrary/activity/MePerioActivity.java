@@ -85,9 +85,9 @@ public class MePerioActivity extends BaseActivity {
 			if(mList != null && list != null){
 				mList.clear();
 				mList.addAll(list);
+				L.d("Cathy", "mList:"+mList.size());
 				mAdapter = new MePerioAdapter(this, mList);
 				mCommonListView.setAdapter(mAdapter);
-				L.d("Cathy", "mList:"+mList.size());
 			}
 		}
 		return object;
