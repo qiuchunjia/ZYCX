@@ -11,7 +11,9 @@ import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -227,7 +229,10 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private void addDataToHeadAndFlag(ModelRequestItem question,
 			List<ModelRequestFlag> topic_list) {
 		if (question != null) {
-			expert_tv_title.setText(question.getQuestion_content());
+			expert_tv_title.setText("");
+			Drawable drawable = getResources().getDrawable(R.drawable.q);
+			expert_tv_title.append(SpanUtil.setImageSpan("xx", 0,0, drawable));
+			expert_tv_title.append("  "+question.getQuestion_content());
 			expert_tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
 			tv_username.setText(question.getUser_name());

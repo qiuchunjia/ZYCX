@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
             android:layout_margin="@dimen/margin_left_small"
+            android:gravity="center_horizontal"
             android:background="@drawable/view_border_gray_3" >
 
             <TextView

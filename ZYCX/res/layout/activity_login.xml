@@ -70,6 +70,7 @@
                 android:layout_toRightOf="@id/iv_pwd"
                 android:background="@null"
                 android:hint="密码"
+                android:inputType="textPassword"
                 android:textColor="@color/text_black"
                 android:textColorHint="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />

@@ -101,7 +101,7 @@ public class FragmentMenu extends BaseFragment {
 	@Override
 	public void initListener() {
 		riv_user_icon.setOnClickListener(this);
-		menu_iv_edit.setOnClickListener(this);
+		rl_user.setOnClickListener(this);
 		rl_home.setOnClickListener(this);
 		rl_question.setOnClickListener(this);
 		rl_app.setOnClickListener(this);
@@ -116,7 +116,7 @@ public class FragmentMenu extends BaseFragment {
 		case R.id.riv_user_icon:
 
 			break;
-		case R.id.menu_iv_edit:
+		case R.id.rl_user:
 			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
 					mActivity.sendDataToBundle(mUser, null));
 
