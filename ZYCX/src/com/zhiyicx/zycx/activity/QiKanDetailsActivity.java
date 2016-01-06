@@ -40,7 +40,7 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	@Override
 	public String setCenterTitle() {
-		return "期刊";
+		return "期刊详情";
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void initView() {
-		titleSetRightImage(R.drawable.fenxiang);
+		titleSetRightTitle("分享");
 		mWebView = (WebView) findViewById(R.id.view_qikan);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mProgBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -73,13 +73,13 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	@Override
 	public void initListener() {
-		getTitleClass().iv_title_right1.setOnClickListener(this);
+		getTitleClass().tv_title_right.setOnClickListener(this);
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_title_right1:
+		case R.id.tv_title_right:
 			if (TextUtils.isEmpty(mUrl))
 				return;
 			/*
