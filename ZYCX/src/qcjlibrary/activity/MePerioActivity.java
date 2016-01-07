@@ -54,7 +54,7 @@ public class MePerioActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(20);
+		mCommonListView.setDividerHeight(40);
 	}
 
 	@Override
