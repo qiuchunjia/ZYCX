@@ -10,11 +10,13 @@ import com.zhiyicx.zycx.sociax.net.HttpHelper;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,10 +24,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
@@ -43,6 +47,7 @@ import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
@@ -618,19 +623,26 @@ public class HomeActivity extends BaseActivity {
 				}
 			});
 		}
+		WindowManager.LayoutParams params = this.getWindow().getAttributes();
+		params.alpha = 0.7f;
+		this.getWindow().setAttributes(params);
 		mSortMenu.setAnimationStyle(R.style.popwin_anim_style);
 		mSortMenu.setFocusable(true);
 		mSortMenu.setOutsideTouchable(true);
 		mSortMenu.update();
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
-		mSortMenu.showAsDropDown(v);
+		//设置弹出框的位置
+		int xPos = (- v.getWidth() / 4);
+		mSortMenu.showAsDropDown(v, xPos , 0);
 		mTitle.arrow_img_1.setImageResource(R.drawable.moreicon);
-		/*mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
-				mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
+				WindowManager.LayoutParams params = HomeActivity.this.getWindow().getAttributes();
+				params.alpha = 1.0f;
+				HomeActivity.this.getWindow().setAttributes(params);
 			}
-		});*/
+		});
 	}
 
 	public interface onStatusChangedListener {

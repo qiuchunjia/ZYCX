@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -101,7 +102,7 @@ public class PopAlertTimeList extends PopView {
 						index = 1;
 					}
 					ll_alert_time_list.addView(timeList.get(index));
-					tv_alert_count.setText("提醒" + (index + 1) + "次");
+					tv_alert_count.setText((index + 1) + "次");
 					count = index + 1;
 					index++;
 				}
@@ -113,7 +114,7 @@ public class PopAlertTimeList extends PopView {
 			public void onClick(View v) {
 				if (index > 1) {
 					ll_alert_time_list.removeView(timeList.get(index - 1));
-					tv_alert_count.setText("提醒" + (index - 1) + "次");
+					tv_alert_count.setText((index - 1) + "次");
 					count = index - 1;
 					index --;
 				}

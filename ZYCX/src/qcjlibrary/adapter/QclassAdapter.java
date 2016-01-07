@@ -9,11 +9,13 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.SpanUtil;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.R.color;
 
 /**
  * 轻课堂分类数据适配器
@@ -62,7 +64,10 @@ public class QclassAdapter extends BAdapter {
 				holder.tv_title.setText(mDetail.getCourse_name());
 				holder.tv_content.setText(mDetail.getContent());
 				holder.tv_num.setText(mDetail.getWatch_num()+"");
-				holder.tv_update.setText(update_head+mDetail.getVideo_num()+update_tail);
+				holder.tv_update.setText("");
+				String update = update_head + mDetail.getVideo_num() + update_tail;
+				holder.tv_update.append(SpanUtil.setForegroundColorSpan("", 0, 0, color.red));
+				holder.tv_update.append(update);
 				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
 			}
 		}

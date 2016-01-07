@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/main_white_pure_color"
-    android:padding="5dp" >
+    android:layout_height="@dimen/item_height"
+    android:layout_marginTop="5dp"
+    android:background="@color/main_white_pure_color" >
 
     <TextView
         android:id="@+id/tv_alert_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:text="8:00"
         android:textSize="@dimen/text_common" />
 
@@ -17,13 +18,15 @@
         android:layout_width="@dimen/margin_left"
         android:layout_height="@dimen/margin_left"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="5dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
         android:background="@drawable/bianjiicon" />
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_height"
-        android:background="@color/main_gray_color"
-        android:layout_below="@id/btn_alert_addtime" />
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="39dp"
+        android:background="@color/main_white_bg_color" />
 
 </RelativeLayout>

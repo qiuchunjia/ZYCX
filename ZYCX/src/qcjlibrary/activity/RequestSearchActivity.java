@@ -8,6 +8,7 @@ import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
@@ -62,8 +63,14 @@ public class RequestSearchActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				if (position > 0) {
-					mCommonListView.stepToNextActivity(parent, view, position,
-							RequestSearchActivity.class);
+					ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
+					if (item.getIs_expert().equals("0")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailCommonActivity.class);
+					} else if (item.getIs_expert().equals("1")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailExpertActivity.class);
+					}
 				}
 			}
 		});
