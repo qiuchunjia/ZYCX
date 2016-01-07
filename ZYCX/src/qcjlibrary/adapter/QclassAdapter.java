@@ -65,10 +65,9 @@ public class QclassAdapter extends BAdapter {
 				holder.tv_content.setText(mDetail.getContent());
 				holder.tv_num.setText(mDetail.getWatch_num()+"");
 				holder.tv_update.setText("");
-				holder.tv_update.append(update_head);
-				holder.tv_update.append(SpanUtil.setForegroundColorSpan("ss", 0, 0, color.red));
-				holder.tv_update.append(String.valueOf(mDetail.getVideo_num()));
-				holder.tv_update.append(update_tail);
+				String update = update_head + mDetail.getVideo_num() + update_tail;
+				holder.tv_update.append(SpanUtil.setForegroundColorSpan("", 0, 0, color.red));
+				holder.tv_update.append(update);
 				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
 			}
 		}
