@@ -75,8 +75,7 @@ public class FragmentMenu extends BaseFragment {
 	public void initData() {
 		mUser = mApp.getUser();
 		if (TextUtils.isEmpty(mUser.getAvatar())) {
-			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
-					REQUEST_GET);
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		} else {
 			addDataToIcon(mUser);
 		}
@@ -118,13 +117,11 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.rl_user:
-			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class,
-					mActivity.sendDataToBundle(mUser, null));
+			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class, mActivity.sendDataToBundle(mUser, null));
 
 			break;
 		case R.id.rl_home:
-			mApp.startActivity_qcj(mActivity, HomeActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(mActivity, HomeActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			mActivity.finish();
 			break;
 		case R.id.rl_question:
@@ -136,12 +133,10 @@ public class FragmentMenu extends BaseFragment {
 					mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
-			mApp.startActivity_qcj(mActivity, WebActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(mActivity, WebActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_periodical:
-			mApp.startActivity_qcj(getActivity(), MePerioActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(getActivity(), MePerioActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
 			quitLogin();
@@ -157,31 +152,27 @@ public class FragmentMenu extends BaseFragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
 		builder.setMessage("确定要注销此帐户吗?");
 		builder.setTitle("提示");
-		builder.setPositiveButton("确认",
-				new android.content.DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						Thinksns app = (Thinksns) obj.getApplicationContext();
-						app.getUserSql().clear();
-						// Thinksns.exitApp();
-						Intent intent = new Intent(obj, GuideActivity.class);
-						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-								| Intent.FLAG_ACTIVITY_NEW_TASK);
-						obj.startActivity(intent);
-						Anim.in(obj);
-						obj.finish();
-					}
-				});
-		builder.setNegativeButton("取消",
-				new android.content.DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				Thinksns app = (Thinksns) obj.getApplicationContext();
+				app.getUserSql().clear();
+				// Thinksns.exitApp();
+				Intent intent = new Intent(obj, GuideActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+				obj.startActivity(intent);
+				Anim.in(obj);
+				obj.finish();
+			}
+		});
+		builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 		builder.create().show();
 	}
 
-	
 }
