@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -164,6 +165,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
+			SociaxUIUtils.hideSoftKeyboard(this, et_content);
 			PopDealAnwer popDealAnwer = new PopDealAnwer(this, mAnswerCommon,
 					this);
 			popDealAnwer.showPop(ll_replay, Gravity.BOTTOM, 0, 0);

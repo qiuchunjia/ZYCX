@@ -9,7 +9,10 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
+import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -65,9 +68,10 @@ public class QclassAdapter extends BAdapter {
 				holder.tv_content.setText(mDetail.getContent());
 				holder.tv_num.setText(mDetail.getWatch_num()+"");
 				holder.tv_update.setText("");
-				String update = update_head + mDetail.getVideo_num() + update_tail;
-				holder.tv_update.append(SpanUtil.setForegroundColorSpan("", 0, 0, color.red));
-				holder.tv_update.append(update);
+				holder.tv_update.append(update_head);
+				holder.tv_update.append(SpanUtil.setForegroundColorSpan(
+						mDetail.getVideo_num()+"", 0, 0, color.red));
+				holder.tv_update.append(update_tail);
 				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
 			}
 		}
