@@ -47,7 +47,11 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 	public void initIntent() {
 		Bundle bundle = getIntent().getExtras();
 		ModelPeriodical mData = (ModelPeriodical) bundle.get(Config.ACTIVITY_TRANSFER_BUNDLE);
-		pid = mData.getPid();
+		try {
+			pid = Integer.parseInt(mData.getPid());
+		} catch (Exception e) {
+			L.d("Cathy", "pid 转换："+e.toString());
+		}
 	}
 
 	@Override

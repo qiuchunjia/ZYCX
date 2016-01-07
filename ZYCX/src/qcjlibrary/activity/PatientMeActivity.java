@@ -46,7 +46,7 @@ public class PatientMeActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "患者信息";
+		return "我的病历";
 	}
 
 	@Override
@@ -61,6 +61,7 @@ public class PatientMeActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		//titleSetRightImage(R.drawable.);
 		tv_edit = (TextView) findViewById(R.id.tv_edit);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_gender = (TextView) findViewById(R.id.tv_gender);

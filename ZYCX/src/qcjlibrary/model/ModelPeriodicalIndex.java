@@ -13,19 +13,14 @@ public class ModelPeriodicalIndex extends Model{
 	 */
 	private static final long serialVersionUID = 7767962929104215117L;
 	
-	private ModelPeriodical data;
-	private List<ModelPeriodical> list;
-	public ModelPeriodical getData() {
+	private List<ModelPeriodical> data;
+
+	public List<ModelPeriodical> getData() {
 		return data;
 	}
-	public void setData(ModelPeriodical data) {
+
+	public void setData(List<ModelPeriodical> data) {
 		this.data = data;
-	}
-	public List<ModelPeriodical> getList() {
-		return list;
-	}
-	public void setList(List<ModelPeriodical> list) {
-		this.list = list;
 	}
 	
 }

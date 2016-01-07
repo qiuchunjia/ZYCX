@@ -21,6 +21,7 @@ import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.ModelNotifyNotice;
+import qcjlibrary.model.ModelPeriodical;
 import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.ModelQclassPlay;
@@ -247,11 +248,17 @@ public class api {
 	public static final class PeriodicalImpl implements PeriodicalIm{
 
 		@Override
-		public RequestParams index() {
+		public RequestParams index(ModelPeriodical mData) {
 			RequestParams params = new RequestParams();
 			params.add(APP, APPNAME);
 			params.add(MOD, PERIODICAL);
 			params.add(ACT, INDEX);
+			if(mData.getLastid() != null && mData.getLastid().equals("")){
+				params.add(LASTID, mData.getLastid());
+			}
+			if (mData.getMaxid() != null && !mData.getMaxid().equals("")) {
+				params.add(MAXID, mData.getMaxid());
+			}
 			return params;
 		}
 

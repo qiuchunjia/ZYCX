@@ -30,6 +30,8 @@ import com.zhiyicx.zycx.R;
 public class FoodCategoryAdapter extends BAdapter {
 
 	private ModelFoodSearch mSearch;
+	private String efficacyHeader = "功效：";
+	private String cancer = "针对癌肿：";
 
 	public FoodCategoryAdapter(BaseActivity activity, ModelFoodSearch search) {
 		super(activity, null);
@@ -72,8 +74,8 @@ public class FoodCategoryAdapter extends BAdapter {
 				Log.i("ModelFoodSearch1", search1.toString());
 				mApp.displayImage(search1.getImgSrc(), holder.iv_food_icon);
 				holder.tv_food_name.setText(search1.getSide_name());
-				holder.tv_food_function.setText(search1.getGongxiao());
-				holder.tv_cancer.setText(search1.getFangzhi_cancer());
+				holder.tv_food_function.setText(efficacyHeader+search1.getGongxiao());
+				holder.tv_cancer.setText(cancer+search1.getFangzhi_cancer());
 			}
 
 		}

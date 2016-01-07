@@ -174,13 +174,11 @@
                     android:textSize="@dimen/text_common" />
             </LinearLayout>
             
-            <include layout="@layout/view_line_vertical" />
 
             <RelativeLayout
                 android:id="@+id/rl_alert_starttime"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                
                 android:paddingLeft="@dimen/margin_left"
                 android:paddingRight="@dimen/margin_right" >
 
@@ -189,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="8: 00"
+                    android:text="2015-1-1"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
 

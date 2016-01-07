@@ -8,6 +8,7 @@ import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelPeriodical;
 import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.L;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,15 +20,14 @@ import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.QiKanDetailsActivity;
 
 /**
- * author：qiuchunjia time：下午5:33:01 类描述：这个类是实现
- *
+ * author：qiuchunjia time：下午5:33:01 
+ * 类描述：展示期刊list数据
  */
 
 public class MePerioActivity extends BaseActivity {
+	
 	private CommonListView mCommonListView;
-
 	private BAdapter mAdapter;
-	private List<Model> mList;
 
 	@Override
 	public void onClick(View v) {
@@ -54,14 +54,13 @@ public class MePerioActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(20);
+		mCommonListView.setDividerHeight(40);
 	}
 
 	@Override
 	public void initData() {
-		mList = new ArrayList<Model>();
-		PeriodicalImpl params = new PeriodicalImpl();
-		sendRequest(params.index(), ModelPeriodicalIndex.class, 0);
+		mAdapter = new MePerioAdapter(this, null);
+		mCommonListView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -76,21 +75,4 @@ public class MePerioActivity extends BaseActivity {
 		});
 	}
 
-	@Override
-	public Object onResponceSuccess(String str, Class class1) {
-		// TODO 自动生成的方法存根
-		Object object = super.onResponceSuccess(str, class1);
-		if(object instanceof ModelPeriodicalIndex){
-			/*//List<ModelPeriodical> list = ((ModelPeriodicalIndex) object).getData();
-			if(mList != null && list != null){
-				mList.clear();
-				mList.addAll(list);
-				L.d("Cathy", "mList:"+mList.size());
-				mAdapter = new MePerioAdapter(this, mList);
-				mCommonListView.setAdapter(mAdapter);
-			}*/
-		}
-		return object;
-	}
-	
 }
