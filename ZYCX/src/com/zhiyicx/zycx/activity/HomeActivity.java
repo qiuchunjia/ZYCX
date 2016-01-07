@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +47,7 @@ import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
@@ -629,7 +631,9 @@ public class HomeActivity extends BaseActivity {
 		mSortMenu.setOutsideTouchable(true);
 		mSortMenu.update();
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
-		mSortMenu.showAsDropDown(v);
+		//设置弹出框的位置
+		int xPos = (- v.getWidth() / 4);
+		mSortMenu.showAsDropDown(v, xPos , 0);
 		mTitle.arrow_img_1.setImageResource(R.drawable.moreicon);
 		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override

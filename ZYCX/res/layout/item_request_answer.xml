@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/margin_right_small"
-                android:drawableLeft="@drawable/pinglunicon"
+                android:drawableLeft="@drawable/pinglunicon_request"
                 android:drawablePadding="5dp"
                 android:text="1"
                 android:textColor="@color/text_more_gray"
