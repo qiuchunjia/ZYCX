@@ -174,13 +174,11 @@
                     android:textSize="@dimen/text_common" />
             </LinearLayout>
             
-            <include layout="@layout/view_line_vertical" />
 
             <RelativeLayout
                 android:id="@+id/rl_alert_starttime"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                
                 android:paddingLeft="@dimen/margin_left"
                 android:paddingRight="@dimen/margin_right" >
 
