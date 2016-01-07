@@ -107,6 +107,7 @@
             android:configChanges="orientation|navigation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+         
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -397,7 +398,7 @@
 
             <!-- 癌友帮二期开发新增加页面end -->
         </activity>
-        <activity android:name="qcjlibrary.activity.QclassDetailActivity"/>
+        <activity android:name="qcjlibrary.activity.QclassDetailActivity" />
 
         <receiver android:name="qcjlibrary.broadcast.AlarmBroadCastReciever" >
             <intent-filter android:priority="1000" >
@@ -420,7 +421,6 @@
                 <action android:name="alert_music" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

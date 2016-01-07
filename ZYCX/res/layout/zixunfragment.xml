@@ -18,12 +18,12 @@
             android:src="@drawable/arrows_right01" />
 
         <com.viewpagerindicator.TabPageIndicator
-            android:fadingEdge="none"
             android:id="@+id/tabpagerIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/iv_right_arrow"
             android:background="@color/main_white_pure_color"
+            android:overScrollMode="never"
             android:visibility="gone" />
     </RelativeLayout>
 
