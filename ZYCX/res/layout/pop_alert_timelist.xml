@@ -24,7 +24,7 @@
 	        android:id="@+id/tv_alert_count"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="提醒一次"
+	        android:text="1次"
 	        android:textSize="@dimen/text_small"
 	        android:layout_below="@id/tv_alert_setting"
 	        />
@@ -50,6 +50,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
+	    android:layout_marginTop="5dp"
 	    ></LinearLayout>
 	<Button 
 	    android:id="@+id/btn_alert_time_check"

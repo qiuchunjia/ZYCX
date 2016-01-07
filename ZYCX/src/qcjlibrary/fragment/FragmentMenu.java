@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import com.zhiyicx.zycx.sociax.unit.Anim;
  */
 
 public class FragmentMenu extends BaseFragment {
-	private RelativeLayout rl_user;
+	private LinearLayout rl_user;
 	private RoundImageView riv_user_icon;
 	private TextView tv_username;
 	private ImageView menu_iv_edit;
@@ -57,7 +58,7 @@ public class FragmentMenu extends BaseFragment {
 
 	@Override
 	public void initView() {
-		rl_user = (RelativeLayout) findViewById(R.id.rl_user);
+		rl_user = (LinearLayout) findViewById(R.id.rl_user);
 		riv_user_icon = (RoundImageView) findViewById(R.id.riv_user_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		menu_iv_edit = (ImageView) findViewById(R.id.menu_iv_edit);

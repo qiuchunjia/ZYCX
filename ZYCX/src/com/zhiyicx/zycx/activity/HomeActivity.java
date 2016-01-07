@@ -10,6 +10,7 @@ import com.zhiyicx.zycx.sociax.net.HttpHelper;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
@@ -22,10 +23,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
@@ -618,6 +621,9 @@ public class HomeActivity extends BaseActivity {
 				}
 			});
 		}
+		WindowManager.LayoutParams params = this.getWindow().getAttributes();
+		params.alpha = 0.7f;
+		this.getWindow().setAttributes(params);
 		mSortMenu.setAnimationStyle(R.style.popwin_anim_style);
 		mSortMenu.setFocusable(true);
 		mSortMenu.setOutsideTouchable(true);
@@ -625,12 +631,14 @@ public class HomeActivity extends BaseActivity {
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
 		mSortMenu.showAsDropDown(v);
 		mTitle.arrow_img_1.setImageResource(R.drawable.moreicon);
-		/*mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
-				mTitle.arrow_img_1.setImageResource(R.drawable.arrow_do);
+				WindowManager.LayoutParams params = HomeActivity.this.getWindow().getAttributes();
+				params.alpha = 1.0f;
+				HomeActivity.this.getWindow().setAttributes(params);
 			}
-		});*/
+		});
 	}
 
 	public interface onStatusChangedListener {
