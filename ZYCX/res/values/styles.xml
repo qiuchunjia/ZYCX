@@ -147,4 +147,15 @@
         <item name="android:layout_marginTop">@dimen/margin_top</item>
         <item name="android:textSize">@dimen/text_common</item>
     </style>
+    
+    <style name="text_home" parent="qclass_cmd_send">
+        <item name="android:layout_marginLeft">@dimen/margin_left</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="img_home" parent="text_home">
+        <item name="android:layout_marginRight">@dimen/margin_left</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
 </resources>

@@ -508,7 +508,7 @@ public class HomeActivity extends BaseActivity {
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			break;
 		case index_web:
-			titleSetCenterTitle("病例");
+			titleSetCenterTitle("病历");
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);

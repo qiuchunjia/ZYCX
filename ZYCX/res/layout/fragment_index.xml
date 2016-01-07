@@ -38,9 +38,9 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/index_tv"
             android:drawablePadding="5dp"
-            android:text="为你推荐"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/text_big" />
+            android:text="为您推荐"
+            android:textColor="@color/text_more_gray"
+            android:textSize="@dimen/text_small" />
         <!-- 主页选项框 -->
 
         <LinearLayout

@@ -35,7 +35,7 @@
                 android:layout_below="@id/iv_mycase"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="我的病例"
+                android:text="我的病历"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -60,7 +60,7 @@
                 android:layout_below="@id/iv_down"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="病例导出"
+                android:text="病历导出"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -103,7 +103,7 @@
             android:id="@+id/tv_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的病例"
+            android:text="我的病历"
             android:textColor="@color/text_green"
             android:textSize="@dimen/text_common" />
 
@@ -203,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_right_small"
-                    android:text="我的病例空空如也"
+                    android:text="我的病历空空如也"
                     android:textColor="@color/text_more_gray"
                     android:textSize="@dimen/text_common" />
             </LinearLayout>
