@@ -20,16 +20,14 @@ import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.QiKanDetailsActivity;
 
 /**
- * author：qiuchunjia time：下午5:33:01 类描述：这个类是实现
- *
+ * author：qiuchunjia time：下午5:33:01 
+ * 类描述：展示期刊list数据
  */
 
 public class MePerioActivity extends BaseActivity {
+	
 	private CommonListView mCommonListView;
-
 	private BAdapter mAdapter;
-	private List<Model> mList;
-	private ModelPeriodical mData;
 
 	@Override
 	public void onClick(View v) {
@@ -61,10 +59,8 @@ public class MePerioActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		mData = new ModelPeriodical();
-		mList = new ArrayList<Model>();
-		PeriodicalImpl params = new PeriodicalImpl();
-		sendRequest(params.index(mData), ModelPeriodical.class, 0);
+		mAdapter = new MePerioAdapter(this, null);
+		mCommonListView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -79,21 +75,4 @@ public class MePerioActivity extends BaseActivity {
 		});
 	}
 
-	@Override
-	public Object onResponceSuccess(String str, Class class1) {
-		// TODO 自动生成的方法存根
-		Object object = DataAnalyze.parseData(str, class1);
-		if(object instanceof List<?>){
-			List<ModelPeriodical> list = (List<ModelPeriodical>) object;
-			if(mList != null && list != null){
-				mList.clear();
-				mList.addAll(list);
-				L.d("Cathy", "mList:"+mList.size());
-				mAdapter = new MePerioAdapter(this, mList);
-				mCommonListView.setAdapter(mAdapter);
-			}
-		}
-		return object;
-	}
-	
 }

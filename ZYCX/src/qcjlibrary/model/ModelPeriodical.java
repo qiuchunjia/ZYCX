@@ -1,10 +1,14 @@
 package qcjlibrary.model;
 
+import org.json.JSONObject;
+
 import qcjlibrary.model.base.Model;
 
 public class ModelPeriodical extends Model {
 	/**
-	 * 期刊详情数据
+	 * 期刊首页数据
+	 * @author Tan
+	 * @since 1.6
 	 */
 	private static final long serialVersionUID = 6380840699162529788L;
 	private String cover;// 首页图片
@@ -16,6 +20,34 @@ public class ModelPeriodical extends Model {
 
 	
 	
+	public ModelPeriodical() {
+		super();
+	}
+	
+	public ModelPeriodical(JSONObject data) {
+		try {
+			if(data.has("cover")){
+				setCover(data.getString("cover"));
+			}
+			if(data.has("periodical_num")){
+				setPeriodical_num(data.getString("periodical_num"));
+			}
+			if(data.has("ctime")){
+				setCtime(data.getString("ctime"));
+			}
+			if(data.has("pid")){
+				setPid(data.getString("pid"));
+			}
+			if(data.has("periodical_name")){
+				setPeriodical_name(data.getString("periodical_name"));
+			}
+			if(data.has("sort")){
+				setSort(data.getString("sort"));
+			}
+		} catch (Exception e) {
+		}
+	}
+
 	public String getCover() {
 		return cover;
 	}

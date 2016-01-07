@@ -12,6 +12,7 @@ import qcjlibrary.model.ModelPeriodicalIndex;
 import qcjlibrary.model.ModelZiXun;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.L;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,16 +115,23 @@ public class MePerioAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-		if(object instanceof ModelPeriodicalIndex){
-			ModelPeriodicalIndex index = (ModelPeriodicalIndex) object;
-			return index.getData();
+		if(object instanceof List<?>){
+			@SuppressWarnings("unchecked")
+			List<ModelPeriodical> list = (List<ModelPeriodical>) object;
+			return list;
 		}
 		return null;
 	}
 
 	private void requstMessage(ModelPeriodical mData, int type) {
 		PeriodicalImpl impl = new PeriodicalImpl();
-		sendRequest(impl.index(mData), ModelPeriodicalIndex.class, 0, type);
+		sendRequest(impl.index(mData), ModelPeriodical.class, REQUEST_GET, type);
+	}
+	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		return DataAnalyze.parseData(str, class1);
 	}
 
 }
