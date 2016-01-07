@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="8: 00"
+                    android:text="2015-1-1"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
 

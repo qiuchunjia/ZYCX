@@ -27,6 +27,8 @@
             android:layout_marginLeft="@dimen/margin_left_small"
             android:layout_toRightOf="@id/riv_user_icon"
             android:text="呵呵哒"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_very_big" />
 

@@ -153,6 +153,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					String[] mTimeArr = timeList.split(";");
 					// 为每一个时间设置广播
 					for (int j = 0; j < mTimeArr.length; j++) {
+						/** 区分不同闹钟的ID**/
+						int id = 0;
+						id = (Integer) SharedPreferencesUtil.getData(
+								this, "alerm id:"+id, id);
 						if (mTimeArr[j] != null) {
 							long currentMillis = System.currentTimeMillis();
 							if(getYearMonDay(startTime) < currentMillis){
@@ -173,10 +177,12 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 							 * int, Intent, int) 发送一个广播 getService(Context, int,
 							 * Intent, int) 开启一个服务
 							 */
-							PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
+							PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
 							mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 							mManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, intervalMillis,
 									mPendingIntent);
+							id++;
+							SharedPreferencesUtil.saveData(this, "alerm id:"+id, id);
 						}
 					}
 				} else {
