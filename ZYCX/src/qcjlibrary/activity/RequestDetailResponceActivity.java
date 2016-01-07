@@ -88,7 +88,11 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	 */
 	private void addDataToHead(ModelRequestAnswerComom mAnswerCommon2) {
 		if (mAnswerCommon2 != null) {
-			titleSetCenterTitle(mAnswerCommon2.getUser_name() + "的解答");
+			String name = mAnswerCommon2.getUser_name();
+			if(name.length() > 5){
+				name = name.substring(0,4);
+			}
+			titleSetCenterTitle(name + "..." + "的解答");
 			mApp.displayImage(mAnswerCommon2.getUser_face(), riv_other_icon);
 			tv_other_username.setText(mAnswerCommon2.getUser_name());
 			tv_other_date.setText(mAnswerCommon2.getTime());
