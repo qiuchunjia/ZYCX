@@ -36,6 +36,9 @@ public class ModelRequestItem extends Model {
 	private String question_detail;
 	private String uid;
 	private String category;
+	private String url;
+//	  "url": "http://demo-qingko.zhiyicx.com/index.php?app=ask&mod=Question&act=view&id=100466"
+
 
 	/** item详情部分需要的字段end **/
 
@@ -199,6 +202,14 @@ public class ModelRequestItem extends Model {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override

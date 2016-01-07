@@ -148,7 +148,7 @@ public class Utils {
 		controller.setAppWebSite(SHARE_MEDIA.RENREN, MyConfig.HOST);
 		controller.setShareContent(txt + url);
 		controller.setShareMedia(null);
-		controller.openShare(context, false);
+//		controller.openShare(context, false);
 	}
 
 	public static void shareVidoe(Activity context, UMSocialService controller,
@@ -227,7 +227,7 @@ public class Utils {
 		umVideo.setTitle("轻课堂分享!");
 		controller.setShareMedia(umVideo);
 		controller.setShareContent("轻课堂视频《" + txt + "》分享。");
-		controller.openShare(context, false);
+//		controller.openShare(context, false);
 
 	}
 
