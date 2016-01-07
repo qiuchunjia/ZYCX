@@ -56,7 +56,7 @@ public class MePerioAdapter extends BAdapter {
 
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
-			L.d("Cathy", "mList adapter:"+mList.size());
+			L.d("Cathy", "adapter mList size:"+mList.size());
 			ModelPeriodical mData = (ModelPeriodical) mList.get(position);
 			mApp.displayImage(mData.getCover(), holder.iv_perio_icon);
 			holder.tv_title.setText(mData.getPeriodical_name());
