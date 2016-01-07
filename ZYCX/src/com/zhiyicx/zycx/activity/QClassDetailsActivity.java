@@ -23,8 +23,10 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelQclassDetail;
+import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.util.L;
 import qcjlibrary.widget.popupview.PopQclassCmt;
+import qcjlibrary.widget.popupview.PopShareContent;
 
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -75,7 +77,7 @@ public class QClassDetailsActivity extends BaseActivity
 
 	private ImageView iv_qclass_play;
 	private TextView tv_title_right;
-	
+
 	private String mDefVurl = null;
 	private String mDefId = null;
 	private String mDefVid = null;
@@ -98,7 +100,13 @@ public class QClassDetailsActivity extends BaseActivity
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right3:
-			Utils.shareVidoe(this, mController, mTitle, mDefVurl);
+			ModelShareContent content = new ModelShareContent();
+			content.setType(Config.SHARE_VIDEO);
+			content.setTitle(mTitle);
+			content.setUrl(mDefVurl);
+			PopShareContent popShareContent = new PopShareContent(this, content, this);
+			popShareContent.showPop(iv_qclass_play, Gravity.BOTTOM, 0, 0);
+			// Utils.shareVidoe(this, mController, mTitle, mDefVurl);
 			break;
 		case R.id.tv_title_right:
 			// 弹出评论PopWindow
@@ -107,13 +115,12 @@ public class QClassDetailsActivity extends BaseActivity
 			break;
 		case R.id.iv_qclass_play:
 			// 跳转播放
-			String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" 
-					+ mDefId + "&uid=" + Utils.getUid(this);
-			//Intent intent = new Intent(this, QClassPlayActivity.class);
-			//intent.putExtra("vurl", urlStr);
-			//startActivity(intent);
+			String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid=" + Utils.getUid(this);
+			// Intent intent = new Intent(this, QClassPlayActivity.class);
+			// intent.putExtra("vurl", urlStr);
+			// startActivity(intent);
 			Uri uri = Uri.parse(urlStr);
-			Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+			Intent it = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(it);
 			break;
 		}
@@ -146,7 +153,7 @@ public class QClassDetailsActivity extends BaseActivity
 
 	@Override
 	public void onPageSelected(int i) {
-		if (i == 1){
+		if (i == 1) {
 			mCmtFgmt.loadCmtData(mDefId);
 		}
 	}
@@ -187,8 +194,7 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void initIntent() {
 		Bundle bundle = getIntent().getExtras();
-		ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable
-				(Config.ACTIVITY_TRANSFER_BUNDLE);
+		ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
 		mCid = mDetail.getCourse_id();
 		cover = mDetail.getCover();
 		if (mCid == -1) {

@@ -68,4 +68,8 @@ public class Config {
 	public static final int TYPE_QCLASS = 3;
 	public static final int TYPE_FOOD = 4;
 
+	/*************** 分享类别 **************************/
+	public static final String SHARE_TEXT = "share_text";
+	public static final String SHARE_VIDEO = "share_video";
+
 }

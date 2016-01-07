@@ -4,16 +4,20 @@ import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
+import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
+import qcjlibrary.widget.popupview.PopShareContent;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -296,6 +300,12 @@ public class RequestDetailCommonActivity extends BaseActivity {
 					sendDataToBundle(new Model(), null));
 			break;
 		case R.id.iv_title_right1:
+			ModelShareContent shareContent=new ModelShareContent();
+			shareContent.setType(Config.SHARE_TEXT);
+			shareContent.setTitle("问答分享：");
+			shareContent.setUrl(mRequestItem.getUrl());
+			PopShareContent popShareContent=new PopShareContent(this, shareContent, this);
+			popShareContent.showPop(ll_answer, Gravity.BOTTOM,0,0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
 			// sendDataToBundle(new Model(), null));
 			break;

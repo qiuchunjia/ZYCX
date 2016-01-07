@@ -6,12 +6,15 @@ import qcjlibrary.activity.RequestFlagActivity;
 import qcjlibrary.activity.ZhiXunFlagActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestFlag;
+import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.util.ToastUtils;
+import qcjlibrary.widget.popupview.PopShareContent;
 import qcjlibrary.widget.popupview.PopSizeChoose;
 import qcjlibrary.widget.popupview.base.PopView;
 import android.content.Intent;
@@ -162,7 +165,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 			}
 			break;
 		case R.id.iv_title_right1:
-			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
+			ModelShareContent shareContent=new ModelShareContent();
+			shareContent.setType(Config.SHARE_TEXT);
+			shareContent.setTitle("青稞网资讯分享:"+mTitle);
+			shareContent.setUrl(mUrl);
+			PopShareContent PopshareContent=new PopShareContent(this, shareContent, this);
+			PopshareContent.showPop(mContent, Gravity.BOTTOM, 0, 0);
+//			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
 			break;
 		case R.id.btn_share:
 			/*
