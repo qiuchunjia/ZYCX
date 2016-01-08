@@ -12,10 +12,16 @@ import android.widget.TextView;
  
 public class Tools_FontManager {  
     
-    public static void changeFonts(ViewGroup root, Activity act) {  
+    public static void changeFonts(ViewGroup root, Activity act, int index) {  
     
-       Typeface tf = Typeface.createFromAsset(act.getAssets(),  
-              "fonts/jingleiti.TTF");  
+    	Typeface tf;
+    	if(index == -1){
+    		tf = Typeface.createFromAsset(act.getAssets(),  
+    				"fonts/xing.TTF");  
+    	} else{
+    		tf = Typeface.createFromAsset(act.getAssets(),  
+    				"fonts/song.TTF");
+    	}
     
 		for (int i = 0; i < root.getChildCount(); i++) {
 			View v = root.getChildAt(i);
@@ -32,7 +38,7 @@ public class Tools_FontManager {
 				edt.setTypeface(tf);
 				setFakeBold(edt);
 			} else if (v instanceof ViewGroup) {
-				changeFonts((ViewGroup) v, act);
+				changeFonts((ViewGroup) v, act , index);
 			}
 		}
     
