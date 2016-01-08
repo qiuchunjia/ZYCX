@@ -23,6 +23,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 			FragmentZiXunList f = new FragmentZiXunList();
 			Bundle bundle = new Bundle();
 			bundle.putInt("type", mList.get(position).getFenlei_id());
+			bundle.putString("isColl", mList.get(position).getIsColl());
 			f.setArguments(bundle);
 			return f;
 		}

@@ -22,6 +22,8 @@ public interface ZhixunIm {
 	public static final String LASTID = "lastid"; // 上拉加载，最下面资讯的id
 	public static final String MAXID = "maxid";// 下拉刷新，最上面的资讯id
 	public static final String TAG_ID = "tag_id";
+	public static final String ISCOLL = "isColl"; //是否收藏
+	
 
 	/**
 	 * 获取咨询新闻

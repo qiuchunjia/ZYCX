@@ -2,39 +2,6 @@ package com.zhiyicx.zycx.activity;
 
 import org.json.JSONObject;
 
-import qcjlibrary.activity.RequestFlagActivity;
-import qcjlibrary.activity.ZhiXunFlagActivity;
-import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.activity.base.Title;
-import qcjlibrary.config.Config;
-import qcjlibrary.model.ModelMsg;
-import qcjlibrary.model.ModelRequest;
-import qcjlibrary.model.ModelRequestFlag;
-import qcjlibrary.model.ModelShareContent;
-import qcjlibrary.model.ModelUser;
-import qcjlibrary.model.ModelZiXunDetail;
-import qcjlibrary.util.ToastUtils;
-import qcjlibrary.widget.popupview.PopShareContent;
-import qcjlibrary.widget.popupview.PopSizeChoose;
-import qcjlibrary.widget.popupview.base.PopView;
-import android.content.Intent;
-import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.sso.UMSsoHandler;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.net.JsonDataListener;
@@ -43,6 +10,30 @@ import com.zhiyicx.zycx.sociax.component.TSFaceView;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 import com.zhiyicx.zycx.util.Utils;
 
+import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import qcjlibrary.activity.ZhiXunFlagActivity;
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
+import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelShareContent;
+import qcjlibrary.model.ModelZiXunDetail;
+import qcjlibrary.util.ToastUtils;
+import qcjlibrary.widget.popupview.PopShareContent;
+import qcjlibrary.widget.popupview.PopSizeChoose;
+import qcjlibrary.widget.popupview.base.PopView;
+
 /**
  * Created by Administrator on 2014/12/27.
  */
@@ -50,7 +41,6 @@ import com.zhiyicx.zycx.util.Utils;
 public class ZiXUnContentActivity extends BaseActivity {
 
 	final private static String TAG = "ZiXUnContentActivity";
-	private final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	private WebView mContent;
 	private int mId, mUid, mCid;
 	private String mTitle;
@@ -58,12 +48,12 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private EditText mCmtEdit = null;
 	private Button mCollBtn = null;
 	private ImageView mFace = null;
+	private TextView btn_praise;
 	private TSFaceView mFaceView = null;
 	private int mIsColl = 0;
 
 	private ModelZiXunDetail mDetail = null;
 	private Title mTitleLayout;
-
 	private String mChangeSizeUrl; // 改变字体的url
 
 	@Override
@@ -98,6 +88,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		titleSetRightImage(R.drawable.fenxiang);
 		mTitleLayout = getTitleClass();
 		mContent = (WebView) findViewById(R.id.content_view);
+		btn_praise=(TextView) findViewById(R.id.btn_praise);
 		mContent.getSettings().setJavaScriptEnabled(true);
 		mContent.setWebViewClient(new WebViewClient() {
 			@Override
@@ -119,7 +110,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		findViewById(R.id.btn_share).setOnClickListener(this);
 		findViewById(R.id.btn_comment).setOnClickListener(this);
 		findViewById(R.id.btn_collect).setOnClickListener(this);
-		findViewById(R.id.btn_praise).setOnClickListener(this);
+		btn_praise.setOnClickListener(this);
 		mCollBtn = (Button) findViewById(R.id.btn_collect);
 		mCmtEdit = (EditText) findViewById(R.id.edit_cmt);
 
@@ -174,14 +165,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 //			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
 			break;
 		case R.id.btn_share:
-			/*
-			 * Intent intent = new Intent(Intent.ACTION_SEND);
-			 * intent.putExtra(Intent.EXTRA_TEXT, mUrl);
-			 * intent.setType("text/plain");
-			 * intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			 * startActivity(Intent.createChooser(intent, "分享到"));
-			 */
-			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
 			break;
 		case R.id.btn_comment:
 			comment();
@@ -332,11 +315,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		/** 使用SSO授权必须添加如下代码 */
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-		if (ssoHandler != null) {
-			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-		}
 	}
 
 	private void loadData() {
