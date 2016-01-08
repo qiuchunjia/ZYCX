@@ -11,6 +11,7 @@ import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 import com.zhiyicx.zycx.util.Utils;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,6 +57,8 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private Title mTitleLayout;
 	private String mChangeSizeUrl; // 改变字体的url
 
+	private int mCurrentPraise;
+
 	@Override
 	public String setCenterTitle() {
 		return "咨询详情";
@@ -88,7 +91,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		titleSetRightImage(R.drawable.fenxiang);
 		mTitleLayout = getTitleClass();
 		mContent = (WebView) findViewById(R.id.content_view);
-		btn_praise=(TextView) findViewById(R.id.btn_praise);
+		btn_praise = (TextView) findViewById(R.id.btn_praise);
 		mContent.getSettings().setJavaScriptEnabled(true);
 		mContent.setWebViewClient(new WebViewClient() {
 			@Override
@@ -124,8 +127,29 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
+	}
 
+	/**
+	 * 初始化点赞
+	 * 
+	 * @param ispraise
+	 */
+	private void initPraise(int ispraise) {
+		if (ispraise == 0) {
+			setTextDrawable(R.drawable.zanicon);
+		} else {
+			setTextDrawable(R.drawable.zanicon02_red);
+		}
+		btn_praise.setText(mCurrentPraise + "");
+	}
+
+	/**
+	 * 设置图片
+	 */
+	private void setTextDrawable(int resouceId) {
+		Drawable drawable = getResources().getDrawable(resouceId);
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+		btn_praise.setCompoundDrawables(drawable, null, null, null);
 	}
 
 	@Override
@@ -156,13 +180,14 @@ public class ZiXUnContentActivity extends BaseActivity {
 			}
 			break;
 		case R.id.iv_title_right1:
-			ModelShareContent shareContent=new ModelShareContent();
+			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
-			shareContent.setTitle("青稞网资讯分享:"+mTitle);
+			shareContent.setTitle("青稞网资讯分享:" + mTitle);
 			shareContent.setUrl(mUrl);
-			PopShareContent PopshareContent=new PopShareContent(this, shareContent, this);
+			PopShareContent PopshareContent = new PopShareContent(this, shareContent, this);
 			PopshareContent.showPop(mContent, Gravity.BOTTOM, 0, 0);
-//			Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ", mUrl);
+			// Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
+			// mUrl);
 			break;
 		case R.id.btn_share:
 			break;
@@ -182,7 +207,17 @@ public class ZiXUnContentActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (judgeTheMsg(object)) {
+			// 已点赞， 已取消点赞
 			ModelMsg modelMsg = (ModelMsg) object;
+			if (modelMsg.getMessage().equals("已点赞")) {
+				mCurrentPraise = mCurrentPraise + 1;
+				btn_praise.setText(mCurrentPraise + "");
+				setTextDrawable(R.drawable.zanicon02_red);
+			} else {
+				mCurrentPraise = mCurrentPraise - 1;
+				btn_praise.setText(mCurrentPraise + "");
+				setTextDrawable(R.drawable.zanicon);
+			}
 			ToastUtils.showToast(modelMsg.getMessage());
 		}
 		return object;
@@ -190,8 +225,10 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	private void comment() {
 		String txt = mCmtEdit.getText().toString().trim();
-		if (TextUtils.isEmpty(txt))
+		if (TextUtils.isEmpty(txt)){
+			ToastUtils.showToast("评论内容不能为空！");
 			return;
+			}
 		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)
 				+ Utils.getTokenString(this);
 		NetComTools.getInstance(this).getNetJson(url, new JsonDataListener() {
@@ -327,11 +364,17 @@ public class ZiXUnContentActivity extends BaseActivity {
 				try {
 					int ret = jsonObject.getInt("code");
 					if (ret == 0) {
+						Log.i("loadData", jsonObject.toString());
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
 						mChangeSizeUrl = mUrl + Utils.getTokenString(ZiXUnContentActivity.this);
 						mContent.loadUrl(mChangeSizeUrl);
 						mIsColl = data.getInt("isColl");
+						int is_praise = data.getInt("isPraise");
+						mCurrentPraise = Integer.valueOf(data.getString("praiseCount"));
+						String count = data.getString("count");
+						mCmtEdit.setHint(count + "人评论过");
+						initPraise(is_praise);
 						if (mIsColl == 1)
 							mCollBtn.setText("不收藏");
 						else

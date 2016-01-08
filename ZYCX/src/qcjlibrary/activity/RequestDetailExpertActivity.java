@@ -179,11 +179,13 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		if (data != null) {
 			tv_expert_date.setText(data.getTime());
 			tv_expertcontent.setText(data.getAnswer_content());
+			find_more.setVisibility(View.VISIBLE);
 			find_more.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					ll_expert_repaly.setVisibility(View.VISIBLE);
+					find_more.setVisibility(View.GONE);
 				}
 			});
 		}
@@ -196,6 +198,8 @@ public class RequestDetailExpertActivity extends BaseActivity {
 				answerComom.setQid(mRequestItem.getQuestion_id());
 				addDataToComment(answerComom);
 			}
+		}else{
+			find_more.setVisibility(View.GONE);
 		}
 
 	}

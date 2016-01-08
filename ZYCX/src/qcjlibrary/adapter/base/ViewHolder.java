@@ -1,6 +1,5 @@
 package qcjlibrary.adapter.base;
 
-
 import qcjlibrary.widget.RoundImageView;
 
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ public class ViewHolder {
 	public TextView tv_title;
 	public TextView tv_answer;
 	public TextView tv_expert_answer;
+	public RelativeLayout rl_common_answer;
 	public TextView tv_date;
 	public RelativeLayout rl_agree;
 	public ImageView iv_yes;
@@ -145,6 +145,5 @@ public class ViewHolder {
 	/******************* 选择地址item ************************/
 	public TextView tv_choose_adress;
 	/******************* 选择地址item end ************************/
-
 
 }

@@ -18,10 +18,13 @@ public class ModelZiXunDetail extends Model {
 	private String cover;
 	private String readCount;
 	private String cTime;
+	private String praise; // 赞的数量
+	private String is_praise;// 是否赞
+
 	// 更具需要多添加的属性
 	private int fenlei_id;
-	private String tag_id;  //用于标签搜索
-	private String isColl; //是否收藏
+	private String tag_id; // 用于标签搜索
+	private String isColl; // 是否收藏
 
 	public ModelZiXunDetail() {
 		// try {
@@ -110,7 +113,6 @@ public class ModelZiXunDetail extends Model {
 		this.fenlei_id = fenlei_id;
 	}
 
-	
 	public String getTag_id() {
 		return tag_id;
 	}
@@ -127,11 +129,26 @@ public class ModelZiXunDetail extends Model {
 		this.isColl = isColl;
 	}
 
+	public String getPraise() {
+		return praise;
+	}
+
+	public void setPraise(String praise) {
+		this.praise = praise;
+	}
+
+	public String getIs_praise() {
+		return is_praise;
+	}
+
+	public void setIs_praise(String is_praise) {
+		this.is_praise = is_praise;
+	}
+
 	@Override
 	public String toString() {
 		return "ModelZiXunDetail [uid=" + uid + ", id=" + id + ", title=" + title + ", cover=" + cover + ", readCount="
 				+ readCount + ", cTime=" + cTime + ", fenlei_id=" + fenlei_id + ", tag_id=" + tag_id + "]";
 	}
 
-	
 }
