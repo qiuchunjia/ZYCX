@@ -29,8 +29,10 @@
     <dimen name="margin_left_small">10dp</dimen>
     <dimen name="margin_top">10dp</dimen>
     <dimen name="margin_top_big">20dp</dimen>
+    <dimen name="margin_top_max">40dp</dimen>
     <dimen name="margin_bottom_big">20dp</dimen>
     <dimen name="margin_bottom">10dp</dimen>
+    <dimen name="item_height_small">30dp</dimen>
     <dimen name="item_height">40dp</dimen>
     <dimen name="item_height_50">50dp</dimen>
     <dimen name="line_height">1dp</dimen>

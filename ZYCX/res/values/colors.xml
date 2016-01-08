@@ -53,9 +53,9 @@
     <!-- 正文 -->
     <color name="text_gray">#636563</color>
     <!-- 次要文字 -->
-    <color name="text_more_gray">#949694</color>
+    <color name="text_more_gray">#9a9f9b</color>
     <color name="btn_blue_color">#7ebbff</color>
-    <color name="quit_color">#31963a</color>
+    <color name="quit_color">#3AA349</color>
     <!-- 其它 -->
 
 </resources>

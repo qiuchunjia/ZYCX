@@ -167,7 +167,13 @@ public class HomeActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		//从Intent中获取当前选中的Fragment
+		try {
+			mCurrentIndex = (Integer) getDataFromIntent(getIntent(), null);
+		} catch (Exception e) {
+			mCurrentIndex = -1;
+		}
+		
 	}
 
 	@Override

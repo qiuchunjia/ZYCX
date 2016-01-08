@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.HomeActivity;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -74,7 +75,10 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 			}
 			break;
 		case R.id.tv_title_right:
-			onBackPressed();
+			//onBackPressed();
+			//完成后跳转到问答首页，传递问答首页的位置到首页
+			mApp.startActivity(RequestSendTopicCommitedActivity.this, 
+					HomeActivity.class, sendDataToBundle(2, null));
 			break;
 		}
 

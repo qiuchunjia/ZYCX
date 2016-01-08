@@ -51,6 +51,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.ToastUtils;
 
@@ -85,6 +86,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private String mType = null;
 	private String mType_Access = null;
 	private boolean mIsBind = false;
+	private Title mTitle;
 
 	private UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 
@@ -106,6 +108,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void initView() {
 		titleSetRightTitle("立即注册");
+		mTitle = getTitleClass();
+		mTitle.iv_title_left.setImageResource(R.drawable.quxiaoicon);
+		mTitle.tv_title_left.setVisibility(View.GONE);
 		HttpHelper.setContext(getApplicationContext());
 		mAutoLoginUserName = (AutoCompleteTextView) findViewById(R.id.et_username);
 		mloginUserpd = (EditText) findViewById(R.id.et_pwd);

@@ -184,6 +184,10 @@ public class RequestSendTopicActivity extends BaseActivity {
 		if (mTitle == null || mTitle.equals("")) {
 			ToastUtils.showToast("标题不能为空");
 			return false;
+		} 
+		if(mTitle.length() > 30){
+			ToastUtils.showToast("标题长度不能大于30");
+			return false;
 		}
 		if (mContent == null || mContent.equals("")) {
 			ToastUtils.showToast("内容不能为空");
