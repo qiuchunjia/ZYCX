@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class Title implements TitleInterface {
 	public ImageView iv_title_left2;
 	public ImageView iv_title_left2_dot;
 	// 中间部分控件
+	public LinearLayout ll_center;
 	public TextView tv_title; // 中间只有一个控件的时候
 	// 中间有两个控件控件的时候 通常这两个控件是可以切换的
 	public RelativeLayout rl_twoButton;
@@ -70,6 +72,8 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.iv_title_left2);
 			iv_title_left2_dot = (ImageView) mTitleView
 			.findViewById(R.id.iv_title_left2_dot);
+			ll_center = (LinearLayout) mTitleView.
+					findViewById(R.id.ll_center);
 			tv_title = (TextView) mTitleView.findViewById(R.id.tv_title);
 			rl_twoButton = (RelativeLayout) mTitleView
 					.findViewById(R.id.rl_twoButton);

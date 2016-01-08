@@ -48,6 +48,7 @@ import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
+import qcjlibrary.util.Tools_FontManager;
 
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
@@ -444,6 +445,7 @@ public class HomeActivity extends BaseActivity {
 		switch (index) {
 		case index_Default:
 			titleSetCenterTitle("癌友帮");
+			setFonts(index);
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
 			mTitle.iv_title_right1.setImageResource(R.drawable.index);
@@ -661,5 +663,11 @@ public class HomeActivity extends BaseActivity {
 		this.mStatusListener = mStatusListener;
 	}
 	
-	
+	private void setFonts(int index){
+		if(index == -1){
+			Tools_FontManager.changeFonts(mTitle.ll_center, this);
+		} else{
+			//mTitle.tv_title.setTypeface(tf);
+		}
+	}
 }
