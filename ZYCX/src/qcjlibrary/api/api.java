@@ -7,6 +7,7 @@ import java.util.List;
 import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelAddNowCase;
+import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelCaseResult;
 import qcjlibrary.model.ModelCaseRecord;
 import qcjlibrary.model.ModelExperience;
@@ -938,5 +939,39 @@ public class api {
 			}
 			return null;
 		}
+	}
+	
+	public static final class AlarmImpl implements AlarmIm{
+
+		@Override
+		public RequestParams index() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDREMINDER);
+			params.add(ACT, INDEX);
+			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams add(ModelAlertData mData) {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDREMINDER);
+			params.add(ACT, ADD);
+			return null;
+		}
+
+		@Override
+		public RequestParams delete(ModelAlertData mData) {
+			// TODO 自动生成的方法存根
+			return null;
+		}
+
+		@Override
+		public RequestParams update(ModelAlertData mData) {
+			// TODO 自动生成的方法存根
+			return null;
+		}
+		
 	}
 }

@@ -13,6 +13,8 @@ public interface AlarmIm {
 	public static final String MEDREMINDER = "Medreminder";
 	public static final String ADD = "add";
 	public static final String INDEX = "index";
+	public static final String DEL = "del";
+	public static final String DEIT = "edit";
 
 	/**
 	 * demo-qingko.zhiyicx.com/index.php?app=api&mod=Medreminder&act=index 首页
