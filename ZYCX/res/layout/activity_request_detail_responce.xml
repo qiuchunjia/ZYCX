@@ -51,10 +51,8 @@
                     android:layout_marginLeft="@dimen/margin_left_small"
                     android:layout_marginTop="@dimen/margin_left"
                     android:layout_toRightOf="@id/riv_other_icon"
-                    android:ellipsize="end"
                     android:gravity="left"
                     android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
-                    android:maxLines="3"
                     android:text="前段时间发现呵呵哒，法打飞机来得及发垃圾的客服进阿凡达了房间萨洛克大家付"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/text_common" />

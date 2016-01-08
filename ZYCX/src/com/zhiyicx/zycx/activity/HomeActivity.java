@@ -521,8 +521,10 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
+					ModelSearchIndex mData = new ModelSearchIndex();
+					mData.setIndex(0);
 					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
-							sendDataToBundle(new Model(), null));
+							sendDataToBundle(mData, "index"));
 				}
 			});
 			break;

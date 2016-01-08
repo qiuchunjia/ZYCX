@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -87,7 +88,11 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	 */
 	private void addDataToHead(ModelRequestAnswerComom mAnswerCommon2) {
 		if (mAnswerCommon2 != null) {
-			titleSetCenterTitle(mAnswerCommon2.getUser_name() + "的解答");
+			String name = mAnswerCommon2.getUser_name();
+			if(name.length() > 5){
+				name = name.substring(0,4);
+			}
+			titleSetCenterTitle(name + "..." + "的解答");
 			mApp.displayImage(mAnswerCommon2.getUser_face(), riv_other_icon);
 			tv_other_username.setText(mAnswerCommon2.getUser_name());
 			tv_other_date.setText(mAnswerCommon2.getTime());
@@ -164,6 +169,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
+			SociaxUIUtils.hideSoftKeyboard(this, et_content);
 			PopDealAnwer popDealAnwer = new PopDealAnwer(this, mAnswerCommon,
 					this);
 			popDealAnwer.showPop(ll_replay, Gravity.BOTTOM, 0, 0);
