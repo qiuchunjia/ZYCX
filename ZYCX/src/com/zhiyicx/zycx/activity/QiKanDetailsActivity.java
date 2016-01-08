@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
@@ -13,7 +14,10 @@ import android.widget.ProgressBar;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPeriodical;
+import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.util.L;
+import qcjlibrary.widget.popupview.PopShareContent;
+
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
@@ -93,7 +97,13 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 			 * intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			 * startActivity(Intent.createChooser(intent, "分享到"));
 			 */
-			Utils.shareText(this, mController, "青稞网期刊分享:" + mTitle + " - ", mUrl);
+//			Utils.shareText(this, mController, "青稞网期刊分享:" + mTitle + " - ", mUrl);
+			ModelShareContent shareContent=new ModelShareContent();
+			shareContent.setType(Config.SHARE_TEXT);
+			shareContent.setTitle("青稞网期刊分享:"+mTitle);
+			shareContent.setUrl(mUrl);
+			PopShareContent popShareContent=new PopShareContent(this, shareContent, this);
+			popShareContent.showPop(mWebView, Gravity.BOTTOM, 0, 0);
 			break;
 		}
 	}

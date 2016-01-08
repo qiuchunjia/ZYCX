@@ -1,8 +1,5 @@
 package qcjlibrary.widget.popupview;
 
-import java.util.ArrayList;
-
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.app.Activity;

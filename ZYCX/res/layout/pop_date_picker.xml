@@ -2,37 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_white_bg_color"
-    android:orientation="vertical" >
+    android:background="@color/main_white_pure_color"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_bottom_big"
+    android:paddingTop="@dimen/margin_top_big" >
 
-    <!-- header -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
-        android:background="@color/main_white_pure_color" >
-
-        <TextView
-            android:id="@+id/tv_date_cancle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:gravity="center"
-            android:text="取消"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_small" />
-
-        <TextView
-            android:id="@+id/tv_date_sure"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_right"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_small" />
-    </RelativeLayout>
     <!-- 时间选择器 -->
 
     <LinearLayout
@@ -59,5 +33,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_date_sure"
+        style="@style/check_button"
+        android:layout_marginRight="@dimen/margin_right"
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="@dimen/text_small" />
 
 </LinearLayout>

@@ -59,7 +59,7 @@ public class WheelView extends View {
 	private static final int MIN_DELTA_FOR_SCROLLING = 1;
 
 	/** Current value & label text color */
-	private static final int VALUE_TEXT_COLOR = 0xFff00000;
+	private static final int VALUE_TEXT_COLOR = 0xFf349342;
 	// private static final int VALUE_TEXT_COLOR = 0xF0FF6347;
 
 	/** Items text color */
@@ -171,7 +171,7 @@ public class WheelView extends View {
 	private void initData(Context context) {
 		gestureDetector = new GestureDetector(context, gestureListener);
 		gestureDetector.setIsLongpressEnabled(false);
-		this.TEXT_SIZE = DisplayUtils.dp2px(context, 14);
+		this.TEXT_SIZE = DisplayUtils.dp2px(context, 17);
 		scroller = new Scroller(context);
 	}
 

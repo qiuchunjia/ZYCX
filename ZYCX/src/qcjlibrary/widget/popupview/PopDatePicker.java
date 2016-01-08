@@ -20,7 +20,6 @@ import com.zhiyicx.zycx.R;
  */
 
 public class PopDatePicker extends PopView {
-	private TextView tv_date_cancle;
 	private TextView tv_date_sure;
 	private WheelView wv_date_year;
 	private WheelView wv_date_month;
@@ -48,7 +47,6 @@ public class PopDatePicker extends PopView {
 
 	@Override
 	public void initPopView() {
-		tv_date_cancle = (TextView) findViewbyId(R.id.tv_date_cancle);
 		tv_date_sure = (TextView) findViewbyId(R.id.tv_date_sure);
 		wv_date_year = (WheelView) findViewbyId(R.id.wv_date_year);
 		wv_date_month = (WheelView) findViewbyId(R.id.wv_date_month);
@@ -75,13 +73,6 @@ public class PopDatePicker extends PopView {
 
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
-		tv_date_cancle.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mPopWindow.dismiss();
-			}
-		});
 		tv_date_sure.setOnClickListener(new OnClickListener() {
 
 			@Override
