@@ -50,7 +50,16 @@ public class FragmentZhixun extends BaseFragment {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelZiXun) {
 			Object result = ((ModelZiXun) object).getFenlei();
+			ModelZiXunCategory all = new ModelZiXunCategory();
+			all.setTitle("全部");
+			all.setFenlei_id(0);
+			mList.add(all);
 			mList.addAll((List<ModelZiXunCategory>) result);
+			ModelZiXunCategory collect = new ModelZiXunCategory();
+			collect.setTitle("收藏");
+			collect.setFenlei_id(0);
+			collect.setIsColl("iscoll");
+			mList.add(collect);
 			FragmentAdapter fadapter = new FragmentAdapter(getChildFragmentManager(), mList);
 			vPager.setAdapter(fadapter);
 			tabpagerIndicator.setViewPager(vPager);
@@ -74,12 +83,12 @@ public class FragmentZhixun extends BaseFragment {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.iv_right_arrow) {
-//			if (vPager != null) {
-//				int currentId = vPager.getCurrentItem();
-//				if (currentId + 1 < mList.size()) {
-//					vPager.setCurrentItem(currentId + 1);
-//				}
-//			}
+			// if (vPager != null) {
+			// int currentId = vPager.getCurrentItem();
+			// if (currentId + 1 < mList.size()) {
+			// vPager.setCurrentItem(currentId + 1);
+			// }
+			// }
 		}
 
 	}

@@ -21,6 +21,7 @@ public class ModelZiXunDetail extends Model {
 	// 更具需要多添加的属性
 	private int fenlei_id;
 	private String tag_id;  //用于标签搜索
+	private String isColl; //是否收藏
 
 	public ModelZiXunDetail() {
 		// try {
@@ -116,6 +117,14 @@ public class ModelZiXunDetail extends Model {
 
 	public void setTag_id(String tag_id) {
 		this.tag_id = tag_id;
+	}
+
+	public String getIsColl() {
+		return isColl;
+	}
+
+	public void setIsColl(String isColl) {
+		this.isColl = isColl;
 	}
 
 	@Override

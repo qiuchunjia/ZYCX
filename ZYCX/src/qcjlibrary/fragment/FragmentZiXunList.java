@@ -6,6 +6,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelZiXunDetail;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,6 +22,7 @@ public class FragmentZiXunList extends BaseFragment {
 	private BAdapter mAdapter;
 	private CommonListView mCommonListView;
 	private int mType = 0;
+	private String isColl;
 
 	public static FragmentZiXunList newInstanse(int type) {
 		FragmentZiXunList f = new FragmentZiXunList();
@@ -39,6 +41,7 @@ public class FragmentZiXunList extends BaseFragment {
 	public void initIntentData() {
 		Bundle bundle = getArguments();
 		mType = bundle.getInt("type");
+		isColl = bundle.getString("isColl");
 	}
 
 	@Override
@@ -46,16 +49,15 @@ public class FragmentZiXunList extends BaseFragment {
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		ModelZiXunDetail detail = new ModelZiXunDetail();
 		detail.setFenlei_id(mType);
+		detail.setIsColl(isColl);
 		mAdapter = new ZhiXunAdapter(this, detail);
 		mCommonListView.setDividerHeight(0);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position,
-						ZiXUnContentActivity.class);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mCommonListView.stepToNextActivity(parent, view, position, ZiXUnContentActivity.class);
 			}
 		});
 	}

@@ -120,6 +120,11 @@ public class ViewHolder {
 	public TextView tv_num;
 
 	/******************* 咨询 item end ************************/
+	/******************* 咨询 item big ************************/
+	public ImageView iv_zixun;
+	public TextView tv_zixun_title;
+	public TextView tv_zixun_num;
+	/******************* 咨询 item big end ************************/
 	/******************* 问答 item ************************/
 	// public TextView tv_title;
 	public TextView tv_advice;

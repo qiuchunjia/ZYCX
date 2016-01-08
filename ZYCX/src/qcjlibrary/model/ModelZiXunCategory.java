@@ -17,6 +17,7 @@ public class ModelZiXunCategory extends Model {
 	private static final long serialVersionUID = 1L;
 	private String title;
 	private int fenlei_id;
+	private String isColl;
 
 	public ModelZiXunCategory() {
 
@@ -55,6 +56,13 @@ public class ModelZiXunCategory extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public String getIsColl() {
+		return isColl;
+	}
+
+	public void setIsColl(String isColl) {
+		this.isColl = isColl;
 	}
 
 	@Override

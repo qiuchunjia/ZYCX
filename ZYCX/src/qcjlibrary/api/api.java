@@ -138,6 +138,8 @@ public class api {
 				if (detail.getMaxid() != null && !detail.getMaxid().equals("")) {
 					params.add(MAXID, detail.getMaxid());
 				}
+				params.add(ISCOLL, detail.getIsColl());
+				Log.i("indexItem", params.toString());
 				return getTestToken(params);
 			}
 			return null;

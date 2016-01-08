@@ -27,9 +27,13 @@ import com.zhiyicx.zycx.R;
 public class ZhiXunAdapter extends BAdapter {
 
 	private ModelZiXunDetail mDetail;
+	private final int TYPE_COUNT = 2;
+	private final int TYPE_1 = 0; // 普通的item
+	private final int TYPE_2 = 1; // 热点的第一个item
 
-	public ZhiXunAdapter(BaseActivity activity, List<Model> list) {
-		super(activity, list);
+	public ZhiXunAdapter(BaseActivity activity, ModelZiXunDetail data) {
+		super(activity, null);
+		mDetail = data;
 	}
 
 	public ZhiXunAdapter(BaseFragment fragment, ModelZiXunDetail data) {
@@ -40,28 +44,48 @@ public class ZhiXunAdapter extends BAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
+		int type = judgeTheType(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater.inflate(R.layout.item_zhixun, null);
-			initView(convertView, holder);
+			convertView = initView(holder, type);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		bindDataToView(holder, position);
+		bindDataToView(holder, position, type);
 		return convertView;
 	}
 
-	private void bindDataToView(ViewHolder holder, int position) {
+	/**
+	 * 判断需要加载的item类型
+	 * 
+	 * @param pos
+	 * @return
+	 */
+	private int judgeTheType(int pos) {
+		// 表示热点
+		if (pos == 0 && mDetail.getFenlei_id() == 106) {
+			return TYPE_2;
+		}
+		return TYPE_1;
+	}
+
+	private void bindDataToView(ViewHolder holder, int position, int type) {
 		if (holder != null) {
 			ModelZiXunDetail modelZiXunDetail = (ModelZiXunDetail) mList.get(position);
 			if (modelZiXunDetail != null) {
-				mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_photo);
-				holder.tv_content.setText(modelZiXunDetail.getTitle());
-				holder.tv_date.setText(modelZiXunDetail.getcTime());
-				// holder.tv_from = (TextView) convertView
-				// .findViewById(R.id.tv_from);
-				holder.tv_num.setText(modelZiXunDetail.getReadCount());
+				if (type == TYPE_1) {
+					mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_photo);
+					holder.tv_content.setText(modelZiXunDetail.getTitle());
+					holder.tv_date.setText(modelZiXunDetail.getcTime());
+					// holder.tv_from = (TextView) convertView
+					// .findViewById(R.id.tv_from);
+					holder.tv_num.setText(modelZiXunDetail.getReadCount());
+				} else {
+					mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_zixun);
+					holder.tv_zixun_title.setText(modelZiXunDetail.getTitle());
+					holder.tv_zixun_num.setText(modelZiXunDetail.getReadCount());
+				}
 			}
 		}
 	}
@@ -72,14 +96,24 @@ public class ZhiXunAdapter extends BAdapter {
 	 * @param convertView
 	 * @param holder
 	 */
-	private void initView(View convertView, ViewHolder holder) {
-		if (convertView != null && holder != null) {
-			holder.iv_photo = (ImageView) convertView.findViewById(R.id.iv_photo);
-			holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-			holder.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
-			holder.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
+	private View initView(ViewHolder holder, int type) {
+		View view = null;
+		if (holder != null) {
+			if (type == TYPE_1) {
+				view = mInflater.inflate(R.layout.item_zhixun, null);
+				holder.iv_photo = (ImageView) view.findViewById(R.id.iv_photo);
+				holder.tv_content = (TextView) view.findViewById(R.id.tv_content);
+				holder.tv_date = (TextView) view.findViewById(R.id.tv_date);
+				holder.tv_from = (TextView) view.findViewById(R.id.tv_from);
+				holder.tv_num = (TextView) view.findViewById(R.id.tv_num);
+			} else {
+				view = mInflater.inflate(R.layout.item_zhixun_big, null);
+				holder.iv_zixun = (ImageView) view.findViewById(R.id.iv_zixun);
+				holder.tv_zixun_title = (TextView) view.findViewById(R.id.tv_zixun_title);
+				holder.tv_zixun_num = (TextView) view.findViewById(R.id.tv_zixun_num);
+			}
 		}
+		return view;
 	}
 
 	@Override
@@ -91,8 +125,8 @@ public class ZhiXunAdapter extends BAdapter {
 	public void refreshHeader(Model item, int count) {
 		if (item instanceof ModelZiXunDetail) {
 			ModelZiXunDetail detail = (ModelZiXunDetail) item;
-			detail.setLastid(detail.getId());
-			requstMessage(detail, REFRESH_HEADER);
+			mDetail.setLastid(detail.getId());
+			requstMessage(mDetail, REFRESH_HEADER);
 		}
 	}
 
@@ -100,8 +134,8 @@ public class ZhiXunAdapter extends BAdapter {
 	public void refreshFooter(Model item, int count) {
 		if (item instanceof ModelZiXunDetail) {
 			ModelZiXunDetail detail = (ModelZiXunDetail) item;
-			detail.setMaxid(detail.getId());
-			requstMessage(detail, REFRESH_FOOTER);
+			mDetail.setLastid(detail.getId());
+			requstMessage(mDetail, REFRESH_FOOTER);
 		}
 	}
 
@@ -123,6 +157,16 @@ public class ZhiXunAdapter extends BAdapter {
 	}
 
 	@Override
+	public int getViewTypeCount() {
+		return TYPE_COUNT;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		return judgeTheType(position);
+	}
+
+	@Override
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelZiXun) {
 			ModelZiXun modelZiXun = (ModelZiXun) object;
@@ -131,4 +175,5 @@ public class ZhiXunAdapter extends BAdapter {
 		}
 		return null;
 	}
+
 }
