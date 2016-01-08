@@ -28,6 +28,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
+              	android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -56,16 +57,17 @@
 
     <TextView
         android:id="@+id/tv_expert_answer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_marginRight="@dimen/margin_right_small"
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/main_white_bg_color"
         android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:maxLines="2"
         android:paddingBottom="@dimen/margin_bottom"
-        android:paddingLeft="3dp"
+        android:paddingLeft="5dp"
         android:paddingRight="3dp"
         android:paddingTop="@dimen/margin_top"
         android:text="专家建议：胸部的磁共振结果如何?如果结果都没有出现转移"

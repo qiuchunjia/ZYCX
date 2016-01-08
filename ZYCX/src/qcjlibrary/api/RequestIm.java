@@ -36,7 +36,7 @@ public interface RequestIm {
 	public static final String CAT = "cat";
 	public static final String QID = "qid";
 	public static final String CONTENT = "content";
-	public static final String QUESTION_DETAIL = "question_detail ";
+	public static final String QUESTION_DETAIL = "question_detail";
 	public static final String IS_EXPERT = "is_expert";
 	public static final String CID = "cid";
 	// public static final String TYPE = "type";

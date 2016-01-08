@@ -10,7 +10,7 @@ import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
-
+import qcjlibrary.util.SpanUtil;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +62,10 @@ public class ExpertRequestAdapter extends BAdapter {
                 holder.tv_title.setText(myAsk.getQuestion_content());
                 holder.tv_answer.setText(myAsk.getQuestion_detail());
                 if (!TextUtils.isEmpty(myAsk.getAnswercontent())) {
-                    holder.tv_expert_answer.setText(myAsk.getAnswercontent());
+                	  holder.tv_expert_answer.setText("");
+                	  holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
+								mBaseActivity.getResources().getColor(R.color.text_yellow)));
+					  holder.tv_expert_answer.append(myAsk.getAnswercontent());
                     holder.tv_expert_answer.setVisibility(View.VISIBLE);
                 }
                 holder.tv_date.setText(myAsk.getTime());

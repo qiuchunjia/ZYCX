@@ -136,8 +136,8 @@ public class RequestSendTopicActivity extends BaseActivity {
 			getDataFromView();
 			if (judgeTheData()) {
 				mAsk.setType(mType);
-				mAsk.setType(mType);
-				mAsk.setContent(mContent);
+				mAsk.setContent(mTitle);
+				mAsk.setQuestion_detail(mContent);
 				mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
 						sendDataToBundle(mAsk, null));
 			}
