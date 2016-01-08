@@ -5,11 +5,14 @@ import java.util.List;
 import com.zhiyicx.zycx.R;
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
@@ -61,7 +64,22 @@ public class CancerCategoryActivity extends BaseActivity {
 
 	@Override
 	public void initListener() {
-		// TODO Auto-generated method stub
+		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (position > 0) {
+					ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
+					if (item.getIs_expert().equals("0")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailCommonActivity.class);
+					} else if (item.getIs_expert().equals("1")) {
+						mCommonListView.stepToNextActivity(parent, view,
+								position, RequestDetailExpertActivity.class);
+					}
+				}
+			}
+		});
 
 	}
 

@@ -26,10 +26,8 @@
                     android:id="@+id/request_tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:gravity="left"
                     android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
-                    android:maxLines="2"
                     android:text=" "
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_big" />
@@ -40,10 +38,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/request_tv_title"
                     android:layout_marginTop="@dimen/margin_left_small"
-                    android:ellipsize="end"
                     android:gravity="left"
                     android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
-                    android:maxLines="2"
                     android:text="前段时间发现呵呵哒，法打飞机来得及发垃圾的客服进阿凡达了房间萨洛克大家付"
                     android:textColor="@color/text_more_gray"
                     android:textSize="@dimen/text_common" />
