@@ -11,6 +11,7 @@ import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
 import android.view.View;
@@ -116,11 +117,15 @@ public class RequestAddFlagActivity extends BaseActivity {
 		case R.id.tv_add:
 			String content = et_content.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
-				ModelRequestFlag flag = new ModelRequestFlag();
-				flag.setTitle(content);
-				if (mFlags != null) {
-					mFlags.add(flag);
-					addModelToView(flag);
+				if(!content.startsWith(" ")){
+					ModelRequestFlag flag = new ModelRequestFlag();
+					flag.setTitle(content);
+					if (mFlags != null) {
+						mFlags.add(flag);
+						addModelToView(flag);
+					}
+				} else{
+					ToastUtils.showToast(this, "内容输入不正确");
 				}
 			}
 			break;
@@ -200,7 +205,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 	 * 获取癌症分类 用逗号隔开
 	 */
 	private boolean getFlag() {
-		if (mFlags != null) {
+		if (mFlags != null && mFlags.size() > 0) {
 			for (int i = 0; i < mFlags.size(); i++) {
 				if (mFlags.get(i).isChoose()) {
 					mAddFlags = mAddFlags + mFlags.get(i).getTitle() + ",";

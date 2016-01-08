@@ -72,7 +72,7 @@
             />
         <TextView 
             style="@style/share_textview" 
-            android:text="QQ空间"
+            android:text="腾讯微博"
             />
         </LinearLayout>
         <LinearLayout 
