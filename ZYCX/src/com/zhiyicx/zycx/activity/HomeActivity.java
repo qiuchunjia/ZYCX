@@ -167,7 +167,12 @@ public class HomeActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		try {
+			mCurrentIndex = (Integer) getDataFromIntent(getIntent(), null);
+		} catch (Exception e) {
+			mCurrentIndex = -1;
+		}
+		
 	}
 
 	@Override

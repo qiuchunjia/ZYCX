@@ -77,7 +77,7 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 		case R.id.tv_title_right:
 			//onBackPressed();
 			mApp.startActivity(RequestSendTopicCommitedActivity.this, 
-					HomeActivity.class, null);
+					HomeActivity.class, sendDataToBundle(2, null));
 			break;
 		}
 
