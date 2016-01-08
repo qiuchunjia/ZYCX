@@ -48,6 +48,7 @@ import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
+import qcjlibrary.util.Tools_FontManager;
 
 public class HomeActivity extends BaseActivity {
 	// private ZiXunFragment mZiXunFgmt; // 咨询fragment qcj
@@ -167,13 +168,13 @@ public class HomeActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		//从Intent中获取当前选中的Fragment
+		// 从Intent中获取当前选中的Fragment
 		try {
 			mCurrentIndex = (Integer) getDataFromIntent(getIntent(), null);
 		} catch (Exception e) {
 			mCurrentIndex = -1;
 		}
-		
+
 	}
 
 	@Override
@@ -203,7 +204,6 @@ public class HomeActivity extends BaseActivity {
 		// 曹立该添加，百度广告，点击 Tab 时第二项时弹出广告
 		initBDAD();
 		Thinksns.homeAct = this;
-		initIcon(mTitle);
 	}
 
 	/**
@@ -218,18 +218,19 @@ public class HomeActivity extends BaseActivity {
 			if (!TextUtils.isEmpty(iconUrl)) {
 				mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
 			} else {
-				sendRequest(mApp.getUserImpl().index(),ModelUser.class, REQUEST_GET);
+				sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 			}
 		}
 	}
+
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		Object object= super.onResponceSuccess(str, class1);
-		if(object instanceof ModelUser){
-			ModelUser obUser=(ModelUser) object;
+		Object object = super.onResponceSuccess(str, class1);
+		if (object instanceof ModelUser) {
+			ModelUser obUser = (ModelUser) object;
 			mApp.displayImage(obUser.getAvatar(), mTitle.iv_title_left2);
 			mApp.saveUser(obUser);
-		}else{
+		} else {
 			judgeTheMsg(object);
 		}
 		return object;
@@ -535,7 +536,7 @@ public class HomeActivity extends BaseActivity {
 			});
 			break;
 		}
-
+		setFonts(-1);
 	}
 
 	/**
@@ -577,6 +578,7 @@ public class HomeActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
+		initIcon(mTitle);
 	}
 
 	@Override
@@ -639,9 +641,9 @@ public class HomeActivity extends BaseActivity {
 		mSortMenu.setOutsideTouchable(true);
 		mSortMenu.update();
 		mSortMenu.setBackgroundDrawable(new BitmapDrawable());
-		//设置弹出框的位置
-		int xPos = (- v.getWidth() / 4);
-		mSortMenu.showAsDropDown(v, xPos , 0);
+		// 设置弹出框的位置
+		int xPos = (-v.getWidth() / 4);
+		mSortMenu.showAsDropDown(v, xPos, 0);
 		mTitle.arrow_img_1.setImageResource(R.drawable.moreicon);
 		mSortMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
@@ -659,5 +661,10 @@ public class HomeActivity extends BaseActivity {
 
 	public void setOnStatusChangedListener(onStatusChangedListener mStatusListener) {
 		this.mStatusListener = mStatusListener;
+	}
+
+	private void setFonts(int index) {
+		Tools_FontManager.changeFonts(mTitle.ll_center, this, index);
+		mTitle.tv_title.setTextColor(Color.WHITE);
 	}
 }

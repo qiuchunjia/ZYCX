@@ -159,10 +159,10 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
     <style name="qclass_status_pop" parent="qclass_cmd_send">
-        <item name="android:paddingTop">20dp</item>
-        <item name="android:paddingBottom">20dp</item>
-        <item name="android:paddingLeft">30dp</item>
-        <item name="android:paddingRight">30dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingLeft">35dp</item>
+        <item name="android:paddingRight">35dp</item>
         <item name="android:background">@drawable/menu_item_bg</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/text_very_big</item>

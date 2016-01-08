@@ -39,6 +39,7 @@
             android:layout_marginTop="@dimen/margin_top"
             android:drawableLeft="@drawable/index_tv"
             android:text="为您推荐"
+            android:drawablePadding="5dp"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
         <!-- 主页选项框 -->

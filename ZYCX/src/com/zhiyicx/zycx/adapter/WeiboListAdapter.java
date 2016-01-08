@@ -1,11 +1,9 @@
 package com.zhiyicx.zycx.adapter;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.fragment.BaseListFragment;
@@ -14,7 +12,6 @@ import com.zhiyicx.zycx.net.NetComTools;
 import com.zhiyicx.zycx.net.StringDataListener;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.api.ApiStatuses;
-import com.zhiyicx.zycx.sociax.component.CustomerDialogNoTitle;
 import com.zhiyicx.zycx.sociax.db.WeiboSqlHelper;
 import com.zhiyicx.zycx.sociax.exception.ApiException;
 import com.zhiyicx.zycx.sociax.exception.DataInvalidException;
