@@ -11,6 +11,7 @@ import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
+import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,12 +23,13 @@ import com.zhiyicx.zycx.R.color;
 
 /**
  * 轻课堂分类数据适配器
+ * 
  * @author Tan
  * @since 12.31
  */
 
 public class QclassAdapter extends BAdapter {
-	
+
 	private ModelQclassDetail detail;
 	private String update_head;
 	private String update_tail;
@@ -37,8 +39,7 @@ public class QclassAdapter extends BAdapter {
 		super(activity, list);
 	}
 
-	public QclassAdapter(BaseFragment fragment, List<Model> mList,
-			ModelQclassDetail detail) {
+	public QclassAdapter(BaseFragment fragment, List<Model> mList, ModelQclassDetail detail) {
 		super(fragment, mList);
 		this.detail = detail;
 		update_head = "已更新";
@@ -63,14 +64,17 @@ public class QclassAdapter extends BAdapter {
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
 			ModelQclassDetail mDetail = (ModelQclassDetail) mList.get(position);
-			if(mDetail != null){
+			if (mDetail != null) {
 				holder.tv_title.setText(mDetail.getCourse_name());
 				holder.tv_content.setText(mDetail.getContent());
-				holder.tv_num.setText(mDetail.getWatch_num()+"");
+				holder.tv_num.setText(mDetail.getWatch_num() + "");
 				holder.tv_update.setText("");
 				holder.tv_update.append(update_head);
-				holder.tv_update.append(SpanUtil.setForegroundColorSpan(
-						mDetail.getVideo_num()+"", 0, 0, color.red));
+				// 0x7f06001d
+				// holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num()
+				// + "", 0, 0, Color.RED));
+				holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_red)));
 				holder.tv_update.append(update_tail);
 				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
 			}
@@ -85,15 +89,11 @@ public class QclassAdapter extends BAdapter {
 	 */
 	private void initView(View convertView, ViewHolder holder) {
 		if (convertView != null && holder != null) {
-			holder.tv_title = (TextView) convertView
-					.findViewById(R.id.tv_title);
-			holder.tv_content = (TextView) convertView
-					.findViewById(R.id.tv_content);
+			holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+			holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
 			holder.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
-			holder.tv_update = (TextView) convertView
-					.findViewById(R.id.tv_update);
-			holder.iv_vedio = (ImageView) convertView
-					.findViewById(R.id.iv_vedio);
+			holder.tv_update = (TextView) convertView.findViewById(R.id.tv_update);
+			holder.iv_vedio = (ImageView) convertView.findViewById(R.id.iv_vedio);
 		}
 	}
 
@@ -108,17 +108,17 @@ public class QclassAdapter extends BAdapter {
 		if (item instanceof ModelQclassDetail) {
 			ModelQclassDetail detail = (ModelQclassDetail) item;
 			detail.setStatus(status);
-			detail.setLastid(detail.getCourse_id()+"");
+			detail.setLastid(detail.getCourse_id() + "");
 			requstMessage(detail, REFRESH_HEADER);
 		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		if(item instanceof ModelQclassDetail){
+		if (item instanceof ModelQclassDetail) {
 			ModelQclassDetail detail = (ModelQclassDetail) item;
 			detail.setStatus(status);
-			detail.setMaxid(detail.getCourse_id()+"");
+			detail.setMaxid(detail.getCourse_id() + "");
 			requstMessage(detail, REFRESH_FOOTER);
 		}
 	}
@@ -131,13 +131,13 @@ public class QclassAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-		if(object instanceof ModelQclass){
-			ModelQclass mQclass = (ModelQclass)object;
+		if (object instanceof ModelQclass) {
+			ModelQclass mQclass = (ModelQclass) object;
 			return mQclass.getList();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 请求咨询内容
 	 * 
@@ -148,8 +148,8 @@ public class QclassAdapter extends BAdapter {
 		QclassImpl qClassImpl = new QclassImpl();
 		sendRequest(qClassImpl.indexItem(data), ModelQclass.class, 0, type);
 	}
-	
-	public void setStatus(int status){
+
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
