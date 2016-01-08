@@ -73,12 +73,12 @@ public class FragmentMenu extends BaseFragment {
 
 	@Override
 	public void initData() {
-		mUser = mApp.getUser();
+		/*mUser = mApp.getUser();
 		if (TextUtils.isEmpty(mUser.getAvatar())) {
 			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		} else {
 			addDataToIcon(mUser);
-		}
+		}*/
 	}
 
 	@Override
@@ -175,4 +175,15 @@ public class FragmentMenu extends BaseFragment {
 		builder.create().show();
 	}
 
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		mUser = mApp.getUser();
+		if (TextUtils.isEmpty(mUser.getAvatar())) {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		} else {
+			addDataToIcon(mUser);
+		}
+	}
 }

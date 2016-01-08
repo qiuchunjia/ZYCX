@@ -203,7 +203,6 @@ public class HomeActivity extends BaseActivity {
 		// 曹立该添加，百度广告，点击 Tab 时第二项时弹出广告
 		initBDAD();
 		Thinksns.homeAct = this;
-		initIcon(mTitle);
 	}
 
 	/**
@@ -577,6 +576,7 @@ public class HomeActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
+		initIcon(mTitle);
 	}
 
 	@Override
@@ -660,4 +660,6 @@ public class HomeActivity extends BaseActivity {
 	public void setOnStatusChangedListener(onStatusChangedListener mStatusListener) {
 		this.mStatusListener = mStatusListener;
 	}
+	
+	
 }

@@ -65,12 +65,12 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		if (mUser != null) {
+		/*if (mUser != null) {
 			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
 		} else {
 			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
 					REQUEST_GET);
-		}
+		}*/
 	}
 
 	@Override
@@ -162,5 +162,17 @@ public class MeCenterActivity extends BaseActivity {
 					}
 				});
 		builder.create().show();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		if (mUser != null) {
+			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
+		} else {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
+					REQUEST_GET);
+		}
 	}
 }

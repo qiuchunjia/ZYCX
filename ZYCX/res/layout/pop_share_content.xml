@@ -1,126 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="400dp"
     android:background="@color/main_white_pure_color"
     android:orientation="vertical" >
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@+id/ll_share_platoon_1"
-        style="@style/share_ll"
-        >
+        style="@style/share_ll" >
+
         <LinearLayout
-              android:id="@+id/ll_share_1"
+            android:id="@+id/ll_share_1"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_message"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/qqzone"
-            />
-        <TextView 
-            style="@style/share_textview" 
-            android:text="短信"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_message"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/qqzone" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="短信" />
         </LinearLayout>
+
         <LinearLayout
-              android:id="@+id/ll_share_2"
+            android:id="@+id/ll_share_2"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_wechat"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/wechat"
-            />
-        <TextView 
-            style="@style/share_textview" 
-            android:text="微信"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_wechat"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/wechat" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="微信" />
         </LinearLayout>
-        <LinearLayout 
-              android:id="@+id/ll_share_3"
+
+        <LinearLayout
+            android:id="@+id/ll_share_3"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_firendcircle"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/frirendquan"
-            />
-        <TextView 
-            style="@style/share_textview" 
-            android:text="朋友圈"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_firendcircle"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/frirendquan" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="朋友圈" />
         </LinearLayout>
     </LinearLayout>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@+id/ll_share_platoon_2"
-        style="@style/share_ll"
-        >
-        <LinearLayout 
-              android:id="@+id/ll_share_4"
+        style="@style/share_ll" >
+
+        <LinearLayout
+            android:id="@+id/ll_share_4"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_qqzone"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/sample_flat_135"
-            />
-        <TextView 
-            style="@style/share_textview" 
-            android:text="腾讯微博"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_qqzone"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/sample_flat_135" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="腾讯微博" />
         </LinearLayout>
-        <LinearLayout 
-              android:id="@+id/ll_share_5"
+
+        <LinearLayout
+            android:id="@+id/ll_share_5"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_qq"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/qq"
-            />
-        <TextView 
-            style="@style/share_textview" 
-            android:text="QQ"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_qq"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/qq" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="QQ" />
         </LinearLayout>
-        <LinearLayout 
-              android:id="@+id/ll_share_6"
+
+        <LinearLayout
+            android:id="@+id/ll_share_6"
             style="@style/share_ll_item"
-            android:layout_weight="1"
-            >
-        <ImageView 
-            android:id="@+id/iv_share_weibo"
-            style="@style/qclass_cmd_send"
-            android:src="@drawable/weibo"
-            />
-        <TextView
-            style="@style/share_textview" 
-            android:text="微博"
-            />
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/iv_share_weibo"
+                style="@style/qclass_cmd_send"
+                android:src="@drawable/weibo" />
+
+            <TextView
+                style="@style/share_textview"
+                android:text="微博" />
         </LinearLayout>
     </LinearLayout>
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_height"
         android:layout_marginTop="@dimen/margin_top_big"
         android:background="@color/main_gray_color" />
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/tv_share_cancel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:text="@string/cancel"
-        android:padding="@dimen/margin_top_big"
-        android:textSize="@dimen/text_common"
-        />
+        android:textSize="@dimen/text_common" />
 
 </LinearLayout>
