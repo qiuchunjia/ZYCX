@@ -958,19 +958,48 @@ public class api {
 			params.add(APP, API);
 			params.add(MOD, MEDREMINDER);
 			params.add(ACT, ADD);
-			return null;
+			if(mData != null){
+				params.add(ID, mData.getId()+"");	
+				params.add(USER, mData.getUser());	
+				params.add(MEDICINE, mData.getMedicine());	
+				params.add(PERIOD, mData.getPeriod());	
+				params.add(MED_NUM, mData.getMed_num()+"");	
+				params.add(MED_TIME, mData.getMed_time());	
+				params.add(STIME, mData.getStime());	
+				params.add(IS_REMIND, mData.getIs_remind()+"");	
+			}
+			return getTestToken(params);
 		}
 
 		@Override
 		public RequestParams delete(ModelAlertData mData) {
-			// TODO 自动生成的方法存根
-			return null;
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDREMINDER);
+			params.add(ACT, DEL);
+			if(mData != null){
+				params.add(ID, mData.getId()+"");	
+			}
+			return getTestToken(params);
 		}
 
 		@Override
 		public RequestParams update(ModelAlertData mData) {
-			// TODO 自动生成的方法存根
-			return null;
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, MEDREMINDER);
+			params.add(ACT, EDIT);
+			if(mData != null){
+				params.add(ID, mData.getId()+"");	
+				params.add(USER, mData.getUser());	
+				params.add(MEDICINE, mData.getMedicine());	
+				params.add(PERIOD, mData.getPeriod());	
+				params.add(MED_NUM, mData.getMed_num()+"");	
+				params.add(MED_TIME, mData.getMed_time());	
+				params.add(STIME, mData.getStime());	
+				params.add(IS_REMIND, mData.getIs_remind()+"");	
+			}
+			return getTestToken(params);
 		}
 		
 	}
