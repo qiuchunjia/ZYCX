@@ -210,6 +210,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 					AlarmImpl impl = new AlarmImpl();
 					if(isExit){
 						//如果是已经存在的闹钟数据，需要修改，则需要传递闹钟的Id
+						L.d("Cathy", "id:"+id);
+						L.d("Cathy", "isOpen = "+isOpen);
+						//http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Medreminder&act=index&oauth_token=304502a0d670f7d29272e5e3a84f8a87&oauth_token_secret=97462e1dec44619ba7d9b67c724b62d1
 						mData.setId(id);
 						sendRequest(impl.update(mData), ModelMsg.class, REQUEST_POST);
 					} else{

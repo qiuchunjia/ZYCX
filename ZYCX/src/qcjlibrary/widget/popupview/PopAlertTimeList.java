@@ -19,6 +19,7 @@ import android.widget.TextView;
 import qcjlibrary.activity.MedicineEditNotifyActivity;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.L;
 import qcjlibrary.widget.popupview.base.PopView;
 
 public class PopAlertTimeList extends PopView {
@@ -100,7 +101,7 @@ public class PopAlertTimeList extends PopView {
 		//默认至少有一个时间
 		ll_alert_time_list.addView(childItemOne);
 		//如果是修改时间，则将之前的数据添加上去
-		if(object != null && object.toString().equals("")){
+		if(object != null && !object.equals("null-1")){
 			String timeAndCount = object.toString();
 			time = new StringBuffer();
 			time.append(timeAndCount.split("-")[0]);

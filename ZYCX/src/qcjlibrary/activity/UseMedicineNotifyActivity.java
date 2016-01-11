@@ -90,7 +90,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			@Override
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
 				mAdapter.delete((ModelAlertData)mAdapter.getItem(position));
-				return true;
+				return false;
 			}
 		});
 	}
