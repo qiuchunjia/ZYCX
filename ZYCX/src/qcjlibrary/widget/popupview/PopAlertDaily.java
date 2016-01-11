@@ -80,25 +80,25 @@ public class PopAlertDaily extends PopView {
 			@Override
 			public void onClick(View v) {
 				/** 选中的提醒频率**/
-				String checkItem = "";
+				int period = 1;
 				if(index == rb_alert_everyday.getId()){
-					checkItem = "每天";
+					period = 1;
 				} else if(index == rb_alert_two.getId()){
-					checkItem = "每2天";
+					period = 2;
 				} else if(index == rb_alert_three.getId()){
-					checkItem = "每3天";
+					period = 3;
 				} else if(index == rb_alert_four.getId()){
-					checkItem = "每4天";
+					period = 4;
 				} else if(index == rb_alert_five.getId()){
-					checkItem = "每5天";
+					period = 5;
 				} else if(index == rb_alert_sex.getId()){
-					checkItem = "每6天";
+					period = 6;
 				} else if(index == rb_alert_seven.getId()){
-					checkItem = "每7天";
+					period = 7;
 				}
 				ModelPop dailyData = new ModelPop();
 				dailyData.setType(Config.TYPE_DAILY);
-				dailyData.setDataStr(checkItem);
+				dailyData.setDataInter(period);
 				listener.onPopResult(dailyData);
 				mPopWindow.dismiss();
 			}

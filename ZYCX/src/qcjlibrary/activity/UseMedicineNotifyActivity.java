@@ -4,10 +4,12 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.UseMedicineNotifyAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.api.api.AlarmImpl;
 import qcjlibrary.broadcast.AlarmBroadCastReciever;
 import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelAlertData;
+import qcjlibrary.model.ModelAlertList;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.SharedPreferencesUtil;
@@ -81,45 +83,47 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			}
 		});
 		mAlertList = new ArrayList<Model>();
-		int count = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
-		if (count < 1) {
-			return;
-		}
-		for (int i = 1; i <= count; i++) {
-			String totalData = SharedPreferencesUtil.getData(this, i + "", "null").toString();
-			if (!totalData.equals("null")) {
-				String[] mDataArr = totalData.split(",");
-				ModelAlertData mData = new ModelAlertData();
-				boolean isOpen = true;
-				if (mDataArr[0].equals("false")) {
-					isOpen = false;
-				}
-				String userName = mDataArr[1];
-				String medicineName = mDataArr[2];
-				String repeatDaily = mDataArr[3];
-				String repeatCount = mDataArr[4];
-				String startTime = mDataArr[5];
-				String timeList = mDataArr[6];
-				mData.setId(i);
-				mData.setExit(true);
-				mData.setOpen(isOpen);
-				mData.setUserName(userName);
-				mData.setMedicineName(medicineName);
-				mData.setRepeatDaily(repeatDaily);
-				mData.setRepeatCount(repeatCount);
-				mData.setStartTime(startTime);
-				mData.setTimeList(timeList);
-				mAlertList.add(mData);
-			}
-		}
-		int len = mAlertList.size();
-		// Log.d("Cathy", "len:"+len);
-		if (len > 0) {
-			mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
-			mCommonListView.setAdapter(mAdapter);
-		}
-
-		setAlarm();
+		AlarmImpl impl = new AlarmImpl();
+		sendRequest(impl.index(), ModelAlertList.class, REQUEST_GET);
+//		int count = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
+//		if (count < 1) {
+//			return;
+//		}
+//		for (int i = 1; i <= count; i++) {
+//			String totalData = SharedPreferencesUtil.getData(this, i + "", "null").toString();
+//			if (!totalData.equals("null")) {
+//				String[] mDataArr = totalData.split(",");
+//				ModelAlertData mData = new ModelAlertData();
+//				boolean isOpen = true;
+//				if (mDataArr[0].equals("false")) {
+//					isOpen = false;
+//				}
+//				String userName = mDataArr[1];
+//				String medicineName = mDataArr[2];
+//				String repeatDaily = mDataArr[3];
+//				String repeatCount = mDataArr[4];
+//				String startTime = mDataArr[5];
+//				String timeList = mDataArr[6];
+//				mData.setId(i);
+//				mData.setExit(true);
+//				mData.setOpen(isOpen);
+//				mData.setUserName(userName);
+//				mData.setMedicineName(medicineName);
+//				mData.setRepeatDaily(repeatDaily);
+//				mData.setRepeatCount(repeatCount);
+//				mData.setStartTime(startTime);
+//				mData.setTimeList(timeList);
+//				mAlertList.add(mData);
+//			}
+//		}
+//		int len = mAlertList.size();
+//		// Log.d("Cathy", "len:"+len);
+//		if (len > 0) {
+//			mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
+//			mCommonListView.setAdapter(mAdapter);
+//		}
+//
+//		setAlarm();
 	}
 
 	@Override
@@ -134,6 +138,27 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			}
 		});
 	}
+	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		Object object =  super.onResponceSuccess(str, class1);
+		if(object instanceof ModelAlertList){
+			ModelAlertList mListData = (ModelAlertList) object;
+			if(mAlertList != null){
+				mAlertList.clear();
+				if(mListData.getList() != null){
+					mAlertList.addAll(mListData.getList());
+					mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
+					mCommonListView.setAdapter(mAdapter);
+					if(mAlertList.size() > 0){
+						setAlarm();
+					}
+				}
+			}
+		}
+		return object;
+	}
 
 	// 设置闹钟
 	private void setAlarm() {
@@ -143,14 +168,14 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		if (mAlertList.size() > 0) {
 			for (int i = 0; i < mAlertList.size(); i++) {
 				ModelAlertData mData = (ModelAlertData) mAlertList.get(i);
-				if (mData.isOpen()) {
-					String timeList = mData.getTimeList();
-					String startTime = mData.getStartTime();
-					String repeatDaily = mData.getRepeatDaily();
-					int daily = setDailyCount(repeatDaily);
+				if (mData.getIs_remind() == 0) {
+					String timeList = mData.getMed_time();
+					String startTime = mData.getStime();
+					String repeatDaily = mData.getPeriod();
+					int period = Integer.parseInt(repeatDaily);
 					// 根据重复天数计算出间隔的毫秒数
-					long intervalMillis = setIntervalMillis(daily);
-					String[] mTimeArr = timeList.split(";");
+					long intervalMillis = setIntervalMillis(period);
+					String[] mTimeArr = timeList.split(",");
 					// 为每一个时间设置广播
 					for (int j = 0; j < mTimeArr.length; j++) {
 						/** 区分不同闹钟的ID**/
