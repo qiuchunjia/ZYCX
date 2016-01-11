@@ -12,6 +12,7 @@ import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelAlertList;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SharedPreferencesUtil;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -30,6 +31,8 @@ import java.util.Locale;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * author：tan time：下午5:7:01 类描述：用药提醒，闹钟界面
@@ -84,7 +87,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		});
 		mAlertList = new ArrayList<Model>();
 		AlarmImpl impl = new AlarmImpl();
-		sendRequest(impl.index(), ModelAlertList.class, REQUEST_GET);
+//		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns.getContext());
+//		L.d("Cathy", "oauth_token:"+preferenceUtil.getString("oauth_token", ""));
+//		L.d("Cathy", "oauth_token_secret:"+preferenceUtil.getString("oauth_token_secret", ""));
+		//sendRequest(impl.index(), ModelAlertList.class, REQUEST_GET);
 //		int count = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
 //		if (count < 1) {
 //			return;
@@ -175,22 +181,22 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					int period = Integer.parseInt(repeatDaily);
 					// 根据重复天数计算出间隔的毫秒数
 					long intervalMillis = setIntervalMillis(period);
-					String[] mTimeArr = timeList.split(",");
+					String[] timeArr = timeList.split(",");
 					// 为每一个时间设置广播
-					for (int j = 0; j < mTimeArr.length; j++) {
+					for (int j = 0; j < timeArr.length; j++) {
 						/** 区分不同闹钟的ID**/
 						int id = 0;
 						id = (Integer) SharedPreferencesUtil.getData(
 								this, "alerm id:"+id, id);
-						if (mTimeArr[j] != null) {
+						if (timeArr[j] != null) {
 							long currentMillis = System.currentTimeMillis();
 							if(getYearMonDay(startTime) < currentMillis){
 								startTime = getYearMonDay(currentMillis);
 							}
 							//Log.d("Cathy", "开始年月日转换long:"+ getYearMonDay(startTime) +
 									//"当前时间："+ currentMillis + "转换后："+ startTime);
-							long triggerAtMillis = changeStr2Long(startTime + " " + mTimeArr[j] + ":00");
-							//Log.d("Cathy", "开始时间："+ startTime + " " + mTimeArr[j] + ":00" + " 换算前："+ triggerAtMillis);
+							long triggerAtMillis = changeStr2Long(startTime + " " + timeArr[j] + ":00");
+							Log.d("Cathy", "开始时间："+ startTime + " " + timeArr[j] + ":00" + " 换算前："+ triggerAtMillis);
 							//如果开始时间已经早于当前时间，则将当前时间设为开始时间
 							if(currentMillis > triggerAtMillis){
 								triggerAtMillis = triggerAtMillis + intervalMillis;
@@ -211,32 +217,13 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						}
 					}
 				} else {
-					Log.d("Cathy", "cancel alert");
+					L.d("Cathy", "cancel alert");
 					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 					mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					mManager.cancel(mPendingIntent);
 				}
 			}
 		}
-	}
-
-	// 判断重复天数频率
-	private int setDailyCount(String repeatDaily) {
-		int count = 1;
-		if (repeatDaily.equals("每2天")) {
-			count = 2;
-		} else if (repeatDaily.equals("每3天")) {
-			count = 3;
-		} else if (repeatDaily.equals("每4天")) {
-			count = 4;
-		} else if (repeatDaily.equals("每5天")) {
-			count = 5;
-		} else if (repeatDaily.equals("每6天")) {
-			count = 6;
-		} else if (repeatDaily.equals("每7天")) {
-			count = 7;
-		}
-		return count;
 	}
 
 	/**

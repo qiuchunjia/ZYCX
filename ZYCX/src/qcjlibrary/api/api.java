@@ -2,6 +2,7 @@ package qcjlibrary.api;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import qcjlibrary.model.ModelAddCase;
@@ -959,11 +960,10 @@ public class api {
 			params.add(MOD, MEDREMINDER);
 			params.add(ACT, ADD);
 			if(mData != null){
-				params.add(ID, mData.getId()+"");	
 				params.add(USER, mData.getUser());	
 				params.add(MEDICINE, mData.getMedicine());	
 				params.add(PERIOD, mData.getPeriod());	
-				params.add(MED_NUM, mData.getMed_num()+"");	
+				params.add(MED_NUM, mData.getMed_num()+"");
 				params.add(MED_TIME, mData.getMed_time());	
 				params.add(STIME, mData.getStime());	
 				params.add(IS_REMIND, mData.getIs_remind()+"");	
@@ -1001,6 +1001,6 @@ public class api {
 			}
 			return getTestToken(params);
 		}
-		
 	}
+	
 }

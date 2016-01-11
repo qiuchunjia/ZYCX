@@ -6,6 +6,8 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SharedPreferencesUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopAlertDaily;
@@ -23,9 +25,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * author：qiuchunjia time：
@@ -66,6 +76,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	private boolean isExit;
 	private Intent intent;
 	private Bundle bundle;
+	private List<String> mTimeList;
 
 	@Override
 	public String setCenterTitle() {
@@ -116,15 +127,11 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	public void initData() {
 		med_num = 1;
 		period = "1";
-		try{
-			id = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
-		} catch(Exception e){
-			id = 0;
-		}
 		isOpen = 1;
 		if(isExit){
 			ModelAlertData mData = (ModelAlertData) bundle.get
 					(Config.ACTIVITY_TRANSFER_BUNDLE);
+			id = mData.getId();
 			userName = mData.getUser();
 			medicineName = mData.getMedicine();
 			period = mData.getPeriod();
@@ -185,21 +192,27 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			if(!userName.equals("") && !medicineName.equals("")){
 				if(startTime != null){
 					ModelAlertData mData = new ModelAlertData();
-					mData.setId(++id);
 					mData.setUser(userName);
 					mData.setMedicine(medicineName);
 					mData.setPeriod(period);
 					mData.setMed_num(med_num);
 					mData.setMed_time(timeList);
+					startTime = DateUtil.dateToStr2(startTime);
 					mData.setStime(startTime);
 					mData.setIs_remind(isOpen);
+					L.d("Cathy", "mData: period"+period+" startTime:"+startTime);
 					AlarmImpl impl = new AlarmImpl();
-					sendRequest(impl.add(mData), ModelMsg.class, REQUEST_POST);
-					StringBuffer totalData = new StringBuffer();
-					totalData.append(isOpen+";").append(userName+";").append(medicineName+";").
-					append(period+";").append(med_num+";").append(startTime+";").append(timeList);
-					SharedPreferencesUtil.saveData(this, (++id)+"", totalData.toString());
-					SharedPreferencesUtil.saveData(this, Config.SHARED_SAVE_KEY, id);
+					if(isExit){
+						mData.setId(id);
+						sendRequest(impl.update(mData), ModelMsg.class, REQUEST_POST);
+					} else{
+						sendRequest(impl.add(mData), ModelMsg.class, REQUEST_POST);
+					}
+//					StringBuffer totalData = new StringBuffer();
+//					totalData.append(isOpen+";").append(userName+";").append(medicineName+";").
+//					append(period+";").append(med_num+";").append(startTime+";").append(timeList);
+//					SharedPreferencesUtil.saveData(this, (++id)+"", totalData.toString());
+//					SharedPreferencesUtil.saveData(this, Config.SHARED_SAVE_KEY, id);
 					mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
 				} else{
 					ToastUtils.showLongToast(this, R.string.alert_time_starttime);
@@ -220,16 +233,22 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		if(type.equals(Config.TYPE_DAILY)){
 			period = ((ModelPop)object).getDataInter()+"";
 			if(period.equals("1")){
-				period = "每天";
+				tv_once.setText("每天"+med_num+"次");
+				tv_eat_med_repeatday.setText("每天");
+			} else{
+				tv_once.setText("每"+period+"天"+med_num+"次");
+				tv_eat_med_repeatday.setText("每"+period+"天");
 			}
-			tv_once.setText("每"+period+"天"+med_num+"次");
-			tv_eat_med_repeatday.setText("每"+period+"天");
 		} else if(type.equals(Config.TYPE_TIME_LIST)){
 			timeAndCount = ((ModelPop)object).getDataStr();
 			timeList = timeAndCount.split("-")[0];
 			med_num = Integer.parseInt(timeAndCount.split("-")[1]);
 			tv_eat_time.setText(timeList);
-			tv_once.setText("每"+period+"天"+med_num+"次");
+			if(period.equals("1")){
+				tv_once.setText("每天"+med_num+"次");
+			} else{
+				tv_once.setText("每"+period+"天"+med_num+"次");
+			}
 		} else if(type.equals(Config.TYPE_DATE)){
 			startTime = ((ModelPop)object).getDataStr();
 			tv_start_time.setText(startTime);

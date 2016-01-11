@@ -5,9 +5,15 @@ import java.util.List;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
+import qcjlibrary.api.api.AlarmImpl;
+import qcjlibrary.api.api.ZhiXunImpl;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelAlertData;
+import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelZiXun;
+import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +31,7 @@ import com.zhiyicx.zycx.R;
 
 public class UseMedicineNotifyAdapter extends BAdapter {
 
+	private ModelAlertData mData;
 	
 	public UseMedicineNotifyAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
@@ -80,7 +87,7 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		//sendRequest(null, null, 1, 1);
+		requstMessage(null, REFRESH_NEW);
 	}
 
 	@Override
@@ -98,8 +105,29 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 	}
 
 	@Override
-	public List<Model> getReallyList(Object object, Class type2) {
+	public Object getReallyList(Object object, Class type2) {
+		if(object instanceof List<?>){
+			@SuppressWarnings("unchecked")
+			List<ModelAlertData> mList = (List<ModelAlertData>) object;
+			return mList;
+		}
 		return null;
 	}
 
+	/**
+	 * 闹钟列表
+	 * 
+	 * @param data
+	 * @param type
+	 */
+	private void requstMessage(ModelAlertData data, int type) {
+		AlarmImpl impl = new AlarmImpl();
+		sendRequest(impl.index(), ModelAlertData.class, 0, type);
+	}
+	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		return DataAnalyze.parseData(str, class1);
+	}
 }
