@@ -6,6 +6,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -535,7 +536,11 @@ public class HomeActivity extends BaseActivity {
 			});
 			break;
 		}
+<<<<<<< HEAD
 		// setFonts(-1);
+=======
+		//setFonts(-1);
+>>>>>>> 855af3ba356fb54ba1463454a57163c70094537b
 	}
 
 	/**

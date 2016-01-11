@@ -34,6 +34,21 @@ public class DateUtil {
 		}
 		return null;
 	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public static String dateToStr2(String year_month_day) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date d = sdf.parse(year_month_day);
+			long unixTimestamp = d.getTime() / 1000;
+			Log.i("time", "dateToStr--------->" + unixTimestamp);
+			return String.valueOf(unixTimestamp);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * 时间戳转为年月日时间
