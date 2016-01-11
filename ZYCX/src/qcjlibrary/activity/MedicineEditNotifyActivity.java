@@ -257,12 +257,12 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	}
 
 	private void setNotify() {
-		if(isOpen == 1){
+		if(isOpen == 0){
 			iv_notify_open.setImageResource(R.drawable.switch_off);
-			isOpen = 0;
+			isOpen = 1;
 		} else{
 			iv_notify_open.setImageResource(R.drawable.switch_on);
-			isOpen = 1;
+			isOpen = 0;
 		}
 	}
 	

@@ -31,7 +31,6 @@ import com.zhiyicx.zycx.R;
 
 public class UseMedicineNotifyAdapter extends BAdapter {
 
-	private ModelAlertData mData;
 	
 	public UseMedicineNotifyAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
@@ -61,7 +60,11 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 			ModelAlertData mData = (ModelAlertData) mList.get(position);
 			holder.tv_user_name.setText(mData.getUser());
 			holder.tv_medicine_name.setText(mData.getMedicine());
-			holder.tv_user_time.setText(mData.getPeriod()+mData.getMed_num());
+			if(mData.getPeriod().equals("1")){
+				holder.tv_user_time.setText("每天"+mData.getMed_num()+"次");
+			} else{
+				holder.tv_user_time.setText("每"+mData.getPeriod()+"天"+mData.getMed_num()+"次");
+			}
 		}
 	}
 
