@@ -10,13 +10,11 @@ import com.zhiyicx.zycx.sociax.net.HttpHelper;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
@@ -47,7 +44,6 @@ import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.L;
 import qcjlibrary.util.Tools_FontManager;
 
 public class HomeActivity extends BaseActivity {
@@ -121,8 +117,11 @@ public class HomeActivity extends BaseActivity {
 			public void onDrawerSlide(View drawerView, float slideOffset) {
 				View mContent = mDrawer.getChildAt(0);
 				View mMenu = drawerView;
+				Log.i("slideOffset", "slideOffset=" + slideOffset);
 				float scale = 1 - slideOffset;
+				Log.i("scale", "scale=" + scale);
 				float rightScale = 0.8f + scale * 0.2f;
+				Log.i("rightScale", "rightScale=" + rightScale);
 
 				if (drawerView.getTag().equals("LEFT")) {
 					float leftScale = 1 - 0.3f * scale;
@@ -536,7 +535,7 @@ public class HomeActivity extends BaseActivity {
 			});
 			break;
 		}
-		setFonts(-1);
+		// setFonts(-1);
 	}
 
 	/**

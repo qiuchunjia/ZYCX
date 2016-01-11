@@ -12,6 +12,7 @@ import qcjlibrary.api.api;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassCategory;
+import qcjlibrary.model.ModelZiXun;
 
 /**
  * 轻课堂首页
@@ -65,6 +66,15 @@ public class FragmentQclassIndex extends BaseFragment {
 
 	@Override
 	public void initListener() {
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		//网络不好的时间会用到
+		if (mCategoryList != null && mCategoryList.size() == 0) {
+			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+		}
 	}
 
 	@Override

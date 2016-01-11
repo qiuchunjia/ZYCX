@@ -7,7 +7,9 @@ import qcjlibrary.activity.RequestMyAskActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.UIUtils;
 import qcjlibrary.widget.RoundImageView;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -73,12 +75,15 @@ public class FragmentMenu extends BaseFragment {
 
 	@Override
 	public void initData() {
-		/*mUser = mApp.getUser();
-		if (TextUtils.isEmpty(mUser.getAvatar())) {
-			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
-		} else {
-			addDataToIcon(mUser);
-		}*/
+		RelativeLayout.LayoutParams layoutParams = (android.widget.RelativeLayout.LayoutParams) btn_quit
+				.getLayoutParams();
+		layoutParams.bottomMargin = (int) (UIUtils.getWindowHeight(getActivity()) * 0.1)-2;
+		btn_quit.setLayoutParams(layoutParams);
+		/*
+		 * mUser = mApp.getUser(); if (TextUtils.isEmpty(mUser.getAvatar())) {
+		 * sendRequest(mApp.getUserImpl().index(), ModelUser.class,
+		 * REQUEST_GET); } else { addDataToIcon(mUser); }
+		 */
 	}
 
 	@Override
