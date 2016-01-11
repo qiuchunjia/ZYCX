@@ -57,11 +57,10 @@ public class ExperienceAdapter extends BaseAdapter {
 		if (holder != null) {
 			ModelExperience experience = mList.get(position);
 			if (experience != null) {
-				// 绑定数据到第一个
 				mActivity.mApp.displayImage(experience.getLogo(), holder.iv_cancer_icon);
 				holder.tv_cancer_name.setText(experience.getWeiba_name());
-				holder.tv_cancer_numer.setText(experience.getFollower_count());
-				holder.tv_cancer_experence.setText(experience.getThread_count());
+				holder.tv_cancer_numer.setText("成员： " + experience.getFollower_count());
+				holder.tv_cancer_experence.setText("经历： " + experience.getThread_count());
 				holder.rl_1.setTag(experience);
 				holder.rl_1.setOnClickListener(new OnClickListener() {
 
