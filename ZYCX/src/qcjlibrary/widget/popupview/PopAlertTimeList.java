@@ -131,7 +131,7 @@ public class PopAlertTimeList extends PopView {
 					timeStr = (String) time.subSequence(0, time.length() - 2);
 				}
 				data.setType(Config.TYPE_TIME_LIST);
-				data.setDataStr(timeStr+","+count+"次");
+				data.setDataStr(timeStr+"-"+count);
 				listener.onPopResult(data);
 				mPopWindow.dismiss();
 			}
@@ -185,7 +185,7 @@ public class PopAlertTimeList extends PopView {
 	
 	private String setTime(Object object){
 		if(object.toString() != null){
-			return object.toString()+"; ";
+			return object.toString()+", ";
 		}
 		return "";
 	}

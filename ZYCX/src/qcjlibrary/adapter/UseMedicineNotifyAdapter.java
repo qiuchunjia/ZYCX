@@ -52,9 +52,9 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 	private void bindDataToView(ViewHolder holder, int position) {
 		if (holder != null) {
 			ModelAlertData mData = (ModelAlertData) mList.get(position);
-			holder.tv_user_name.setText(mData.getUserName());
-			holder.tv_medicine_name.setText(mData.getMedicineName());
-			holder.tv_user_time.setText(mData.getRepeatDaily()+mData.getRepeatCount());
+			holder.tv_user_name.setText(mData.getUser());
+			holder.tv_medicine_name.setText(mData.getMedicine());
+			holder.tv_user_time.setText(mData.getPeriod()+mData.getMed_num());
 		}
 	}
 
