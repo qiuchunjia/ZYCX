@@ -2,6 +2,7 @@ package qcjlibrary.adapter;
 
 import java.util.List;
 
+import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
@@ -17,6 +18,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.SharedPreferencesUtil;
+import qcjlibrary.util.ToastUtils;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -137,8 +139,17 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		// TODO 自动生成的方法存根
-		return DataAnalyze.parseData(str, class1);
+		Object object = super.onResponceSuccess(str, class1);
+		if(object instanceof ModelMsg){
+			ModelMsg msg = (ModelMsg) object;
+			ToastUtils.showLongToast(Thinksns.getContext(), msg.getMessage());
+			if(msg.getCode() == 0){
+				requstMessage(null, REFRESH_NEW);
+			}
+			return object;
+		} else{
+			return DataAnalyze.parseData(str, class1);
+		}
 	}
 	
 	//删除闹钟，外部调用
