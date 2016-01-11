@@ -13,12 +13,17 @@
         android:textColor="@color/text_more_gray"
         android:textSize="@dimen/text_common" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main_gray_color" />
+
     <GridView
-        android:listSelector="@null"
         android:id="@+id/gv_experience"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_white_pure_color"
+        android:listSelector="@null"
         android:numColumns="2" >
     </GridView>
 
