@@ -150,8 +150,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 				tv_eat_med_repeatday.setText("每"+period+"天");
 			}
 			tv_start_time.setText(startTime);
-			Log.d("Cathy", "med_num = "+med_num);
-			Log.d("Cathy", "timeList = "+timeList);
+			tv_eat_time.setText(timeList);
 			if(isOpen == 0){
 				iv_notify_open.setImageResource(R.drawable.switch_on);
 			}

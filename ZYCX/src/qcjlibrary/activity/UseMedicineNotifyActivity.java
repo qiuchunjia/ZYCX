@@ -12,13 +12,17 @@ import qcjlibrary.listview.base.swipelistview.SwipeMenuListView.OnMenuItemClickL
 import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
 import android.app.AlarmManager;
+import android.media.AudioRecord.OnRecordPositionUpdateListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.zhiyicx.zycx.R;
 
@@ -29,6 +33,9 @@ import com.zhiyicx.zycx.R;
 public class UseMedicineNotifyActivity extends BaseActivity {
 	private SwipeMenuListView mSwipeMenuListView;
 	private UseMedicineNotifyAdapter mAdapter;
+	private List<Model> mList;
+	boolean isDel = false;
+	private AlarmImpl impl;
 
 	@Override
 	public void onClick(View v) {
@@ -69,8 +76,9 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						MedicineEditNotifyActivity.class, null);
 			}
 		});
-		mAdapter = new UseMedicineNotifyAdapter(this, null);
-		mSwipeMenuListView.setAdapter(mAdapter);
+		mList = new ArrayList<Model>();
+		impl = new AlarmImpl();
+		sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
 	}
 
 	@Override
@@ -92,10 +100,43 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			
 			@Override
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-				mAdapter.delete((ModelAlertData)mAdapter.getItem(position));
+				isDel = true;
+				sendRequest(impl.delete((ModelAlertData)mList.get(position)), 
+						ModelMsg.class, REQUEST_POST);
 				return false;
 			}
 		});
 	}
 	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		Object object;
+		if(isDel){
+			object = DataAnalyze.parseDataByGson(str, class1);
+		} else{
+			object = DataAnalyze.parseData(str, class1);
+		}
+		if(object instanceof List<?>){
+			if(mList != null){
+				mList.clear();
+				mList.addAll((List<ModelAlertData>) object);
+				if(mAdapter != null){
+					mAdapter.notifyDataSetChanged();
+				} else{
+					mAdapter = new UseMedicineNotifyAdapter(this, mList);
+					mSwipeMenuListView.setAdapter(mAdapter);
+				}
+			}
+		}
+		if(object instanceof ModelMsg){
+			isDel = false;
+			ModelMsg msg = (ModelMsg) object;
+			if(msg.getCode() == 0){
+				sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+			}
+			ToastUtils.showLongToast(getApplicationContext(), msg.getMessage());
+		}
+		return object;
+	}
 }

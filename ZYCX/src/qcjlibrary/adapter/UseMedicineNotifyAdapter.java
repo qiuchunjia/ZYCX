@@ -99,7 +99,7 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-		requstMessage(null, REFRESH_NEW);
+		//requstMessage(null, REFRESH_NEW);
 	}
 
 	@Override
@@ -118,35 +118,35 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-		if (object instanceof List<?>) {
-			@SuppressWarnings("unchecked")
-			List<ModelAlertData> mList = (List<ModelAlertData>) object;
-			return mList;
-		}
+//		if (object instanceof List<?>) {
+//			@SuppressWarnings("unchecked")
+//			List<ModelAlertData> mList = (List<ModelAlertData>) object;
+//			return mList;
+//		}
 		return null;
 	}
 
-	/**
-	 * 闹钟列表
-	 * 
-	 * @param data
-	 * @param type
-	 */
-	private void requstMessage(ModelAlertData data, int type) {
-		AlarmImpl impl = new AlarmImpl();
-		sendRequest(impl.index(), ModelAlertData.class, 0, type);
-	}
+//	/**
+//	 * 闹钟列表
+//	 * 
+//	 * @param data
+//	 * @param type
+//	 */
+//	private void requstMessage(ModelAlertData data, int type) {
+//		AlarmImpl impl = new AlarmImpl();
+//		sendRequest(impl.index(), ModelAlertData.class, 0, type);
+//	}
 
-	@Override
-	public Object onResponceSuccess(String str, Class class1) {
-			return DataAnalyze.parseData(str, class1);
-	}
+//	@Override
+//	public Object onResponceSuccess(String str, Class class1) {
+//			return DataAnalyze.parseData(str, class1);
+//	}
 	
-	//删除闹钟，外部调用
-	public void delete(ModelAlertData mData){
-		AlarmImpl impl = new AlarmImpl();
-		sendRequest(impl.delete(mData), ModelMsg.class, REQUEST_POST, REFRESH_NEW);
-	}
+//	//删除闹钟，外部调用
+//	public void delete(ModelAlertData mData){
+//		AlarmImpl impl = new AlarmImpl();
+//		sendRequest(impl.delete(mData), ModelMsg.class, REQUEST_POST, REFRESH_NEW);
+//	}
 
 	// 设置闹钟
 	private void setAlarm(int position) {
