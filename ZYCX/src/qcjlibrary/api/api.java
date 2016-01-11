@@ -96,11 +96,12 @@ public class api {
 	 */
 	public static RequestParams getChangePage(RequestParams params, Model model) {
 		if (model != null && params != null) {
-			if (model.getLastid() != null && !model.getLastid().equals("")) {
+			if (!TextUtils.isEmpty(model.getLastid())) {
 				params.add(LASTID, model.getLastid());
-			}
-			if (model.getMaxid() != null && !model.getMaxid().equals("")) {
-				params.add(MAXID, model.getMaxid());
+			}else{
+				if (!TextUtils.isEmpty(model.getMaxid())) {
+					params.add(MAXID, model.getMaxid());
+				}
 			}
 		}
 		return params;
@@ -287,7 +288,7 @@ public class api {
 				params.add(ID, item.getId());
 				params.add(TYPE, item.getType());
 				params = getChangePage(params, item);
-				Log.i("paramstest", params.toString());
+				Log.i("RequestParamsIndex", params.toString());
 				return params;
 			}
 			return params;
@@ -303,6 +304,7 @@ public class api {
 				params.add(KEY, search.getKey());
 				params.add(TYPE, search.getType());
 				params.add(CAT, search.getCat());
+				getChangePage(params, search);
 				Log.i("paramstest", params.toString());
 				return getTestToken(params);
 			}

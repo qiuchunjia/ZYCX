@@ -2,6 +2,14 @@ package qcjlibrary.adapter;
 
 import java.util.List;
 
+import com.zhiyicx.zycx.R;
+
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
@@ -13,14 +21,6 @@ import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.SpanUtil;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午5:06:10
@@ -147,16 +147,44 @@ public class RequestAnswerAdapter extends BAdapter {
 	@Override
 	public void refreshHeader(Model item, int count) {
 		ModelRequestItem requestItem = (ModelRequestItem) item;
-		requestItem.setLastid(requestItem.getQuestion_id());
-		Log.i("params", "refreshHeader" + requestItem.getLastid() + "  dfadfds");
-		sendRequest(mApp.getRequestImpl().index(requestItem), ModelRequest.class, 0, REFRESH_HEADER);
+		if (mRequestData instanceof ModelRequestSearch) {
+			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+			// 这个用于搜索
+			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_HEADER);
+		} else if (mRequestData instanceof ModelRequestItem) {
+			ModelRequestItem data = (ModelRequestItem) mRequestData;
+			// 这个接口用于首页
+			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_HEADER);
+		} else if (mRequestData instanceof ModelRequestFlag) {
+			// 这个接口用于标签
+			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_HEADER);
+		} else if (mRequestData instanceof ModelRequestMyAsk) {
+			dismissTheProgress();
+		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
 		ModelRequestItem requestItem = (ModelRequestItem) item;
-		requestItem.setMaxid(requestItem.getQuestion_id());
-		sendRequest(mApp.getRequestImpl().index(requestItem), ModelRequest.class, 0, REFRESH_FOOTER);
+		if (mRequestData instanceof ModelRequestSearch) {
+			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+			search.setLastid(requestItem.getQuestion_id());
+			// 这个用于搜索
+			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_FOOTER);
+		} else if (mRequestData instanceof ModelRequestItem) {
+			ModelRequestItem data = (ModelRequestItem) mRequestData;
+			// 这个接口用于首页
+			data.setLastid(requestItem.getQuestion_id());
+			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_FOOTER);
+		} else if (mRequestData instanceof ModelRequestFlag) {
+			// 这个接口用于标签
+			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+			flag.setLastid(requestItem.getQuestion_id());
+			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_FOOTER);
+		} else if (mRequestData instanceof ModelRequestMyAsk) {
+			dismissTheProgress();
+		}
 	}
 
 	@Override
@@ -164,7 +192,6 @@ public class RequestAnswerAdapter extends BAdapter {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	@Override
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelRequest) {

@@ -123,11 +123,7 @@ public class ZhiXunAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		if (item instanceof ModelZiXunDetail) {
-			ModelZiXunDetail detail = (ModelZiXunDetail) item;
-			mDetail.setLastid(detail.getId());
-			requstMessage(mDetail, REFRESH_HEADER);
-		}
+		requstMessage(mDetail, REFRESH_NEW);
 	}
 
 	@Override

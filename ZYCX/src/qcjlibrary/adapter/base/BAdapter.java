@@ -126,12 +126,33 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
+	/**
+	 * 刷新头部的第二种方式
+	 * 
+	 * 清理掉所有的内容，然后添加内容
+	 * 
+	 * @param list
+	 */
+	public void addHeadList(List<Model> list) {
+		if (list != null) {
+			if (list.size() > 0) {
+				if (mList == null) {
+					mList = new ArrayList<Model>();
+				} else {
+					mList.removeAll(mList); // 清空所有的数据
+				}
+				mList.addAll(list);
+				this.notifyDataSetChanged();
+			}
+		}
+		dismissTheProgress();
+	}
 
 	/**
 	 * @param list
 	 * @pdOid 下拉刷新后把数据加载到头部
 	 */
-	public void addHeadList(List<Model> list) {
+	public void addHeadListWay2(List<Model> list) {
 		if (list != null) {
 			if (mList != null && list.size() > 0) {
 				List<Model> cacheList = new ArrayList<Model>();
@@ -145,30 +166,6 @@ public abstract class BAdapter extends BaseAdapter {
 				mList.addAll(list);
 				mList.addAll(cacheList);
 				// 加了数据后就要通知adapter 更新list
-				this.notifyDataSetChanged();
-			}
-		}
-		dismissTheProgress();
-	}
-
-	/**
-	 * 刷新头部的第二种方式
-	 * 
-	 * 清理掉所有的内容，然后添加内容
-	 * 
-	 * @param list
-	 */
-	public void addHeadListWay2(List<Model> list) {
-		if (list != null) {
-			if (list.size() > 0) {
-				if (mList == null) {
-					mList = new ArrayList<Model>();
-				} else {
-					mList.removeAll(mList); // 清空所有的数据
-				}
-				Log.i("mlisttest", "mlist.size()=" + mList.size());
-				mList.addAll(list);
-				Log.i("mlisttest", "mlist.size()=" + mList.size());
 				this.notifyDataSetChanged();
 			}
 		}
@@ -286,20 +283,6 @@ public abstract class BAdapter extends BaseAdapter {
 		return null;
 	}
 
-	// /**
-	// * 第一次刷新数据（就是打開listview 獲取的数据）先獲取緩存中的數據，如果存在就加載出來，否則就去網絡上獲取數據
-	// */
-	// private List<Model> firstRefreshData() {
-	// mCache = getCache();
-	// if (mCache != null) {
-	// // return mCache.getTheData(0);
-	// }
-	// // TODO 这里要先检查网络是否有，如果没有的话 就return；
-	// List<Model> list = refreshNew();
-	// if (list == null)
-	// list = new ArrayList<Model>();
-	// return list;
-	// }
 
 	public void setListView(BaseListView listView) {
 		this.mListView = listView;
