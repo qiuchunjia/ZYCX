@@ -335,29 +335,24 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		mController.getPlatformInfo(LoginActivity.this, media, new SocializeListeners.UMDataListener() {
 			@Override
 			public void onStart() {
-//				 Toast.makeText(LoginActivity.this, "获取平台数据开始...",
-//				 Toast.LENGTH_SHORT).show();
+				// Toast.makeText(LoginActivity.this, "获取平台数据开始...",
+				// Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onComplete(int status, Map<String, Object> info) {
 				if (status == 200 && info != null) {
-
+					Log.i("weixin1", info.toString());
 					StringBuilder sb = new StringBuilder();
 					Set<String> keys = info.keySet();
 					for (String key : keys) {
 						sb.append(key + "=" + info.get(key).toString() + "\r\n");
 					}
-					
-					Log.d("TestData", sb.toString());
 					if (media == SHARE_MEDIA.QQ) {
 						mType_uid = info.get("screen_name").toString();
-					}if(media == SHARE_MEDIA.WEIXIN){
-						ToastUtils.showToast(info.toString());
-						
-					}
-					
-					else {
+					} else if (media == SHARE_MEDIA.WEIXIN) {
+						mType_uid = info.get("unionid").toString();
+					} else {
 						mType_uid = info.get("uid").toString();
 						mType_Access = info.get("access_token").toString();
 					}

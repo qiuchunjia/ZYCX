@@ -156,11 +156,6 @@ public class ExperienceCycleAdapter extends BAdapter {
 				ModelExperiencePostDetail.class, REQUEST_GET, REFRESH_NEW);
 	}
 
-	@Override
-	public void addHeadList(List<Model> list) {
-		Log.i("mlisttest", "addHeadList");
-		addHeadListWay2(list);
-	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
