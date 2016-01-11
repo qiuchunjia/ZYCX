@@ -139,17 +139,7 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		Object object = super.onResponceSuccess(str, class1);
-		if(object instanceof ModelMsg){
-			ModelMsg msg = (ModelMsg) object;
-			ToastUtils.showLongToast(Thinksns.getContext(), msg.getMessage());
-			if(msg.getCode() == 0){
-				requstMessage(null, REFRESH_NEW);
-			}
-			return object;
-		} else{
 			return DataAnalyze.parseData(str, class1);
-		}
 	}
 	
 	//删除闹钟，外部调用
