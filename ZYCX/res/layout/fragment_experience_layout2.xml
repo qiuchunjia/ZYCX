@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white_pure_color"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_left_small"
+        android:text="全部小组"
+        android:textColor="@color/text_more_gray"
+        android:textSize="@dimen/text_common" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main_gray_color" />
+
+    <GridView
+        android:id="@+id/gv_experience"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white_pure_color"
+        android:listSelector="@null"
+        android:numColumns="2" >
+    </GridView>
+
+</LinearLayout>

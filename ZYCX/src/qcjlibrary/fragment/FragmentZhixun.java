@@ -75,6 +75,14 @@ public class FragmentZhixun extends BaseFragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (mList.size() == 0) {
+			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+		}
+	}
+
+	@Override
 	public void initData() {
 		// TODO Auto-generated method stub
 

@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_white_pure_color"
-        android:padding="@dimen/margin_left_small" >
+        android:paddingBottom="@dimen/margin_left_small"
+        android:paddingTop="@dimen/margin_left_small" >
 
         <TextView
             android:id="@+id/tv_watch_num"
