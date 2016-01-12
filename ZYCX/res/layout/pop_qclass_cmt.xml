@@ -26,6 +26,8 @@
         android:background="@drawable/view_border_gray_20"
         android:inputType="textMultiLine"
         android:gravity="top|left"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/text_green"
         android:hint="说点什么吧" />
 
     <TextView
