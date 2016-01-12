@@ -205,10 +205,10 @@ public class PatientInforActivity extends BaseActivity {
 			ModelMeAddress address = (ModelMeAddress) object;
 			if (address.getType().equals(Config.TYPE_HOME)) {
 				tv_hometown_name.setText(address.getWholeAddress());
-				natives = address.getWholeId();
+				natives =address.getWholeAddress();
 			} else if (address.getType().equals(Config.TYPE_ADDRESS)) {
 				tv_address_name.setText(address.getWholeAddress());
-				domicile = address.getWholeId();
+				domicile = address.getWholeAddress();
 			}
 		}
 		Object object2 = getReturnResultSeri(resultCode, data,
