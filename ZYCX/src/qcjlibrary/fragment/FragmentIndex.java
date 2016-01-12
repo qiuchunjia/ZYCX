@@ -3,6 +3,7 @@ package qcjlibrary.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity;
 
@@ -76,8 +77,7 @@ public class FragmentIndex extends BaseFragment {
 		if (mActivity instanceof HomeActivity) {
 			mHomeActivity = (HomeActivity) mActivity;
 		}
-		sendRequest(mApp.getZhiXunImpl().appBanner(), ModelAds.class,
-				BaseActivity.REQUEST_GET);
+		sendRequest(mApp.getZhiXunImpl().appBanner(), ModelAds.class, BaseActivity.REQUEST_GET);
 	}
 
 	@Override
@@ -116,20 +116,26 @@ public class FragmentIndex extends BaseFragment {
 			break;
 		case R.id.rl_3:
 			// TODO
-			mApp.startActivity_qcj(mActivity, FoodWayActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(mActivity, FoodWayActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_4:
 			setTabFragement(HomeActivity.index_qikan);
 			break;
 		case R.id.rl_5:
-			mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			if (isLogin()) {
+				mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
+						mActivity.sendDataToBundle(new Model(), null));
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 			break;
 		case R.id.rl_6:
-			mApp.startActivity_qcj(getActivity(),
-					UseMedicineNotifyActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			if (isLogin()) {
+				mApp.startActivity_qcj(getActivity(), UseMedicineNotifyActivity.class,
+						mActivity.sendDataToBundle(new Model(), null));
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 			break;
 
 		}

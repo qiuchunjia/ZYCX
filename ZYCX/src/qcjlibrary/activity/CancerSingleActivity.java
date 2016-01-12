@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -62,21 +63,22 @@ public class CancerSingleActivity extends BaseActivity {
 		tv_cancer_content = (TextView) findViewById(R.id.tv_cancer_content);
 		iv_bottom_arrow = (ImageView) findViewById(R.id.iv_bottom_arrow);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(DisplayUtils.dp2px(
-				getApplicationContext(), 1));
+		mCommonListView.setDividerHeight(DisplayUtils.dp2px(getApplicationContext(), 1));
 		mAdapter = new CancerTopicAdapter(this, mExperienceData);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if (mDetail != null) {
-					ModelExperienceDetailItem1 detailItem = (ModelExperienceDetailItem1) parent
-							.getItemAtPosition(position);
-					detailItem.setWeiba_id(mDetail.getInfo().getWeiba_id());
-					mCommonListView.stepToNextActivity(detailItem,
-							ExperienceCycleActivity.class);
+					if (isLogin()) {
+						ModelExperienceDetailItem1 detailItem = (ModelExperienceDetailItem1) parent
+								.getItemAtPosition(position);
+						detailItem.setWeiba_id(mDetail.getInfo().getWeiba_id());
+						mCommonListView.stepToNextActivity(detailItem, ExperienceCycleActivity.class);
+					} else {
+						mApp.startActivity_qcj(CancerSingleActivity.this, LoginActivity.class, null);
+					}
 				}
 			}
 		});
@@ -87,8 +89,7 @@ public class CancerSingleActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
-		sendRequest(mApp.getExperienceImpl().detail(mExperienceData),
-				ModelExperienceDetail.class, REQUEST_GET);
+		sendRequest(mApp.getExperienceImpl().detail(mExperienceData), ModelExperienceDetail.class, REQUEST_GET);
 	}
 
 	@Override
@@ -122,21 +123,23 @@ public class CancerSingleActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
-			if (mDetail != null) {
-				ModelExperienceSend send = new ModelExperienceSend();
-				send.setWeiba_id(mDetail.getInfo().getWeiba_id());
-				send.setTags(mDetail.getInfo().getTags());
-				mApp.startActivity_qcj(this, ExperienceSendActivity.class,
-						sendDataToBundle(send, null));
+			if (isLogin()) {
+				if (mDetail != null) {
+					ModelExperienceSend send = new ModelExperienceSend();
+					send.setWeiba_id(mDetail.getInfo().getWeiba_id());
+					send.setTags(mDetail.getInfo().getTags());
+					mApp.startActivity_qcj(this, ExperienceSendActivity.class, sendDataToBundle(send, null));
+				} else {
+					ToastUtils.showToast("正在获取数据");
+				}
 			} else {
-				ToastUtils.showToast("正在获取数据");
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
 
 		case R.id.iv_bottom_arrow:
 			if (mDetail != null) {
-				PopSingleCancer popSingleCancer = new PopSingleCancer(this,
-						mDetail.getInfo(), this);
+				PopSingleCancer popSingleCancer = new PopSingleCancer(this, mDetail.getInfo(), this);
 				popSingleCancer.showPop(mTitlell, -1, 0, 0);
 			}
 			break;

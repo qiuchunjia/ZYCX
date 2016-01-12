@@ -4,6 +4,7 @@ import qcjlibrary.activity.base.BaseActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -53,13 +54,15 @@ public class MeAplicationActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_notify:
-			mApp.startActivity_qcj(this,
-                    UseMedicineNotifyActivity.class, null);
+			if (isLogin()) {
+				mApp.startActivity_qcj(this, UseMedicineNotifyActivity.class, null);
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 
 		case R.id.ll_food:
-			mApp.startActivity_qcj(this, 
-					FoodWayActivity.class, null);
+			mApp.startActivity_qcj(this, FoodWayActivity.class, null);
 			break;
 		}
 

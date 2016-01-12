@@ -53,7 +53,6 @@ import android.widget.Toast;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelUser;
-import qcjlibrary.util.ToastUtils;
 
 /**
  * 登录类
@@ -289,10 +288,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						preferenceUtil.saveString("oauth_token_secret", tmpuser.getSecretToken());
 						preferenceUtil.saveString("oauth_token", tmpuser.getToken());
 						preferenceUtil.saveInt("uid", tmpuser.getUid());
-						Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-						LoginActivity.this.startActivity(intent);
-						Anim.in(LoginActivity.this);
-						LoginActivity.this.finish();
+						onBackPressed();
+						// Intent intent = new Intent(LoginActivity.this,
+						// HomeActivity.class);
+						// LoginActivity.this.startActivity(intent);
+						// Anim.in(LoginActivity.this);
+						// LoginActivity.this.finish();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -389,12 +390,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				}
 				break;
 			case AUTH_DOWN:
-				Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-				LoginActivity.this.startActivity(intent);
-				Anim.in(LoginActivity.this);
-				dialog.dismiss();
-				LoginActivity.this.finish();
+				// Intent intent = new Intent(LoginActivity.this,
+				// HomeActivity.class);
+				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+				// Intent.FLAG_ACTIVITY_NEW_TASK);
+				// LoginActivity.this.startActivity(intent);
+				// Anim.in(LoginActivity.this);
+				// dialog.dismiss();
+				// LoginActivity.this.finish();
+				onBackPressed();
 				break;
 			}
 		}

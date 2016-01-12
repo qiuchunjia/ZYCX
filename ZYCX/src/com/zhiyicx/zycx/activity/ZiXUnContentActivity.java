@@ -2,6 +2,7 @@ package com.zhiyicx.zycx.activity;
 
 import org.json.JSONObject;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.net.JsonDataListener;
@@ -165,7 +166,11 @@ public class ZiXUnContentActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_praise:
-			sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class, BaseActivity.REQUEST_GET);
+			if(isLogin()){
+				sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class, BaseActivity.REQUEST_GET);
+			}else{
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 		case R.id.btn_back:
 			finish();
@@ -192,7 +197,11 @@ public class ZiXUnContentActivity extends BaseActivity {
 		case R.id.btn_share:
 			break;
 		case R.id.btn_comment:
-			comment();
+			if(isLogin()){
+				comment();
+			}else{
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 		case R.id.btn_collect:
 			if (mIsColl == 1)

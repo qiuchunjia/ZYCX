@@ -17,6 +17,7 @@ import com.zhiyicx.zycx.activity.GuideActivity;
 import com.zhiyicx.zycx.activity.WebActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.unit.Anim;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * author：qiuchunjia time：下午5:41:04 类描述：这个类是实现
@@ -65,12 +66,11 @@ public class MeCenterActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		/*if (mUser != null) {
-			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
-		} else {
-			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
-					REQUEST_GET);
-		}*/
+		/*
+		 * if (mUser != null) { mApp.displayImage(mUser.getAvatar(),
+		 * riv_user_icon); } else { sendRequest(mApp.getUserImpl().index(),
+		 * ModelUser.class, REQUEST_GET); }
+		 */
 	}
 
 	@Override
@@ -99,29 +99,23 @@ public class MeCenterActivity extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.rl_user:
 			// TODO
-			mApp.startActivity_qcj(this, MeCenterBasicActivity.class,
-					sendDataToBundle(mUser, null));
+			mApp.startActivity_qcj(this, MeCenterBasicActivity.class, sendDataToBundle(mUser, null));
 			break;
 
 		case R.id.rl_mycase:
-			mApp.startActivity_qcj(this, PatientMeActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientMeActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_question:
-			mApp.startActivity_qcj(this, ExpertRequestActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, ExpertRequestActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_app:
-			mApp.startActivity_qcj(this, MeAplicationActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, MeAplicationActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_cycle:
-			mApp.startActivity_qcj(this, WebActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, WebActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_periodical:
-			mApp.startActivity_qcj(this, MePerioActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, MePerioActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
 			quitLogin();
@@ -138,32 +132,38 @@ public class MeCenterActivity extends BaseActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
 		builder.setMessage("确定要注销此帐户吗?");
 		builder.setTitle("提示");
-		builder.setPositiveButton("确认",
-				new android.content.DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						Thinksns app = (Thinksns) obj.getApplicationContext();
-						app.getUserSql().clear();
-						// Thinksns.exitApp();
-						Intent intent = new Intent(obj, GuideActivity.class);
-						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-								| Intent.FLAG_ACTIVITY_NEW_TASK);
-						obj.startActivity(intent);
-						Anim.in(obj);
-						obj.finish();
-					}
-				});
-		builder.setNegativeButton("取消",
-				new android.content.DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				Thinksns app = (Thinksns) obj.getApplicationContext();
+				app.getUserSql().clear();
+				/******************
+				 * 清除token author qcj 2015-1-12
+				 **************************/
+				PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(MeCenterActivity.this);
+				preferenceUtil.saveString("oauth_token_secret", "");
+				preferenceUtil.saveString("oauth_token", "");
+				/******************
+				 * 清除token author qcj 2015-1-12
+				 **************************/
+				// Thinksns.exitApp();
+				Intent intent = new Intent(obj, GuideActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+				obj.startActivity(intent);
+				Anim.in(obj);
+				obj.finish();
+			}
+		});
+		builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 		builder.create().show();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO 自动生成的方法存根
@@ -171,8 +171,7 @@ public class MeCenterActivity extends BaseActivity {
 		if (mUser != null) {
 			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
 		} else {
-			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
-					REQUEST_GET);
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		}
 	}
 }

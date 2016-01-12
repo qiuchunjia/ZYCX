@@ -51,7 +51,7 @@ public class GuideActivity extends Activity {
         @Override
         public void onClick(View v) {
         	preferenceUtil.saveBoolean("first_launch", false);
-        	Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
+        	Intent intent = new Intent(GuideActivity.this, HomeActivity.class);
 			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             GuideActivity.this.startActivity(intent);
@@ -154,7 +154,7 @@ public class GuideActivity extends Activity {
 					
 					if(!preferenceUtil.getBoolean("first_launch", true))
 					{
-						intent = new Intent(GuideActivity.this, LoginActivity.class);
+						intent = new Intent(GuideActivity.this, HomeActivity.class);
 						intent.putExtras(data);
 						//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

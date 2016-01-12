@@ -31,6 +31,7 @@ import qcjlibrary.widget.popupview.PopShareContent;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.fragment.ClassCmtFragment;
@@ -109,9 +110,13 @@ public class QClassDetailsActivity extends BaseActivity
 			// Utils.shareVidoe(this, mController, mTitle, mDefVurl);
 			break;
 		case R.id.tv_title_right:
-			// 弹出评论PopWindow
-			PopQclassCmt mCmt = new PopQclassCmt(this, null, this);
-			mCmt.showPop(iv_qclass_play, Gravity.CENTER, 0, 0);
+			// 弹出评论PopWindow ,先判断是否登录
+			if (isLogin()) {
+				PopQclassCmt mCmt = new PopQclassCmt(this, null, this);
+				mCmt.showPop(iv_qclass_play, Gravity.CENTER, 0, 0);
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 		case R.id.iv_qclass_play:
 			// 跳转播放

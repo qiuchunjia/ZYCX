@@ -60,7 +60,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/iv_title_left2_dot"
-                android:src="@drawable/default_image_small" />
+                android:src="@drawable/morentouxiang02" />
         </RelativeLayout>
     </FrameLayout>
 
