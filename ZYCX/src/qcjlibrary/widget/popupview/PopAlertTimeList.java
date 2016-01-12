@@ -115,6 +115,10 @@ public class PopAlertTimeList extends PopView {
 				tv2.setText(timeArr[1]);
 				tv3.setText(timeArr[2]);
 				tv4.setText(timeArr[3]);
+				item_1 = timeArr[0];
+				item_2 = timeArr[1];
+				item_3 = timeArr[2];
+				item_4 = timeArr[3];
 			}catch(Exception e){
 				
 			}
