@@ -80,16 +80,24 @@ public class ExperienceSendActivity extends BaseActivity {
 		title.tv_title_right.setOnClickListener(this);
 		String tags = mSendData.getTags();
 		if (tags != null) {
-			final String[] dataArray = tags.split(",");
-			ExperienceTagGvAdapter adapter = new ExperienceTagGvAdapter(this,
-					dataArray);
+			String[] dataArray = null;
+			if (tags.contains(",")) {
+				dataArray = tags.split(",");
+			} else if (tags.contains("，")) {
+				dataArray = tags.split("，");
+			} else {
+				dataArray = new String[1];
+				dataArray[0] = tags;
+			}
+			ExperienceTagGvAdapter adapter = new ExperienceTagGvAdapter(this, dataArray);
 			gv_choose_flag.setAdapter(adapter);
+			gv_choose_flag.setTag(dataArray);
 			gv_choose_flag.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
-					judgeChooseOrCancle(arg1, dataArray[arg2]);
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+					String[] data = (String[]) arg0.getTag();
+					judgeChooseOrCancle(arg1, data[arg2]);
 				}
 
 			});
@@ -130,8 +138,7 @@ public class ExperienceSendActivity extends BaseActivity {
 				mSendData.setPost_time(DateUtil.dateToStr(date));
 				mSendData.setPhotoUrls(mPhotoList);
 				mSendData.setTags(chooseTags);
-				sendRequest(mApp.getExperienceImpl().addPost(mSendData),
-						ModelMsg.class, REQUEST_GET);
+				sendRequest(mApp.getExperienceImpl().addPost(mSendData), ModelMsg.class, REQUEST_GET);
 			}
 			break;
 		case R.id.tv_choosedate:
@@ -178,8 +185,7 @@ public class ExperienceSendActivity extends BaseActivity {
 	 * @param content
 	 * @return
 	 */
-	private boolean judgeTheSend(String title, String date, String content,
-			String tags) {
+	private boolean judgeTheSend(String title, String date, String content, String tags) {
 		if (TextUtils.isEmpty(title)) {
 			ToastUtils.showToast("标题不能为空");
 			return false;
@@ -228,12 +234,10 @@ public class ExperienceSendActivity extends BaseActivity {
 	private void addImageToHsv(String path, int type) {
 		View itemView = mInflater.inflate(R.layout.hsv_img_item, null);
 		ImageView big_image = (ImageView) itemView.findViewById(R.id.big_image);
-		ImageView delete_image = (ImageView) itemView
-				.findViewById(R.id.delete_image);
+		ImageView delete_image = (ImageView) itemView.findViewById(R.id.delete_image);
 		if (type == PHOTO) {
 			if (path != null) {
-				mImageManager.displayImage(big_image, path,
-						R.drawable.default_image_small, 100, 100);
+				mImageManager.displayImage(big_image, path, R.drawable.default_image_small, 100, 100);
 				delete_image.setTag(itemView);
 				ll_ScrollView.addView(itemView);
 				changeThePosition(ll_ScrollView, itemView);
@@ -255,9 +259,7 @@ public class ExperienceSendActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivityForResult_qcj(
-							ExperienceSendActivity.this,
-							LocalImagListActivity.class, null);
+					mApp.startActivityForResult_qcj(ExperienceSendActivity.this, LocalImagListActivity.class, null);
 				}
 			});
 		}
