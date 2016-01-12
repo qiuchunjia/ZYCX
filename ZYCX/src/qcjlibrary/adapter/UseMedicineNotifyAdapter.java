@@ -77,7 +77,6 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 			} else {
 				holder.tv_user_time.setText("每" + mData.getPeriod() + "天" + mData.getMed_num() + "次");
 			}
-			setAlarm(position);
 		}
 	}
 
@@ -118,92 +117,7 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-//		if (object instanceof List<?>) {
-//			@SuppressWarnings("unchecked")
-//			List<ModelAlertData> mList = (List<ModelAlertData>) object;
-//			return mList;
-//		}
 		return null;
-	}
-
-//	/**
-//	 * 闹钟列表
-//	 * 
-//	 * @param data
-//	 * @param type
-//	 */
-//	private void requstMessage(ModelAlertData data, int type) {
-//		AlarmImpl impl = new AlarmImpl();
-//		sendRequest(impl.index(), ModelAlertData.class, 0, type);
-//	}
-
-//	@Override
-//	public Object onResponceSuccess(String str, Class class1) {
-//			return DataAnalyze.parseData(str, class1);
-//	}
-	
-//	//删除闹钟，外部调用
-//	public void delete(ModelAlertData mData){
-//		AlarmImpl impl = new AlarmImpl();
-//		sendRequest(impl.delete(mData), ModelMsg.class, REQUEST_POST, REFRESH_NEW);
-//	}
-
-	// 设置闹钟
-	private void setAlarm(int position) {
-		Context context = Thinksns.getContext();
-		Intent mIntent = new Intent(context, AlarmBroadCastReciever.class);
-		mIntent.setAction("alarm.alert.short");
-		// 循环为每个闹钟设置广播
-		ModelAlertData mData = (ModelAlertData) mList.get(position);
-		mManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
-		if (mData.getIs_remind() == 0) {
-			String timeList = mData.getMed_time();
-			String startTime = mData.getStime();
-			String repeatDaily = mData.getPeriod();
-			int period = Integer.parseInt(repeatDaily);
-			// 根据重复天数计算出间隔的毫秒数
-			long intervalMillis = DateUtil.setIntervalMillis(period);
-			if(timeList == null){
-				return;
-			}
-			String[] timeArr = timeList.split(",");
-			// 为每一个时间设置广播
-			for (int j = 0; j < timeArr.length; j++) {
-				/** 区分不同闹钟的ID **/
-				int id = 0;
-				id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
-						mData.getId() + ":" + id, id);
-				if (timeArr[j] != null) {
-					long currentMillis = System.currentTimeMillis();
-					if (DateUtil.getYearMonDay(startTime) < currentMillis) {
-						startTime = DateUtil.getYearMonDay(currentMillis);
-					}
-					// Log.d("Cathy", "开始年月日转换long:"+ getYearMonDay(startTime) +
-					// "当前时间："+ currentMillis + "转换后："+ startTime);
-					long triggerAtMillis = DateUtil.changeStr2Long(startTime + " " + timeArr[j] + ":00");
-					Log.d("Cathy", "开始时间：" + startTime + " " + timeArr[j] + ":00" + " 换算前：" + triggerAtMillis);
-					// 如果开始时间已经早于当前时间，则将当前时间设为开始时间
-					if (currentMillis > triggerAtMillis) {
-						triggerAtMillis = triggerAtMillis + intervalMillis;
-						// Log.d("Cathy", "下次提醒时间：
-						// "+changeLong2Str(triggerAtMillis));
-					}
-					/**
-					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
-					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
-					 * 发送一个广播 getService(Context, int, Intent, int) 开启一个服务
-					 */
-					PendingIntent mPendingIntent = PendingIntent.getBroadcast(context, id, mIntent, 0);
-					mManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, intervalMillis, mPendingIntent);
-					id++;
-					SharedPreferencesUtil.saveData(context, mData.getId() + ":" + id, id);
-				}
-			}
-		} else {
-			L.d("Cathy", "cancel alert");
-			PendingIntent mPendingIntent = PendingIntent.getBroadcast(context, 0, mIntent, 0);
-			mManager.cancel(mPendingIntent);
-		}
 	}
 
 }

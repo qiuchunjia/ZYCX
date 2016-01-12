@@ -112,13 +112,13 @@ public class PopAlertTimeList extends PopView {
 			String[] timeArr = timeAndCount.split("-")[0].split(",");
 			try{
 				tv1.setText(timeArr[0]);
-				item_1 = timeArr[0];
+				item_1 = timeArr[0]+",";
 				tv2.setText(timeArr[1]);
-				item_2 = timeArr[1];
+				item_2 = timeArr[1]+",";
 				tv3.setText(timeArr[2]);
-				item_3 = timeArr[2];
+				item_3 = timeArr[2]+",";
 				tv4.setText(timeArr[3]);
-				item_4 = timeArr[3];
+				item_4 = timeArr[3]+",";
 			}catch(Exception e){
 				
 			}
@@ -131,6 +131,7 @@ public class PopAlertTimeList extends PopView {
 
 	@Override
 	public void setPopLisenter(final PopResultListener listener) {
+		
 		btn_alert_add.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -165,11 +166,16 @@ public class PopAlertTimeList extends PopView {
 				ModelPop data = new ModelPop();
 				String timeStr = "8:00";
 				time = new StringBuffer();
+				item_1 = tv1.getText().toString()+",";
+				time.append(item_1);
 				if(count > 1){
-					time.append(item_1).append(item_2);
+					item_2 = tv2.getText().toString()+",";
+					time.append(item_2);
 					if(count > 2){
+						item_3 = tv3.getText().toString()+",";
 						time.append(item_3);
 						if(count > 3){
+							item_4 = tv4.getText().toString()+",";
 							time.append(item_4);
 						}
 					}

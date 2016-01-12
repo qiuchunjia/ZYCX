@@ -32,9 +32,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.baidu.android.bba.common.util.Util;
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
@@ -137,6 +139,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			period = mData.getPeriod();
 			med_num = mData.getMed_num();
 			timeList = mData.getMed_time();
+			//用于传递到PopWindow
 			timeAndCount = timeList +"-"+med_num;
 			startTime = mData.getStime();
 			isOpen = mData.getIs_remind();
@@ -168,6 +171,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 
 	@Override
 	public void onClick(View v) {
+		//点击弹出选择框或者确认修改时，首先隐藏软键盘
+		SociaxUIUtils.hideSoftKeyboard(this, et_medicine_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_user);
 		switch (v.getId()) {
 		case R.id.rl_alert_repaet_daily:
 			//弹出日期提醒频率框
@@ -203,14 +209,13 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 					mData.setPeriod(period);
 					mData.setMed_num(med_num);
 					mData.setMed_time(timeList);
+					//将时间转换为时间戳
 					startTime = DateUtil.dateToStr2(startTime);
 					mData.setStime(startTime);
 					mData.setIs_remind(isOpen);
 					AlarmImpl impl = new AlarmImpl();
 					if(isExit){
 						//如果是已经存在的闹钟数据，需要修改，则需要传递闹钟的Id
-						L.d("Cathy", "id:"+id);
-						L.d("Cathy", "isOpen = "+isOpen);
 						//http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Medreminder&act=index&oauth_token=304502a0d670f7d29272e5e3a84f8a87&oauth_token_secret=97462e1dec44619ba7d9b67c724b62d1
 						mData.setId(id);
 						sendRequest(impl.update(mData), ModelMsg.class, REQUEST_POST);
@@ -268,6 +273,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		return super.onPopResult(object);
 	}
 
+	//根据isOpen的值设置是否开启提示图标
 	private void setNotify() {
 		if(isOpen == 0){
 			iv_notify_open.setImageResource(R.drawable.switch_off);
@@ -280,7 +286,6 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
-		// TODO 自动生成的方法存根
 		Object object = super.onResponceSuccess(str, class1);
 		if(object instanceof ModelMsg){
 			ModelMsg msg = (ModelMsg) object;
