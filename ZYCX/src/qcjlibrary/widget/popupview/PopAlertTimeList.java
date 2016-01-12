@@ -112,12 +112,12 @@ public class PopAlertTimeList extends PopView {
 			String[] timeArr = timeAndCount.split("-")[0].split(",");
 			try{
 				tv1.setText(timeArr[0]);
-				tv2.setText(timeArr[1]);
-				tv3.setText(timeArr[2]);
-				tv4.setText(timeArr[3]);
 				item_1 = timeArr[0];
+				tv2.setText(timeArr[1]);
 				item_2 = timeArr[1];
+				tv3.setText(timeArr[2]);
 				item_3 = timeArr[2];
+				tv4.setText(timeArr[3]);
 				item_4 = timeArr[3];
 			}catch(Exception e){
 				
