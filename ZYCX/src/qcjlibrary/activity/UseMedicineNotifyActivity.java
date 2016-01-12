@@ -112,6 +112,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		// TODO 自动生成的方法存根
 		Object object;
+		/**
+		 * 根据返回的对象类型使用不同的解析数据的方法
+		 * 如果是删除后数据，则将isDel设置为false
+		 * */
 		if(isDel){
 			object = DataAnalyze.parseDataByGson(str, class1);
 		} else{
