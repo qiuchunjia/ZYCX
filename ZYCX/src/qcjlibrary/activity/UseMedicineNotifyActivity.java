@@ -5,46 +5,37 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.UseMedicineNotifyAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.api.api.AlarmImpl;
-import qcjlibrary.broadcast.AlarmBroadCastReciever;
-import qcjlibrary.config.Config;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.listview.base.swipelistview.SwipeMenu;
+import qcjlibrary.listview.base.swipelistview.SwipeMenuListView;
+import qcjlibrary.listview.base.swipelistview.SwipeMenuListView.OnMenuItemClickListener;
 import qcjlibrary.model.ModelAlertData;
-import qcjlibrary.model.ModelAlertList;
+import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.DisplayUtils;
-import qcjlibrary.util.L;
-import qcjlibrary.util.SharedPreferencesUtil;
-import android.annotation.SuppressLint;
+import qcjlibrary.util.ToastUtils;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
+import android.media.AudioRecord.OnRecordPositionUpdateListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
-import com.umeng.socialize.utils.Log;
+import java.util.ArrayList;
+import java.util.List;
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
-import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * author：tan time：下午5:7:01 类描述：用药提醒，闹钟界面
  */
 
 public class UseMedicineNotifyActivity extends BaseActivity {
-	private CommonListView mCommonListView;
-	private BAdapter mAdapter;
-
-	private List<Model> mAlertList;
-	// 闹钟管理类
-	private AlarmManager mManager;
+	private SwipeMenuListView mSwipeMenuListView;
+	private UseMedicineNotifyAdapter mAdapter;
+	private List<Model> mList;
+	boolean isDel = false;
+	private AlarmImpl impl;
 
 	@Override
 	public void onClick(View v) {
@@ -63,14 +54,14 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.listview_common_layout;
+		return R.layout.swipe_menu_listview;
 	}
 
 	@Override
 	public void initView() {
 		titleSetRightImage(R.drawable.tianjia);
-		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(DisplayUtils.dp2px(this, 10));
+		mSwipeMenuListView = (SwipeMenuListView) findViewById(R.id.mSwipeMenuListView);
+		mSwipeMenuListView.setDividerHeight(DisplayUtils.dp2px(this, 10));
 
 	}
 
@@ -85,62 +76,34 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						MedicineEditNotifyActivity.class, null);
 			}
 		});
-		mAlertList = new ArrayList<Model>();
-		AlarmImpl impl = new AlarmImpl();
-//		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(Thinksns.getContext());
-//		L.d("Cathy", "oauth_token:"+preferenceUtil.getString("oauth_token", ""));
-//		L.d("Cathy", "oauth_token_secret:"+preferenceUtil.getString("oauth_token_secret", ""));
-		//sendRequest(impl.index(), ModelAlertList.class, REQUEST_GET);
-//		int count = (Integer) SharedPreferencesUtil.getData(this, Config.SHARED_SAVE_KEY, 0);
-//		if (count < 1) {
-//			return;
-//		}
-//		for (int i = 1; i <= count; i++) {
-//			String totalData = SharedPreferencesUtil.getData(this, i + "", "null").toString();
-//			if (!totalData.equals("null")) {
-//				String[] mDataArr = totalData.split(",");
-//				ModelAlertData mData = new ModelAlertData();
-//				boolean isOpen = true;
-//				if (mDataArr[0].equals("false")) {
-//					isOpen = false;
-//				}
-//				String userName = mDataArr[1];
-//				String medicineName = mDataArr[2];
-//				String repeatDaily = mDataArr[3];
-//				String repeatCount = mDataArr[4];
-//				String startTime = mDataArr[5];
-//				String timeList = mDataArr[6];
-//				mData.setId(i);
-//				mData.setExit(true);
-//				mData.setOpen(isOpen);
-//				mData.setUserName(userName);
-//				mData.setMedicineName(medicineName);
-//				mData.setRepeatDaily(repeatDaily);
-//				mData.setRepeatCount(repeatCount);
-//				mData.setStartTime(startTime);
-//				mData.setTimeList(timeList);
-//				mAlertList.add(mData);
-//			}
-//		}
-//		int len = mAlertList.size();
-//		// Log.d("Cathy", "len:"+len);
-//		if (len > 0) {
-//			mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
-//			mCommonListView.setAdapter(mAdapter);
-//		}
-//
-//		setAlarm();
+		mList = new ArrayList<Model>();
+		impl = new AlarmImpl();
+		sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
 	}
 
 	@Override
 	public void initListener() {
-		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+		mSwipeMenuListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mCommonListView.stepToNextActivity(parent, view, position, 
+				mSwipeMenuListView.stepToNextActivity(parent, view, position, 
 						MedicineEditNotifyActivity.class);
 
+			}
+		});
+		
+		/**
+		 * 监听滑动删除,调用适配器中delete方法，删除服务器中数据
+		 * */
+		mSwipeMenuListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+				isDel = true;
+				sendRequest(impl.delete((ModelAlertData)mList.get(position)), 
+						ModelMsg.class, REQUEST_POST);
+				return false;
 			}
 		});
 	}
@@ -148,136 +111,36 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		// TODO 自动生成的方法存根
-		Object object =  super.onResponceSuccess(str, class1);
-		if(object instanceof ModelAlertList){
-			ModelAlertList mListData = (ModelAlertList) object;
-			if(mAlertList != null){
-				mAlertList.clear();
-				if(mListData.getList() != null){
-					mAlertList.addAll(mListData.getList());
-					mAdapter = new UseMedicineNotifyAdapter(this, mAlertList);
-					mCommonListView.setAdapter(mAdapter);
-					if(mAlertList.size() > 0){
-						setAlarm();
-					}
+		Object object;
+		/**
+		 * 根据返回的对象类型使用不同的解析数据的方法
+		 * 如果是删除后数据，则将isDel设置为false
+		 * */
+		if(isDel){
+			object = DataAnalyze.parseDataByGson(str, class1);
+		} else{
+			object = DataAnalyze.parseData(str, class1);
+		}
+		if(object instanceof List<?>){
+			if(mList != null){
+				mList.clear();
+				mList.addAll((List<ModelAlertData>) object);
+				if(mAdapter != null){
+					mAdapter.notifyDataSetChanged();
+				} else{
+					mAdapter = new UseMedicineNotifyAdapter(this, mList);
+					mSwipeMenuListView.setAdapter(mAdapter);
 				}
 			}
+		}
+		if(object instanceof ModelMsg){
+			isDel = false;
+			ModelMsg msg = (ModelMsg) object;
+			if(msg.getCode() == 0){
+				sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+			}
+			ToastUtils.showLongToast(getApplicationContext(), msg.getMessage());
 		}
 		return object;
-	}
-
-	// 设置闹钟
-	private void setAlarm() {
-		Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
-		mIntent.setAction("alarm.alert.short");
-		// 循环为每个闹钟设置广播
-		if (mAlertList.size() > 0) {
-			for (int i = 0; i < mAlertList.size(); i++) {
-				ModelAlertData mData = (ModelAlertData) mAlertList.get(i);
-				if (mData.getIs_remind() == 0) {
-					String timeList = mData.getMed_time();
-					String startTime = mData.getStime();
-					String repeatDaily = mData.getPeriod();
-					int period = Integer.parseInt(repeatDaily);
-					// 根据重复天数计算出间隔的毫秒数
-					long intervalMillis = setIntervalMillis(period);
-					String[] timeArr = timeList.split(",");
-					// 为每一个时间设置广播
-					for (int j = 0; j < timeArr.length; j++) {
-						/** 区分不同闹钟的ID**/
-						int id = 0;
-						id = (Integer) SharedPreferencesUtil.getData(
-								this, "alerm id:"+id, id);
-						if (timeArr[j] != null) {
-							long currentMillis = System.currentTimeMillis();
-							if(getYearMonDay(startTime) < currentMillis){
-								startTime = getYearMonDay(currentMillis);
-							}
-							//Log.d("Cathy", "开始年月日转换long:"+ getYearMonDay(startTime) +
-									//"当前时间："+ currentMillis + "转换后："+ startTime);
-							long triggerAtMillis = changeStr2Long(startTime + " " + timeArr[j] + ":00");
-							Log.d("Cathy", "开始时间："+ startTime + " " + timeArr[j] + ":00" + " 换算前："+ triggerAtMillis);
-							//如果开始时间已经早于当前时间，则将当前时间设为开始时间
-							if(currentMillis > triggerAtMillis){
-								triggerAtMillis = triggerAtMillis + intervalMillis;
-								//Log.d("Cathy", "下次提醒时间： "+changeLong2Str(triggerAtMillis));
-							}
-							/**
-							 * 三种获取PendingIntent对象的方法 getActivity(Context, int,
-							 * Intent, int) 启动一个activity getBroadcast(Context,
-							 * int, Intent, int) 发送一个广播 getService(Context, int,
-							 * Intent, int) 开启一个服务
-							 */
-							PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
-							mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-							mManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, intervalMillis,
-									mPendingIntent);
-							id++;
-							SharedPreferencesUtil.saveData(this, "alerm id:"+id, id);
-						}
-					}
-				} else {
-					L.d("Cathy", "cancel alert");
-					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
-					mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-					mManager.cancel(mPendingIntent);
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param int
-	 *            daily 间隔天数
-	 * @return long 将天数转换为毫秒数
-	 */
-	private long setIntervalMillis(int daily) {
-		return daily * 24 * 60 * 60 * 1000;
-	}
-
-	/**
-	 * 将时间字符串转换为long
-	 */
-	@SuppressLint("SimpleDateFormat")
-	private long changeStr2Long(String time) {
-		SimpleDateFormat mFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss",Locale.CHINA);
-		Date mDate;
-		try {
-			mDate = mFormat.parse(time);
-			return mDate.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-			Log.d("Cathy", e.toString());
-		}
-		return 0;
-	}
-	
-	private String changeLong2Str(long time){
-		SimpleDateFormat mFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-		Date date = new Date(time);
-		return mFormat.format(date);
-	}
-	
-	private long getYearMonDay(String time){
-		SimpleDateFormat mFormat = new SimpleDateFormat(
-				"yyyy-MM-dd", Locale.CHINA);
-		Date mDate;
-		try {
-			mDate = mFormat.parse(time);
-			return mDate.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-			Log.d("Cathy", e.toString());
-		}
-		return 0;
-	}
-
-	private String getYearMonDay(long time){
-		SimpleDateFormat mFormat = new SimpleDateFormat(
-				"yyyy-MM-dd", Locale.CHINA);
-		Date date = new Date(time);
-		return mFormat.format(date);
 	}
 }

@@ -6,7 +6,7 @@ import com.renn.rennsdk.param.GetAppParam;
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import qcjlibrary.activity.MedicineEditNotifyActivity;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.L;
 import qcjlibrary.widget.popupview.base.PopView;
 
 public class PopAlertTimeList extends PopView {
@@ -51,10 +52,14 @@ public class PopAlertTimeList extends PopView {
 	/** 返回数据的Item的标志**/
 	private int flag;
 	/** 四个子选项返回的值**/
-	private String item_1 = "";
-	private String item_2 = "";
-	private String item_3 = "";
-	private String item_4 = "";
+	private String item_1 = "8:00,";
+	private String item_2 = "8:00,";
+	private String item_3 = "8:00,";
+	private String item_4 = "8:00,";
+	private TextView tv1;
+	private TextView tv2;
+	private TextView tv3;
+	private TextView tv4;
 
 	public PopAlertTimeList(Activity activity, Object object, PopResultListener resultListener) {
 		super(activity, object, resultListener);
@@ -74,21 +79,54 @@ public class PopAlertTimeList extends PopView {
 		btn_alert_time_check = (Button) findViewbyId(R.id.btn_alert_time_check);
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public void initPopData(Object object) {
 		timeList = new ArrayList<View>();
-		time = new StringBuffer();
 		inflate = LayoutInflater.from(mActivity);
+		//四个时间选项布局
 		childItemOne = inflate.inflate(R.layout.item_alert_time, null);
 		childItemTwo = inflate.inflate(R.layout.item_alert_time, null);
 		childItemThree = inflate.inflate(R.layout.item_alert_time, null);
 		childItemFour = inflate.inflate(R.layout.item_alert_time, null);
+		tv1 = (TextView) childItemOne.findViewById(R.id.tv_alert_time);
+		tv2 = (TextView) childItemTwo.findViewById(R.id.tv_alert_time);
+		tv3 = (TextView) childItemThree.findViewById(R.id.tv_alert_time);
+		tv4 = (TextView) childItemFour.findViewById(R.id.tv_alert_time);
+		//将四个布局添加到list中
 		timeList.add(childItemOne);
 		timeList.add(childItemTwo);
 		timeList.add(childItemThree);
 		timeList.add(childItemFour);
+		//默认至少有一个时间
 		ll_alert_time_list.addView(childItemOne);
-		count = 1;
+		//如果是修改时间，则将之前的数据添加上去
+		if(object != null && !object.equals("null-1")){
+			String timeAndCount = object.toString();
+			time = new StringBuffer();
+			time.append(timeAndCount.split("-")[0]);
+			count = Integer.parseInt(timeAndCount.split("-")[1]);
+			for (int i = 1; i < count; i++) {
+				ll_alert_time_list.addView(timeList.get(i));
+			}
+			String[] timeArr = timeAndCount.split("-")[0].split(",");
+			try{
+				tv1.setText(timeArr[0]);
+				item_1 = timeArr[0];
+				tv2.setText(timeArr[1]);
+				item_2 = timeArr[1];
+				tv3.setText(timeArr[2]);
+				item_3 = timeArr[2];
+				tv4.setText(timeArr[3]);
+				item_4 = timeArr[3];
+			}catch(Exception e){
+				
+			}
+			tv_alert_count.setText((count) + "次");
+		} else{
+			count = 1;
+			tv1.setText("8:00");
+		}
 	}
 
 	@Override
@@ -125,10 +163,21 @@ public class PopAlertTimeList extends PopView {
 			@Override
 			public void onClick(View v) {
 				ModelPop data = new ModelPop();
-				String timeStr = "8: 00";
-				time.append(item_1).append(item_2).append(item_3).append(item_4);
-				if (!time.equals("")) {
+				String timeStr = "8:00";
+				time = new StringBuffer();
+				if(count > 1){
+					time.append(item_1).append(item_2);
+					if(count > 2){
+						time.append(item_3);
+						if(count > 3){
+							time.append(item_4);
+						}
+					}
+				}
+				if (!time.equals("") && time.length() > 2) {
 					timeStr = (String) time.subSequence(0, time.length() - 1);
+				} else{
+					count = 1;
 				}
 				data.setType(Config.TYPE_TIME_LIST);
 				data.setDataStr(timeStr+"-"+count);

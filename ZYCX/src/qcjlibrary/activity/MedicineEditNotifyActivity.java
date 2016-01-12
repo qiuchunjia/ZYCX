@@ -76,8 +76,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	private boolean isExit;
 	private Intent intent;
 	private Bundle bundle;
-	private List<String> mTimeList;
-
+	private String timeAndCount;
 	@Override
 	public String setCenterTitle() {
 		return "编辑提醒";
@@ -129,25 +128,29 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		period = "1";
 		isOpen = 1;
 		if(isExit){
+			//修改闹钟,获取闹钟数据，将原来的数据展示出来
 			ModelAlertData mData = (ModelAlertData) bundle.get
 					(Config.ACTIVITY_TRANSFER_BUNDLE);
 			id = mData.getId();
 			userName = mData.getUser();
 			medicineName = mData.getMedicine();
 			period = mData.getPeriod();
-			if(period.equals("1")){
-				period = "每天";
-			}
 			med_num = mData.getMed_num();
 			timeList = mData.getMed_time();
+			timeAndCount = timeList +"-"+med_num;
 			startTime = mData.getStime();
 			isOpen = mData.getIs_remind();
 			et_user.setText(userName);
 			et_medicine_name.setText(medicineName);
-			tv_once.setText(period+med_num);
-			tv_eat_med_repeatday.setText(period);
-			tv_eat_time.setText(timeList);
+			if(period.equals("1")){
+				tv_once.setText("每天"+med_num+"次");
+				tv_eat_med_repeatday.setText("每天");
+			} else{
+				tv_once.setText("每"+period+"天"+med_num+"次");
+				tv_eat_med_repeatday.setText("每"+period+"天");
+			}
 			tv_start_time.setText(startTime);
+			tv_eat_time.setText(timeList);
 			if(isOpen == 0){
 				iv_notify_open.setImageResource(R.drawable.switch_on);
 			}
@@ -173,13 +176,14 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			break;
 		case R.id.rl_alert_repeat_time:
 			//弹出时间提醒频率框
-			PopAlertTimeList alertTimeList = new PopAlertTimeList(this, null, this);
+			L.d("Cathy", "timeAndCount:"+timeAndCount);
+			PopAlertTimeList alertTimeList = new PopAlertTimeList(this, timeAndCount, this);
 			alertTimeList.showPop(rl_alert_repeat_time, Gravity.BOTTOM, 0, 0);
 			Thinksns.medicineAct = this;
 			break;
 		case R.id.rl_alert_starttime:
 			//弹出开始时间选择框
-			PopAlertStartTime datePicker = new PopAlertStartTime(this, null, this);
+			PopAlertStartTime datePicker = new PopAlertStartTime(this, startTime, this);
 			datePicker.showPop(rl_alert_starttime, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.iv_notify_open:
@@ -187,10 +191,12 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			setNotify();
 			break;
 		case R.id.tv_title_right:
+			//获取数据并且上传到服务器
 			userName = et_user.getText()+"";
 			medicineName = et_medicine_name.getText()+"";
 			if(!userName.equals("") && !medicineName.equals("")){
 				if(startTime != null){
+					//将数据保存到实体类中
 					ModelAlertData mData = new ModelAlertData();
 					mData.setUser(userName);
 					mData.setMedicine(medicineName);
@@ -200,12 +206,16 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 					startTime = DateUtil.dateToStr2(startTime);
 					mData.setStime(startTime);
 					mData.setIs_remind(isOpen);
-					L.d("Cathy", "mData: period"+period+" startTime:"+startTime);
 					AlarmImpl impl = new AlarmImpl();
 					if(isExit){
+						//如果是已经存在的闹钟数据，需要修改，则需要传递闹钟的Id
+						L.d("Cathy", "id:"+id);
+						L.d("Cathy", "isOpen = "+isOpen);
+						//http://demo-qingko.zhiyicx.com/index.php?app=api&mod=Medreminder&act=index&oauth_token=304502a0d670f7d29272e5e3a84f8a87&oauth_token_secret=97462e1dec44619ba7d9b67c724b62d1
 						mData.setId(id);
 						sendRequest(impl.update(mData), ModelMsg.class, REQUEST_POST);
 					} else{
+						//新建的闹钟数据则不用传递Id，服务器自增
 						sendRequest(impl.add(mData), ModelMsg.class, REQUEST_POST);
 					}
 //					StringBuffer totalData = new StringBuffer();
@@ -213,7 +223,6 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 //					append(period+";").append(med_num+";").append(startTime+";").append(timeList);
 //					SharedPreferencesUtil.saveData(this, (++id)+"", totalData.toString());
 //					SharedPreferencesUtil.saveData(this, Config.SHARED_SAVE_KEY, id);
-					mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
 				} else{
 					ToastUtils.showLongToast(this, R.string.alert_time_starttime);
 				}
@@ -228,9 +237,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 
 	@Override
 	public Object onPopResult(Object object) {
+		//通过type判断返回数据的作用
 		String type = ((ModelPop)object).getType();
-		String timeAndCount;
 		if(type.equals(Config.TYPE_DAILY)){
+			//周期数据
 			period = ((ModelPop)object).getDataInter()+"";
 			if(period.equals("1")){
 				tv_once.setText("每天"+med_num+"次");
@@ -240,6 +250,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 				tv_eat_med_repeatday.setText("每"+period+"天");
 			}
 		} else if(type.equals(Config.TYPE_TIME_LIST)){
+			//提醒时间
 			timeAndCount = ((ModelPop)object).getDataStr();
 			timeList = timeAndCount.split("-")[0];
 			med_num = Integer.parseInt(timeAndCount.split("-")[1]);
@@ -250,6 +261,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 				tv_once.setText("每"+period+"天"+med_num+"次");
 			}
 		} else if(type.equals(Config.TYPE_DATE)){
+			//提醒的开始时间
 			startTime = ((ModelPop)object).getDataStr();
 			tv_start_time.setText(startTime);
 		}
@@ -257,12 +269,12 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	}
 
 	private void setNotify() {
-		if(isOpen == 1){
+		if(isOpen == 0){
 			iv_notify_open.setImageResource(R.drawable.switch_off);
-			isOpen = 0;
+			isOpen = 1;
 		} else{
 			iv_notify_open.setImageResource(R.drawable.switch_on);
-			isOpen = 1;
+			isOpen = 0;
 		}
 	}
 	
@@ -272,6 +284,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if(object instanceof ModelMsg){
 			ModelMsg msg = (ModelMsg) object;
+			if(msg.getCode() == 0){
+				//上传完毕后跳转到闹钟list界面
+				mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
+			}
 			ToastUtils.showLongToast(this, msg.getMessage());
 		}
 		return object;

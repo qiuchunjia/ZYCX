@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -207,5 +208,55 @@ public class DateUtil {
 		}
 		return false;
 
+	}
+	
+	/**
+	 * 将时间字符串改为long
+	 * */
+	public static long getYearMonDay(String time){
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd", Locale.CHINA);
+		Date mDate;
+		try {
+			mDate = mFormat.parse(time);
+			return mDate.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.d("Cathy", e.toString());
+		}
+		return 0;
+	}
+	
+	public static String getYearMonDay(long time){
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd", Locale.CHINA);
+		Date date = new Date(time);
+		return mFormat.format(date);
+	}
+	/**
+	 * @param int
+	 *            daily 间隔天数
+	 * @return long 将天数转换为毫秒数
+	 */
+	public static long setIntervalMillis(int daily) {
+		return daily * 24 * 60 * 60 * 1000;
+	}
+	
+	/**
+	 * 将时间字符串转换为long
+	 */
+	@SuppressLint("SimpleDateFormat")
+	public static long changeStr2Long(String time) {
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss",Locale.CHINA);
+		Date mDate;
+		try {
+			mDate = mFormat.parse(time);
+			return mDate.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.d("Cathy", e.toString());
+		}
+		return 0;
 	}
 }
