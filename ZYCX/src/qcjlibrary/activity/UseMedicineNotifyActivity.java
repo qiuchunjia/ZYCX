@@ -27,10 +27,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
 import com.nostra13.universalimageloader.utils.L;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -46,8 +46,6 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	boolean isDel = false;
 	private AlarmImpl impl;
 	/** 闹钟管理类 **/
-	private AlarmManager mManager;
-	private Intent mIntent;
 
 	@Override
 	public void onClick(View v) {
@@ -87,9 +85,6 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				mApp.startActivity_qcj(UseMedicineNotifyActivity.this, MedicineEditNotifyActivity.class, null);
 			}
 		});
-		mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		mIntent = new Intent(this, AlarmBroadCastReciever.class);
-		mIntent.setAction("alarm.alert.short");
 		mList = new ArrayList<Model>();
 		impl = new AlarmImpl();
 		sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
@@ -182,33 +177,56 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				/** 区分不同闹钟的ID **/
 				if (timeArr[i] != null) {
 					long currentMillis = System.currentTimeMillis();
-					if (DateUtil.getYearMonDay(startTime) < currentMillis) {
-						startTime = DateUtil.getYearMonDay(currentMillis);
+					Calendar mCalendar = Calendar.getInstance();
+					//将当前时间设置到Calendar中，如果设置的时间为过去时间，那么直接改成当前时间
+					mCalendar.setTimeInMillis(currentMillis);
+					Date current = DateUtil.stampToDate(String.valueOf(currentMillis));
+					Date set = DateUtil.stampToDate(DateUtil.dateToStr2(startTime));
+					/**
+					 * 如果设置的时间为未来时间，那么将年月日设置为未来时间
+					 * */
+					if (DateUtil.compareDate(set, current)) {
+						mCalendar.set(Calendar.YEAR, set.getYear());
+						mCalendar.set(Calendar.MONTH, set.getMonth());
+						mCalendar.set(Calendar.DATE, set.getDate());
 					}
-					// Log.d("Cathy", "开始年月日转换long:"+ getYearMonDay(startTime) +
-					// "当前时间："+ currentMillis + "转换后："+ startTime);
-					long triggerAtMillis = DateUtil.changeStr2Long(startTime + " " + timeArr[i] + ":00");
-					Log.d("Cathy", "开始时间：" + startTime + " " + timeArr[i] + ":00" + " 换算前：" + triggerAtMillis);
-					// 如果开始时间已经早于当前时间，则将当前时间设为开始时间
-					if (currentMillis > triggerAtMillis) {
-						triggerAtMillis = triggerAtMillis + intervalMillis;
-						// Log.d("Cathy", "下次提醒时间：
-						// "+changeLong2Str(triggerAtMillis));
+					int hour = Integer.parseInt(timeArr[i].split(":")[0]);
+					int min = Integer.parseInt(timeArr[i].split(":")[1]);
+					mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+					mCalendar.set(Calendar.MINUTE, min);
+					/**
+					 * 如果当前时间晚于第一次提醒时间，那么则提醒时间顺推到下次提醒的时间
+					 * 如：设置的为 2016-1-12 10:00:00 当前为 2016-1-12 11:00:00 间隔时间为一天
+					 * 	     则将第一次提醒时间设置为2016-1-13 10:00:00
+					 * */
+					if(mCalendar.getTimeInMillis() < currentMillis){
+						 long triggerAtMillis = mCalendar.getTimeInMillis()+intervalMillis;
+						 mCalendar.setTimeInMillis(triggerAtMillis);
 					}
+					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**
 					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
 					 * 发送一个广播 getService(Context, int, Intent, int) 开启一个服务
 					 */
-					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
-					mManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMillis, intervalMillis, mPendingIntent);
+					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+					Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+					mIntent.setAction("alarm.alert.short");
+					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
+							PendingIntent.FLAG_CANCEL_CURRENT);
+					mManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),
+							intervalMillis, mPendingIntent);
 					SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				}
 			} else{
 				//不提醒则取消
+				AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+				Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+				mIntent.setAction("alarm.alert.short");
 				L.d("Cathy", "cancel alert");
 				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
-				PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
+				PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
+						PendingIntent.FLAG_CANCEL_CURRENT);
 				mManager.cancel(mPendingIntent);
 			}
 		}
@@ -217,6 +235,9 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	private void cancelAlarm(ModelAlertData mData){
 		int count = mData.getMed_num();
 		for (int i = 0; i < count; i++) {
+			AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+			Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+			mIntent.setAction("alarm.alert.short");
 			int id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
 					mData.getId() + ":" + i, 0);
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
