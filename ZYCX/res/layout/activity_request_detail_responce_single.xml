@@ -14,6 +14,8 @@
         android:gravity="left|top"
         android:hint="请输入内容"
         android:minHeight="160dp"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/text_green"
         android:padding="@dimen/margin_left_small"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_common" />

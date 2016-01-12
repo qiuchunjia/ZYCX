@@ -203,7 +203,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						 long triggerAtMillis = mCalendar.getTimeInMillis()+intervalMillis;
 						 mCalendar.setTimeInMillis(triggerAtMillis);
 					}
-					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
+					L.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**
 					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)

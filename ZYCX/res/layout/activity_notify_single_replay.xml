@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_white_pure_color"
+        android:cursorVisible="true"
         android:gravity="left|top"
         android:hint="请输入内容"
         android:padding="@dimen/margin_left_small"
         android:textColor="@color/text_black"
+        android:textCursorDrawable="@color/text_green"
         android:textSize="@dimen/text_common" />
 
 </LinearLayout>

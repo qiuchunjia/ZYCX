@@ -34,6 +34,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="输入患过疾病"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -63,6 +65,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="输入过敏的"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -91,6 +95,8 @@
                 android:layout_below="@id/tv_single"
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:hint="出生地，生活地，曾旅游和生活地"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
@@ -220,6 +226,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入每日抽烟根数"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -354,6 +362,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入饮酒起始年龄"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -383,6 +393,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入每日饮酒ml量"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -482,6 +494,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入初潮年纪"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -546,6 +560,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入闭经年龄"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -610,6 +626,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="输入家族病史"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
