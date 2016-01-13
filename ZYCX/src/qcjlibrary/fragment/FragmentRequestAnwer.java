@@ -15,8 +15,10 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
+import android.animation.ObjectAnimator;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ import com.zhiyicx.zycx.R;
 
 public class FragmentRequestAnwer extends BaseFragment {
 	private RelativeLayout rl_space;
+	private LinearLayout ll_top;
 	private ImageView iv_zoom;
 	private TextView tv_find;
 	private EditText et_find;
@@ -67,6 +70,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 
 	@Override
 	public void initView() {
+		ll_top = (LinearLayout) findViewById(R.id.ll_top);
 		rl_space = (RelativeLayout) findViewById(R.id.rl_space);
 		iv_zoom = (ImageView) findViewById(R.id.iv_zoom);
 		tv_find = (TextView) findViewById(R.id.tv_find);
@@ -90,17 +94,13 @@ public class FragmentRequestAnwer extends BaseFragment {
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				ModelRequestItem item = (ModelRequestItem) parent
-						.getItemAtPosition(position);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
 				if (item != null) {
 					if (item.getIs_expert().equals("0")) {
-						mCommonListView.stepToNextActivity(parent, view,
-								position, RequestDetailCommonActivity.class);
+						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailCommonActivity.class);
 					} else if (item.getIs_expert().equals("1")) {
-						mCommonListView.stepToNextActivity(parent, view,
-								position, RequestDetailExpertActivity.class);
+						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailExpertActivity.class);
 					}
 				}
 
@@ -134,8 +134,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 		if (object instanceof ModelRequest) {
 			ModelRequest request = (ModelRequest) object;
 			mCancerList = request.getFenlei();
-			PopCancerCategory category = new PopCancerCategory(mActivity,
-					mCancerList, mActivity);
+			PopCancerCategory category = new PopCancerCategory(mActivity, mCancerList, mActivity);
 			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 		}
 		return object;
@@ -181,13 +180,11 @@ public class FragmentRequestAnwer extends BaseFragment {
 			iv_4.setImageResource(R.drawable.more_green);
 			tv_4.setTextColor(getResources().getColor(R.color.text_green));
 			if (mCancerList != null && mCancerList.size() > 0) {
-				PopCancerCategory category = new PopCancerCategory(mActivity,
-						mCancerList, mActivity);
+				PopCancerCategory category = new PopCancerCategory(mActivity, mCancerList, mActivity);
 				category.showPop(ll_4, Gravity.RIGHT, 0, 0);
 
 			} else {
-				sendRequest(mApp.getRequestImpl().index(null),
-						ModelRequest.class, 0);
+				sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
 			}
 			break;
 		}
@@ -206,6 +203,15 @@ public class FragmentRequestAnwer extends BaseFragment {
 		tv_2.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_3.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_4.setTextColor(getResources().getColor(R.color.text_more_gray));
+	}
+
+	/**
+	 * 实现动画
+	 */
+	private void setAnimation() {
+		ObjectAnimator animator = ObjectAnimator.ofFloat(ll_top, "y", -100);
+		animator.setDuration(2000);
+		animator.start();
 	}
 
 }
