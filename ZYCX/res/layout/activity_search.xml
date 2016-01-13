@@ -53,7 +53,7 @@
                 android:imeOptions="actionSearch"
                 android:hint="搜索关键词"
                 android:cursorVisible="true"
-                android:textCursorDrawable="@color/text_green"
+                android:textCursorDrawable="@null"
                 android:src="@drawable/search_icon"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_common" />
