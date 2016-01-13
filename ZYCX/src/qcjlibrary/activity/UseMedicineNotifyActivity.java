@@ -140,6 +140,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					mSwipeMenuListView.setAdapter(mAdapter);
 				}
 				for (int i = 0; i < mList.size(); i++) {
+					Log.d("Cathy", "position:"+i);
 					setAlarm(i);
 				}
 			}
@@ -156,6 +157,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	}
 
 	private void setAlarm(int position) {
+		Log.d("Cathy", "position:"+position);
 		// 循环为每个闹钟设置广播
 		ModelAlertData mData = (ModelAlertData) mList.get(position);
 		String timeList = mData.getMed_time();
@@ -194,6 +196,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					int min = Integer.parseInt(timeArr[i].split(":")[1]);
 					mCalendar.set(Calendar.HOUR_OF_DAY, hour);
 					mCalendar.set(Calendar.MINUTE, min);
+					mCalendar.set(Calendar.SECOND, 0);
 					/**
 					 * 如果当前时间晚于第一次提醒时间，那么则提醒时间顺推到下次提醒的时间
 					 * 如：设置的为 2016-1-12 10:00:00 当前为 2016-1-12 11:00:00 间隔时间为一天
@@ -201,9 +204,14 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					 * */
 					if(mCalendar.getTimeInMillis() < currentMillis){
 						 long triggerAtMillis = mCalendar.getTimeInMillis()+intervalMillis;
-						 mCalendar.setTimeInMillis(triggerAtMillis);
+						 Date Result = DateUtil.stampToDate(String.valueOf(triggerAtMillis));
+						 mCalendar.set(Calendar.YEAR, Result.getYear());
+						 mCalendar.set(Calendar.MONTH, Result.getMonth());
+						 mCalendar.set(Calendar.DATE, Result.getDate());
+						 mCalendar.set(Calendar.HOUR_OF_DAY, Result.getHours());
+						 mCalendar.set(Calendar.MINUTE, Result.getMinutes());
 					}
-					L.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
+					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**
 					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
