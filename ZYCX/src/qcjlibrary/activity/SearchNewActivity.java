@@ -28,6 +28,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午4:07:29 类描述：这个类是实现
@@ -214,6 +215,7 @@ public class SearchNewActivity extends BaseActivity {
 
 	@Override
 	public void onClick(View v) {
+		SociaxUIUtils.hideSoftKeyboard(this, et_search);
 		switch (v.getId()) {
 		case R.id.tv_sure:
 			String key = et_search.getText().toString();

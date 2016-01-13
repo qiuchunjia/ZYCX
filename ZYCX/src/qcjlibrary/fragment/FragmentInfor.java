@@ -6,14 +6,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.config.Config;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.adapter.ZiXunListAdapter;
 import com.zhiyicx.zycx.fragment.BaseListFragment;
+import com.zhiyicx.zycx.activity.QClassDetailsActivity;
 import com.zhiyicx.zycx.activity.ZiXUnContentActivity;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.listener.OnTouchListListener;
@@ -55,10 +59,11 @@ public class FragmentInfor extends BaseListFragment {
                 try {
                     int _id = jsonObject.getInt("id");
                     int uid = jsonObject.getInt("uid");
+                    String title = jsonObject.getString("title");
                     Intent intent = new Intent(mContext, ZiXUnContentActivity.class);
                     intent.putExtra("id", _id);
                     intent.putExtra("uid", uid);
-                    //intent.putExtra("cid", mType);
+                    intent.putExtra("title", title);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                     Anim.in(mContext);
@@ -68,6 +73,19 @@ public class FragmentInfor extends BaseListFragment {
                 }
             }
         });
+        mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Model model = (Model) parent.getItemAtPosition(position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Config.ACTIVITY_TRANSFER_BUNDLE, model);
+				Intent mIntent = new Intent(mContext, ZiXUnContentActivity.class);
+				mIntent.putExtras(bundle);
+				startActivity(mIntent);
+				Anim.in(mContext);
+			}
+		});
         ArrayList<JSONObject> data = new ArrayList<JSONObject>();
         mAdapter = new ZiXunListAdapter(this, data, -2);
         mListView.setAdapter(mAdapter, System.currentTimeMillis(), mContext);
@@ -114,7 +132,7 @@ public class FragmentInfor extends BaseListFragment {
 			public void onSearchTouch_Info(String key) {
 				setKey(key);
 				Log.d("Cathy", "info:"+key);
-				mAdapter.loadSearchData(key);
+				mAdapter.loadSearchData(Utils.getUTF8String(key));
 		        mListView.setSelectionFromTop(0, 20);
 		        isLoad = true;
 			}
@@ -127,7 +145,7 @@ public class FragmentInfor extends BaseListFragment {
     }
     
     private void setKey(String key){
-    	this.key = key;
+    	this.key = Utils.getUTF8String(key);
     }
     
     //仅当可见时才加载内容

@@ -73,6 +73,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 			mId = Integer.valueOf(mDetail.getId());
 			mUid = Integer.valueOf(mDetail.getUid());
 			mTitle = mDetail.getTitle();
+		} else{
+			Intent intent = getIntent();
+			mId = intent.getIntExtra("id", 0);
+			mUid = intent.getIntExtra("uid", 0);
+			mTitle = intent.getStringExtra("title");
+			mDetail = new ModelZiXunDetail();
+			mDetail.setId(mId+"");
 		}
 		// mCid = getIntent().getIntExtra("cid", 0);
 		if (mId == 0 || mUid == 0)
