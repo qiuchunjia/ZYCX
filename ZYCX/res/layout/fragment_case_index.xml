@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
+     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white_bg_color"
+    >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_white_bg_color"
@@ -224,11 +230,9 @@
     </RelativeLayout>
     <!-- 应用推荐 -->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
         <RelativeLayout
+            android:paddingBottom="@dimen/item_height_50"
             android:id="@+id/rl_myapp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -300,6 +304,5 @@
                     android:textSize="@dimen/text_common" />
             </LinearLayout>
         </RelativeLayout>
-    </ScrollView>
-
 </LinearLayout>
+</ScrollView>
