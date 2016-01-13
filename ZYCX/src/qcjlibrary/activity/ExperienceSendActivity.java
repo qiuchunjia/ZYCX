@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午2:34:26 类描述：这个类是实现
@@ -128,6 +129,8 @@ public class ExperienceSendActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
+			SociaxUIUtils.hideSoftKeyboard(this, et_title);
+			SociaxUIUtils.hideSoftKeyboard(this, et_content);
 			String title = et_title.getText().toString();
 			String content = et_content.getText().toString();
 			String date = tv_choosedate.getText().toString();

@@ -114,7 +114,11 @@ public class QClassListAdapter extends LoadListAdapter {
             JSONObject jsonObject = list.get(position);
             holder.mTitle.setText(jsonObject.get("course_name").toString());
             holder.mContent.setText(jsonObject.getString("content").toString());
-            holder.mWatchCnt.setText(jsonObject.get("watch_num")+"");
+            String watch_num = jsonObject.get("watch_num")+"";
+            if(watch_num.length() > 3){
+            	watch_num = "999+";
+            }
+            holder.mWatchCnt.setText(watch_num);
             holder.mVideoCnt.setText("");
 			holder.mVideoCnt.append(update_head);
 			holder.mVideoCnt.append(SpanUtil.setForegroundColorSpan(jsonObject.get("video_num") + "", 0, 0,

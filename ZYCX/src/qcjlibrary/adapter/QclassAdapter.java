@@ -64,7 +64,11 @@ public class QclassAdapter extends BAdapter {
 			if (mDetail != null) {
 				holder.tv_title.setText(mDetail.getCourse_name());
 				holder.tv_content.setText(mDetail.getContent());
-				holder.tv_num.setText(mDetail.getWatch_num() + "");
+				String watch_num = mDetail.getWatch_num()+"";
+	            if(watch_num.length() > 3){
+	            	watch_num = "999+";
+	            }
+				holder.tv_num.setText(watch_num);
 				holder.tv_update.setText("");
 				holder.tv_update.append(update_head);
 				holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num() + "", 0, 0,
@@ -128,6 +132,9 @@ public class QclassAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelQclass) {
 			ModelQclass mQclass = (ModelQclass) object;
+			if(status == 2 && mList!= null){
+				mList.clear();
+			}
 			return mQclass.getList();
 		}
 		return null;
