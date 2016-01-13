@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
@@ -43,8 +44,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		mAnswerCommon = (ModelRequestAnswerComom) getDataFromIntent(
-				getIntent(), null);
+		mAnswerCommon = (ModelRequestAnswerComom) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -76,8 +76,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		if (mAnswerCommon != null) {
 			addDataToHead(mAnswerCommon);
-			sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon),
-					ModelRequestCommmetCommon.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon), ModelRequestCommmetCommon.class, REQUEST_GET);
 		}
 	}
 
@@ -89,8 +88,8 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	private void addDataToHead(ModelRequestAnswerComom mAnswerCommon2) {
 		if (mAnswerCommon2 != null) {
 			String name = mAnswerCommon2.getUser_name();
-			if(name.length() > 5){
-				name = name.substring(0,4);
+			if (name.length() > 5) {
+				name = name.substring(0, 4);
 			}
 			titleSetCenterTitle(name + "..." + "的解答");
 			mApp.displayImage(mAnswerCommon2.getUser_face(), riv_other_icon);
@@ -113,9 +112,8 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		if (object instanceof ModelMsg) {
 			if (judgeTheMsg(object)) {
 				if (!isPop) {
-					sendRequest(mApp.getRequestImpl()
-							.commentList(mAnswerCommon),
-							ModelRequestCommmetCommon.class, REQUEST_GET);
+					sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon), ModelRequestCommmetCommon.class,
+							REQUEST_GET);
 					et_content.setText("");
 				} else {
 					isPop = false;
@@ -139,17 +137,12 @@ public class RequestDetailResponceActivity extends BaseActivity {
 			}
 			for (int i = 0; i < commentList.size(); i++) {
 				ModelRequestAnswerComom answerComom = commentList.get(i);
-				View view = mInflater.inflate(
-						R.layout.item_requeset_detail_replay, null);
+				View view = mInflater.inflate(R.layout.item_requeset_detail_replay, null);
 				/******************* 初始化控件 *********************/
-				RoundImageView riv_other_icon = (RoundImageView) view
-						.findViewById(R.id.riv_other_icon);
-				TextView tv_other_username = (TextView) view
-						.findViewById(R.id.tv_other_username);
-				TextView tv_other_date = (TextView) view
-						.findViewById(R.id.tv_other_date);
-				TextView tv_other_content = (TextView) view
-						.findViewById(R.id.tv_other_content);
+				RoundImageView riv_other_icon = (RoundImageView) view.findViewById(R.id.riv_other_icon);
+				TextView tv_other_username = (TextView) view.findViewById(R.id.tv_other_username);
+				TextView tv_other_date = (TextView) view.findViewById(R.id.tv_other_date);
+				TextView tv_other_content = (TextView) view.findViewById(R.id.tv_other_content);
 				/******************* 初始化控件end *********************/
 				mApp.displayImage(answerComom.getUser_face(), riv_other_icon);
 				tv_other_username.setText(answerComom.getUser_name());
@@ -169,18 +162,24 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_title_right1:
-			SociaxUIUtils.hideSoftKeyboard(this, et_content);
-			PopDealAnwer popDealAnwer = new PopDealAnwer(this, mAnswerCommon,
-					this);
-			popDealAnwer.showPop(ll_replay, Gravity.BOTTOM, 0, 0);
+			if (isLogin()) {
+				SociaxUIUtils.hideSoftKeyboard(this, et_content);
+				PopDealAnwer popDealAnwer = new PopDealAnwer(this, mAnswerCommon, this);
+				popDealAnwer.showPop(ll_replay, Gravity.BOTTOM, 0, 0);
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 
 		case R.id.tv_send:
-			String content = et_content.getText().toString();
-			if (!TextUtils.isEmpty(content)) {
-				mAnswerCommon.setContent(content);
-				sendRequest(mApp.getRequestImpl().answerComment(mAnswerCommon),
-						ModelMsg.class, REQUEST_GET);
+			if (isLogin()) {
+				String content = et_content.getText().toString();
+				if (!TextUtils.isEmpty(content)) {
+					mAnswerCommon.setContent(content);
+					sendRequest(mApp.getRequestImpl().answerComment(mAnswerCommon), ModelMsg.class, REQUEST_GET);
+				}
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
 		}
@@ -194,8 +193,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 			String type = (String) data;
 			mAnswerCommon.setType(type);
 			isPop = true;
-			sendRequest(mApp.getRequestImpl().setBestAnswer(mAnswerCommon),
-					ModelMsg.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().setBestAnswer(mAnswerCommon), ModelMsg.class, REQUEST_GET);
 		}
 
 		return data;

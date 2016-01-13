@@ -62,6 +62,7 @@ import com.zhiyicx.zycx.sociax.net.Request;
 import com.zhiyicx.zycx.sociax.unit.Anim;
 import com.zhiyicx.zycx.sociax.unit.CommonLog;
 import com.zhiyicx.zycx.sociax.unit.LogFactory;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 public class Thinksns extends Application {
 	private Api api;
@@ -184,7 +185,18 @@ public class Thinksns extends Application {
 	public Api getApi() {
 		return this.api;
 	}
-
+    /**判断用户是否登录
+     * @return
+     */
+  public boolean isLogin(){
+	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
+	  String token=preferenceUtil.getString("oauth_token", "");
+	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
+	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
+		 return true ;
+	  }
+		return false;
+ }
 	public static WeakHashMap<String, Bitmap> getImageCache() {
 		return imageCache;
 	}

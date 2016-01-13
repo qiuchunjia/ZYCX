@@ -104,6 +104,9 @@ public class AtMeSqlHelper extends SqlHelper
 
 	public ListData<SociaxItem> getAtMeList()
 	{
+		if(Thinksns.getMy()==null){
+			return null;
+		}
 		Cursor cursor = weiboTable.getReadableDatabase().query(ThinksnsTableSqlHelper.atMeTable, null,
 				"site_id=" + Thinksns.getMySite().getSite_id() + " and my_uid=" + Thinksns.getMy().getUid(), null,
 				null, null, ThinksnsTableSqlHelper.weiboId + " DESC");

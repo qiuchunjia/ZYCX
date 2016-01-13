@@ -38,6 +38,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * fragment的基类，其它fragment必須實現他，不要隨意修改這個基類
@@ -101,20 +103,18 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 		return mView;
 	}
 
-	/**
-	 * 判断这个用户是否登录过
-	 * 
-	 * 如果个别fragement对用户开发的话，就重新这个方法，然后return true就可以了
-	 * 
-	 * @return
-	 */
-	public boolean checkTheUser() {
-		ModelUser user = mApp.getUser();
-		if (user != null) {
-			return true;
-		}
+    /**判断用户是否登录
+     * @return
+     */
+  public boolean isLogin(){
+	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
+	  String token=preferenceUtil.getString("oauth_token", "");
+	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
+	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
+		 return true ;
+	  }
 		return false;
-	}
+ }
 
 	/**
 	 * @param viewid

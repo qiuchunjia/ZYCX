@@ -7,6 +7,7 @@ import qcjlibrary.model.base.Model;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -63,14 +64,20 @@ public class RequestWayActivity extends BaseActivity {
 			break;
 
 		case R.id.tv_common:
-			mAsk.setIs_expert("0");
-			mApp.startActivity_qcj(this, RequestSendTopicActivity.class,
-					sendDataToBundle(mAsk, null));
+			if (isLogin()) {
+				mAsk.setIs_expert("0");
+				mApp.startActivity_qcj(this, RequestSendTopicActivity.class, sendDataToBundle(mAsk, null));
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 		case R.id.tv_zhuanye:
-			mAsk.setIs_expert("1");
-			mApp.startActivity_qcj(this, RequestSendTopicActivity.class,
-					sendDataToBundle(mAsk, null));
+			if (isLogin()) {
+				mAsk.setIs_expert("1");
+				mApp.startActivity_qcj(this, RequestSendTopicActivity.class, sendDataToBundle(mAsk, null));
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 		}
 

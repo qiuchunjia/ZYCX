@@ -25,7 +25,7 @@ public class PopDatePicker extends PopView {
 	private WheelView wv_date_month;
 	private WheelView wv_date_day;
 	/***************************************/
-	public static String[] mYear = new String[70];
+	public static String[] mYear = new String[100];
 	public static String[] mMonth = new String[12];
 	public static String[] mDay = new String[31];
 
@@ -35,8 +35,7 @@ public class PopDatePicker extends PopView {
 
 	private String mDateType;
 
-	public PopDatePicker(Activity activity, Object object,
-			PopResultListener resultListener) {
+	public PopDatePicker(Activity activity, Object object, PopResultListener resultListener) {
 		super(activity, object, resultListener);
 	}
 
@@ -59,6 +58,7 @@ public class PopDatePicker extends PopView {
 		wv_date_year.setVisibleItems(5);
 		wv_date_year.setCyclic(true);
 		wv_date_year.setAdapter(new ArrayWheelAdapter<String>(mYear));
+		wv_date_year.setCurrentItem(30);
 		wv_date_month.setVisibleItems(5);
 		wv_date_month.setCyclic(true);
 		wv_date_month.setAdapter(new ArrayWheelAdapter<String>(mMonth));
@@ -96,7 +96,7 @@ public class PopDatePicker extends PopView {
 	 */
 	private void genateYearMouthDay() {
 		for (int i = 0; i < mYear.length; i++) {
-			mYear[i] = "  " + (2015 - i) + "  ";
+			mYear[i] = "  " + (2045 - i) + "  ";
 		}
 		for (int i = 0; i < mMonth.length; i++) {
 			mMonth[i] = "  " + ((1 + i)) + "  ";

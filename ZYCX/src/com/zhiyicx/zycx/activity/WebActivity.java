@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.adapter.ListFragmentAdapter;
 import com.zhiyicx.zycx.fragment.BaseListFragment;
@@ -72,33 +73,36 @@ public class WebActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mApp.startActivity(WebActivity.this, WeiboCreateActivity.class,
-						null);
+				if (isLogin()) {
+					mApp.startActivity(WebActivity.this, WeiboCreateActivity.class, null);
+				} else {
+					mApp.startActivity(WebActivity.this, LoginActivity.class, null);
+				}
 			}
 		});
-		// findViewById(R.id.btn_send).setOnClickListener(
-		// new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// mApp.startActivity(WebActivity.this,
-		// WeiboCreateActivity.class, null);
-		// }
-		// });
-		// findViewById(R.id.btn_search).setOnClickListener(
-		// new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// Intent intent = new Intent(WebActivity.this,
-		// SearchActivity.class);
-		// intent.putExtra("type", 0);
-		// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-		// | Intent.FLAG_ACTIVITY_NEW_TASK);
-		// WebActivity.this.startActivity(intent);
-		// Anim.in(WebActivity.this);
-		// }
-		// });
-
 	}
+	// findViewById(R.id.btn_send).setOnClickListener(
+	// new View.OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// mApp.startActivity(WebActivity.this,
+	// WeiboCreateActivity.class, null);
+	// }
+	// });
+	// findViewById(R.id.btn_search).setOnClickListener(
+	// new View.OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// Intent intent = new Intent(WebActivity.this,
+	// SearchActivity.class);
+	// intent.putExtra("type", 0);
+	// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+	// | Intent.FLAG_ACTIVITY_NEW_TASK);
+	// WebActivity.this.startActivity(intent);
+	// Anim.in(WebActivity.this);
+	// }
+	// });
+
 
 	@Override
 	public void onClick(View v) {
@@ -112,18 +116,22 @@ public class WebActivity extends BaseActivity {
 		super.onResume();
 		if (allListFragment != null)
 			allListFragment.doRefreshHeader();
+		if (!isLogin()) {
+			if (mPager != null) {
+				mPager.setCurrentItem(0);
+			}
+		}
 	}
 
 	private void InitViewPager() {
 		mFragmentsList = new ArrayList<Fragment>();
 		allListFragment = new WebListFragment();
-		allListFragment
-				.setFinishLoadListener(new BaseListFragment.FinishLoadListener() {
-					@Override
-					public void OnFinish() {
-						mLoadingView.hide(mPager);
-					}
-				});
+		allListFragment.setFinishLoadListener(new BaseListFragment.FinishLoadListener() {
+			@Override
+			public void OnFinish() {
+				mLoadingView.hide(mPager);
+			}
+		});
 		atomFragment = new WebAtomFragment();
 		commentFragment = new WebCommentFragment();
 		collectFragment = new WebCollectFragment();
@@ -133,8 +141,7 @@ public class WebActivity extends BaseActivity {
 		mFragmentsList.add(collectFragment);
 
 		String[] titles = new String[] { "首页", "@我", "评论", "收藏" };
-		mPager.setAdapter(new ListFragmentAdapter(getSupportFragmentManager(),
-				mFragmentsList, titles));
+		mPager.setAdapter(new ListFragmentAdapter(getSupportFragmentManager(), mFragmentsList, titles));
 		mTabs.setViewPager(mPager);
 		mTabs.setOnPageChangeListener(new MyOnPageChangeListener());
 		setTabsValue();
@@ -146,12 +153,9 @@ public class WebActivity extends BaseActivity {
 		mTabs.setShouldExpand(true);
 		mTabs.setDividerColor(Color.TRANSPARENT);
 		DisplayMetrics dm = getResources().getDisplayMetrics();
-		mTabs.setUnderlineHeight((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 1, dm));
-		mTabs.setIndicatorHeight((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 4, dm));
-		mTabs.setTextSize((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_SP, 16, dm));
+		mTabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm));
+		mTabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
+		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, dm));
 		mTabs.setIndicatorColor(Color.parseColor("#45c01a"));
 		mTabs.setSelectedTextColor(Color.parseColor("#45c01a"));
 		mTabs.setTabBackground(0);
@@ -165,8 +169,12 @@ public class WebActivity extends BaseActivity {
 		}
 
 		public void onPageSelected(int arg0) {
-			BaseListFragment fragment = (BaseListFragment) mFragmentsList
-					.get(arg0);
+			if (arg0 > 0) {
+				if (!isLogin()) {
+					mApp.startActivity_qcj(WebActivity.this, LoginActivity.class, null);
+				}
+			}
+			BaseListFragment fragment = (BaseListFragment) mFragmentsList.get(arg0);
 			// fragment.loadData(false);
 			fragment.doRefreshHeader();
 		}

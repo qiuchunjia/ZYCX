@@ -28,8 +28,7 @@ public class WeiboSqlHelper extends SqlHelper {
 	private CommonLog mCommonLog = LogFactory.createLog();
 
 	private WeiboSqlHelper(Context context) {
-		this.weiboTable = new ThinksnsTableSqlHelper(context, DB_NAME, null,
-				VERSION);
+		this.weiboTable = new ThinksnsTableSqlHelper(context, DB_NAME, null, VERSION);
 	}
 
 	public static WeiboSqlHelper getInstance(Context context) {
@@ -48,6 +47,9 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public long addWeibo(Weibo weibo) {
+		if (Thinksns.getMy() == null) {
+			return 0;
+		}
 		ContentValues map = new ContentValues();
 		map.put(ThinksnsTableSqlHelper.weiboId, weibo.getWeiboId());
 		map.put(ThinksnsTableSqlHelper.uid, weibo.getUid());
@@ -69,29 +71,24 @@ public class WeiboSqlHelper extends SqlHelper {
 		 * map.put(weiboTable.picUrl, weibo.getPicUrl()!=
 		 * null?weibo.getPicUrl():"");
 		 * 
-		 * map.put(weiboTable.thumbMiddleUrl,weibo.getThumbMiddleUrl()!=null?weibo
-		 * .getPicUrl():""); map.put(weiboTable.thumbUrl,
+		 * map.put(weiboTable.thumbMiddleUrl,weibo.getThumbMiddleUrl()!=null?
+		 * weibo .getPicUrl():""); map.put(weiboTable.thumbUrl,
 		 * weibo.getThumbUrl()!=null?weibo.getThumbUrl():"");
 		 */
 		if (!weibo.isNullForTranspondId()) {
-			map.put(ThinksnsTableSqlHelper.transpond, weibo.getTranspond()
-					.toJSON());
+			map.put(ThinksnsTableSqlHelper.transpond, weibo.getTranspond().toJSON());
 		}
 		// map.put(weiboTable.transpond,weibo.getTranspond().toJSON()!=
 		// null?weibo.getTranspond().toJSON():" ");
-		map.put(ThinksnsTableSqlHelper.transpondCount,
-				weibo.getTranspondCount());
+		map.put(ThinksnsTableSqlHelper.transpondCount, weibo.getTranspondCount());
 		map.put(ThinksnsTableSqlHelper.userface, weibo.getUserface());
 		map.put(ThinksnsTableSqlHelper.transpondId, weibo.getTranspondId());
-		map.put(ThinksnsTableSqlHelper.favorited,
-				transFavourt(weibo.isFavorited()));
+		map.put(ThinksnsTableSqlHelper.favorited, transFavourt(weibo.isFavorited()));
 		map.put(ThinksnsTableSqlHelper.weiboJson, weibo.toJSON());
 		map.put("site_id", Thinksns.getMySite().getSite_id());
 		map.put("my_uid", Thinksns.getMy().getUid());
-		mCommonLog.d("site id " + Thinksns.getMySite().getSite_id() + "uid "
-				+ Thinksns.getMy().getUid());
-		return weiboTable.getWritableDatabase().insert(
-				ThinksnsTableSqlHelper.weiboTable, null, map);
+		mCommonLog.d("site id " + Thinksns.getMySite().getSite_id() + "uid " + Thinksns.getMy().getUid());
+		return weiboTable.getWritableDatabase().insert(ThinksnsTableSqlHelper.weiboTable, null, map);
 	}
 
 	/**
@@ -100,66 +97,51 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public ListData<SociaxItem> getWeiboList() {
-		Cursor cursor = weiboTable.getReadableDatabase().query(
-				ThinksnsTableSqlHelper.weiboTable,
-				null,
-				"site_id=" + Thinksns.getMySite().getSite_id() + " and my_uid="
-						+ Thinksns.getMy().getUid(), null, null, null,
-				ThinksnsTableSqlHelper.weiboId + " DESC");
+		/********** qcj 添加 2015-1-12 *********/
+		if (Thinksns.getMy() == null) {
+			return null;
+		}
+		/********** qcj 添加 2015-1-12 end *********/
+		Cursor cursor = weiboTable.getReadableDatabase().query(ThinksnsTableSqlHelper.weiboTable, null,
+				"site_id=" + Thinksns.getMySite().getSite_id() + " and my_uid=" + Thinksns.getMy().getUid(), null, null,
+				null, ThinksnsTableSqlHelper.weiboId + " DESC");
 		weiboDatas = new ListData<SociaxItem>();
 
 		if (cursor.moveToFirst())
 			do {
 				Weibo weibo = new Weibo();
-				int weiboId = cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.weiboId));
+				int weiboId = cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.weiboId));
 				weibo.setWeiboId(weiboId);
-				weibo.setUid(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.uid)));
-				weibo.setUsername(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.userName)));
-				weibo.setContent(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.content)));
-				weibo.setCtime(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.cTime)));
-				weibo.setFrom(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.from)));
-				weibo.setTimestamp(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.timeStamp)));
-				weibo.setComment(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.comment)));
-				weibo.setType(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.type)));
+				weibo.setUid(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.uid)));
+				weibo.setUsername(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.userName)));
+				weibo.setContent(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.content)));
+				weibo.setCtime(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.cTime)));
+				weibo.setFrom(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.from)));
+				weibo.setTimestamp(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.timeStamp)));
+				weibo.setComment(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.comment)));
+				weibo.setType(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.type)));
 
 				weibo.setAttachs(attachSqlHelper.getAttachsByWeiboId(weiboId));
 				attachSqlHelper.close();
 
 				// weibo.setPicUrl(cursor.getString(cursor.getColumnIndex(weiboTable.picUrl)));
 				// weibo.setThumbMiddleUrl(cursor.getString(cursor.getColumnIndex(weiboTable.thumbMiddleUrl)));
-				weibo.setTranspondId(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.transpondId)));
+				weibo.setTranspondId(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.transpondId)));
 				// weibo.setThumbUrl(cursor.getString(cursor.getColumnIndex(weiboTable.thumbUrl)));
-				if (cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.transpond)) != null) {
+				if (cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.transpond)) != null) {
 					try {
-						weibo.setTranspond(new Weibo(
-								new JSONObject(
-										cursor.getString(cursor
-												.getColumnIndex(ThinksnsTableSqlHelper.transpond)))));
+						weibo.setTranspond(new Weibo(new JSONObject(
+								cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.transpond)))));
 					} catch (WeiboDataInvalidException e) {
 						mCommonLog.e(e.toString());
 					} catch (JSONException e) {
 						mCommonLog.e(e.toString());
 					}
 				}
-				weibo.setTranspondCount(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.transpondCount)));
-				weibo.setFavorited(isFavourt(cursor.getInt(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.favorited))));
-				weibo.setUserface(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.userface)));
-				weibo.setTempJsonString(cursor.getString(cursor
-						.getColumnIndex(ThinksnsTableSqlHelper.weiboJson)));
+				weibo.setTranspondCount(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.transpondCount)));
+				weibo.setFavorited(isFavourt(cursor.getInt(cursor.getColumnIndex(ThinksnsTableSqlHelper.favorited))));
+				weibo.setUserface(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.userface)));
+				weibo.setTempJsonString(cursor.getString(cursor.getColumnIndex(ThinksnsTableSqlHelper.weiboJson)));
 				weiboDatas.add(weibo);
 			} while (cursor.moveToNext());
 		cursor.close();
@@ -172,10 +154,11 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public int getDBWeiboSize() {
-		Cursor cursor = weiboTable.getWritableDatabase().rawQuery(
-				"select count(*) from home_weibo where site_id = "
-						+ Thinksns.getMySite().getSite_id() + " and my_uid = "
-						+ Thinksns.getMy().getUid(), null);
+		if (Thinksns.getMy() == null) {
+			return 0;
+		}
+		Cursor cursor = weiboTable.getWritableDatabase().rawQuery("select count(*) from home_weibo where site_id = "
+				+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid(), null);
 		if (cursor.moveToFirst()) {
 			return cursor.getInt(0);
 		} else {
@@ -191,17 +174,12 @@ public class WeiboSqlHelper extends SqlHelper {
 	 */
 	public void deleteWeibo(int count) {
 		if (count >= 20) {
-			weiboTable.getWritableDatabase().execSQL(
-					"delete from home_weibo where site_id = "
-							+ Thinksns.getMySite().getSite_id()
-							+ " and my_uid = " + Thinksns.getMy().getUid());
+			weiboTable.getWritableDatabase().execSQL("delete from home_weibo where site_id = "
+					+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid());
 		} else if (count > 0 && count < 20) {
 			String sql = "delete from home_weibo where weiboId in (select weiboId from home_weibo where site_id = "
-					+ Thinksns.getMySite().getSite_id()
-					+ " and my_uid = "
-					+ Thinksns.getMy().getUid()
-					+ " order by weiboId limit "
-					+ count + ")";
+					+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid()
+					+ " order by weiboId limit " + count + ")";
 			weiboTable.getWritableDatabase().execSQL(sql);
 		}
 	}
@@ -214,15 +192,12 @@ public class WeiboSqlHelper extends SqlHelper {
 	 */
 	public boolean deleteWeiboById(int weiboId) {
 		try {
-			weiboTable.getWritableDatabase().execSQL(
-					"delete from home_weibo where weiboId=" + weiboId
-							+ " and site_id = "
-							+ Thinksns.getMySite().getSite_id()
-							+ " and my_uid = " + Thinksns.getMy().getUid());
+			weiboTable.getWritableDatabase()
+					.execSQL("delete from home_weibo where weiboId=" + weiboId + " and site_id = "
+							+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid());
 			return true;
 		} catch (Exception e) {
-			Log.e("WeiboSqlHelper",
-					"delete weibo error ---------->" + e.toString());
+			Log.e("WeiboSqlHelper", "delete weibo error ---------->" + e.toString());
 			return false;
 		}
 	}
@@ -231,10 +206,8 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * 删除数据库缓存
 	 */
 	public void clearCacheDB() {
-		weiboTable.getWritableDatabase().execSQL(
-				"delete from home_weibo where site_id = "
-						+ Thinksns.getMySite().getSite_id() + " and my_uid = "
-						+ Thinksns.getMy().getUid());
+		weiboTable.getWritableDatabase().execSQL("delete from home_weibo where site_id = "
+				+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid());
 	}
 
 	@Override

@@ -1,15 +1,14 @@
 package qcjlibrary.fragment;
 
-import qcjlibrary.activity.MeAplicationActivity;
-import qcjlibrary.activity.MeCenterActivity;
-import qcjlibrary.activity.MePerioActivity;
-import qcjlibrary.activity.RequestMyAskActivity;
-import qcjlibrary.fragment.base.BaseFragment;
-import qcjlibrary.model.ModelUser;
-import qcjlibrary.model.base.Model;
-import qcjlibrary.util.UIUtils;
-import qcjlibrary.widget.RoundImageView;
-import android.app.ActionBar.LayoutParams;
+import com.zhiyicx.zycx.LoginActivity;
+import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.GuideActivity;
+import com.zhiyicx.zycx.activity.HomeActivity;
+import com.zhiyicx.zycx.activity.WebActivity;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.sociax.unit.Anim;
+import com.zhiyicx.zycx.util.PreferenceUtil;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,13 +20,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.activity.GuideActivity;
-import com.zhiyicx.zycx.activity.HomeActivity;
-import com.zhiyicx.zycx.activity.WebActivity;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
-import com.zhiyicx.zycx.sociax.unit.Anim;
+import qcjlibrary.activity.MeAplicationActivity;
+import qcjlibrary.activity.MeCenterActivity;
+import qcjlibrary.activity.MePerioActivity;
+import qcjlibrary.activity.RequestMyAskActivity;
+import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelUser;
+import qcjlibrary.model.base.Model;
+import qcjlibrary.util.UIUtils;
+import qcjlibrary.widget.RoundImageView;
 
 /**
  * author：qiuchunjia time：下午5:27:29 类描述：这个类是实现
@@ -77,8 +78,11 @@ public class FragmentMenu extends BaseFragment {
 	public void initData() {
 		RelativeLayout.LayoutParams layoutParams = (android.widget.RelativeLayout.LayoutParams) btn_quit
 				.getLayoutParams();
-		layoutParams.bottomMargin = (int) (UIUtils.getWindowHeight(getActivity()) * 0.1)-2;
+		layoutParams.bottomMargin = (int) (UIUtils.getWindowHeight(getActivity()) * 0.1) - 2;
 		btn_quit.setLayoutParams(layoutParams);
+		if (!isLogin()) {
+			btn_quit.setText("请登录");
+		}
 		/*
 		 * mUser = mApp.getUser(); if (TextUtils.isEmpty(mUser.getAvatar())) {
 		 * sendRequest(mApp.getUserImpl().index(), ModelUser.class,
@@ -122,7 +126,11 @@ public class FragmentMenu extends BaseFragment {
 
 			break;
 		case R.id.rl_user:
-			mApp.startActivity_qcj(getActivity(), MeCenterActivity.class, mActivity.sendDataToBundle(mUser, null));
+			if (isLogin()) {
+				mApp.startActivity_qcj(getActivity(), MeCenterActivity.class, mActivity.sendDataToBundle(mUser, null));
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 
 			break;
 		case R.id.rl_home:
@@ -130,8 +138,11 @@ public class FragmentMenu extends BaseFragment {
 			mActivity.finish();
 			break;
 		case R.id.rl_question:
-			mApp.startActivity_qcj(mActivity, RequestMyAskActivity.class,
-					mActivity.sendDataToBundle(new Model(), null));
+			if (isLogin()) {
+				mApp.startActivity_qcj(mActivity, RequestMyAskActivity.class, null);
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 			break;
 		case R.id.rl_app:
 			mApp.startActivity_qcj(mActivity, MeAplicationActivity.class,
@@ -144,7 +155,11 @@ public class FragmentMenu extends BaseFragment {
 			mApp.startActivity_qcj(getActivity(), MePerioActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
-			quitLogin();
+			if (isLogin()) {
+				quitLogin();
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 			break;
 		}
 	}
@@ -163,6 +178,15 @@ public class FragmentMenu extends BaseFragment {
 				dialog.dismiss();
 				Thinksns app = (Thinksns) obj.getApplicationContext();
 				app.getUserSql().clear();
+				/******************
+				 * 清除token author qcj 2015-1-12
+				 **************************/
+				PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
+				preferenceUtil.saveString("oauth_token_secret", "");
+				preferenceUtil.saveString("oauth_token", "");
+				/******************
+				 * 清除token author qcj 2015-1-12
+				 **************************/
 				// Thinksns.exitApp();
 				Intent intent = new Intent(obj, GuideActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -185,6 +209,10 @@ public class FragmentMenu extends BaseFragment {
 		// TODO 自动生成的方法存根
 		super.onResume();
 		mUser = mApp.getUser();
+		if (!isLogin()) {
+			return;
+		}
+		btn_quit.setText("退出登录");
 		if (TextUtils.isEmpty(mUser.getAvatar())) {
 			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		} else {

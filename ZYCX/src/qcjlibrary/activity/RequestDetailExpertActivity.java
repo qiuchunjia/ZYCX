@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -100,8 +101,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
-		sendRequest(mApp.getRequestImpl().answer(mRequestItem),
-				ModelRequestDetailExpert.class, REQUEST_GET);
+		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailExpert.class, REQUEST_GET);
 	}
 
 	@Override
@@ -109,16 +109,13 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestDetailExpert) {
 			mDetailExpert = (ModelRequestDetailExpert) object;
-			addDataToHeadAndFlag(mDetailExpert.getQuestion(),
-					mDetailExpert.getTopic_list());
-			addDataToExpertAnswer(mDetailExpert.getAnswer(),
-					mDetailExpert.getCommentlist());
+			addDataToHeadAndFlag(mDetailExpert.getQuestion(), mDetailExpert.getTopic_list());
+			addDataToExpertAnswer(mDetailExpert.getAnswer(), mDetailExpert.getCommentlist());
 			addDataToRelate(mDetailExpert.getOther_question());
 		}
 		if (judgeTheMsg(object)) {
 			et_content.setText("");
-			sendRequest(mApp.getRequestImpl().answer(mRequestItem),
-					ModelRequestDetailExpert.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailExpert.class, REQUEST_GET);
 		}
 		return object;
 	}
@@ -135,13 +132,10 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			}
 			for (int i = 0; i < other_question.size(); i++) {
 				final ModelRequestRelate relate = other_question.get(i);
-				View view = mInflater.inflate(
-						R.layout.item_request_detail_relate, null);
+				View view = mInflater.inflate(R.layout.item_request_detail_relate, null);
 				/*********** 初始化布局问答布局 ********************/
-				TextView tv_relate_title = (TextView) view
-						.findViewById(R.id.tv_relate_title);
-				TextView tv_watch_num = (TextView) view
-						.findViewById(R.id.tv_watch_num);
+				TextView tv_relate_title = (TextView) view.findViewById(R.id.tv_relate_title);
+				TextView tv_watch_num = (TextView) view.findViewById(R.id.tv_watch_num);
 				/*********** 初始化布局问答布局 end ********************/
 				tv_relate_title.setText(relate.getTitle());
 				tv_watch_num.setText("浏览次数：" + relate.getView_count());
@@ -152,14 +146,10 @@ public class RequestDetailExpertActivity extends BaseActivity {
 						ModelRequestItem item = new ModelRequestItem();
 						item.setQuestion_id(relate.getQid());
 						if (relate.getIs_expert().equals("0")) {
-							mApp.startActivity_qcj(
-									RequestDetailExpertActivity.this,
-									RequestDetailCommonActivity.class,
+							mApp.startActivity_qcj(RequestDetailExpertActivity.this, RequestDetailCommonActivity.class,
 									sendDataToBundle(item, null));
 						} else if (relate.getIs_expert().equals("1")) {
-							mApp.startActivity_qcj(
-									RequestDetailExpertActivity.this,
-									RequestDetailExpertActivity.class,
+							mApp.startActivity_qcj(RequestDetailExpertActivity.this, RequestDetailExpertActivity.class,
 									sendDataToBundle(item, null));
 						}
 					}
@@ -174,8 +164,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	 * 
 	 * @param answer
 	 */
-	private void addDataToExpertAnswer(ModelRequestAnswerComom data,
-			List<ModelRequestAnswerComom> answers) {
+	private void addDataToExpertAnswer(ModelRequestAnswerComom data, List<ModelRequestAnswerComom> answers) {
 		if (data != null) {
 			tv_expert_date.setText(data.getTime());
 			tv_expertcontent.setText(data.getAnswer_content());
@@ -198,7 +187,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 				answerComom.setQid(mRequestItem.getQuestion_id());
 				addDataToComment(answerComom);
 			}
-		}else{
+		} else {
 			find_more.setVisibility(View.GONE);
 		}
 
@@ -206,8 +195,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 	private void addDataToComment(final ModelRequestAnswerComom answerComom) {
 		if (answerComom != null) {
-			View view = mInflater.inflate(R.layout.item_request_expert_repaly,
-					null);
+			View view = mInflater.inflate(R.layout.item_request_expert_repaly, null);
 			/*********** 初始化布局问答布局 ********************/
 			TextView tv_user = (TextView) view.findViewById(R.id.tv_user);
 			TextView tv_date = (TextView) view.findViewById(R.id.tv_date);
@@ -215,12 +203,10 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			/*********** 初始化布局问答布局 end ********************/
 			if (answerComom.getFrom().equals("expert")) {
 				tv_user.setText("专家建议");
-				tv_user.setTextColor(getResources().getColor(
-						R.color.text_yellow));
+				tv_user.setTextColor(getResources().getColor(R.color.text_yellow));
 			} else if (answerComom.getFrom().equals("user")) {
 				tv_user.setText("追加提问");
-				tv_user.setTextColor(getResources()
-						.getColor(R.color.text_green));
+				tv_user.setTextColor(getResources().getColor(R.color.text_green));
 			}
 			tv_content.setText(answerComom.getContent());
 			tv_date.setText(answerComom.getTime());
@@ -234,13 +220,12 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	 * @param question
 	 * @param topic_list
 	 */
-	private void addDataToHeadAndFlag(ModelRequestItem question,
-			List<ModelRequestFlag> topic_list) {
+	private void addDataToHeadAndFlag(ModelRequestItem question, List<ModelRequestFlag> topic_list) {
 		if (question != null) {
 			expert_tv_title.setText("");
 			Drawable drawable = getResources().getDrawable(R.drawable.q);
-			expert_tv_title.append(SpanUtil.setImageSpan("xx", 0,0, drawable));
-			expert_tv_title.append("  "+question.getQuestion_content());
+			expert_tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
+			expert_tv_title.append("  " + question.getQuestion_content());
 			expert_tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
 			tv_username.setText(question.getUser_name());
@@ -256,9 +241,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailExpertActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailExpertActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -270,9 +253,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailExpertActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailExpertActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -284,9 +265,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailExpertActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailExpertActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -305,35 +284,40 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_answer:
-			mApp.startActivityForResult_qcj(this,
-					RequestDetailReponceSingleActivity.class,
-					sendDataToBundle(mRequestItem, null));
+			if (isLogin()) {
+				mApp.startActivityForResult_qcj(this, RequestDetailReponceSingleActivity.class,
+						sendDataToBundle(mRequestItem, null));
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 
 		case R.id.tv_flag_value2:
-			mApp.startActivity_qcj(this, RequestFlagActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, RequestFlagActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.iv_title_right1:
-			ModelShareContent shareContent=new ModelShareContent();
+			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
 			shareContent.setUrl(mRequestItem.getUrl());
-			PopShareContent popShareContent=new PopShareContent(this, shareContent, this);
-			popShareContent.showPop(tv_send, Gravity.BOTTOM,0,0);
+			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
+			popShareContent.showPop(tv_send, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
 			// sendDataToBundle(new Model(), null));
 			break;
 		case R.id.tv_send:
-			String content = et_content.getText().toString();
-			if (!TextUtils.isEmpty(content)) {
-				ModelRequestAnswerComom answerComom = new ModelRequestAnswerComom();
-				answerComom.setContent(content);
-				// 当没有追加内容的时候 就拿专家的id，当有追加内容的时候就拿 追加当中id最大的专家id
-				if (mDetailExpert != null) {
-					addDataToModel(mDetailExpert.getCommentlist(),
-							mDetailExpert.getAnswer(), answerComom);
+			if (isLogin()) {
+				String content = et_content.getText().toString();
+				if (!TextUtils.isEmpty(content)) {
+					ModelRequestAnswerComom answerComom = new ModelRequestAnswerComom();
+					answerComom.setContent(content);
+					// 当没有追加内容的时候 就拿专家的id，当有追加内容的时候就拿 追加当中id最大的专家id
+					if (mDetailExpert != null) {
+						addDataToModel(mDetailExpert.getCommentlist(), mDetailExpert.getAnswer(), answerComom);
+					}
 				}
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
 		}
@@ -347,8 +331,8 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	 * @param answer
 	 * @param answerComom
 	 */
-	private void addDataToModel(List<ModelRequestAnswerComom> commentlist,
-			ModelRequestAnswerComom answer, ModelRequestAnswerComom answerComom) {
+	private void addDataToModel(List<ModelRequestAnswerComom> commentlist, ModelRequestAnswerComom answer,
+			ModelRequestAnswerComom answerComom) {
 		if (commentlist != null) {
 			for (int i = commentlist.size() - 1; i >= 0; i--) {
 				ModelRequestAnswerComom comom = commentlist.get(i);
@@ -359,12 +343,10 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 		}
 		if (answerComom.getComment_id() != null && !answerComom.equals("")) {
-			sendRequest(mApp.getRequestImpl().addComment(answerComom),
-					ModelMsg.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().addComment(answerComom), ModelMsg.class, REQUEST_GET);
 		} else {
 			answerComom.setAnswer_id(answer.getAnswer_id());
-			sendRequest(mApp.getRequestImpl().answerComment(answerComom),
-					ModelMsg.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().answerComment(answerComom), ModelMsg.class, REQUEST_GET);
 		}
 
 	}

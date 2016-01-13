@@ -23,7 +23,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="@dimen/margin_left_small"
-                android:src="@drawable/default_image_small" />
+                android:src="@drawable/morentouxiang02" />
 
             <TextView
                 android:id="@+id/tv_username"
@@ -33,7 +33,7 @@
                 android:layout_weight="2"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="呵呵哒"
+                android:text="青稞官方网站"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_very_big" />
 

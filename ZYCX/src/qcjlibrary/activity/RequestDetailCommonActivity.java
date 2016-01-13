@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -85,8 +86,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
-		sendRequest(mApp.getRequestImpl().answer(mRequestItem),
-				ModelRequestDetailCommon.class, REQUEST_GET);
+		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailCommon.class, REQUEST_GET);
 	}
 
 	@Override
@@ -94,8 +94,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestDetailCommon) {
 			ModelRequestDetailCommon detailCommon = (ModelRequestDetailCommon) object;
-			addDataToHeadAndFlag(detailCommon.getQuestion(),
-					detailCommon.getTopic_list());
+			addDataToHeadAndFlag(detailCommon.getQuestion(), detailCommon.getTopic_list());
 			addDataToAnswer(detailCommon.getAnswer());
 			addDataToRelate(detailCommon.getOther_question());
 		}
@@ -114,13 +113,10 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			}
 			for (int i = 0; i < other_question.size(); i++) {
 				final ModelRequestRelate relate = other_question.get(i);
-				View view = mInflater.inflate(
-						R.layout.item_request_detail_relate, null);
+				View view = mInflater.inflate(R.layout.item_request_detail_relate, null);
 				/*********** 初始化布局问答布局 ********************/
-				TextView tv_relate_title = (TextView) view
-						.findViewById(R.id.tv_relate_title);
-				TextView tv_watch_num = (TextView) view
-						.findViewById(R.id.tv_watch_num);
+				TextView tv_relate_title = (TextView) view.findViewById(R.id.tv_relate_title);
+				TextView tv_watch_num = (TextView) view.findViewById(R.id.tv_watch_num);
 				/*********** 初始化布局问答布局 end ********************/
 				tv_relate_title.setText(relate.getTitle());
 				tv_watch_num.setText("浏览次数：" + relate.getView_count());
@@ -131,14 +127,10 @@ public class RequestDetailCommonActivity extends BaseActivity {
 						ModelRequestItem item = new ModelRequestItem();
 						item.setQuestion_id(relate.getQid());
 						if (relate.getIs_expert().equals("0")) {
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestDetailCommonActivity.class,
+							mApp.startActivity_qcj(RequestDetailCommonActivity.this, RequestDetailCommonActivity.class,
 									sendDataToBundle(item, null));
 						} else if (relate.getIs_expert().equals("1")) {
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestDetailExpertActivity.class,
+							mApp.startActivity_qcj(RequestDetailCommonActivity.this, RequestDetailExpertActivity.class,
 									sendDataToBundle(item, null));
 						}
 					}
@@ -162,21 +154,14 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			for (int i = 0; i < answers.size(); i++) {
 				final ModelRequestAnswerComom answerComom = answers.get(i);
 				answerComom.setQid(mRequestItem.getQuestion_id());
-				View view = mInflater.inflate(
-						R.layout.item_requset_detail_common, null);
+				View view = mInflater.inflate(R.layout.item_requset_detail_common, null);
 				/*********** 初始化布局问答布局 ********************/
-				RoundImageView riv_other_icon = (RoundImageView) view
-						.findViewById(R.id.riv_other_icon);
-				TextView tv_other_username = (TextView) view
-						.findViewById(R.id.tv_other_username);
-				TextView tv_other_content = (TextView) view
-						.findViewById(R.id.tv_other_content);
-				TextView tv_other_date = (TextView) view
-						.findViewById(R.id.tv_other_date);
-				TextView tv_other_num = (TextView) view
-						.findViewById(R.id.tv_other_num);
-				ImageView iv_medat = (ImageView) view
-						.findViewById(R.id.iv_medat);
+				RoundImageView riv_other_icon = (RoundImageView) view.findViewById(R.id.riv_other_icon);
+				TextView tv_other_username = (TextView) view.findViewById(R.id.tv_other_username);
+				TextView tv_other_content = (TextView) view.findViewById(R.id.tv_other_content);
+				TextView tv_other_date = (TextView) view.findViewById(R.id.tv_other_date);
+				TextView tv_other_num = (TextView) view.findViewById(R.id.tv_other_num);
+				ImageView iv_medat = (ImageView) view.findViewById(R.id.iv_medat);
 				/*********** 初始化布局问答布局 end ********************/
 				mApp.displayImage(answerComom.getUser_face(), riv_other_icon);
 				tv_other_username.setText(answerComom.getUser_name());
@@ -191,10 +176,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 					@Override
 					public void onClick(View v) {
-						mApp.startActivityForResult_qcj(
-								RequestDetailCommonActivity.this,
-								RequestDetailResponceActivity.class,
-								sendDataToBundle(answerComom, null));
+						mApp.startActivityForResult_qcj(RequestDetailCommonActivity.this,
+								RequestDetailResponceActivity.class, sendDataToBundle(answerComom, null));
 					}
 				});
 				ll_add_answer.addView(view);
@@ -209,13 +192,12 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	 * @param question
 	 * @param topic_list
 	 */
-	private void addDataToHeadAndFlag(ModelRequestItem question,
-			List<ModelRequestFlag> topic_list) {
+	private void addDataToHeadAndFlag(ModelRequestItem question, List<ModelRequestFlag> topic_list) {
 		if (question != null) {
 			request_tv_title.setText("");
 			Drawable drawable = getResources().getDrawable(R.drawable.q);
 			request_tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
-			request_tv_title.append("  "+question.getQuestion_content());
+			request_tv_title.append("  " + question.getQuestion_content());
 			tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
 			tv_username.setText(question.getUser_name());
@@ -231,9 +213,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailCommonActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -245,9 +225,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailCommonActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -259,9 +237,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 						@Override
 						public void onClick(View v) {
-							mApp.startActivity_qcj(
-									RequestDetailCommonActivity.this,
-									RequestFlagActivity.class,
+							mApp.startActivity_qcj(RequestDetailCommonActivity.this, RequestFlagActivity.class,
 									sendDataToBundle(flag, null));
 						}
 					});
@@ -281,8 +257,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		Object object = getReturnResultSeri(resultCode, data, null);
 		if (object instanceof Boolean) {
-			sendRequest(mApp.getRequestImpl().answer(mRequestItem),
-					ModelRequestDetailCommon.class, REQUEST_GET);
+			sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailCommon.class, REQUEST_GET);
 		}
 	}
 
@@ -290,22 +265,24 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_answer:
-			mApp.startActivityForResult_qcj(this,
-					RequestDetailReponceSingleActivity.class,
-					sendDataToBundle(mRequestItem, null));
+			if (isLogin()) {
+				mApp.startActivityForResult_qcj(this, RequestDetailReponceSingleActivity.class,
+						sendDataToBundle(mRequestItem, null));
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
 			break;
 
 		case R.id.tv_flag_value2:
-			mApp.startActivity_qcj(this, RequestFlagActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, RequestFlagActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.iv_title_right1:
-			ModelShareContent shareContent=new ModelShareContent();
+			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
 			shareContent.setUrl(mRequestItem.getUrl());
-			PopShareContent popShareContent=new PopShareContent(this, shareContent, this);
-			popShareContent.showPop(ll_answer, Gravity.BOTTOM,0,0);
+			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
+			popShareContent.showPop(ll_answer, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
 			// sendDataToBundle(new Model(), null));
 			break;

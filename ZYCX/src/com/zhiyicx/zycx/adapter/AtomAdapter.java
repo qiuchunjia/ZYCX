@@ -17,25 +17,21 @@ public class AtomAdapter extends WeiboListAdapter {
 
 	private static final String TAG = "AtomAdapter";
 
-	public AtomAdapter(BaseListFragment context,
-			ListData<SociaxItem> data) {
+	public AtomAdapter(BaseListFragment context, ListData<SociaxItem> data) {
 		super(context, data);
 	}
 
 	@Override
 	public ListData<SociaxItem> refreshHeader(SociaxItem obj)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 
 		if (obj == null) {
 			return refreshNew(PAGE_COUNT);
 		}
 
-		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme,
-				getMyUid());
+		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme, getMyUid());
 
-		ListData<SociaxItem> weiboDatas = this.getApiStatuses().mentionsHeader(
-				(Weibo) obj, PAGE_COUNT);
+		ListData<SociaxItem> weiboDatas = this.getApiStatuses().mentionsHeader((Weibo) obj, PAGE_COUNT);
 
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
 		AtMeSqlHelper atMeSqlHelper = app.getAtMeSql();
@@ -56,18 +52,17 @@ public class AtomAdapter extends WeiboListAdapter {
 
 	@Override
 	public ListData<SociaxItem> refreshFooter(SociaxItem obj)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 		return this.getApiStatuses().mentionsFooter((Weibo) obj, PAGE_COUNT);
 	}
 
 	@Override
 	public ListData<SociaxItem> refreshNew(int count)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
-
-		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme,
-				getMyUid());
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
+		if (Thinksns.getMy() == null) {
+			return null;
+		}
+		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme, getMyUid());
 
 		ListData<SociaxItem> weiboDatas = this.getApiStatuses().mentions(count);
 		Thinksns app = (Thinksns) this.context.getApplicationContext();

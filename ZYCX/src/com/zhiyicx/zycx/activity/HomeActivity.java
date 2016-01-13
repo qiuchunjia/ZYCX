@@ -3,10 +3,10 @@ package com.zhiyicx.zycx.activity;
 import com.baidu.appx.BDInterstitialAd;
 import com.nineoldandroids.view.ViewHelper;
 import com.umeng.analytics.MobclickAgent;
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.net.HttpHelper;
-import com.zhiyicx.zycx.util.PreferenceUtil;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -45,6 +45,7 @@ import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Tools_FontManager;
 
 public class HomeActivity extends BaseActivity {
@@ -213,12 +214,14 @@ public class HomeActivity extends BaseActivity {
 	 */
 	private void initIcon(Title mTitle2) {
 		if (mTitle2 != null) {
-			ModelUser user = mApp.getUser();
-			String iconUrl = user.getAvatar();
-			if (!TextUtils.isEmpty(iconUrl)) {
-				mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
-			} else {
-				sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+			if (isLogin()) {
+				ModelUser user = mApp.getUser();
+				String iconUrl = user.getAvatar();
+				if (!TextUtils.isEmpty(iconUrl)) {
+					mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+				} else {
+					sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+				}
 			}
 		}
 	}
@@ -335,8 +338,13 @@ public class HomeActivity extends BaseActivity {
 			IB_home_bottom_qikan.setImageResource(R.drawable.jingli_press);
 			break;
 		case R.id.weibo_layout:
-			setTabSelection(index_web);
-			IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
+			if (isLogin()) {
+				setTabSelection(index_web);
+				IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
+			} else {
+				mApp.startActivity_qcj(this, LoginActivity.class, null);
+			}
+
 			// Intent intent = new Intent(this, WeiboAppActivity.class);
 			// startActivity(intent);
 			// Anim.in(activity);
@@ -432,6 +440,7 @@ public class HomeActivity extends BaseActivity {
 			// mWebLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		}
+		mCurrentIndex = index;
 		transaction.commit();
 	}
 
@@ -453,8 +462,12 @@ public class HomeActivity extends BaseActivity {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this, MsgNotifyPraiseActivity.class,
-							sendDataToBundle(new Model(), null));
+					if (isLogin()) {
+						mApp.startActivity_qcj(HomeActivity.this, MsgNotifyPraiseActivity.class,
+								sendDataToBundle(new Model(), null));
+					} else {
+						mApp.startActivity_qcj(HomeActivity.this, LoginActivity.class, null);
+					}
 				}
 			});
 			break;
@@ -578,6 +591,9 @@ public class HomeActivity extends BaseActivity {
 		super.onResume();
 		MobclickAgent.onResume(this);
 		initIcon(mTitle);
+		if (!isLogin() && mCurrentIndex == index_qikan) {
+			setTabSelection(index_Default);
+		}
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public class FragmentZhixun extends BaseFragment {
 		if (object instanceof ModelZiXun) {
 			Object result = ((ModelZiXun) object).getFenlei();
 			ModelZiXunCategory all = new ModelZiXunCategory();
+			mList.removeAll(mList);
 			all.setTitle("全部");
 			all.setFenlei_id(0);
 			mList.add(all);

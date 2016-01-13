@@ -1,6 +1,13 @@
 package qcjlibrary.adapter;
 
 import java.util.List;
+
+import com.zhiyicx.zycx.R;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.ViewHolder;
@@ -9,17 +16,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.R.color;
 
 /**
  * 轻课堂分类数据适配器
@@ -70,9 +67,6 @@ public class QclassAdapter extends BAdapter {
 				holder.tv_num.setText(mDetail.getWatch_num() + "");
 				holder.tv_update.setText("");
 				holder.tv_update.append(update_head);
-				// 0x7f06001d
-				// holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num()
-				// + "", 0, 0, Color.RED));
 				holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num() + "", 0, 0,
 						mBaseActivity.getResources().getColor(R.color.text_red)));
 				holder.tv_update.append(update_tail);
@@ -105,20 +99,21 @@ public class QclassAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		if (item instanceof ModelQclassDetail) {
-			ModelQclassDetail detail = (ModelQclassDetail) item;
-			detail.setStatus(status);
-			detail.setLastid(detail.getCourse_id() + "");
-			requstMessage(detail, REFRESH_HEADER);
-		}
+		refreshNew();
+//		if (item instanceof ModelQclassDetail) {
+//			ModelQclassDetail detail = (ModelQclassDetail) item;
+//			detail.setStatus(status);
+//			detail.setLastid(detail.getCourse_id() + "");
+//			requstMessage(detail, REFRESH_HEADER);
+//		}
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
 		if (item instanceof ModelQclassDetail) {
-			ModelQclassDetail detail = (ModelQclassDetail) item;
+			ModelQclassDetail detailitem = (ModelQclassDetail) item;
 			detail.setStatus(status);
-			detail.setMaxid(detail.getCourse_id() + "");
+			detail.setLastid(detailitem.getCourse_id() + "");
 			requstMessage(detail, REFRESH_FOOTER);
 		}
 	}

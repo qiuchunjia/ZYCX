@@ -1,5 +1,6 @@
 package com.zhiyicx.zycx.widget;
 
+import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.adapter.WeiboListAdapter;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -36,16 +37,13 @@ public class WeiboList extends SociaxList {
 			iv.setVisibility(View.VISIBLE);
 			Anim.refresh(getContext(), iv);
 
-			HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter) this
-					.getAdapter();
-			WeiboListAdapter weiboLisAdapter = (WeiboListAdapter) headerAdapter
-					.getWrappedAdapter();
+			HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter) this.getAdapter();
+			WeiboListAdapter weiboLisAdapter = (WeiboListAdapter) headerAdapter.getWrappedAdapter();
 			weiboLisAdapter.animView = iv;
 			weiboLisAdapter.doRefreshFooter();
 		} else {
 			Log.d(TAG, "get Weibolist item click position : " + position);
-			LinearLayout layout = (LinearLayout) view
-					.findViewById(R.id.weibo_data);
+			LinearLayout layout = (LinearLayout) view.findViewById(R.id.weibo_data);
 			Weibo weiboData = (Weibo) layout.getTag();
 			Bundle data = new Bundle();
 			if (weiboData.getTempJsonString() != null) {
@@ -56,8 +54,11 @@ public class WeiboList extends SociaxList {
 			data.putInt("position", getLastPosition());
 			data.putInt("this_position", position);
 			Thinksns app = (Thinksns) getContext().getApplicationContext();
-
-			app.startActivity(getActivityObj(), WeiboContentList.class, data);
+			if (app.isLogin()) {
+				app.startActivity(getActivityObj(), WeiboContentList.class, data);
+			} else {
+				app.startActivity_qcj(getActivityObj(), LoginActivity.class, null);
+			}
 			// app.startActivityForResult(getActivityObj(),
 			// ThinksnsWeiboContent.class, data);
 		}

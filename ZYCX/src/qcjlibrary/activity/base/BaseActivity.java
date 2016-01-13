@@ -17,49 +17,6 @@ import java.util.Locale;
 
 import org.apache.http.Header;
 
-import qcjlibrary.adapter.base.BAdapter;
-import qcjlibrary.config.Config;
-import qcjlibrary.fragment.base.BaseFragment;
-
-import qcjlibrary.model.ModelMsg;
-
-import qcjlibrary.model.ModelUser;
-import qcjlibrary.model.base.Model;
-import qcjlibrary.request.base.Request;
-import qcjlibrary.response.DataAnalyze;
-import qcjlibrary.response.HttpResponceListener;
-import qcjlibrary.util.Anim;
-import qcjlibrary.util.BitmapUtil;
-import qcjlibrary.util.ToastUtils;
-import qcjlibrary.util.Uri2Path;
-import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -71,6 +28,46 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.PreferenceUtil;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.config.Config;
+import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.base.Model;
+import qcjlibrary.request.base.Request;
+import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.response.HttpResponceListener;
+import qcjlibrary.util.Anim;
+import qcjlibrary.util.BitmapUtil;
+import qcjlibrary.util.ToastUtils;
+import qcjlibrary.util.Uri2Path;
+import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 
 /**
  * activity的基类，任何activity都要继承它，并且实现里面的方法 一般不要轻易修改它
@@ -600,73 +597,18 @@ public abstract class BaseActivity extends FragmentActivity implements
 	}
 
 	// ----------------------------------我是本区域邪恶的分界线------------------------------------------------------
-
-	// ------------------------------------友盟初始化qq，微信，微博，人人等-----------------------
-	/**
-	 * 初始化需要分享的内容
-	 */
-	public void initShareContent() {
-		// // 设置分享内容
-		// mController
-		// .setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
-		// 设置分享内容
-		mController.setShareContent("线团APP");
-		// mController.setsh
-		// 设置分享图片, 参数2为图片的url地址
-		mController.setShareMedia(new UMImage(this, "http://t.univs.cn/"));
-		initQQShare();
-		initQQZoneShare();
-		initWeiXinShare();
-		// 设置分享面板上显示的平台
-		mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-				SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
-				SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.RENREN);
-	}
-
-	/**
-	 * 初始化qq分享的内容
-	 */
-	private void initQQShare() {
-		// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1104831952",
-				"ioLElezMMAJ94NHm");
-		qqSsoHandler.addToSocialSDK();
-	}
-
-	/**
-	 * 初始化qq空间分享的内容
-	 */
-	private void initQQZoneShare() {
-		// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
-				"1104831952", "ioLElezMMAJ94NHm");
-		qZoneSsoHandler.addToSocialSDK();
-	}
-
-	/**
-	 * 初始化微信分享
-	 */
-	private void initWeiXinShare() {
-		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-		String appID = "wxf3ff5a169747d2f5";
-		String appSecret = "14eeda3b22f601ae91bfd34b8d65574d";
-		// 添加微信平台
-		UMWXHandler wxHandler = new UMWXHandler(this, appID, appSecret);
-		wxHandler.addToSocialSDK();
-		// 支持微信朋友圈
-		UMWXHandler wxCircleHandler = new UMWXHandler(this, appID, appSecret);
-		wxCircleHandler.setToCircle(true);
-		wxCircleHandler.addToSocialSDK();
-	}
-
-	/**
-	 * 执行分享
-	 */
-	public void preformShare() {
-		mController.openShare(this, false);
-	}
-
-	// ------------------------------------友盟初始化qq微信，微博，人人end------------------z
+	    /**判断用户是否登录
+	     * @return
+	     */
+      public boolean isLogin(){
+    	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(this);
+    	  String token=preferenceUtil.getString("oauth_token", "");
+    	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
+    	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
+    		 return true ;
+    	  }
+			return false;
+	 }
 
 	/**************************** uri 与 filepath互转 *********************************************/
 	/**

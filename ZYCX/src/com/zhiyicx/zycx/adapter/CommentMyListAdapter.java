@@ -33,40 +33,33 @@ import android.widget.TextView;
 /**
  * 我收到的评论
  */
-public class CommentMyListAdapter extends SociaxListAdapter
-{
+public class CommentMyListAdapter extends SociaxListAdapter {
 	private Context mContext;
 
-	public ReceiveComment getFirst()
-	{
+	public ReceiveComment getFirst() {
 		return (ReceiveComment) super.getFirst();
 	}
 
-	public ReceiveComment getLast()
-	{
+	public ReceiveComment getLast() {
 		return (ReceiveComment) super.getLast();
 	}
 
 	@Override
-	public ReceiveComment getItem(int position)
-	{
+	public ReceiveComment getItem(int position) {
 		// TODO Auto-generated method stub
 		return (ReceiveComment) super.getItem(position);
 	}
 
-	public CommentMyListAdapter(BaseListFragment context, ListData<SociaxItem> data)
-	{
+	public CommentMyListAdapter(BaseListFragment context, ListData<SociaxItem> data) {
 		super(context, data);
 		mContext = context.mContext;
-		//initHeadImageFetcher();
+		// initHeadImageFetcher();
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
+	public View getView(int position, View convertView, ViewGroup parent) {
 		CommentMyListItem commentMyListItem = null;
-		if (convertView == null)
-		{
+		if (convertView == null) {
 			commentMyListItem = new CommentMyListItem();
 			convertView = this.inflater.inflate(R.layout.comment_my_list, null);
 			commentMyListItem.userheader = (ImageView) convertView.findViewById(R.id.user_comment_header);
@@ -75,71 +68,61 @@ public class CommentMyListAdapter extends SociaxListAdapter
 			commentMyListItem.content = (TextView) convertView.findViewById(R.id.comment_content);
 			commentMyListItem.myComment = (TextView) convertView.findViewById(R.id.comment_receive_me);
 			convertView.setTag(commentMyListItem);
-		} else
-		{
+		} else {
 			commentMyListItem = (CommentMyListItem) convertView.getTag();
 		}
 		LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.weibo_data);
 		// this.loadingHeader(position, commentMyListItem.userheader);
 		ReceiveComment comment = this.getItem(position);
 
-        mNetComTools.loadNetImage(commentMyListItem.userheader, comment.getHeadUrl(),R.drawable.header, mHeadImageSize, mHeadImageSize);
+		mNetComTools.loadNetImage(commentMyListItem.userheader, comment.getHeadUrl(), R.drawable.header, mHeadImageSize,
+				mHeadImageSize);
 
-		//mHeadImageFetcher.loadImage(comment.getHeadUrl(), commentMyListItem.userheader);
+		// mHeadImageFetcher.loadImage(comment.getHeadUrl(),
+		// commentMyListItem.userheader);
 		layout.setTag(comment.getStatus());
 		commentMyListItem.username.setText(comment.getUname());
-		try
-		{
+		try {
 			commentMyListItem.time.setText(TimeHelper.friendlyTimeFromeStringTime(comment.getcTime()));
 			System.out.println(" ctime" + comment.getcTime());
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			commentMyListItem.time.setText(comment.getcTime());
 		}
 		SpannableString ss = new SpannableString(SociaxUIUtils.filterHtml(comment.getContent()));
 		SociaxUIUtils.highlightContent(mContext, ss);
 		commentMyListItem.content.setText(ss);
 
-		try{
-			if (comment.isNullForReplyComment())
-			{
-				SpannableString ss1 = new SpannableString("回复我的微博:"
-						+ SociaxUIUtils.filterHtml(comment.getStatus().getContent()));
+		try {
+			if (comment.isNullForReplyComment()) {
+				SpannableString ss1 = new SpannableString(
+						"回复我的微博:" + SociaxUIUtils.filterHtml(comment.getStatus().getContent()));
 				SociaxUIUtils.highlightContent(mContext, ss1);
 				commentMyListItem.myComment.setText(ss1);
-			} else
-			{
-				SpannableString ss2 = new SpannableString("回复我的评论:"
-						+ SociaxUIUtils.filterHtml(comment.getReplyComment().getContent()));
+			} else {
+				SpannableString ss2 = new SpannableString(
+						"回复我的评论:" + SociaxUIUtils.filterHtml(comment.getReplyComment().getContent()));
 				SociaxUIUtils.highlightContent(mContext, ss2);
 				commentMyListItem.myComment.setText(ss2);
 			}
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return convertView;
 	}
 
-	private User loadingHeader(int position, ImageView userheader)
-	{
+	private User loadingHeader(int position, ImageView userheader) {
 		User temp = getItem(position).getUser();
 		userheader.setTag(temp);
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
-		if (/* temp.hasHeader() && */app.isNetWorkOn())
-		{
-			if (temp.isNullForHeaderCache())
-			{
+		if (/* temp.hasHeader() && */app.isNetWorkOn()) {
+			if (temp.isNullForHeaderCache()) {
 				dowloaderTask(temp.getUserface(), userheader, BitmapDownloaderTask.Type.FACE);
-			} else
-			{
+			} else {
 				Bitmap cache = temp.getHeader();
-				if (cache == null)
-				{
+				if (cache == null) {
 					dowloaderTask(temp.getUserface(), userheader, BitmapDownloaderTask.Type.FACE);
-				} else
-				{
+				} else {
 					userheader.setImageBitmap(cache);
 				}
 			}
@@ -147,19 +130,16 @@ public class CommentMyListAdapter extends SociaxListAdapter
 		return temp;
 	}
 
-	protected void dowloaderTask(String url, ImageView image, BitmapDownloaderTask.Type type)
-	{
+	protected void dowloaderTask(String url, ImageView image, BitmapDownloaderTask.Type type) {
 		BitmapDownloaderTask task = new BitmapDownloaderTask(image, type);
 		task.execute(url);
 	}
 
 	@Override
-	public ListData<SociaxItem> refreshHeader(SociaxItem obj) throws VerifyErrorException, ApiException,
-			ListAreEmptyException, DataInvalidException
-	{
+	public ListData<SociaxItem> refreshHeader(SociaxItem obj)
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 
-		if (obj == null)
-		{
+		if (obj == null) {
 			return refreshNew(PAGE_COUNT);
 		}
 
@@ -171,18 +151,14 @@ public class CommentMyListAdapter extends SociaxListAdapter
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
 		MyCommentSqlHelper mCommentSqlHelper = app.getMyCommentSql();
 
-		if (commentDatas.size() > 0)
-		{
+		if (commentDatas.size() > 0) {
 			int dbSize = mCommentSqlHelper.getDBCommentSize();
-			if (dbSize >= 20)
-			{
+			if (dbSize >= 20) {
 				mCommentSqlHelper.deleteWeibo(commentDatas.size());
-			} else if ((dbSize + commentDatas.size()) >= 20)
-			{
+			} else if ((dbSize + commentDatas.size()) >= 20) {
 				mCommentSqlHelper.deleteWeibo(dbSize + commentDatas.size() - 20);
 			}
-			for (int i = 0; i < commentDatas.size(); i++)
-			{
+			for (int i = 0; i < commentDatas.size(); i++) {
 				mCommentSqlHelper.addComment((ReceiveComment) commentDatas.get(i));
 			}
 		}
@@ -191,35 +167,31 @@ public class CommentMyListAdapter extends SociaxListAdapter
 	}
 
 	@Override
-	public ListData<SociaxItem> refreshFooter(SociaxItem obj) throws VerifyErrorException, ApiException,
-			ListAreEmptyException, DataInvalidException
-	{
+	public ListData<SociaxItem> refreshFooter(SociaxItem obj)
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 		return getApiStatuses().commentReceiveMyFooterTimeline((Comment) obj, PAGE_COUNT);
 	}
 
 	@Override
-	public ListData<SociaxItem> refreshNew(int count) throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException
-	{
-
+	public ListData<SociaxItem> refreshNew(int count)
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
+		if (Thinksns.getMy() == null) {
+			return null;
+		}
 		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.comment, getMyUid());
 
 		ListData<SociaxItem> commentDatas = getApiStatuses().commentReceiveMyTimeline(count);
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
 		MyCommentSqlHelper mCommentSqlHelper = app.getMyCommentSql();
 
-		if (commentDatas.size() > 0)
-		{
+		if (commentDatas.size() > 0) {
 			int dbSize = mCommentSqlHelper.getDBCommentSize();
-			if (dbSize >= 20)
-			{
+			if (dbSize >= 20) {
 				mCommentSqlHelper.deleteWeibo(commentDatas.size());
-			} else if ((dbSize + commentDatas.size()) >= 20)
-			{
+			} else if ((dbSize + commentDatas.size()) >= 20) {
 				mCommentSqlHelper.deleteWeibo(dbSize + commentDatas.size() - 20);
 			}
-			for (int i = 0; i < commentDatas.size(); i++)
-			{
+			for (int i = 0; i < commentDatas.size(); i++) {
 				mCommentSqlHelper.addComment((ReceiveComment) commentDatas.get(i));
 			}
 		}
@@ -227,14 +199,12 @@ public class CommentMyListAdapter extends SociaxListAdapter
 		return commentDatas;
 	}
 
-	private ApiStatuses getApiStatuses()
-	{
+	private ApiStatuses getApiStatuses() {
 		Thinksns app = thread.getApp();
 		return app.getStatuses();
 	}
 
-	public class CommentMyListItem
-	{
+	public class CommentMyListItem {
 		ImageView userheader;
 		TextView username;
 		TextView time;
