@@ -12,6 +12,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
