@@ -58,7 +58,7 @@
             android:hint="添加标签"
             android:paddingLeft="5dp"
             android:cursorVisible="true"
-            android:textCursorDrawable="@color/text_green"
+            android:textCursorDrawable="@null"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
