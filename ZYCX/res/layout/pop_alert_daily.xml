@@ -7,61 +7,180 @@
     android:paddingBottom="@dimen/margin_bottom"
     android:paddingTop="@dimen/margin_top" >
 
-    <RadioGroup
-        android:id="@+id/rg_alert_daily"
+    <LinearLayout
+        android:id="@+id/ll_alert_daily"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/margin_left"
         android:paddingRight="@dimen/margin_right" >
 
-        <RadioButton
-            android:id="@+id/rb_alert_everyday"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_everydaty"
-            android:textSize="@dimen/text_common" />
+        <LinearLayout
+            android:id="@+id/ll_alert_everyday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
 
-        <RadioButton
-            android:id="@+id/rb_alert_two"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_two"
-            android:textSize="@dimen/text_common" />
+            <ImageView
+                android:id="@+id/iv_alert_everyday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
 
-        <RadioButton
-            android:id="@+id/rb_alert_three"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_three"
-            android:textSize="@dimen/text_common" />
+            <TextView
+                android:id="@+id/tv_alert_everyday"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_everydaty" />
+        </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/rb_alert_four"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_four"
-            android:textSize="@dimen/text_common" />
+        <LinearLayout
+            android:id="@+id/ll_alert_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:paddingLeft="10dp" >
 
-        <RadioButton
-            android:id="@+id/rb_alert_five"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_five"
-            android:textSize="@dimen/text_common" />
+            <ImageView
+                android:id="@+id/iv_alert_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
 
-        <RadioButton
-            android:id="@+id/rb_alert_sex"
-            style="@style/radio_button"
-            android:paddingLeft="@dimen/body_margin_left_new"
-            android:text="@string/alert_daily_sex"
-            android:textSize="@dimen/text_common" />
+            <TextView
+                android:id="@+id/tv_alert_two"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_two" />
+        </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/rb_alert_seven"
-            style="@style/radio_button"
-            android:text="@string/alert_daily_seven"
-            android:textSize="@dimen/text_common" />
-    </RadioGroup>
+        <LinearLayout
+            android:id="@+id/ll_alert_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_alert_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
+
+            <TextView
+                android:id="@+id/tv_alert_three"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_three" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_alert_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_alert_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
+
+            <TextView
+                android:id="@+id/tv_alert_four"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_four" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_alert_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_alert_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
+
+            <TextView
+                android:id="@+id/tv_alert_five"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_five" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_alert_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_alert_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
+
+            <TextView
+                android:id="@+id/tv_alert_sex"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_sex" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_alert_seven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border_gray_white_0"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_alert_seven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixuanzhong" />
+
+            <TextView
+                android:id="@+id/tv_alert_seven"
+                style="@style/radio_button"
+                android:gravity="center_vertical"
+                android:text="@string/alert_daily_seven" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_alert_check"
         style="@style/check_button"
-        android:layout_below="@id/rg_alert_daily"
+        android:layout_below="@id/ll_alert_daily"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

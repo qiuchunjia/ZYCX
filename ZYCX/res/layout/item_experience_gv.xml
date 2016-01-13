@@ -25,6 +25,8 @@
             android:layout_marginLeft="@dimen/margin_left_small"
             android:layout_toRightOf="@id/iv_cancer_icon"
             android:text="肺癌"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_green"
             android:textSize="@dimen/text_big" />
 

@@ -121,6 +121,8 @@
                     android:layout_marginTop="@dimen/margin_top"
                     android:background="@null"
                     android:hint="请输入医院"
+                    android:cursorVisible="true"
+                	android:textCursorDrawable="@color/text_green"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
             </RelativeLayout>
@@ -298,6 +300,8 @@
                     android:layout_marginTop="@dimen/margin_top"
                     android:background="@null"
                     android:hint="请输入医院"
+                    android:cursorVisible="true"
+                	android:textCursorDrawable="@color/text_green"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
             </RelativeLayout>
@@ -440,6 +444,8 @@
                     android:layout_marginTop="@dimen/margin_top"
                     android:background="@null"
                     android:hint="请输入医院"
+                    android:cursorVisible="true"
+                	android:textCursorDrawable="@color/text_green"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
             </RelativeLayout>

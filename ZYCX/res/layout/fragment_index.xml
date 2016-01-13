@@ -38,167 +38,159 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top"
             android:drawableLeft="@drawable/index_tv"
-            android:text="为您推荐"
             android:drawablePadding="5dp"
+            android:text="为您推荐"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
         <!-- 主页选项框 -->
 
-        <!-- <ScrollView
-            android:layout_marginTop="30dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" > -->
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_recommand"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/ll_first"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tv_recommand"
-                android:layout_marginTop="30dp"
-                android:orientation="vertical" >
+                android:layout_height="100dp"
+                android:orientation="horizontal" >
 
-                <LinearLayout
-                    android:id="@+id/ll_first"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
+                <RelativeLayout
+                    android:id="@+id/rl_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                    <RelativeLayout
-                        android:id="@+id/rl_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
+                    <ImageView
+                        android:id="@+id/iv_choose1"
+                        style="@style/text_index"
+                        android:layout_marginTop="0dp"
+                        android:src="@drawable/index_hot_question" />
 
-                        <ImageView
-                            android:id="@+id/iv_choose1"
-                            style="@style/text_index"
-                            android:layout_marginTop="0dp"
-                            android:src="@drawable/index_hot_question" />
+                    <TextView
+                        android:id="@+id/tv_hot_request"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose1"
+                        android:text="热门问答" />
+                </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tv_hot_request"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose1"
-                            android:text="热门问答" />
-                    </RelativeLayout>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
-                    <include layout="@layout/view_line_hor" >
-                    </include>
+                <RelativeLayout
+                    android:id="@+id/rl_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                    <RelativeLayout
-                        android:id="@+id/rl_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
+                    <ImageView
+                        android:id="@+id/iv_choose2"
+                        style="@style/text_index"
+                        android:layout_marginTop="0dp"
+                        android:src="@drawable/index_exprest_say" />
 
-                        <ImageView
-                            android:id="@+id/iv_choose2"
-                            style="@style/text_index"
-                            android:layout_marginTop="0dp"
-                            android:src="@drawable/index_exprest_say" />
+                    <TextView
+                        android:id="@+id/tv_hot_request2"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose2"
+                        android:layout_marginTop="@dimen/margin_top_big"
+                        android:text="专家精讲" />
+                </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tv_hot_request2"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose2"
-                            android:layout_marginTop="@dimen/margin_top_big"
-                            android:text="专家精讲" />
-                    </RelativeLayout>
+                <include layout="@layout/view_line_hor" >
+                </include>
 
-                    <include layout="@layout/view_line_hor" >
-                    </include>
+                <RelativeLayout
+                    android:id="@+id/rl_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                    <RelativeLayout
-                        android:id="@+id/rl_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
+                    <ImageView
+                        android:id="@+id/iv_choose3"
+                        style="@style/text_index"
+                        android:layout_marginTop="0dp"
+                        android:src="@drawable/index_cook" />
 
-                        <ImageView
-                            android:id="@+id/iv_choose3"
-                            style="@style/text_index"
-                            android:layout_marginTop="0dp"
-                            android:src="@drawable/index_cook" />
-
-                        <TextView
-                            android:id="@+id/tv_hot_request3"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose3"
-                            android:text="食疗大全" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <include layout="@layout/view_line_vertical" />
-
-                <LinearLayout
-                    android:id="@+id/ll_second"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-
-                    <RelativeLayout
-                        android:id="@+id/rl_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
-
-                        <ImageView
-                            android:id="@+id/iv_choose4"
-                            style="@style/text_index"
-                            android:src="@drawable/index_cancel_expre" />
-
-                        <TextView
-                            android:id="@+id/tv_hot_request4"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose4"
-                            android:text="抗癌经历" />
-                    </RelativeLayout>
-
-                    <include layout="@layout/view_line_hor" >
-                    </include>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
-
-                        <ImageView
-                            android:id="@+id/iv_choose5"
-                            style="@style/text_index"
-                            android:src="@drawable/index_electric" />
-
-                        <TextView
-                            android:id="@+id/tv_hot_request5"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose5"
-                            android:text="电子简历" />
-                    </RelativeLayout>
-
-                    <include layout="@layout/view_line_hor" >
-                    </include>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" >
-
-                        <ImageView
-                            android:id="@+id/iv_choose6"
-                            style="@style/text_index"
-                            android:src="@drawable/index_medicine_notify" />
-
-                        <TextView
-                            android:id="@+id/tv_hot_request6"
-                            style="@style/text_index"
-                            android:layout_below="@+id/iv_choose6"
-                            android:text="用药提醒" />
-                    </RelativeLayout>
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_hot_request3"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose3"
+                        android:text="食疗大全" />
+                </RelativeLayout>
             </LinearLayout>
-        <!-- </ScrollView> -->
+
+            <include layout="@layout/view_line_vertical" />
+
+            <LinearLayout
+                android:id="@+id/ll_second"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:id="@+id/rl_4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/iv_choose4"
+                        style="@style/text_index"
+                        android:src="@drawable/index_cancel_expre" />
+
+                    <TextView
+                        android:id="@+id/tv_hot_request4"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose4"
+                        android:text="抗癌经历" />
+                </RelativeLayout>
+
+                <include layout="@layout/view_line_hor" >
+                </include>
+
+                <RelativeLayout
+                    android:id="@+id/rl_5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/iv_choose5"
+                        style="@style/text_index"
+                        android:src="@drawable/index_electric" />
+
+                    <TextView
+                        android:id="@+id/tv_hot_request5"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose5"
+                        android:text="电子简历" />
+                </RelativeLayout>
+
+                <include layout="@layout/view_line_hor" >
+                </include>
+
+                <RelativeLayout
+                    android:id="@+id/rl_6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/iv_choose6"
+                        style="@style/text_index"
+                        android:src="@drawable/index_medicine_notify" />
+
+                    <TextView
+                        android:id="@+id/tv_hot_request6"
+                        style="@style/text_index"
+                        android:layout_below="@+id/iv_choose6"
+                        android:text="用药提醒" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout

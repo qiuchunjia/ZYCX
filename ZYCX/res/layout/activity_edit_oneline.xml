@@ -16,9 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
         android:background="@color/main_white_pure_color"
+        android:cursorVisible="true"
         android:hint="请输入"
         android:paddingLeft="@dimen/margin_left_small"
         android:textColor="@color/text_black"
+        android:textCursorDrawable="@color/text_green"
         android:textSize="@dimen/text_common" />
 
     <include layout="@layout/view_line_vertical" />

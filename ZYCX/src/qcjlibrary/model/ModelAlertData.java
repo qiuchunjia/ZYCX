@@ -61,10 +61,9 @@ public class ModelAlertData extends Model {
 				int len = timeArray.length();
 				String timeStr = "";
 				for (int i = 0; i < len; i++) {
-					//JSONObject item = timeArray.getJSONObject(i);
 					timeStr = timeStr +","+timeArray.getString(i);
 				}
-				timeStr = timeStr.substring(1, timeStr.length() - 1);
+				timeStr = timeStr.substring(1, timeStr.length());
 				setMed_time(timeStr);
 			}
 		} catch (JSONException e) {

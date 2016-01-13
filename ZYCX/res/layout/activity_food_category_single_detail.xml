@@ -337,6 +337,7 @@
                         android:id="@+id/iv_relate1"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/view_border_gray_3"
                         android:src="@drawable/default_image_small" />
 
@@ -360,6 +361,7 @@
                         android:id="@+id/iv_relate2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/view_border_gray_3"
                         android:src="@drawable/default_image_small" />
 
@@ -392,6 +394,7 @@
                         android:id="@+id/iv_relate3"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/view_border_gray_3"
                         android:src="@drawable/default_image_small" />
 
@@ -415,6 +418,7 @@
                         android:id="@+id/iv_relate4"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:background="@drawable/view_border_gray_3"
                         android:src="@drawable/default_image_small" />
 

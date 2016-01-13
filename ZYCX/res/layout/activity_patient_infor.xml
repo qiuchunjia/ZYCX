@@ -34,6 +34,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入姓名"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -98,6 +100,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入年龄"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -197,6 +201,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入职业"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -366,6 +372,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入身高"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -395,6 +403,8 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@null"
                 android:hint="请输入体重kg"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>

@@ -259,4 +259,10 @@ public class DateUtil {
 		}
 		return 0;
 	}
+	public static String changeLong2Str(long time) {
+		SimpleDateFormat mFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+		Date date = new Date(time);
+		return mFormat.format(date);
+	}
 }

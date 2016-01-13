@@ -64,6 +64,8 @@
             style="@style/cmtedit"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/text_green"
             android:hint="说点什么吧" />
 
         <ImageView

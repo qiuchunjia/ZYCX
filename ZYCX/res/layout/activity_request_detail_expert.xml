@@ -277,6 +277,8 @@
                 android:background="@drawable/view_border_gray_white_3"
                 android:hint="说点什么"
                 android:paddingLeft="5dp"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@color/text_green"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
