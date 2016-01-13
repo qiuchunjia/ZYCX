@@ -94,7 +94,7 @@ public class PopAlertTime extends PopView{
 			mHour[i] = "  " + ((i + 1)) + "  ";
 		}
 		for (int i = 0; i < mMin.length; i++) {
-			mMin[i] = "  " + ((i + 1)) + "  ";
+			mMin[i] = "  " + i + "  ";
 		}
 	}
 	
@@ -112,6 +112,9 @@ public class PopAlertTime extends PopView{
 		mCurrentMin = mCurrentMin.trim();
 		if(mCurrentAm.equals("下午")){
 			mCurrentHour = wv_date_month.getCurrentItem() + 13 +"";
+			if(mCurrentHour.equals("24")){
+				mCurrentHour = "0";
+			}
 		}
 		return mCurrentHour + ":" + mCurrentMin;
 	}
