@@ -704,6 +704,7 @@ public class api {
 				params.add(MOD, EXPERIENCE);
 				params.add(ACT, POST_DETAIL);
 				params.add(ID, item1.getPost_id());
+				getTestToken(params);
 				Log.i("postDetail", params.toString());
 				return params;
 			}
