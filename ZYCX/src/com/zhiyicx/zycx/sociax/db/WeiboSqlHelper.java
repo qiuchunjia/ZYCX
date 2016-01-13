@@ -47,6 +47,9 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public long addWeibo(Weibo weibo) {
+		if (Thinksns.getMy() == null) {
+			return 0;
+		}
 		ContentValues map = new ContentValues();
 		map.put(ThinksnsTableSqlHelper.weiboId, weibo.getWeiboId());
 		map.put(ThinksnsTableSqlHelper.uid, weibo.getUid());
@@ -151,6 +154,9 @@ public class WeiboSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public int getDBWeiboSize() {
+		if (Thinksns.getMy() == null) {
+			return 0;
+		}
 		Cursor cursor = weiboTable.getWritableDatabase().rawQuery("select count(*) from home_weibo where site_id = "
 				+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid(), null);
 		if (cursor.moveToFirst()) {

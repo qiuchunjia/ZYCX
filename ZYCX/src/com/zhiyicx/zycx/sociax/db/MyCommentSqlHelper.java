@@ -22,8 +22,7 @@ public class MyCommentSqlHelper extends SqlHelper {
 	private ListData<SociaxItem> weiboDatas;
 
 	private MyCommentSqlHelper(Context context) {
-		this.weiboTable = new ThinksnsTableSqlHelper(context, DB_NAME, null,
-				VERSION);
+		this.weiboTable = new ThinksnsTableSqlHelper(context, DB_NAME, null, VERSION);
 	}
 
 	public static MyCommentSqlHelper getInstance(Context context) {
@@ -83,8 +82,7 @@ public class MyCommentSqlHelper extends SqlHelper {
 		map.put("cTime", comment.getcTime());
 		map.put("site_id", Thinksns.getMySite().getSite_id());
 		map.put("my_uid", Thinksns.getMy().getUid());
-		long l = weiboTable.getWritableDatabase().insert(
-				ThinksnsTableSqlHelper.myCommentTable, null, map);
+		long l = weiboTable.getWritableDatabase().insert(ThinksnsTableSqlHelper.myCommentTable, null, map);
 		return l;
 	}
 
@@ -95,48 +93,39 @@ public class MyCommentSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public ListData<SociaxItem> getDBCommentList() {
-		Cursor cursor = weiboTable.getReadableDatabase().query(
-				ThinksnsTableSqlHelper.myCommentTable,
-				null,
-				"site_id=" + Thinksns.getMySite().getSite_id() + " and my_uid="
-						+ Thinksns.getMy().getUid(), null, null, null,
-				"commentId DESC");
+		if (Thinksns.getMy() == null) {
+			return null;
+		}
+		Cursor cursor = weiboTable.getReadableDatabase().query(ThinksnsTableSqlHelper.myCommentTable, null,
+				"site_id=" + Thinksns.getMySite().getSite_id() + " and my_uid=" + Thinksns.getMy().getUid(), null, null,
+				null, "commentId DESC");
 		weiboDatas = new ListData<SociaxItem>();
 		if (cursor.moveToFirst()) {
 			do {
 				ReceiveComment comment = new ReceiveComment();
 				comment.setUid(cursor.getInt(cursor.getColumnIndex("uid")));
-				comment.setHeadUrl(cursor.getString(cursor
-						.getColumnIndex("userface")));
-				comment.setCommentId(cursor.getInt(cursor
-						.getColumnIndex("commentId")));
-				comment.setContent(cursor.getString(cursor
-						.getColumnIndex("content")));
-				comment.setcTime(cursor.getString(cursor
-						.getColumnIndex("cTime")));
-				comment.setUname(cursor.getString(cursor
-						.getColumnIndex("uname")));
+				comment.setHeadUrl(cursor.getString(cursor.getColumnIndex("userface")));
+				comment.setCommentId(cursor.getInt(cursor.getColumnIndex("commentId")));
+				comment.setContent(cursor.getString(cursor.getColumnIndex("content")));
+				comment.setcTime(cursor.getString(cursor.getColumnIndex("cTime")));
+				comment.setUname(cursor.getString(cursor.getColumnIndex("uname")));
 				if (cursor.getString(cursor.getColumnIndex("replyComment")) != null) {
 					try {
-						comment.setReplyComment(new Comment(new JSONObject(
-								cursor.getString(cursor
-										.getColumnIndex("replyComment")))));
+						comment.setReplyComment(
+								new Comment(new JSONObject(cursor.getString(cursor.getColumnIndex("replyComment")))));
 					} catch (DataInvalidException e) {
 						e.printStackTrace();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-				comment.setTimestemp(cursor.getInt(cursor
-						.getColumnIndex("timestamp")));
-				comment.setReplyCommentId(cursor.getInt(cursor
-						.getColumnIndex("replyCommentId")));
-				comment.setReplyUid(cursor.getInt(cursor
-						.getColumnIndex("replyUid")));
+				comment.setTimestemp(cursor.getInt(cursor.getColumnIndex("timestamp")));
+				comment.setReplyCommentId(cursor.getInt(cursor.getColumnIndex("replyCommentId")));
+				comment.setReplyUid(cursor.getInt(cursor.getColumnIndex("replyUid")));
 				if (cursor.getString(cursor.getColumnIndex("status")) != null) {
 					try {
-						comment.setStatus(new Weibo(new JSONObject(cursor
-								.getString(cursor.getColumnIndex("status"))), 1));
+						comment.setStatus(
+								new Weibo(new JSONObject(cursor.getString(cursor.getColumnIndex("status"))), 1));
 					} catch (WeiboDataInvalidException e) {
 						e.printStackTrace();
 					} catch (JSONException e) {
@@ -145,17 +134,15 @@ public class MyCommentSqlHelper extends SqlHelper {
 				}
 				if (cursor.getString(cursor.getColumnIndex("commentUser")) != null) {
 					try {
-						comment.setUser(new User(new JSONObject(
-								cursor.getString(cursor
-										.getColumnIndex("commentUser")))));
+						comment.setUser(
+								new User(new JSONObject(cursor.getString(cursor.getColumnIndex("commentUser")))));
 					} catch (DataInvalidException e) {
 						e.printStackTrace();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-				comment.setWeiboId(cursor.getInt(cursor
-						.getColumnIndex("weiboId")));
+				comment.setWeiboId(cursor.getInt(cursor.getColumnIndex("weiboId")));
 				comment.setType(cursor.getString(cursor.getColumnIndex("type")));
 
 				cursor.moveToNext();
@@ -173,11 +160,11 @@ public class MyCommentSqlHelper extends SqlHelper {
 	 * @return
 	 */
 	public int getDBCommentSize() {
-		Cursor cursor = weiboTable.getWritableDatabase().rawQuery(
-				"select count(*) from " + ThinksnsTableSqlHelper.myCommentTable
-						+ " where site_id = "
-						+ Thinksns.getMySite().getSite_id() + " and my_uid = "
-						+ Thinksns.getMy().getUid(), null);
+		Cursor cursor = weiboTable.getWritableDatabase()
+				.rawQuery(
+						"select count(*) from " + ThinksnsTableSqlHelper.myCommentTable + " where site_id = "
+								+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid(),
+						null);
 		if (cursor.moveToFirst()) {
 			return cursor.getInt(0);
 		} else {
@@ -194,17 +181,12 @@ public class MyCommentSqlHelper extends SqlHelper {
 
 	public boolean deleteWeibo(int count) {
 		if (count > 19) {
-			weiboTable.getWritableDatabase().execSQL(
-					"delete from my_comment where site_id = "
-							+ Thinksns.getMySite().getSite_id()
-							+ " and my_uid = " + Thinksns.getMy().getUid());
+			weiboTable.getWritableDatabase().execSQL("delete from my_comment where site_id = "
+					+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid());
 		} else if (count > 0 && count < 20) {
 			String sql = "delete from my_comment where commentId in (select weiboId from my_comment where site_id = "
-					+ Thinksns.getMySite().getSite_id()
-					+ " and my_uid = "
-					+ Thinksns.getMy().getUid()
-					+ " order by weiboId limit "
-					+ count + ")";
+					+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid()
+					+ " order by weiboId limit " + count + ")";
 			weiboTable.getWritableDatabase().execSQL(sql);
 		}
 		return false;
@@ -214,10 +196,8 @@ public class MyCommentSqlHelper extends SqlHelper {
 	 * 删除数据库缓存
 	 */
 	public void clearCacheDB() {
-		weiboTable.getWritableDatabase().execSQL(
-				"delete from my_comment where site_id = "
-						+ Thinksns.getMySite().getSite_id() + " and my_uid = "
-						+ Thinksns.getMy().getUid());
+		weiboTable.getWritableDatabase().execSQL("delete from my_comment where site_id = "
+				+ Thinksns.getMySite().getSite_id() + " and my_uid = " + Thinksns.getMy().getUid());
 	}
 
 }

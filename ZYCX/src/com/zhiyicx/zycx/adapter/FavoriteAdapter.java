@@ -15,24 +15,22 @@ import com.zhiyicx.zycx.sociax.modle.Weibo;
 
 public class FavoriteAdapter extends WeiboListAdapter {
 
-	public FavoriteAdapter(BaseListFragment context,
-			ListData<SociaxItem> data) {
+	public FavoriteAdapter(BaseListFragment context, ListData<SociaxItem> data) {
 		super(context, data);
 	}
 
 	@Override
 	public ListData<SociaxItem> refreshHeader(SociaxItem obj)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 
 		if (obj == null) {
 			return refreshNew(PAGE_COUNT);
 		}
-
-		ListData<SociaxItem> weiboDatas = this.getApiStatuses().indexHeader(
-				(Weibo) obj, PAGE_COUNT);
-		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme,
-				getMyUid());
+		if (Thinksns.getMy() == null) {
+			return null;
+		}
+		ListData<SociaxItem> weiboDatas = this.getApiStatuses().indexHeader((Weibo) obj, PAGE_COUNT);
+		this.getApiUsers().unsetNotificationCount(NotifyCount.Type.atme, getMyUid());
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
 		FavoritWeiboSqlHelper faWeiboSqlHelper = app.getFavoritWeiboSql();
 
@@ -52,15 +50,13 @@ public class FavoriteAdapter extends WeiboListAdapter {
 
 	@Override
 	public ListData<SociaxItem> refreshFooter(SociaxItem obj)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 		return this.getApiStatuses().indexFooter((Weibo) obj, PAGE_COUNT);
 	}
 
 	@Override
 	public ListData<SociaxItem> refreshNew(int count)
-			throws VerifyErrorException, ApiException, ListAreEmptyException,
-			DataInvalidException {
+			throws VerifyErrorException, ApiException, ListAreEmptyException, DataInvalidException {
 
 		ListData<SociaxItem> weiboDatas = this.getApiStatuses().index(count);
 		Thinksns app = (Thinksns) this.context.getApplicationContext();
