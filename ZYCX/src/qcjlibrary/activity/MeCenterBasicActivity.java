@@ -1,6 +1,8 @@
 package qcjlibrary.activity;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
@@ -8,6 +10,7 @@ import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.L;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
@@ -18,6 +21,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -43,6 +48,8 @@ public class MeCenterBasicActivity extends BaseActivity {
 	private TextView tv_address_value;
 	private RelativeLayout rl_cancer_category;
 	private TextView tv_category_value;
+	/**年月日时间选择框**/
+	private TimePickerView pvTime;
 
 	@Override
 	public String setCenterTitle() {
@@ -77,7 +84,11 @@ public class MeCenterBasicActivity extends BaseActivity {
 		tv_address_value = (TextView) findViewById(R.id.tv_address_value);
 		rl_cancer_category = (RelativeLayout) findViewById(R.id.rl_cancer_category);
 		tv_category_value = (TextView) findViewById(R.id.tv_category_value);
-
+		
+		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+		pvTime.setTime(new Date());
+		pvTime.setCyclic(false);
+        pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -126,6 +137,16 @@ public class MeCenterBasicActivity extends BaseActivity {
 		rl_birth.setOnClickListener(this);
 		rl_address.setOnClickListener(this);
 		rl_cancer_category.setOnClickListener(this);
+		pvTime.setOnTimeSelectListener(new OnTimeSelectListener() {
+			
+			@Override
+			public void onTimeSelect(Date date) {
+				ModelUser user = new ModelUser();
+				user.setBirthday(DateUtil.DateToStamp(date));
+				sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
+						REQUEST_GET);
+			}
+		});
 	}
 
 	@Override
@@ -176,8 +197,9 @@ public class MeCenterBasicActivity extends BaseActivity {
 			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_birth:
-			PopDatePicker datePicker = new PopDatePicker(this, null, this);
-			datePicker.showPop(rl_birth, Gravity.BOTTOM, 0, 0);
+//			PopDatePicker datePicker = new PopDatePicker(this, null, this);
+//			datePicker.showPop(rl_birth, Gravity.BOTTOM, 0, 0);
+			pvTime.show();
 			break;
 		case R.id.rl_address:
 			mApp.startActivity_qcj(this, MeChooseProvinceActivity.class, null);
