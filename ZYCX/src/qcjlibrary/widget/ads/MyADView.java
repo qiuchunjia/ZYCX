@@ -38,7 +38,7 @@ public class MyADView extends LinearLayout {
 	private static final int MESSAGE_WHAT = 1;
 	private int delay = 1000 * 2;
 	// 当前页数索引
-	private int currentIndex = 0;
+	private int currentIndex = 2000;
 
 	// 装载图片的 ViewPager
 	private ViewPager mViewPager;
@@ -79,8 +79,7 @@ public class MyADView extends LinearLayout {
 		this.mContext = context;
 
 		// 重要，注意 inflater() 方法第二个参数不为 null
-		LayoutInflater.from(context).inflate(R.layout.ads_layout_item, this,
-				true);
+		LayoutInflater.from(context).inflate(R.layout.ads_layout_item, this, true);
 		mViewPager = (ViewPager) findViewById(R.id.vp_ad);
 		ll_point_container = (LinearLayout) findViewById(R.id.ll_point_container);
 	}
@@ -102,8 +101,8 @@ public class MyADView extends LinearLayout {
 	 *            高度
 	 */
 	public void setHeight(int height) {
-		RelativeLayout.LayoutParams mParams = new RelativeLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, height);
+		RelativeLayout.LayoutParams mParams = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				height);
 		mViewPager.setLayoutParams(mParams);
 	}
 
@@ -119,8 +118,7 @@ public class MyADView extends LinearLayout {
 		try {
 			Field field = ViewPager.class.getDeclaredField("mScroller");
 			field.setAccessible(true);
-			FixedSpeedScroller scroller = new FixedSpeedScroller(
-					mViewPager.getContext(), new AccelerateInterpolator());
+			FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new AccelerateInterpolator());
 			field.set(mViewPager, scroller);
 			scroller.setmDuration(duration);
 		} catch (Exception e) {
@@ -167,6 +165,7 @@ public class MyADView extends LinearLayout {
 			@Override
 			public void onPageSelected(int arg0) {
 				currentIndex = arg0;
+				Log.i("point", arg0 + "");
 				selectPoint(arg0);
 				mHandler.removeMessages(MESSAGE_WHAT);
 				mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, delay);
@@ -198,15 +197,12 @@ public class MyADView extends LinearLayout {
 	private void selectPoint(int index) {
 
 		if (index > lastIndex) {
-			Log.i("ads", index + "");
 			// 先重置
 			for (ImageView image : iv_points) {
 				image.setImageResource(R.drawable.ic_dot_normal);
 			}
 			// 设置选中的圆圈
-			iv_points[index % mRealCount]
-					.setImageResource(R.drawable.ic_dot_focused);
-			lastIndex = index;
+			iv_points[index % mRealCount].setImageResource(R.drawable.ic_dot_focused);
 		}
 
 	}
@@ -221,15 +217,14 @@ public class MyADView extends LinearLayout {
 	 * @param mContext
 	 *            context
 	 */
-	private void createPoints(int size, LinearLayout ll_point_container,
-			Context mContext, LinearLayout.LayoutParams params) {
+	private void createPoints(int size, LinearLayout ll_point_container, Context mContext,
+			LinearLayout.LayoutParams params) {
 		if (size == 0 || ll_point_container == null || mContext == null) {
 			return;
 		}
 
 		if (params == null) {
-			params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
+			params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			params.setMargins(10, 10, 10, 10);
 		}
 
@@ -263,8 +258,7 @@ public class MyADView extends LinearLayout {
 				this.context = context;
 				this.datas = datas;
 				mRealCount = datas.size();
-				options = new DisplayImageOptions.Builder()
-						.showImageOnLoading(R.drawable.default_image_small)// 加载中显示的图片
+				options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_image_small)// 加载中显示的图片
 						.showImageOnFail(R.drawable.default_image_small)// 加载失败显示的图片
 						.cacheInMemory(true)// 缓存保存在内存中
 						.cacheOnDisk(true)// 缓存保存在硬盘中
@@ -290,14 +284,12 @@ public class MyADView extends LinearLayout {
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			// 根据实际需要更改此方法实现
-			View mView = LayoutInflater.from(context).inflate(
-					R.layout.ads_item, null);
+			View mView = LayoutInflater.from(context).inflate(R.layout.ads_item, null);
 			ImageView iv_pic = (ImageView) mView.findViewById(R.id.iv_pic);
 			String imageurl = datas.get(position % mRealCount).getImgUrl();
 			int resouceID = datas.get(position % mRealCount).getResouceId();
 			if (imageurl != null && imageurl.length() > 0) {
-				ImageLoader.getInstance().displayImage(imageurl, iv_pic,
-						options);
+				ImageLoader.getInstance().displayImage(imageurl, iv_pic, options);
 			} else if (resouceID > 0) {
 				iv_pic.setImageResource(resouceID);
 			}
@@ -324,8 +316,8 @@ public class MyADView extends LinearLayout {
 			default:
 				break;
 			}
-			mHandler.removeMessages(MESSAGE_WHAT);
-			mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, delay);
+			 mHandler.removeMessages(MESSAGE_WHAT);
+			 mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, delay);
 		}
 
 	};
