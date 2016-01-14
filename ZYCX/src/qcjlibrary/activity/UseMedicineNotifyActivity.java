@@ -140,7 +140,6 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					mSwipeMenuListView.setAdapter(mAdapter);
 				}
 				for (int i = 0; i < mList.size(); i++) {
-					Log.d("Cathy", "position:"+i);
 					setAlarm(i);
 				}
 			}
@@ -184,13 +183,16 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					mCalendar.setTimeInMillis(currentMillis);
 					Date current = DateUtil.stampToDate(String.valueOf(currentMillis));
 					Date set = DateUtil.stampToDate(DateUtil.dateToStr2(startTime));
+					int day = current.getDay();
+					Log.d("Cathy", "day:"+day);
 					/**
 					 * 如果设置的时间为未来时间，那么将年月日设置为未来时间
 					 * */
 					if (DateUtil.compareDate(set, current)) {
+						day = set.getDate();
 						mCalendar.set(Calendar.YEAR, set.getYear());
 						mCalendar.set(Calendar.MONTH, set.getMonth());
-						mCalendar.set(Calendar.DATE, set.getDate());
+						mCalendar.set(Calendar.DAY_OF_MONTH, set.getDay());
 					}
 					int hour = Integer.parseInt(timeArr[i].split(":")[0]);
 					int min = Integer.parseInt(timeArr[i].split(":")[1]);
@@ -203,13 +205,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					 * 	     则将第一次提醒时间设置为2016-1-13 10:00:00
 					 * */
 					if(mCalendar.getTimeInMillis() < currentMillis){
-						 long triggerAtMillis = mCalendar.getTimeInMillis()+intervalMillis;
-						 Date Result = DateUtil.stampToDate(String.valueOf(triggerAtMillis));
-						 mCalendar.set(Calendar.YEAR, Result.getYear());
-						 mCalendar.set(Calendar.MONTH, Result.getMonth());
-						 mCalendar.set(Calendar.DATE, Result.getDate());
-						 mCalendar.set(Calendar.HOUR_OF_DAY, Result.getHours());
-						 mCalendar.set(Calendar.MINUTE, Result.getMinutes());
+						 mCalendar.set(Calendar.DAY_OF_MONTH, day+period);
 					}
 					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**

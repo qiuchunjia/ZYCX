@@ -88,7 +88,7 @@ public class MeChooseTowerActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (judgeTheMsg(object)) {
-			onBackPressed();
+			mApp.startActivity(this, MeCenterBasicActivity.class, null);
 		}
 		return object;
 	}

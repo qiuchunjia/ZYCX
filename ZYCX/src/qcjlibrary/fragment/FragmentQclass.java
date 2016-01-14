@@ -3,21 +3,30 @@ package qcjlibrary.fragment;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
+import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelQclassDetail;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
 
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.activity.QClassDetailsActivity;
 import com.zhiyicx.zycx.adapter.QClassListAdapter;
 import com.zhiyicx.zycx.fragment.BaseListFragment;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.listener.OnTouchListListener;
+import com.zhiyicx.zycx.sociax.unit.Anim;
 import com.zhiyicx.zycx.util.Utils;
 import com.zhiyicx.zycx.widget.LoadListView;
 
@@ -54,6 +63,18 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
         mList.setAdapter(mAdapter, System.currentTimeMillis(), mContext);
         mList.setOnItemListener(this);
         mList.setVisibility(View.INVISIBLE);
+//        mList.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				Model model = (Model) parent.getItemAtPosition(position);
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable(Config.ACTIVITY_TRANSFER_BUNDLE, model);
+//				Intent mIntent = new Intent(getActivity(), QClassDetailsActivity.class);
+//				mIntent.putExtras(bundle);
+//				startActivity(mIntent);
+//			}
+//		});
         return mCustView;
     }
 
@@ -61,14 +82,17 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     public void onClick(View view, int position, long id) {
         JSONObject jsonObject = mAdapter.getItem(position-1);
         try {
-//            int _id = jsonObject.getInt("course_id");
-//            String img_url = jsonObject.getString("cover");
-//            Intent intent = new Intent(mContext, QClassDetailsActivity.class);
-//            intent.putExtra("id", _id);
-//            intent.putExtra("cover", img_url);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            mContext.startActivity(intent);
-//            Anim.in(mContext);
+            int _id = jsonObject.getInt("course_id");
+            String img_url = jsonObject.getString("cover");
+            Bundle bundle = new Bundle();
+            ModelQclassDetail model = new ModelQclassDetail();
+            model.setCourse_id(_id);
+            model.setCover(img_url);
+			bundle.putSerializable(Config.ACTIVITY_TRANSFER_BUNDLE, model);
+            Intent intent = new Intent(mContext, QClassDetailsActivity.class);
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+            Anim.in(mContext);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -101,7 +125,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 			public void onSearchTouch_Qclass(String key) {
 				setKey(key);
 				L.d("Cathy", "Qclass"+key);
-				mAdapter.loadSearchData(key);
+				mAdapter.loadSearchData(Utils.getUTF8String(key));
 				mList.setSelectionFromTop(0, 20);
 				isLoad = true;
 				

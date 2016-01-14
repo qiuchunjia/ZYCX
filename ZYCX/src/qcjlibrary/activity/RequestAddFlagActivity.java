@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午1:56:07 类描述：这个类是实现
@@ -72,6 +73,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 			public void onClick(View v) {
 				getFlag();
 				mAsk.setTopics(mAddFlags);
+				SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), et_content);
 				ToastUtils.showToast("正在提交");
 				sendRequest(mApp.getRequestImpl().addQuestion(mAsk),
 						ModelRequestAsk.class, REQUEST_GET);
@@ -118,12 +120,26 @@ public class RequestAddFlagActivity extends BaseActivity {
 			String content = et_content.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
 				if(!content.startsWith(" ")){
-					ModelRequestFlag flag = new ModelRequestFlag();
-					flag.setTitle(content);
-					if (mFlags != null) {
-						mFlags.add(flag);
-						addModelToView(flag);
+					//判断输入的标签是否已经存在
+					boolean isExist = false;
+					for (int i = 0; i < mFlags.size(); i++) {
+						String flag = mFlags.get(i).getTitle();
+						if(content.equals(flag)){
+							isExist = true;
+							ToastUtils.showLongToast(this, "该标签已经存在");
+							return;
+						}
 					}
+					if(!isExist){
+						ModelRequestFlag flag = new ModelRequestFlag();
+						flag.setTitle(content);
+						if (mFlags != null) {
+							mFlags.add(flag);
+							addModelToView(flag);
+						}
+					}
+					et_content.setText("");
+					SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), et_content);
 				} else{
 					ToastUtils.showToast(this, "内容输入不正确");
 				}

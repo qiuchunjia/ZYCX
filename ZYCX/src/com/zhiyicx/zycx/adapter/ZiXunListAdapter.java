@@ -69,6 +69,7 @@ public class ZiXunListAdapter extends LoadListAdapter {
 		TextView mTitle;
 		TextView mDate;
 		TextView mReads;
+		TextView mFrom;
 		ImageView mPreview;
 	}
 
@@ -76,13 +77,14 @@ public class ZiXunListAdapter extends LoadListAdapter {
 	public View getView(int i, View view, ViewGroup viewGroup) {
 		ViewHolder holder;
 		if (view == null) {
-			view = mInflater.inflate(R.layout.zixun_list_item, null);
+			view = mInflater.inflate(R.layout.item_zhixun, null);
 			holder = new ViewHolder();
-			holder.mTitle = (TextView) view.findViewById(R.id.txt_item_title);
-			holder.mDate = (TextView) view.findViewById(R.id.txt_item_date);
-			holder.mReads = (TextView) view.findViewById(R.id.txt_item_reads);
+			holder.mTitle = (TextView) view.findViewById(R.id.tv_content);
+			holder.mDate = (TextView) view.findViewById(R.id.tv_date);
+			holder.mReads = (TextView) view.findViewById(R.id.tv_num);
+			holder.mFrom = (TextView) view.findViewById(R.id.tv_from);
 			holder.mPreview = (ImageView) view
-					.findViewById(R.id.img_item_preview);
+					.findViewById(R.id.iv_photo);
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
@@ -91,7 +93,11 @@ public class ZiXunListAdapter extends LoadListAdapter {
 			JSONObject jsonObject = list.get(i);
 			holder.mTitle.setText(jsonObject.get("title").toString());
 			holder.mDate.setText(jsonObject.get("cTime").toString());
-			holder.mReads.setText(jsonObject.get("readCount") + "人浏览过");
+			String count = jsonObject.get("readCount").toString();
+			if(count.length() > 3){
+				count = "999+";
+			}
+			holder.mReads.setText(count);
 			NetComTools.getInstance(mContext).loadNetImage(holder.mPreview,
 					jsonObject.get("cover").toString(), R.drawable.bg_loading,
 					144, 144);

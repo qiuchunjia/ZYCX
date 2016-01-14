@@ -12,6 +12,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
@@ -119,7 +120,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 				TextView tv_watch_num = (TextView) view.findViewById(R.id.tv_watch_num);
 				/*********** 初始化布局问答布局 end ********************/
 				tv_relate_title.setText(relate.getTitle());
-				tv_watch_num.setText("浏览次数：" + relate.getView_count());
+				tv_watch_num.setText("浏览人数" + relate.getView_count());
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override

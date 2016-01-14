@@ -7,6 +7,7 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestCommmetCommon;
+import qcjlibrary.util.L;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopDealAnwer;
 import android.text.TextUtils;
@@ -106,6 +107,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestCommmetCommon) {
 			ModelRequestCommmetCommon common = (ModelRequestCommmetCommon) object;
+			L.d("Cathy", "username = "+(common.getCommentList().get(0).getUsername() == null));
 			addDataToHead(common.getAnswer());
 			addDataToll(common.getCommentList());
 		}
@@ -145,7 +147,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 				TextView tv_other_content = (TextView) view.findViewById(R.id.tv_other_content);
 				/******************* 初始化控件end *********************/
 				mApp.displayImage(answerComom.getUser_face(), riv_other_icon);
-				tv_other_username.setText(answerComom.getUser_name());
+				tv_other_username.setText(answerComom.getUsername());
 				tv_other_date.setText(answerComom.getTime());
 				tv_other_content.setText(answerComom.getContent());
 				ll_replay.addView(view);

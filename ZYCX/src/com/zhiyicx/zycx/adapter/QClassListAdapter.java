@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import qcjlibrary.util.SpanUtil;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
@@ -17,6 +18,7 @@ import com.zhiyicx.zycx.fragment.BaseListFragment;
 import com.zhiyicx.zycx.modle.NetData;
 import com.zhiyicx.zycx.net.JsonDataListener;
 import com.zhiyicx.zycx.net.NetComTools;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.exception.ApiException;
 import com.zhiyicx.zycx.util.Utils;
 
@@ -35,11 +37,15 @@ public class QClassListAdapter extends LoadListAdapter {
     private LayoutInflater mInflater = null;
     private String mKey = null;
     private int mStatus = 0;
+    private String update_head;
+	private String update_tail;
     public QClassListAdapter(BaseListFragment ctx, ArrayList<JSONObject> list, int type) {
         super(ctx, list);
         mContext = ctx.mContext;
         mType = type;
         mInflater = LayoutInflater.from(mContext);
+        update_head = "已更新";
+		update_tail = "课";
     }
 
     public void setStatus(int status)
@@ -82,6 +88,7 @@ public class QClassListAdapter extends LoadListAdapter {
         TextView mTitle;
         TextView mWatchCnt;
         TextView mVideoCnt;
+        TextView mContent;
         ImageView mPreview;
         ImageButton mBtnDel;
     }
@@ -90,13 +97,14 @@ public class QClassListAdapter extends LoadListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.qclass_list_item, null);
+            convertView = mInflater.inflate(R.layout.item_qing_class, null);
             holder = new ViewHolder();
-            holder.mTitle = (TextView)convertView.findViewById(R.id.txt_item_title);
-            holder.mWatchCnt = (TextView)convertView.findViewById(R.id.txt_watch_num);
-            holder.mVideoCnt = (TextView)convertView.findViewById(R.id.txt_video_num);
-            holder.mPreview = (ImageView)convertView.findViewById(R.id.img_item_preview);
-            holder.mBtnDel = (ImageButton)convertView.findViewById(R.id.btn_delete);
+            holder.mTitle = (TextView)convertView.findViewById(R.id.tv_title);
+            holder.mContent = (TextView)convertView.findViewById(R.id.tv_content);
+            holder.mWatchCnt = (TextView)convertView.findViewById(R.id.tv_num);
+            holder.mVideoCnt = (TextView)convertView.findViewById(R.id.tv_update);
+            holder.mPreview = (ImageView)convertView.findViewById(R.id.iv_vedio);
+            //holder.mBtnDel = (ImageButton)convertView.findViewById(R.id.btn_delete);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder)convertView.getTag();
@@ -105,17 +113,26 @@ public class QClassListAdapter extends LoadListAdapter {
             //Log.d(TAG, "QClassListAdpter getView");
             JSONObject jsonObject = list.get(position);
             holder.mTitle.setText(jsonObject.get("course_name").toString());
-            holder.mWatchCnt.setText(jsonObject.get("watch_num") + "次观看");
-            holder.mVideoCnt.setText(jsonObject.get("video_num") + "课时");
+            holder.mContent.setText(jsonObject.getString("content").toString());
+            String watch_num = jsonObject.get("watch_num")+"";
+            if(watch_num.length() > 3){
+            	watch_num = "999+";
+            }
+            holder.mWatchCnt.setText(watch_num);
+            holder.mVideoCnt.setText("");
+			holder.mVideoCnt.append(update_head);
+			holder.mVideoCnt.append(SpanUtil.setForegroundColorSpan(jsonObject.get("video_num") + "", 0, 0,
+					Thinksns.getContext().getResources().getColor(R.color.text_red)));
+			holder.mVideoCnt.append(update_tail);
             NetComTools.getInstance(mContext).loadNetImage(holder.mPreview,
                     jsonObject.get("cover").toString(),
                     R.drawable.bg_loading, 144, 144);
-            if(mStatus == 2)
-            {
-                holder.mBtnDel.setVisibility(View.VISIBLE);
-                holder.mBtnDel.setOnClickListener(new DeleteListener(position));
-            }else
-                holder.mBtnDel.setVisibility(View.GONE);
+//            if(mStatus == 2)
+//            {
+//                holder.mBtnDel.setVisibility(View.VISIBLE);
+//                holder.mBtnDel.setOnClickListener(new DeleteListener(position));
+//            }else
+//                holder.mBtnDel.setVisibility(View.GONE);
         }catch (Exception e)
         {
             Log.d("QClassView", "QClassListAdpter error");
