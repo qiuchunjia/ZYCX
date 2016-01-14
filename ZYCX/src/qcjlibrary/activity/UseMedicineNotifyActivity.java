@@ -181,15 +181,12 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					Calendar mCalendar = Calendar.getInstance();
 					//将当前时间设置到Calendar中，如果设置的时间为过去时间，那么直接改成当前时间
 					mCalendar.setTimeInMillis(currentMillis);
-					Date current = DateUtil.stampToDate(String.valueOf(currentMillis));
+					Date current = new Date();
 					Date set = DateUtil.stampToDate(DateUtil.dateToStr2(startTime));
-					int day = current.getDay();
-					Log.d("Cathy", "day:"+day);
 					/**
 					 * 如果设置的时间为未来时间，那么将年月日设置为未来时间
 					 * */
 					if (DateUtil.compareDate(set, current)) {
-						day = set.getDate();
 						mCalendar.set(Calendar.YEAR, set.getYear());
 						mCalendar.set(Calendar.MONTH, set.getMonth());
 						mCalendar.set(Calendar.DAY_OF_MONTH, set.getDay());
@@ -205,7 +202,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					 * 	     则将第一次提醒时间设置为2016-1-13 10:00:00
 					 * */
 					if(mCalendar.getTimeInMillis() < currentMillis){
-						 mCalendar.set(Calendar.DAY_OF_MONTH, day+period);
+						 mCalendar.add(Calendar.DAY_OF_MONTH, period);
 					}
 					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**

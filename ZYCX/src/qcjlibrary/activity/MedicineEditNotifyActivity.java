@@ -24,15 +24,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.TimePicker;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import com.baidu.android.bba.common.util.Util;
+import com.bigkoo.pickerview.TimePickerView;
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -79,6 +79,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	private Intent intent;
 	private Bundle bundle;
 	private String timeAndCount;
+	/**年月日时间选择框**/
+	private TimePickerView pvTime;
+	
 	@Override
 	public String setCenterTitle() {
 		return "编辑提醒";
@@ -121,7 +124,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			titleSetRightTitle("修改");
 		}
 		
-		
+		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+		pvTime.setTime(new Date());
+		pvTime.setCyclic(false);
+        pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -167,6 +173,14 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		rl_alert_starttime.setOnClickListener(this);
 		iv_notify_open.setOnClickListener(this);
 		tv_title_right.setOnClickListener(this);
+		pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+
+            @Override
+            public void onTimeSelect(Date date) {
+            	startTime = DateUtil.strTodate2(DateUtil.DateToStamp(date));
+            	tv_start_time.setText(startTime);
+            }
+        });
 	}
 
 	@Override
@@ -189,8 +203,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			break;
 		case R.id.rl_alert_starttime:
 			//弹出开始时间选择框
-			PopAlertStartTime datePicker = new PopAlertStartTime(this, startTime, this);
-			datePicker.showPop(rl_alert_starttime, Gravity.BOTTOM, 0, 0);
+//			PopAlertStartTime datePicker = new PopAlertStartTime(this, startTime, this);
+//			datePicker.showPop(rl_alert_starttime, Gravity.BOTTOM, 0, 0);
+			//测试PickerView,新开分支……
+			pvTime.show();
 			break;
 		case R.id.iv_notify_open:
 			//打开或关闭提醒
@@ -209,7 +225,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 					mData.setPeriod(period);
 					mData.setMed_num(med_num);
 					mData.setMed_time(timeList);
-					//将时间转换为时间戳
+					//转换为时间戳
 					startTime = DateUtil.dateToStr2(startTime);
 					mData.setStime(startTime);
 					mData.setIs_remind(isOpen);
@@ -265,11 +281,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			} else{
 				tv_once.setText("每"+period+"天"+med_num+"次");
 			}
-		} else if(type.equals(Config.TYPE_DATE)){
-			//提醒的开始时间
-			startTime = ((ModelPop)object).getDataStr();
-			tv_start_time.setText(startTime);
-		}
+		} 
 		return super.onPopResult(object);
 	}
 

@@ -1,7 +1,10 @@
 package qcjlibrary.widget.popupview;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.renn.rennsdk.param.GetAppParam;
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import qcjlibrary.activity.MedicineEditNotifyActivity;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelPop;
+import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.L;
 import qcjlibrary.widget.popupview.base.PopView;
 
@@ -60,6 +64,8 @@ public class PopAlertTimeList extends PopView {
 	private TextView tv2;
 	private TextView tv3;
 	private TextView tv4;
+	/**时分时间选择框**/
+	private TimePickerView pvTimeHour;
 
 	public PopAlertTimeList(Activity activity, Object object, PopResultListener resultListener) {
 		super(activity, object, resultListener);
@@ -77,6 +83,10 @@ public class PopAlertTimeList extends PopView {
 		btn_alert_add = (Button) findViewbyId(R.id.btn_alert_add);
 		ll_alert_time_list = (LinearLayout) findViewbyId(R.id.ll_alert_time_list);
 		btn_alert_time_check = (Button) findViewbyId(R.id.btn_alert_time_check);
+		pvTimeHour = new TimePickerView(mActivity, TimePickerView.Type.HOURS_MINS);
+        pvTimeHour.setTime(new Date());
+        pvTimeHour.setCyclic(false);
+        pvTimeHour.setCancelable(true);
 	}
 
 	@SuppressLint("InflateParams")
@@ -159,6 +169,38 @@ public class PopAlertTimeList extends PopView {
 				}
 			}
 		});
+		
+		/**
+		 * 子项选择的监听器
+		 * */
+		pvTimeHour.setOnTimeSelectListener(new OnTimeSelectListener() {
+			
+			@Override
+			public void onTimeSelect(Date date) {
+				switch (flag) {
+				case 0:
+					item_1 = DateUtil.strTodate3(DateUtil.DateToStamp(date));
+					tv1.setText(item_1);
+					break;
+				case 1:
+					item_2 = DateUtil.strTodate3(DateUtil.DateToStamp(date));
+					tv2.setText(item_2);
+					break;
+				case 2:
+					item_3 = DateUtil.strTodate3(DateUtil.DateToStamp(date));
+					tv3.setText(item_3);
+					break;
+				case 3:
+					item_4 = DateUtil.strTodate3(DateUtil.DateToStamp(date));
+					tv4.setText(item_4);
+					break;
+				default:
+					break;
+				}
+				/** 获得到返回数据后将本类的PopWindow展示出来**/
+				showPop(btn_alert_time_check, Gravity.BOTTOM, 0, 0);
+			}
+		});
 		btn_alert_time_check.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -199,11 +241,8 @@ public class PopAlertTimeList extends PopView {
 				public void onClick(View v) {
 					/** PopWindow必须有一个base activity,因此在弹出子项选择框时需要先关闭当前的选择框**/
 					mPopWindow.dismiss();
-					PopAlertTime alertTime = new PopAlertTime(Thinksns.medicineAct, null, listener);
-					alertTime.setPopalerttime(PopAlertTimeList.this);
-					alertTime.showPop(childItem, Gravity.BOTTOM, 0, 0);
-					tv_alert_time = (TextView) childItem.findViewById(R.id.tv_alert_time);
 					flag = timeList.indexOf(childItem);
+					pvTimeHour.show();
 				}
 			});
 		}
@@ -215,27 +254,6 @@ public class PopAlertTimeList extends PopView {
 	 * @param object
 	 */
 	public void setOtherPopView(Object object) {
-		// TODO
-		/** 获得到返回数据后将本类的PopWindow展示出来**/
-		PopAlertTimeList.this.showPop(btn_alert_time_check, Gravity.BOTTOM, 0, 0);
-		switch (flag) {
-		case 0:
-			item_1 = setTime(object);
-			break;
-		case 1:
-			item_2 = setTime(object);
-			break;
-		case 2:
-			item_3 = setTime(object);
-			break;
-		case 3:
-			item_4 = setTime(object);
-			break;
-
-		default:
-			break;
-		}
-		tv_alert_time.setText(object.toString());
 	}
 	
 	private String setTime(Object object){
