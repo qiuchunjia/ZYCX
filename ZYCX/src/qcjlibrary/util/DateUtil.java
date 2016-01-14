@@ -50,6 +50,20 @@ public class DateUtil {
 		}
 		return null;
 	}
+	@SuppressLint("SimpleDateFormat")
+	public static String dateToStr3(String year_month_day) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			Date d = sdf.parse(year_month_day);
+			long unixTimestamp = d.getTime() / 1000;
+			Log.i("time", "dateToStr--------->" + unixTimestamp);
+			return String.valueOf(unixTimestamp);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * 时间戳转为年月日时间
@@ -63,6 +77,34 @@ public class DateUtil {
 			Long timestamp = Long.valueOf(time) * 1000;
 			Timestamp unixTime = new Timestamp(timestamp);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy年M月d号");
+			String d = format.format(unixTime);
+			return d;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@SuppressLint("SimpleDateFormat")
+	public static String strTodate2(String time) {
+		try {
+			Long timestamp = Long.valueOf(time) * 1000;
+			Timestamp unixTime = new Timestamp(timestamp);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String d = format.format(unixTime);
+			return d;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@SuppressLint("SimpleDateFormat")
+	public static String strTodate3(String time) {
+		try {
+			Long timestamp = Long.valueOf(time) * 1000;
+			Timestamp unixTime = new Timestamp(timestamp);
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 			String d = format.format(unixTime);
 			return d;
 		} catch (NumberFormatException e) {
