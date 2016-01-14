@@ -317,7 +317,6 @@ public class MyADView extends LinearLayout {
 				mHandler.removeMessages(MESSAGE_WHAT);
 				if (currentIndex < Integer.MAX_VALUE) {
 					currentIndex++;
-					Log.i("ads++", currentIndex + "");
 					mViewPager.setCurrentItem(currentIndex);
 				}
 				break;
