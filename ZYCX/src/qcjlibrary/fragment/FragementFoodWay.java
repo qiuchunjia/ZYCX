@@ -1,21 +1,20 @@
 package qcjlibrary.fragment;
 
-
 import java.util.List;
 
-import qcjlibrary.activity.FoodCategoryActivity;
-import qcjlibrary.fragment.base.BaseFragment;
-import qcjlibrary.model.ModelFood;
-import qcjlibrary.model.ModelFoodCategory;
-import qcjlibrary.model.ModelFoodIndex;
+import com.zhiyicx.zycx.R;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-import com.zhiyicx.zycx.R;
+import qcjlibrary.activity.FoodCategoryActivity;
+import qcjlibrary.activity.FoodTwoChooseActivity;
+import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelFoodCategory;
+import qcjlibrary.model.ModelFoodIndex;
+import qcjlibrary.util.ToastUtils;
 
 /**
  * author：qiuchunjia time：上午11:30:54 类描述：这个类是实现
@@ -28,7 +27,6 @@ public class FragementFoodWay extends BaseFragment {
 	private RelativeLayout rl_cancer_category;
 
 	private ModelFoodIndex mFoodIndex;
-
 
 	@Override
 	public void initIntentData() {
@@ -57,9 +55,7 @@ public class FragementFoodWay extends BaseFragment {
 
 	@Override
 	public void initData() {
-
-		sendRequest(mApp.getFoodImpl().index(), ModelFoodIndex.class,
-				REQUEST_GET);
+		sendRequest(mApp.getFoodImpl().index(), ModelFoodIndex.class, REQUEST_GET);
 	}
 
 	@Override
@@ -85,18 +81,15 @@ public class FragementFoodWay extends BaseFragment {
 			for (int i = 0; i < foods.size(); i++) {
 				final ModelFoodCategory foodCategory = foods.get(i);
 				view = mInflater.inflate(R.layout.item_food_choose, null);
-				TextView tv_foot_name = (TextView) view
-						.findViewById(R.id.tv_foot_name);
-				TextView tv_number = (TextView) view
-						.findViewById(R.id.tv_number);
+				TextView tv_foot_name = (TextView) view.findViewById(R.id.tv_foot_name);
+				TextView tv_number = (TextView) view.findViewById(R.id.tv_number);
 				tv_number.setText(foodCategory.getCount() + "");
 				tv_foot_name.setText(foodCategory.getClass_name() + "");
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						mApp.startActivity_qcj(getActivity(),
-								FoodCategoryActivity.class,
+						mApp.startActivity_qcj(getActivity(), FoodCategoryActivity.class,
 								mActivity.sendDataToBundle(foodCategory, null));
 					}
 				});
@@ -110,11 +103,23 @@ public class FragementFoodWay extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rl_cancer:
-
+			if (mFoodIndex == null) {
+				ToastUtils.showToast("正在获取数据");
+				initData();
+			} else {
+				mApp.startActivity_qcj(getActivity(), FoodTwoChooseActivity.class, mActivity
+						.sendDataToBundle(mFoodIndex.getFoodSide_symptom(), FoodTwoChooseActivity.TYPE_SYMPTOM));
+			}
 			break;
 
 		case R.id.rl_cancer_category:
-
+			if (mFoodIndex == null) {
+				ToastUtils.showToast("正在获取数据");
+				initData();
+			} else {
+				mApp.startActivity_qcj(getActivity(), FoodTwoChooseActivity.class,
+						mActivity.sendDataToBundle(mFoodIndex.getFoodSide_cancer(), FoodTwoChooseActivity.TYPE_CANCER));
+			}
 			break;
 		}
 

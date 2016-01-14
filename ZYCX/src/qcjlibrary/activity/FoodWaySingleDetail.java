@@ -93,8 +93,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 	@Override
 	public void initData() {
 
-		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData),
-				ModelFoodWayDetail.class, REQUEST_GET);
+		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData), ModelFoodWayDetail.class, REQUEST_GET);
 
 	}
 
@@ -123,8 +122,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 			if (!TextUtils.isEmpty(zucheng)) {
 				String[] dataArray = zucheng.split("，");
 				Log.i("effect", dataArray.toString());
-				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
-						dataArray);
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this, dataArray);
 				gv_contain.setAdapter(adapter);
 			}
 			tv_food_way_value.setText(info.getZuofa());
@@ -133,8 +131,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 			if (!TextUtils.isEmpty(foodeffect)) {
 				String[] dataArray = foodeffect.split("，");
 				Log.i("effect", dataArray.toString());
-				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
-						dataArray);
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this, dataArray);
 				gv_function.setAdapter(adapter);
 			}
 		}

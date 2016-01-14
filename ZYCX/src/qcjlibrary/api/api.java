@@ -98,7 +98,7 @@ public class api {
 		if (model != null && params != null) {
 			if (!TextUtils.isEmpty(model.getLastid())) {
 				params.add(LASTID, model.getLastid());
-			}else{
+			} else {
 				if (!TextUtils.isEmpty(model.getMaxid())) {
 					params.add(MAXID, model.getMaxid());
 				}
@@ -249,8 +249,8 @@ public class api {
 		}
 
 	}
-	
-	public static final class PeriodicalImpl implements PeriodicalIm{
+
+	public static final class PeriodicalImpl implements PeriodicalIm {
 
 		@Override
 		public RequestParams index(ModelPeriodical mData) {
@@ -258,7 +258,7 @@ public class api {
 			params.add(APP, APPNAME);
 			params.add(MOD, PERIODICAL);
 			params.add(ACT, INDEX);
-			if(mData.getLastid() != null && mData.getLastid().equals("")){
+			if (mData.getLastid() != null && mData.getLastid().equals("")) {
 				params.add(LASTID, mData.getLastid());
 			}
 			if (mData.getMaxid() != null && !mData.getMaxid().equals("")) {
@@ -272,7 +272,7 @@ public class api {
 			// TODO 自动生成的方法存根
 			return null;
 		}
-		
+
 	}
 
 	public static final class RequestImpl implements RequestIm {
@@ -472,6 +472,7 @@ public class api {
 				} else {
 					params.put(TYPE_ID, foodSearch.getType_id());
 				}
+				params.put(TYPE, foodSearch.getType());
 				params.put(STATE, foodSearch.getState());
 				params.put(P, foodSearch.getP());
 				params.add(TABLE, foodSearch.getTable());
@@ -857,7 +858,7 @@ public class api {
 				if (nowCase.getDiagnosisList() != null) {
 					List<String> data = nowCase.getDiagnosisList();
 					for (int i = 0; i < data.size(); i++) {
-						File file=new File(data.get(i));
+						File file = new File(data.get(i));
 						try {
 							params.put(DIAGNOSIS + i, file);
 						} catch (FileNotFoundException e) {
@@ -869,7 +870,7 @@ public class api {
 				if (nowCase.getLab_examList() != null) {
 					List<String> data = nowCase.getLab_examList();
 					for (int i = 0; i < data.size(); i++) {
-						File file=new File(data.get(i));
+						File file = new File(data.get(i));
 						try {
 							params.put(LAB_EXAM + i, file);
 						} catch (FileNotFoundException e) {
@@ -881,7 +882,7 @@ public class api {
 				if (nowCase.getImage_examList() != null) {
 					List<String> data = nowCase.getImage_examList();
 					for (int i = 0; i < data.size(); i++) {
-						File file=new File(data.get(i));
+						File file = new File(data.get(i));
 						try {
 							params.put(IMAGE_EXAM + i, file);
 						} catch (FileNotFoundException e) {
@@ -944,8 +945,8 @@ public class api {
 			return null;
 		}
 	}
-	
-	public static final class AlarmImpl implements AlarmIm{
+
+	public static final class AlarmImpl implements AlarmIm {
 
 		@Override
 		public RequestParams index() {
@@ -962,14 +963,14 @@ public class api {
 			params.add(APP, API);
 			params.add(MOD, MEDREMINDER);
 			params.add(ACT, ADD);
-			if(mData != null){
-				params.add(USER, mData.getUser());	
-				params.add(MEDICINE, mData.getMedicine());	
-				params.add(PERIOD, mData.getPeriod());	
-				params.add(MED_NUM, mData.getMed_num()+"");
-				params.add(MED_TIME, mData.getMed_time());	
-				params.add(STIME, mData.getStime());	
-				params.add(IS_REMIND, mData.getIs_remind()+"");	
+			if (mData != null) {
+				params.add(USER, mData.getUser());
+				params.add(MEDICINE, mData.getMedicine());
+				params.add(PERIOD, mData.getPeriod());
+				params.add(MED_NUM, mData.getMed_num() + "");
+				params.add(MED_TIME, mData.getMed_time());
+				params.add(STIME, mData.getStime());
+				params.add(IS_REMIND, mData.getIs_remind() + "");
 			}
 			return getTestToken(params);
 		}
@@ -980,8 +981,8 @@ public class api {
 			params.add(APP, API);
 			params.add(MOD, MEDREMINDER);
 			params.add(ACT, DEL);
-			if(mData != null){
-				params.add(ID, mData.getId()+"");	
+			if (mData != null) {
+				params.add(ID, mData.getId() + "");
 			}
 			return getTestToken(params);
 		}
@@ -992,18 +993,18 @@ public class api {
 			params.add(APP, API);
 			params.add(MOD, MEDREMINDER);
 			params.add(ACT, EDIT);
-			if(mData != null){
-				params.add(ID, mData.getId()+"");	
-				params.add(USER, mData.getUser());	
-				params.add(MEDICINE, mData.getMedicine());	
-				params.add(PERIOD, mData.getPeriod());	
-				params.add(MED_NUM, mData.getMed_num()+"");	
-				params.add(MED_TIME, mData.getMed_time());	
-				params.add(STIME, mData.getStime());	
-				params.add(IS_REMIND, mData.getIs_remind()+"");	
+			if (mData != null) {
+				params.add(ID, mData.getId() + "");
+				params.add(USER, mData.getUser());
+				params.add(MEDICINE, mData.getMedicine());
+				params.add(PERIOD, mData.getPeriod());
+				params.add(MED_NUM, mData.getMed_num() + "");
+				params.add(MED_TIME, mData.getMed_time());
+				params.add(STIME, mData.getStime());
+				params.add(IS_REMIND, mData.getIs_remind() + "");
 			}
 			return getTestToken(params);
 		}
 	}
-	
+
 }
