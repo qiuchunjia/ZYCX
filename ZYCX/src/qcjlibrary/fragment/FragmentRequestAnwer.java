@@ -205,13 +205,4 @@ public class FragmentRequestAnwer extends BaseFragment {
 		tv_4.setTextColor(getResources().getColor(R.color.text_more_gray));
 	}
 
-	/**
-	 * 实现动画
-	 */
-	private void setAnimation() {
-		ObjectAnimator animator = ObjectAnimator.ofFloat(ll_top, "y", -100);
-		animator.setDuration(2000);
-		animator.start();
-	}
-
 }
