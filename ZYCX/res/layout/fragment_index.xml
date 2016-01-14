@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_white_bg_color"
+    >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/main_white_bg_color"
     android:orientation="vertical" >
 
@@ -127,7 +133,7 @@
             <LinearLayout
                 android:id="@+id/ll_second"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="105dp"
                 android:orientation="horizontal" >
 
                 <RelativeLayout
@@ -199,5 +205,5 @@
         android:layout_height="60dp"
         android:background="@color/text_white" >
     </RelativeLayout>
-
 </LinearLayout>
+</ScrollView>

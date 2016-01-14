@@ -2,9 +2,9 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.RequestDetailCommonActivity;
 import qcjlibrary.activity.RequestDetailExpertActivity;
-import qcjlibrary.activity.SearchNewActivity;
 import qcjlibrary.activity.SearchNewActivity.OnSearchTouchListerer;
 import qcjlibrary.adapter.RequestAnswerAdapter;
-import qcjlibrary.config.Config;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelRequest;
