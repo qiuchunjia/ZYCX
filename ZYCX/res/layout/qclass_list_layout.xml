@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,21 +13,5 @@
         android:id="@+id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-=======
-<?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_white_bg_color">
-    <com.zhiyicx.zycx.sociax.component.LoadingView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <com.zhiyicx.zycx.widget.LoadListView
-        android:id="@+id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
->>>>>>> bbf68849e359b0172fc24f663d153fff13335d34
 </LinearLayout>

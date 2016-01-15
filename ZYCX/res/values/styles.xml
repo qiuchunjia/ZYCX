@@ -177,14 +177,9 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/text_common</item>
     </style>
-<<<<<<< HEAD
-
-
-=======
     <style name="text_base" parent="qclass_cmd_send">
         <item name="android:textSize">@dimen/text_common</item>
         <item name="android:textColor">@color/text_gray</item>
         <item name="android:layout_marginTop">@dimen/margin_top</item>
     </style>
->>>>>>> bbf68849e359b0172fc24f663d153fff13335d34
 </resources>
