@@ -115,7 +115,7 @@ public class CancerTopicAdapter extends BAdapter {
 		currentPage++;
 		mExperienceData.setPage(currentPage);
 		sendRequest(mApp.getExperienceImpl().detail(mExperienceData), ModelExperienceDetail.class, REQUEST_GET,
-				REFRESH_NEW);
+				REFRESH_FOOTER);
 	}
 
 	@Override

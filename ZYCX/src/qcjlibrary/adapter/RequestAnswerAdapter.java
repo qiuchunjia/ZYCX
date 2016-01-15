@@ -130,16 +130,19 @@ public class RequestAnswerAdapter extends BAdapter {
 	public void refreshNew() {
 		if (mRequestData instanceof ModelRequestSearch) {
 			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+			search.setLastid(null);
 			// 这个用于搜索
 			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem item = (ModelRequestItem) mRequestData;
+			item.setLastid(null);
 			// 这个接口用于首页
 			Log.i("anwer", item.toString() + "");
 			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestFlag) {
 			// 这个接口用于标签
 			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+			flag.setLastid(null);
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
 			sendRequest(mApp.getRequestImpl().myAsk(), ModelRequest.class, 0, REFRESH_NEW);
@@ -148,22 +151,25 @@ public class RequestAnswerAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		ModelRequestItem requestItem = (ModelRequestItem) item;
-		if (mRequestData instanceof ModelRequestSearch) {
-			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
-			// 这个用于搜索
-			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestItem) {
-			ModelRequestItem data = (ModelRequestItem) mRequestData;
-			// 这个接口用于首页
-			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestFlag) {
-			// 这个接口用于标签
-			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
-			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			dismissTheProgress();
-		}
+		refreshNew();
+		// if (mRequestData instanceof ModelRequestSearch) {
+		// ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+		// // 这个用于搜索
+		// sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class,
+		// 0, REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestItem) {
+		// ModelRequestItem data = (ModelRequestItem) mRequestData;
+		// // 这个接口用于首页
+		// sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0,
+		// REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestFlag) {
+		// // 这个接口用于标签
+		// ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+		// sendRequest(mApp.getRequestImpl().topicQuestion(flag),
+		// ModelRequest.class, 0, REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestMyAsk) {
+		// dismissTheProgress();
+		// }
 	}
 
 	@Override
