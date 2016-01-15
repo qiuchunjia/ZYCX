@@ -56,13 +56,16 @@
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
 
+        <include layout="@layout/default_case_detail" />
+
         <LinearLayout
             android:id="@+id/rl_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_white_pure_color"
             android:orientation="vertical"
-            android:padding="@dimen/margin_left_small" >
+            android:padding="@dimen/margin_left_small"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -228,12 +231,16 @@
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
 
+        <include layout="@layout/default_case_detail" />
+
         <LinearLayout
+            android:id="@+id/ll_once"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_white_pure_color"
             android:orientation="vertical"
-            android:padding="@dimen/margin_left_small" >
+            android:padding="@dimen/margin_left_small"
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/tv_user_histroy"
@@ -362,6 +369,60 @@
             android:layout_marginLeft="@dimen/margin_left_small"
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
+
+        <include layout="@layout/default_case_detail" />
+
+        <RelativeLayout
+            android:id="@+id/rl_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:background="@color/main_white_pure_color"
+            android:padding="@dimen/margin_left_small" 
+            >
+            <TextView 
+                android:id="@+id/tv_commit_time"
+                style="@style/text_base"
+                android:textSize="@dimen/text_small"
+                android:textColor="@color/text_more_gray"
+                android:layout_alignParentLeft="true"
+                android:text="提交时间：2015-01-01"
+                />
+            <TextView 
+                android:id="@+id/tv_deal_time"
+                style="@style/text_base"
+                android:textSize="@dimen/text_small"
+                android:textColor="@color/text_more_gray"
+                android:layout_alignParentRight="true"
+                android:text="处理时间：2015-01-01"
+                />
+            <TextView
+                android:id="@+id/tv_diagnosis"
+                style="@style/text_base"
+                android:textSize="@dimen/text_big"
+                android:textColor="@color/text_black"
+                android:text="诊断过程"
+                android:layout_below="@id/tv_commit_time"
+                />
+            <TextView
+                android:id="@+id/tv_diagnosis_time"
+                style="@style/text_base"
+                android:text="诊断时间：2015-01-01"
+                android:layout_below="@id/tv_diagnosis"
+                />
+            <TextView
+                android:id="@+id/tv_hospital"
+                style="@style/text_base"
+                android:text="医院：四川省华西医院"
+                android:layout_below="@id/tv_diagnosis_time"
+                />
+            <TextView
+                android:id="@+id/tv_blood"
+                style="@style/text_base"
+                android:text="血常规："
+                android:layout_below="@id/tv_hospital"
+                />
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>
