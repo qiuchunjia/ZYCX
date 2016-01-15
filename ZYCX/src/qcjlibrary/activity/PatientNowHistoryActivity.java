@@ -1,6 +1,7 @@
 package qcjlibrary.activity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
@@ -26,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -63,6 +66,9 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private LinearLayout ll_ScrollView3;
 
 	private PopCommonProgress mProgress;
+	
+	private TimePickerView pvTime;
+	private String timeType;
 
 	@Override
 	public String setCenterTitle() {
@@ -107,6 +113,10 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		ll_ScrollView1 = (LinearLayout) findViewById(R.id.ll_ScrollView1);
 		ll_ScrollView2 = (LinearLayout) findViewById(R.id.ll_ScrollView2);
 		ll_ScrollView3 = (LinearLayout) findViewById(R.id.ll_ScrollView3);
+		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+		pvTime.setTime(new Date());
+		pvTime.setCyclic(true);
+		pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -129,7 +139,25 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		rl_lab_check_time1.setOnClickListener(this);
 		rl_vedio_check_project.setOnClickListener(this);
 		rl_vedio_check_time1.setOnClickListener(this);
-
+		pvTime.setOnTimeSelectListener(new OnTimeSelectListener() {
+			
+			@Override
+			public void onTimeSelect(Date date) {
+				if(timeType.equals(Config.TYPE_CHECK_START_TIME)){
+					diagnosis_stime = DateUtil.DateToStamp(date);
+					tv_check_time_name.setText(DateUtil.strTodate(diagnosis_stime));
+				} else if(timeType.equals(Config.TYPE_CHECK_END_TIME)){
+					diagnosis_etime = DateUtil.DateToStamp(date);
+					tv_check_end_time_name.setText(DateUtil.strTodate(diagnosis_etime));
+				} else if(timeType.equals(Config.TYPE_LAB_CHECK_TIME)){
+					lab_exam_time = DateUtil.DateToStamp(date);
+					tv_lab_check_end_time_name.setText(DateUtil.strTodate(lab_exam_time));
+				} else if(timeType.equals(Config.TYPE_VIDEO_CHECK_TIME)){
+					image_exam_time = DateUtil.DateToStamp(date);
+					tv_vedio_check_end_time_name.setText(DateUtil.strTodate(image_exam_time));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -145,15 +173,19 @@ public class PatientNowHistoryActivity extends BaseActivity {
 
 			break;
 		case R.id.rl_check_time:
-			PopDatePicker datePicker = new PopDatePicker(this, null, this);
-			datePicker.setType(Config.TYPE_CHECK_START_TIME);
-			datePicker.showPop(rl_check_time, Gravity.BOTTOM, 0, 0);
+			timeType = Config.TYPE_CHECK_START_TIME;
+			pvTime.show();
+//			PopDatePicker datePicker = new PopDatePicker(this, null, this);
+//			datePicker.setType(Config.TYPE_CHECK_START_TIME);
+//			datePicker.showPop(rl_check_time, Gravity.BOTTOM, 0, 0);
 			break;
 
 		case R.id.rl_check_time1:
-			PopDatePicker datePicker1 = new PopDatePicker(this, null, this);
-			datePicker1.setType(Config.TYPE_CHECK_END_TIME);
-			datePicker1.showPop(rl_check_time1, Gravity.BOTTOM, 0, 0);
+			timeType = Config.TYPE_CHECK_END_TIME;
+			pvTime.show();
+//			PopDatePicker datePicker1 = new PopDatePicker(this, null, this);
+//			datePicker1.setType(Config.TYPE_CHECK_END_TIME);
+//			datePicker1.showPop(rl_check_time1, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_check_way:
 			mApp.startActivityForResult_qcj(this, ChooseSurgeryWayActivity.class, null);
@@ -162,17 +194,21 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			mApp.startActivityForResult_qcj(this, ChooseLabWayActivity.class, null);
 			break;
 		case R.id.rl_lab_check_time1:
-			PopDatePicker labdatePicker = new PopDatePicker(this, null, this);
-			labdatePicker.setType(Config.TYPE_LAB_CHECK_TIME);
-			labdatePicker.showPop(rl_lab_check_time1, Gravity.BOTTOM, 0, 0);
+			timeType = Config.TYPE_LAB_CHECK_TIME;
+			pvTime.show();
+//			PopDatePicker labdatePicker = new PopDatePicker(this, null, this);
+//			labdatePicker.setType(Config.TYPE_LAB_CHECK_TIME);
+//			labdatePicker.showPop(rl_lab_check_time1, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_vedio_check_project:
 			mApp.startActivityForResult_qcj(this, ChooseTreatWayActivity.class, null);
 			break;
 		case R.id.rl_vedio_check_time1:
-			PopDatePicker videodatePicker = new PopDatePicker(this, null, this);
-			videodatePicker.setType(Config.TYPE_VIDEO_CHECK_TIME);
-			videodatePicker.showPop(rl_vedio_check_time1, Gravity.BOTTOM, 0, 0);
+			timeType = Config.TYPE_VIDEO_CHECK_TIME;
+			pvTime.show();
+//			PopDatePicker videodatePicker = new PopDatePicker(this, null, this);
+//			videodatePicker.setType(Config.TYPE_VIDEO_CHECK_TIME);
+//			videodatePicker.showPop(rl_vedio_check_time1, Gravity.BOTTOM, 0, 0);
 			break;
 		}
 

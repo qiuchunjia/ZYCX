@@ -1,6 +1,7 @@
 package qcjlibrary.activity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
@@ -10,6 +11,7 @@ import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.MyGridView;
@@ -27,6 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
@@ -46,6 +50,8 @@ public class ExperienceSendActivity extends BaseActivity {
 	private ModelExperienceSend mSendData;
 	private LocalImageManager mImageManager;
 	private List<String> tagsList = new ArrayList<String>(); // 选中的标签
+	/**时分时间选择框**/
+	private TimePickerView pvTime;
 
 	@Override
 	public String setCenterTitle() {
@@ -73,6 +79,11 @@ public class ExperienceSendActivity extends BaseActivity {
 		gv_choose_flag = (MyGridView) findViewById(R.id.gv_choose_flag);
 		mImageManager = LocalImageManager.from(mApp);
 		addImageToHsv(null, ADDPHOTO);
+		
+		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+		pvTime.setTime(new Date());
+		pvTime.setCyclic(false);
+		pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -123,14 +134,22 @@ public class ExperienceSendActivity extends BaseActivity {
 	@Override
 	public void initListener() {
 		tv_choosedate.setOnClickListener(this);
+		
+		pvTime.setOnTimeSelectListener(new OnTimeSelectListener() {
+			
+			@Override
+			public void onTimeSelect(Date date) {
+				tv_choosedate.setText(DateUtil.strTodate(DateUtil.DateToStamp(date)));
+			}
+		});
 	}
 
 	@Override
 	public void onClick(View v) {
+		SociaxUIUtils.hideSoftKeyboard(this, et_title);
+		SociaxUIUtils.hideSoftKeyboard(this, et_content);
 		switch (v.getId()) {
 		case R.id.tv_title_right:
-			SociaxUIUtils.hideSoftKeyboard(this, et_title);
-			SociaxUIUtils.hideSoftKeyboard(this, et_content);
 			String title = et_title.getText().toString();
 			String content = et_content.getText().toString();
 			String date = tv_choosedate.getText().toString();
@@ -145,8 +164,9 @@ public class ExperienceSendActivity extends BaseActivity {
 			}
 			break;
 		case R.id.tv_choosedate:
-			PopDatePicker datePicker = new PopDatePicker(this, null, this);
-			datePicker.showPop(tv_choosedate, Gravity.BOTTOM, 0, 0);
+			pvTime.show();
+//			PopDatePicker datePicker = new PopDatePicker(this, null, this);
+//			datePicker.showPop(tv_choosedate, Gravity.BOTTOM, 0, 0);
 			break;
 		}
 	}

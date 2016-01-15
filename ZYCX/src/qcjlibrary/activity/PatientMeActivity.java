@@ -4,10 +4,13 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
+import qcjlibrary.model.ModelAddNowCase;
 import qcjlibrary.model.ModelMyCaseIndex;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -44,6 +47,14 @@ public class PatientMeActivity extends BaseActivity {
 	private TextView tv_first;
 	private TextView tv_child;
 	private TextView tv_family;
+	/** 数据展示项**/
+	private LinearLayout ll_user;
+	private LinearLayout ll_once;
+	private LinearLayout ll_now;
+	/** 缺省页**/
+	private LinearLayout defautl_1;
+	private LinearLayout defautl_2;
+	private LinearLayout defautl_3;
 
 	/*************** 添加现病史的控件 **************************/
 	private TextView tv_now_edit2;
@@ -90,6 +101,13 @@ public class PatientMeActivity extends BaseActivity {
 		tv_now_edit2 = (TextView) findViewById(R.id.tv_now_edit2);
 		tv_child = (TextView) findViewById(R.id.tv_child);
 		tv_family = (TextView) findViewById(R.id.tv_family);
+		
+		ll_user = (LinearLayout) findViewById(R.id.ll_user);
+		ll_once = (LinearLayout) findViewById(R.id.ll_once);
+		ll_now = (LinearLayout) findViewById(R.id.ll_now);
+		defautl_1 = (LinearLayout) findViewById(R.id.defautl_1);
+		defautl_2 = (LinearLayout) findViewById(R.id.defautl_2);
+		defautl_3 = (LinearLayout) findViewById(R.id.defautl_3);
 	}
 
 	@Override
@@ -105,6 +123,7 @@ public class PatientMeActivity extends BaseActivity {
 			ModelMyCaseIndex caseIndex = (ModelMyCaseIndex) object;
 			addInfroToView(caseIndex.getInfo());
 			addHistroyToView(caseIndex.getHistory());
+			addPresentToView(caseIndex.getPresent());
 		}
 		return object;
 	}
@@ -116,6 +135,8 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addInfroToView(ModelAddCase info) {
 		if (info != null) {
+			ll_user.setVisibility(View.VISIBLE);
+			defautl_1.setVisibility(View.GONE);
 			tv_username.setText(info.getRealname());
 			if (info.getSex().equals("0")) {
 				tv_gender.setText("男");
@@ -146,6 +167,8 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addHistroyToView(ModelAddHistoryCase history) {
 		if (history != null) {
+			ll_once.setVisibility(View.VISIBLE);
+			defautl_2.setVisibility(View.GONE);
 			tv_user_histroy.setText("既往史：" + history.getMed_history());
 			tv_allegry.setText("过敏史：" + history.getAllergy_history());
 			tv_useraddress.setText("个人史：" + history.getPer_history());
@@ -192,6 +215,18 @@ public class PatientMeActivity extends BaseActivity {
 			}
 			tv_child.setText("子女：" + history.getChilds());
 			tv_family.setText("家族史：" + history.getFamily_history());
+		}
+	}
+	
+	/**
+	 * 添加现病史到界面
+	 * 
+	 * @param present
+	 */
+	private void addPresentToView(ModelAddNowCase present) {
+		if(present != null){
+			ll_now.setVisibility(View.VISIBLE);
+			defautl_3.setVisibility(View.GONE);
 		}
 	}
 
