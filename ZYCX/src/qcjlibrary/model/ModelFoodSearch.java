@@ -24,12 +24,13 @@ public class ModelFoodSearch extends Model {
 	 * 
 	 * string table 食疗方类型（普通食疗方sidefood,癌种食疗方cancer,对症食疗方symptom） 选填
 	 * 
-	 * *****/
+	 *****/
 	private String key;
 	private int state;
 	private int type_id;
 	private int p;
 	private String table;
+	private String type; // 用于删选对症食疗方和癌症石材
 
 	public String getKey() {
 		return key;
@@ -73,6 +74,14 @@ public class ModelFoodSearch extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

@@ -21,8 +21,13 @@ public class ModelMeAddress extends Model {
 	private String title;
 	private String pid;
 	private String sort;
-	private String wholeAddress = ""; // 拼接完整的地址
-	private String wholeId = "";// 拼接完整的id
+	/**************** activity传值需要的字段 ***********************/
+	private String provinceId; // 省份id
+	private String cityId; // 城市id
+	private String towerId; // 乡镇id
+	private String provinceName;// 省份名字
+	private String cityName;// 城市名字
+	private String towerName;// 城镇名字
 
 	private String type; // activity根据type的类型来判断需要处理的逻辑
 
@@ -85,22 +90,6 @@ public class ModelMeAddress extends Model {
 		this.sort = sort;
 	}
 
-	public String getWholeAddress() {
-		return wholeAddress;
-	}
-
-	public void setWholeAddress(String wholeAddress) {
-		this.wholeAddress = wholeAddress;
-	}
-
-	public String getWholeId() {
-		return wholeId;
-	}
-
-	public void setWholeId(String wholeId) {
-		this.wholeId = wholeId;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -113,4 +102,53 @@ public class ModelMeAddress extends Model {
 		this.type = type;
 	}
 
+	public String getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(String provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getTowerId() {
+		return towerId;
+	}
+
+	public void setTowerId(String towerId) {
+		this.towerId = towerId;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getTowerName() {
+		return towerName;
+	}
+
+	public void setTowerName(String towerName) {
+		this.towerName = towerName;
+	}
+
+	
 }

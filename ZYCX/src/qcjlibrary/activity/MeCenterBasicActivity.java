@@ -6,15 +6,18 @@ import java.util.Date;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelMeAddress;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.L;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import qcjlibrary.widget.popupview.PopUploadIcon;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -48,7 +51,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 	private TextView tv_address_value;
 	private RelativeLayout rl_cancer_category;
 	private TextView tv_category_value;
-	/**年月日时间选择框**/
+	/** 年月日时间选择框 **/
 	private TimePickerView pvTime;
 
 	@Override
@@ -84,11 +87,11 @@ public class MeCenterBasicActivity extends BaseActivity {
 		tv_address_value = (TextView) findViewById(R.id.tv_address_value);
 		rl_cancer_category = (RelativeLayout) findViewById(R.id.rl_cancer_category);
 		tv_category_value = (TextView) findViewById(R.id.tv_category_value);
-		
+
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
 		pvTime.setTime(new Date());
 		pvTime.setCyclic(false);
-        pvTime.setCancelable(true);
+		pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -105,8 +108,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 			mApp.saveUser(user); // 保存数据到shareprefrence中
 		}
 		if (judgeTheMsg(object)) {
-			sendRequest(mApp.getUserImpl().index(), ModelUser.class,
-					REQUEST_GET);
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		}
 		return object;
 	}
@@ -138,13 +140,12 @@ public class MeCenterBasicActivity extends BaseActivity {
 		rl_address.setOnClickListener(this);
 		rl_cancer_category.setOnClickListener(this);
 		pvTime.setOnTimeSelectListener(new OnTimeSelectListener() {
-			
+
 			@Override
 			public void onTimeSelect(Date date) {
 				ModelUser user = new ModelUser();
 				user.setBirthday(DateUtil.DateToStamp(date));
-				sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
-						REQUEST_GET);
+				sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
 			}
 		});
 	}
@@ -160,8 +161,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 		File file = super.getFile(path);
 		// 上传头像
 		Log.i("file", file.toString());
-		sendRequest(mApp.getUserImpl().editavatar(file), ModelMsg.class,
-				REQUEST_POST);
+		sendRequest(mApp.getUserImpl().editavatar(file), ModelMsg.class, REQUEST_POST);
 		return file;
 	}
 
@@ -182,11 +182,8 @@ public class MeCenterBasicActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_mycase:
-			mApp.startActivity_qcj(
-					this,
-					SettingOneLineEditActivity.class,
-					sendDataToBundle(SettingOneLineEditActivity.DECLARATION,
-							null));
+			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.DECLARATION, null));
 			break;
 		case R.id.rl_nick:
 			mApp.startActivity_qcj(this, SettingOneLineEditActivity.class,
@@ -197,22 +194,36 @@ public class MeCenterBasicActivity extends BaseActivity {
 			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_birth:
-//			PopDatePicker datePicker = new PopDatePicker(this, null, this);
-//			datePicker.showPop(rl_birth, Gravity.BOTTOM, 0, 0);
+			// PopDatePicker datePicker = new PopDatePicker(this, null, this);
+			// datePicker.showPop(rl_birth, Gravity.BOTTOM, 0, 0);
 			pvTime.show();
 			break;
 		case R.id.rl_address:
-			mApp.startActivity_qcj(this, MeChooseProvinceActivity.class, null);
+			mApp.startActivityForResult_qcj(this, MeChooseProvinceActivity.class, null);
 			break;
 		case R.id.rl_cancer_category:
-			mApp.startActivity_qcj(
-					this,
-					MeChooseCancerActivity.class,
-					sendDataToBundle(SettingOneLineEditActivity.CANCERCATEGORY,
-							null));
+			mApp.startActivity_qcj(this, MeChooseCancerActivity.class,
+					sendDataToBundle(SettingOneLineEditActivity.CANCERCATEGORY, null));
 			break;
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Object object = getReturnResultSeri(requestCode, data, Config.TYPE_ADDRESS);
+		if (object instanceof ModelMeAddress) {
+			ModelMeAddress address = (ModelMeAddress) object;
+			ModelUser user = new ModelUser();
+			String addressId = address.getProvinceId() + "," + address.getCityId() + "," + address.getTowerId();
+			String wholeAddress = address.getProvinceName() + "," + address.getCityName() + ","
+					+ address.getTowerName();
+			user.setCity_ids(addressId);
+			user.setLocation(wholeAddress);
+			Log.i("city", addressId + "");
+			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
+		}
 	}
 
 	@Override
@@ -226,8 +237,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 			} else {
 				user.setBirthday(DateUtil.dateToStr(data.getDataStr()));
 			}
-			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
-					REQUEST_GET);
+			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
 		}
 		return object2;
 	}

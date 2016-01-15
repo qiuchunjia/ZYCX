@@ -31,10 +31,11 @@ public interface FoodIm {
 	 * int p 页数 选填
 	 * 
 	 * string table 食疗方类型（普通食疗方sidefood,癌种食疗方cancer,对症食疗方symptom） 选填
-	 * */
+	 */
 	public static final String KEY = "key"; // 搜索内容 选填
 	public static final String STATE = "state";
 	public static final String TYPE_ID = "type_id";
+	public static final String TYPE= "type";
 	public static final String P = "p";
 	public static final String TABLE = "table";
 	public static final String ID = "id"; // 食疗方id 必填 已经食疗方的id
@@ -86,14 +87,15 @@ public interface FoodIm {
 	 * @return
 	 */
 	public RequestParams food_side_detail(ModelFoodSearch1 search1);
-	
+
 	/**
-	 * demo-qingko.zhiyicx.com/index.php?app=api&mod=Shiliao&act=all_search&key=枣
+	 * demo-qingko.zhiyicx.com/index.php?app=api&mod=Shiliao&act=all_search&key=
+	 * 枣
 	 * 
 	 * 食疗全搜索 key关键字
 	 * 
 	 * 
-	 * */
-	
+	 */
+
 	public RequestParams food_search_all(ModelFoodSearchAll searchAll);
 }

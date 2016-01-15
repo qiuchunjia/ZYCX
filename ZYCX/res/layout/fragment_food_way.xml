@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="对癌食疗方"
+                android:text="对症食疗方"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_big" />
 

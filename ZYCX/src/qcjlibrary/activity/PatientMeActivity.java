@@ -1,3 +1,4 @@
+
 package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
