@@ -72,11 +72,9 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
-
 		title.iv_title_right1.setOnClickListener(this);
 		title.iv_title_right1.setOnClickListener(this);
 		if (mAnswerCommon != null) {
-			addDataToHead(mAnswerCommon);
 			sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon), ModelRequestCommmetCommon.class, REQUEST_GET);
 		}
 	}
