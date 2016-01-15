@@ -25,7 +25,7 @@ public class ModelExperience extends Model {
 	 * "thread_count": "10", "following": null
 	 * 
 	 * 
-	 * ****/
+	 ****/
 
 	public ModelExperience() {
 	}
@@ -68,6 +68,7 @@ public class ModelExperience extends Model {
 	private String follower_count;
 	private String recommend;
 	private String thread_count;
+	private int page; // 用于分页
 
 	public String getWeiba_id() {
 		return weiba_id;
@@ -119,6 +120,14 @@ public class ModelExperience extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 }

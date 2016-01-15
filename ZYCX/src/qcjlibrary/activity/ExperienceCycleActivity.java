@@ -2,6 +2,11 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.zhiyicx.zycx.R;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.ExperienceCycleAdapter;
@@ -12,13 +17,8 @@ import qcjlibrary.model.ModelExperiencePostDetail;
 import qcjlibrary.model.ModelExperiencePostDetailInfo;
 import qcjlibrary.model.ModelExperienceSend;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午5:33:01 类描述：这个类是实现
@@ -47,8 +47,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		mItemData = (ModelExperienceDetailItem1) getDataFromIntent(getIntent(),
-				null);
+		mItemData = (ModelExperienceDetailItem1) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -77,8 +76,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
-		sendRequest(mApp.getExperienceImpl().postDetail(mItemData),
-				ModelExperiencePostDetail.class, REQUEST_GET);
+		sendRequest(mApp.getExperienceImpl().postDetail(mItemData), ModelExperiencePostDetail.class, REQUEST_GET);
 		setTagViewGone();
 	}
 
@@ -111,7 +109,11 @@ public class ExperienceCycleActivity extends BaseActivity {
 			tv_date = (TextView) findViewById(R.id.tv_date);
 			mApp.displayImage(post_detail.getUserface(), iv_cycle_icon);
 			tv_username.setText(post_detail.getTitle());
-			tv_has_update.setText("已更新" + post_detail.getChildCount() + "篇");
+			tv_has_update.setText("");
+			tv_has_update.append("已更新");
+			tv_has_update.append(SpanUtil.setForegroundColorSpan(post_detail.getChildCount() + "", 0, 0,
+					getResources().getColor(R.color.text_red)));
+			tv_has_update.append("篇");
 			List<String> tags = post_detail.getTags();
 			if (tags != null && tags.size() >= 0) {
 				String result = tags.get(0);
@@ -159,8 +161,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 					tags = tags.replace("]", "");
 				}
 				send.setTags(tags);
-				mApp.startActivity_qcj(this, ExperienceSendActivity.class,
-						sendDataToBundle(send, null));
+				mApp.startActivity_qcj(this, ExperienceSendActivity.class, sendDataToBundle(send, null));
 			}
 			break;
 

@@ -692,6 +692,7 @@ public class api {
 				params.add(MOD, EXPERIENCE);
 				params.add(ACT, DETAIL);
 				params.add(ID, experience.getWeiba_id());
+				params.put(PAGE, experience.getPage());
 				return params;
 			}
 			return null;
@@ -721,6 +722,21 @@ public class api {
 				params.add(ACT, DOPRAISE);
 				params.add(ID, item1.getPost_id());
 				Log.i("doPraise", params.toString());
+				getTestToken(params);
+				return params;
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams showPost(ModelExperiencePostDetailItem item1) {
+			if (item1 != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, WEIBA);
+				params.add(MOD, Index);
+				params.add(ACT, SHOWPOST);
+				params.add(ID, item1.getPost_id());
+				Log.i("showPost", params.toString());
 				getTestToken(params);
 				return params;
 			}

@@ -8,6 +8,8 @@ import qcjlibrary.model.ModelExperience;
 import qcjlibrary.model.ModelExperienceDetail;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.SpanUtil;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,14 +27,12 @@ import com.zhiyicx.zycx.R;
 public class CancerTopicAdapter extends BAdapter {
 	private ModelExperience mExperienceData;
 
-	public CancerTopicAdapter(BaseActivity activity,
-			ModelExperience modelExperience) {
+	public CancerTopicAdapter(BaseActivity activity, ModelExperience modelExperience) {
 		super(activity, null);
 		mExperienceData = modelExperience;
 	}
 
-	public CancerTopicAdapter(BaseFragment fragment,
-			ModelExperience modelExperience) {
+	public CancerTopicAdapter(BaseFragment fragment, ModelExperience modelExperience) {
 		super(fragment, null);
 		mExperienceData = modelExperience;
 	}
@@ -62,9 +62,18 @@ public class CancerTopicAdapter extends BAdapter {
 				if (detailItem1.getRecommend().equals("1")) {
 					holder.tv_topic_advice.setVisibility(View.VISIBLE);
 				}
-				// holder.tv_topic_user.setText(detailItem1.get);
-				// holder.tv_topic_update.setText(detailItem1.getContent());
-				holder.tv_topic_date.setText(detailItem1.getPost_time());
+				if (detailItem1.getUsername() != null && detailItem1.getUsername().length() > 3) {
+					String name = detailItem1.getUsername().substring(0, 3) + "...";
+					holder.tv_topic_user.setText(name);
+				} else {
+					holder.tv_topic_user.setText(detailItem1.getUsername());
+				}
+				holder.tv_topic_update.setText("");
+				holder.tv_topic_update.append("已更新");
+				holder.tv_topic_update.append(SpanUtil.setForegroundColorSpan(detailItem1.getChildCount() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_red)));
+				holder.tv_topic_update.append("篇");
+				holder.tv_topic_date.setText(DateUtil.strTodate(detailItem1.getLasted_time()));
 
 			}
 		}
@@ -78,32 +87,35 @@ public class CancerTopicAdapter extends BAdapter {
 	 */
 	private void initView(View convertView, ViewHolder holder) {
 		if (convertView != null && holder != null) {
-			holder.tv_topic_title = (TextView) convertView
-					.findViewById(R.id.tv_topic_title);
-			holder.tv_topic_advice = (TextView) convertView
-					.findViewById(R.id.tv_topic_advice);
-			holder.tv_topic_user = (TextView) convertView
-					.findViewById(R.id.tv_topic_user);
-			holder.tv_topic_update = (TextView) convertView
-					.findViewById(R.id.tv_topic_update);
-			holder.tv_topic_date = (TextView) convertView
-					.findViewById(R.id.tv_topic_date);
+			holder.tv_topic_title = (TextView) convertView.findViewById(R.id.tv_topic_title);
+			holder.tv_topic_advice = (TextView) convertView.findViewById(R.id.tv_topic_advice);
+			holder.tv_topic_user = (TextView) convertView.findViewById(R.id.tv_topic_user);
+			holder.tv_topic_update = (TextView) convertView.findViewById(R.id.tv_topic_update);
+			holder.tv_topic_date = (TextView) convertView.findViewById(R.id.tv_topic_date);
 		}
 	}
 
+	private int currentPage = 0;
+
 	@Override
 	public void refreshNew() {
-		sendRequest(mApp.getExperienceImpl().detail(mExperienceData),
-				ModelExperienceDetail.class, REQUEST_GET, REFRESH_NEW);
+		currentPage = 0;
+		mExperienceData.setPage(currentPage);
+		sendRequest(mApp.getExperienceImpl().detail(mExperienceData), ModelExperienceDetail.class, REQUEST_GET,
+				REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		// TODO Auto-generated method stub
+		currentPage++;
+		mExperienceData.setPage(currentPage);
+		sendRequest(mApp.getExperienceImpl().detail(mExperienceData), ModelExperienceDetail.class, REQUEST_GET,
+				REFRESH_NEW);
 	}
 
 	@Override

@@ -22,65 +22,36 @@
             android:background="@drawable/view_border_blue_3"
             android:text="推荐"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_big"
+            android:visibility="visible" />
 
-        <RelativeLayout
-            android:id="@+id/rl_quesion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_big" >
-
-            <ImageView
-                android:id="@+id/iv_q"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="@dimen/margin_left_small"
-                android:src="@drawable/q" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_small"
-                android:layout_toRightOf="@id/iv_q"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="肺癌晚期怎么治？"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_big" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_common_answer"
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rl_quesion"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginTop="@dimen/margin_top_big"
+            android:layout_toLeftOf="@id/tv_advice"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="肺癌晚期怎么治fdsfdsfffffffffff？"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_big" />
+
+        <TextView
+            android:id="@+id/tv_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginLeft="@dimen/margin_left_small"
             android:layout_marginTop="@dimen/margin_top"
-            android:paddingRight="@dimen/margin_right_small" >
-
-            <ImageView
-                android:id="@+id/iv_a"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_small"
-                android:src="@drawable/a" />
-
-            <TextView
-                android:id="@+id/tv_answer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_small"
-                android:layout_marginTop="@dimen/margin_top"
-                android:layout_toRightOf="@id/iv_a"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="冷先生：胸部的磁共振结果如何？如果结果都没有出现转移"
-                android:textColor="@color/text_more_gray"
-                android:textSize="@dimen/text_big" />
-        </RelativeLayout>
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
+            android:maxLines="2"
+            android:text="冷先生：胸部的磁共振结果如何？如果结果都没有出现转移"
+            android:textColor="@color/text_more_gray"
+            android:textSize="@dimen/text_big" />
     </RelativeLayout>
     <!-- 专家回复 -->
 
@@ -93,6 +64,7 @@
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/main_white_bg_color"
         android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:maxLines="2"
         android:paddingBottom="@dimen/margin_bottom"
         android:paddingLeft="3dp"
