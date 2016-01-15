@@ -16,8 +16,10 @@ import com.loopj.android.http.RequestParams;
 
 public interface ExperienceIm {
 	// 接口需要的操作参数
+	public static final String WEIBA = "weiba";
 	public static final String EXPERIENCE = "Experience";
 	public static final String INDEX = "index";
+	public static final String Index = "Index"; // 正能量详情
 	public static final String ADD_POST = "add_post";
 	public static final String POST_DETAIL = "post_detail"; // 经历-主帖详情
 	public static final String DETAIL = "detail";
@@ -30,6 +32,8 @@ public interface ExperienceIm {
 	public static final String BODY = "body";
 	public static final String TAGS = "tags";
 	public static final String ID = "id";
+	public static final String SHOWPOST = "showPost";
+	public static final String PAGE = "page"; // 用于分页
 
 	/**
 	 * 经历-经历首页
@@ -63,5 +67,11 @@ public interface ExperienceIm {
 	 * @return
 	 */
 	public RequestParams doPraise(ModelExperiencePostDetailItem item1);
+
+	/**
+	 * @param item1
+	 * @return
+	 */
+	public RequestParams showPost(ModelExperiencePostDetailItem item1);
 
 }

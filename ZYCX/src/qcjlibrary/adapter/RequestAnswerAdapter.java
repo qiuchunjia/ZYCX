@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zhiyicx.zycx.R;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,17 +72,20 @@ public class RequestAnswerAdapter extends BAdapter {
 		if (holder != null) {
 			ModelRequestItem modelRequestItem = (ModelRequestItem) mList.get(position);
 			if (modelRequestItem != null) {
-				holder.tv_title.setText(modelRequestItem.getQuestion_content());
-				holder.iv_a.setVisibility(View.GONE);
+				holder.tv_title.setText("");
+				Drawable drawable = mBaseActivity.getResources().getDrawable(R.drawable.q);
+				holder.tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
+				holder.tv_title.append("  " + modelRequestItem.getQuestion_content());
 				holder.tv_answer.setVisibility(View.GONE);
 				holder.tv_advice.setVisibility(View.GONE);
 				holder.tv_expert_answer.setVisibility(View.GONE);
-				holder.rl_common_answer.setVisibility(View.VISIBLE);
 				if (modelRequestItem.getAnswercontent() != null && !modelRequestItem.getAnswercontent().equals("")) {
-					holder.iv_a.setVisibility(View.VISIBLE);
 					holder.tv_answer.setVisibility(View.VISIBLE);
-					holder.tv_answer
-							.setText(modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
+					Drawable anwerDrable = mBaseActivity.getResources().getDrawable(R.drawable.a);
+					holder.tv_answer.setText("");
+					holder.tv_answer.append(SpanUtil.setImageSpan("xx", 0, 0, anwerDrable));
+					holder.tv_answer.append(
+							"  " + modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
 				}
 				if (modelRequestItem.getIs_recommend() != null) {
 					if (modelRequestItem.getIs_recommend().equals("1")) {
@@ -90,8 +94,8 @@ public class RequestAnswerAdapter extends BAdapter {
 				}
 				if (modelRequestItem.getIs_expert() != null) {
 					if (modelRequestItem.getIs_expert().equals("1")) {
+						holder.tv_answer.setVisibility(View.GONE);
 						holder.tv_expert_answer.setVisibility(View.VISIBLE);
-						holder.rl_common_answer.setVisibility(View.GONE);
 						holder.tv_expert_answer.setText("");
 						holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
 								mBaseActivity.getResources().getColor(R.color.text_yellow)));
@@ -114,10 +118,8 @@ public class RequestAnswerAdapter extends BAdapter {
 		if (convertView != null && holder != null) {
 			holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
 			holder.tv_advice = (TextView) convertView.findViewById(R.id.tv_advice);
-			holder.iv_a = (ImageView) convertView.findViewById(R.id.iv_a);
 			holder.tv_answer = (TextView) convertView.findViewById(R.id.tv_answer);
 			holder.tv_expert_answer = (TextView) convertView.findViewById(R.id.tv_expert_answer);
-			holder.rl_common_answer = (RelativeLayout) convertView.findViewById(R.id.rl_common_answer);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
 
@@ -128,16 +130,19 @@ public class RequestAnswerAdapter extends BAdapter {
 	public void refreshNew() {
 		if (mRequestData instanceof ModelRequestSearch) {
 			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+			search.setLastid(null);
 			// 这个用于搜索
 			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem item = (ModelRequestItem) mRequestData;
+			item.setLastid(null);
 			// 这个接口用于首页
 			Log.i("anwer", item.toString() + "");
 			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestFlag) {
 			// 这个接口用于标签
 			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+			flag.setLastid(null);
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
 			sendRequest(mApp.getRequestImpl().myAsk(), ModelRequest.class, 0, REFRESH_NEW);
@@ -146,22 +151,25 @@ public class RequestAnswerAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		ModelRequestItem requestItem = (ModelRequestItem) item;
-		if (mRequestData instanceof ModelRequestSearch) {
-			ModelRequestSearch search = (ModelRequestSearch) mRequestData;
-			// 这个用于搜索
-			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestItem) {
-			ModelRequestItem data = (ModelRequestItem) mRequestData;
-			// 这个接口用于首页
-			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestFlag) {
-			// 这个接口用于标签
-			ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
-			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_HEADER);
-		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			dismissTheProgress();
-		}
+		refreshNew();
+		// if (mRequestData instanceof ModelRequestSearch) {
+		// ModelRequestSearch search = (ModelRequestSearch) mRequestData;
+		// // 这个用于搜索
+		// sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class,
+		// 0, REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestItem) {
+		// ModelRequestItem data = (ModelRequestItem) mRequestData;
+		// // 这个接口用于首页
+		// sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0,
+		// REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestFlag) {
+		// // 这个接口用于标签
+		// ModelRequestFlag flag = (ModelRequestFlag) mRequestData;
+		// sendRequest(mApp.getRequestImpl().topicQuestion(flag),
+		// ModelRequest.class, 0, REFRESH_HEADER);
+		// } else if (mRequestData instanceof ModelRequestMyAsk) {
+		// dismissTheProgress();
+		// }
 	}
 
 	@Override
@@ -192,6 +200,7 @@ public class RequestAnswerAdapter extends BAdapter {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	@Override
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelRequest) {

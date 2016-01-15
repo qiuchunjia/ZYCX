@@ -2,6 +2,17 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.zhiyicx.zycx.LoginActivity;
+import com.zhiyicx.zycx.R;
+
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
@@ -12,21 +23,9 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.view.Gravity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.LoginActivity;
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -198,7 +197,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			request_tv_title.setText("");
 			Drawable drawable = getResources().getDrawable(R.drawable.q);
 			request_tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
-			request_tv_title.append("  " + question.getQuestion_content());
+			request_tv_title.append(" " + question.getQuestion_content());
 			tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
 			tv_username.setText(question.getUser_name());

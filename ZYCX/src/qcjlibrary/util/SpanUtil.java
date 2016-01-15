@@ -64,18 +64,15 @@ public class SpanUtil {
 	 * @param color
 	 * @return
 	 */
-	public static SpannableString setBackgroundColorSpan(String content,
-			int startIndex, int endIndex, int color) {
+	public static SpannableString setBackgroundColorSpan(String content, int startIndex, int endIndex, int color) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new BackgroundColorSpan(color), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new BackgroundColorSpan(color), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -88,13 +85,11 @@ public class SpanUtil {
 	 * @param url
 	 * @return
 	 */
-	public static SpannableString setClickableSpan(String content,
-			int startIndex, int endIndex, final String url) {
+	public static SpannableString setClickableSpan(String content, int startIndex, int endIndex, final String url) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
@@ -113,8 +108,7 @@ public class SpanUtil {
 				Uri uri = Uri.parse(url);
 				Context context = widget.getContext();
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				intent.putExtra(Browser.EXTRA_APPLICATION_ID,
-						context.getPackageName());
+				intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
 				context.startActivity(intent);
 			}
 
@@ -132,19 +126,17 @@ public class SpanUtil {
 	 *            自己重写ClickableSpan的 updateDrawState与onClick方法
 	 * @return
 	 */
-	public static SpannableString setClickableSpan(String content,
-			int startIndex, int endIndex, ClickableSpan clickableSpan) {
+	public static SpannableString setClickableSpan(String content, int startIndex, int endIndex,
+			ClickableSpan clickableSpan) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
 		if (null != clickableSpan) {
-			spannableString.setSpan(clickableSpan, startIndex, endIndex,
-					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		} else {
 			spannableString.setSpan(new ClickableSpan() {
 				@Override
@@ -166,18 +158,15 @@ public class SpanUtil {
 	 * @param color
 	 * @return
 	 */
-	public static SpannableString setForegroundColorSpan(String content,
-			int startIndex, int endIndex, int color) {
+	public static SpannableString setForegroundColorSpan(String content, int startIndex, int endIndex, int color) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new ForegroundColorSpan(color), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new ForegroundColorSpan(color), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -189,16 +178,13 @@ public class SpanUtil {
 	 * @param endIndex
 	 * @return
 	 */
-	public static SpannableString setSubscriptSpan(String content,
-			int startIndex, int endIndex) {
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+	public static SpannableString setSubscriptSpan(String content, int startIndex, int endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return null;
 		}
 
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new SubscriptSpan(), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new SubscriptSpan(), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		return spannableString;
 	}
@@ -211,16 +197,13 @@ public class SpanUtil {
 	 * @param endIndex
 	 * @return
 	 */
-	public static SpannableString setSuperscriptSpan(String content,
-			int startIndex, int endIndex) {
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+	public static SpannableString setSuperscriptSpan(String content, int startIndex, int endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return null;
 		}
 
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new SuperscriptSpan(), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new SuperscriptSpan(), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		return spannableString;
 	}
@@ -240,35 +223,29 @@ public class SpanUtil {
 	 *            其他自定义效果
 	 * @return
 	 */
-	public static SpannableString setMaskFilterSpan(String content,
-			int startIndex, int endIndex, BlurMaskFilter blurMaskFilter,
-			EmbossMaskFilter embossMaskFilter, MaskFilter maskFilter) {
+	public static SpannableString setMaskFilterSpan(String content, int startIndex, int endIndex,
+			BlurMaskFilter blurMaskFilter, EmbossMaskFilter embossMaskFilter, MaskFilter maskFilter) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
 		if (null == blurMaskFilter) {
-			spannableString.setSpan(new BlurMaskFilter(50, Blur.SOLID),
-					startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		} else {
-			spannableString.setSpan(blurMaskFilter, startIndex, endIndex,
+			spannableString.setSpan(new BlurMaskFilter(50, Blur.SOLID), startIndex, endIndex,
 					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		} else {
+			spannableString.setSpan(blurMaskFilter, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		if (null == embossMaskFilter) {
-			spannableString.setSpan(new EmbossMaskFilter(
-					new float[] { 1, 1, 1 }, 0.4f, 6, (float) 3.5), startIndex,
+			spannableString.setSpan(new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, (float) 3.5), startIndex,
 					endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		} else {
-			spannableString.setSpan(embossMaskFilter, startIndex, endIndex,
-					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spannableString.setSpan(embossMaskFilter, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		if (null != maskFilter) {
-			spannableString.setSpan(maskFilter, startIndex, endIndex,
-					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spannableString.setSpan(maskFilter, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		return spannableString;
 	}
@@ -282,18 +259,16 @@ public class SpanUtil {
 	 *            设为0则到最后
 	 * @return
 	 */
-	public static SpannableString setRasterizerSpan(String content,
-			int startIndex, int endIndex) {
+	public static SpannableString setRasterizerSpan(String content, int startIndex, int endIndex) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new RasterizerSpan(new Rasterizer()),
-				startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new RasterizerSpan(new Rasterizer()), startIndex, endIndex,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -306,18 +281,15 @@ public class SpanUtil {
 	 *            设为0则到最后
 	 * @return
 	 */
-	public static SpannableString setStrikethroughSpan(String content,
-			int startIndex, int endIndex) {
+	public static SpannableString setStrikethroughSpan(String content, int startIndex, int endIndex) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new StrikethroughSpan(), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new StrikethroughSpan(), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -331,19 +303,17 @@ public class SpanUtil {
 	 * @return
 	 */
 	@SuppressLint({ "InlinedApi", "NewApi" })
-	public static SpannableString setSuggestionSpan(String content,
-			int startIndex, int endIndex, String[] suggestionArray) {
+	public static SpannableString setSuggestionSpan(String content, int startIndex, int endIndex,
+			String[] suggestionArray) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new SuggestionSpan(Locale.CHINESE,
-				suggestionArray, SuggestionSpan.FLAG_EASY_CORRECT), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new SuggestionSpan(Locale.CHINESE, suggestionArray, SuggestionSpan.FLAG_EASY_CORRECT),
+				startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -356,18 +326,15 @@ public class SpanUtil {
 	 *            设为0则到最后
 	 * @return
 	 */
-	public static SpannableString setUnderlineSpan(String content,
-			int startIndex, int endIndex) {
+	public static SpannableString setUnderlineSpan(String content, int startIndex, int endIndex) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new UnderlineSpan(), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new UnderlineSpan(), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -382,18 +349,15 @@ public class SpanUtil {
 	 *            字号，单位px
 	 * @return
 	 */
-	public static SpannableString setAbsoluteSizeSpan(String content,
-			int startIndex, int endIndex, int size) {
+	public static SpannableString setAbsoluteSizeSpan(String content, int startIndex, int endIndex, int size) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new AbsoluteSizeSpan(size), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new AbsoluteSizeSpan(size), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -408,20 +372,17 @@ public class SpanUtil {
 	 *            显示的图片
 	 * @return
 	 */
-	public static SpannableString setDynamicDrawableSpanBaseLine(
-			String content, int startIndex, int endIndex,
+	public static SpannableString setDynamicDrawableSpanBaseLine(String content, int startIndex, int endIndex,
 			final Drawable drawable) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
 		// 基线对齐
-		spannableString.setSpan(new DynamicDrawableSpan(
-				DynamicDrawableSpan.ALIGN_BASELINE) {
+		spannableString.setSpan(new DynamicDrawableSpan(DynamicDrawableSpan.ALIGN_BASELINE) {
 
 			@Override
 			public Drawable getDrawable() {
@@ -432,8 +393,7 @@ public class SpanUtil {
 
 		}, startIndex, startIndex + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		// 底部对齐
-		spannableString.setSpan(new DynamicDrawableSpan(
-				DynamicDrawableSpan.ALIGN_BOTTOM) {
+		spannableString.setSpan(new DynamicDrawableSpan(DynamicDrawableSpan.ALIGN_BOTTOM) {
 
 			@Override
 			public Drawable getDrawable() {
@@ -455,19 +415,17 @@ public class SpanUtil {
 	 * @param drawable
 	 * @return
 	 */
-	public static SpannableString setDynamicDrawableSpanBottom(String content,
-			int startIndex, int endIndex, final Drawable drawable) {
+	public static SpannableString setDynamicDrawableSpanBottom(String content, int startIndex, int endIndex,
+			final Drawable drawable) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
 		// 底部对齐
-		spannableString.setSpan(new DynamicDrawableSpan(
-				DynamicDrawableSpan.ALIGN_BOTTOM) {
+		spannableString.setSpan(new DynamicDrawableSpan(DynamicDrawableSpan.ALIGN_BOTTOM) {
 
 			@Override
 			public Drawable getDrawable() {
@@ -491,18 +449,16 @@ public class SpanUtil {
 	 *            显示的图片
 	 * @return
 	 */
-	public static SpannableString setImageSpan(String content, int startIndex,
-			int endIndex, final Drawable drawable) {
+	public static SpannableString setImageSpan(String content, int startIndex, int endIndex, final Drawable drawable) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		drawable.setBounds(0, 0, 50, 50);
-		spannableString.setSpan(new ImageSpan(drawable), startIndex, endIndex,
+		drawable.setBounds(0, 0, drawable.getIntrinsicWidth() + 10, drawable.getIntrinsicHeight() + 10);
+		spannableString.setSpan(new VerticalImageSpan(drawable), startIndex, endIndex,
 				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
@@ -518,18 +474,15 @@ public class SpanUtil {
 	 *            字缩放倍数
 	 * @return
 	 */
-	public static SpannableString setRelativeSizeSpan(String content,
-			int startIndex, int endIndex, float size) {
+	public static SpannableString setRelativeSizeSpan(String content, int startIndex, int endIndex, float size) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new RelativeSizeSpan(size), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new RelativeSizeSpan(size), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -546,18 +499,15 @@ public class SpanUtil {
 	 *            x轴缩放倍数
 	 * @return
 	 */
-	public static SpannableString setScaleXSpan(String content, int startIndex,
-			int endIndex, float size) {
+	public static SpannableString setScaleXSpan(String content, int startIndex, int endIndex, float size) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new ScaleXSpan(size), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new ScaleXSpan(size), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -572,18 +522,15 @@ public class SpanUtil {
 	 *            Typeface.xxx 选择字体的样式
 	 * @return
 	 */
-	public static SpannableString setStyleSpan(String content, int startIndex,
-			int endIndex, int style) {
+	public static SpannableString setStyleSpan(String content, int startIndex, int endIndex, int style) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new StyleSpan(style), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new StyleSpan(style), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -597,19 +544,16 @@ public class SpanUtil {
 	 * @param context
 	 * @return
 	 */
-	public static SpannableString setTextAppearanceSpan(String content,
-			int startIndex, int endIndex, Context context) {
+	public static SpannableString setTextAppearanceSpan(String content, int startIndex, int endIndex, Context context) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new TextAppearanceSpan(context,
-				android.R.style.TextAppearance_Holo_Large_Inverse), startIndex,
-				endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new TextAppearanceSpan(context, android.R.style.TextAppearance_Holo_Large_Inverse),
+				startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -625,18 +569,15 @@ public class SpanUtil {
 	 *            serif, and sans-serif.
 	 * @return
 	 */
-	public static SpannableString setTypefaceSpan(String content,
-			int startIndex, int endIndex, String family) {
+	public static SpannableString setTypefaceSpan(String content, int startIndex, int endIndex, String family) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new TypefaceSpan(family), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new TypefaceSpan(family), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannableString;
 	}
 
@@ -650,19 +591,16 @@ public class SpanUtil {
 	 * @param url
 	 * @return
 	 */
-	public static SpannableString setURLSpan(String content, int startIndex,
-			int endIndex, String url) {
+	public static SpannableString setURLSpan(String content, int startIndex, int endIndex, String url) {
 		if (0 == endIndex) {
 			endIndex = content.length();
 		}
-		if (TextUtils.isEmpty(content) || startIndex < 0
-				|| endIndex > content.length() || startIndex >= endIndex) {
+		if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex > content.length() || startIndex >= endIndex) {
 			return new SpannableString(content);
 		}
 
 		SpannableString spannableString = new SpannableString(content);
-		spannableString.setSpan(new URLSpan(url), startIndex, endIndex,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannableString.setSpan(new URLSpan(url), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		return spannableString;
 	}

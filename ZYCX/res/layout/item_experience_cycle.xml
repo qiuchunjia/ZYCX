@@ -178,8 +178,7 @@
 
             <View
                 android:layout_width="@dimen/line_height"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="95dp"
                 android:background="@color/main_gray_color" />
         </LinearLayout>
     </RelativeLayout>

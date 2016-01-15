@@ -2,9 +2,11 @@ package qcjlibrary.activity;
 
 import com.zhiyicx.zycx.R;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.model.ModelExperiencePostDetailItem;
 
 /**
  * author：qiuchunjia time：下午4:34:47 类描述：这个类是实现
@@ -14,6 +16,7 @@ import qcjlibrary.activity.base.BaseActivity;
 public class ExperienceCycleDetail extends BaseActivity {
 	private String mUrl;
 	private WebView wv_view;
+	private ModelExperiencePostDetailItem mItems;
 
 	@Override
 	public String setCenterTitle() {
@@ -22,7 +25,7 @@ public class ExperienceCycleDetail extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		mUrl = (String) getDataFromIntent(getIntent(), null);
+		mItems = (ModelExperiencePostDetailItem) getDataFromIntent(getIntent(), null);
 	}
 
 	@Override
@@ -38,7 +41,11 @@ public class ExperienceCycleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
-		wv_view.loadUrl(mUrl);
+		if (mItems != null) {
+			mUrl = mApp.getHostUrl() + mApp.getExperienceImpl().showPost(mItems).toString();
+			Log.i("murl", mUrl);
+			wv_view.loadUrl(mUrl);
+		}
 
 	}
 
