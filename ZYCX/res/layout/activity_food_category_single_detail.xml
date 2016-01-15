@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_function_value"
-                android:layout_marginTop="30dp" >
+                android:layout_marginTop="@dimen/margin_top_min" >
 
                 <qcjlibrary.widget.MyGridView
                     android:id="@+id/gv_function"
@@ -125,6 +125,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/margin_top"
             android:layout_marginLeft="@dimen/margin_left_small"
             android:background="@color/main_gray_color" />
         <!-- 功能，抗药功效 -->

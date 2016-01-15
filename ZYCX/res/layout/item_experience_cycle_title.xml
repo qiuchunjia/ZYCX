@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="wrap_content"
         android:background="@color/main_white_pure_color"
         android:paddingLeft="@dimen/margin_left_small"
         android:paddingRight="@dimen/margin_right_small" >
@@ -16,7 +16,7 @@
             android:id="@+id/tv_cycle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_big"
+            android:layout_marginTop="@dimen/margin_top_30"
             android:text="我的抗癌经历"
             android:textColor="@color/text_green"
             android:textSize="@dimen/text_very_big" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_cycle"
             android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginTop="@dimen/margin_top_big"
+            android:layout_marginTop="@dimen/margin_top_min"
             android:layout_toRightOf="@id/iv_cycle_icon"
             android:text="呵呵哒"
             android:textColor="@color/text_black"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_username"
             android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top_min"
             android:layout_toRightOf="@id/iv_cycle_icon"
             android:orientation="horizontal" >
 
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_flag"
             android:layout_marginLeft="@dimen/margin_left"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top_min"
             android:layout_toRightOf="@id/iv_cycle_icon"
             android:text="主贴更新："
             android:textColor="@color/text_gray"
@@ -114,7 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_flag"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top_min"
+            android:paddingBottom="@dimen/margin_top_big"
             android:layout_toRightOf="@id/tv_update"
             android:text="2015-06-12 14:40"
             android:textColor="@color/text_gray"
