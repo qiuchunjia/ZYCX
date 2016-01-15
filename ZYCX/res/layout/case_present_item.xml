@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_white_pure_color"
+    android:gravity="left"
+    android:padding="@dimen/margin_left_small" >
+
+    <TextView
+        android:id="@+id/tv_commit_time"
+        style="@style/text_base"
+        android:layout_alignParentLeft="true"
+        android:text="提交时间:2015-01-01"
+        android:textColor="@color/text_more_gray"
+        android:textSize="@dimen/text_small" />
+
+    <TextView
+        android:id="@+id/tv_deal_time"
+        style="@style/text_base"
+        android:layout_alignParentRight="true"
+        android:text="处理时间:2015-01-01"
+        android:textColor="@color/text_more_gray"
+        android:textSize="@dimen/text_small" />
+
+    <TextView
+        android:id="@+id/tv_diagnosis"
+        style="@style/text_base"
+        android:layout_below="@id/tv_deal_time"
+        android:text="诊断过程"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_big" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_base"
+        android:layout_below="@id/tv_diagnosis"
+        android:text="诊断时间：2015-01-01" />
+
+    <TextView
+        android:id="@+id/tv_hospital"
+        style="@style/text_base"
+        android:layout_below="@id/tv_time"
+        android:text="医院：四川省华西医院" />
+
+    <TextView
+        android:id="@+id/tv_blood"
+        style="@style/text_base"
+        android:layout_below="@id/tv_hospital"
+        android:text="血常规：" />
+
+</RelativeLayout>

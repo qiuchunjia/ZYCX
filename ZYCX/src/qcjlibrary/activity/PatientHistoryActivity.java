@@ -7,6 +7,7 @@ import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopChooseDrink;
 import qcjlibrary.widget.popupview.PopChooseSmoke;
@@ -22,6 +23,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Date;
+
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -68,7 +73,10 @@ public class PatientHistoryActivity extends BaseActivity {
 	private RelativeLayout rl_first;
 	private RelativeLayout rl_stop_yuejin;
 	private ModelUser modelUser;
-
+	
+	private TimePickerView pvTime;
+	private String timeType;
+	
 	@Override
 	public String setCenterTitle() {
 		return "既往史";
@@ -123,6 +131,11 @@ public class PatientHistoryActivity extends BaseActivity {
 		rl_drink_much = (RelativeLayout) findViewById(R.id.rl_drink_much);
 		rl_first = (RelativeLayout) findViewById(R.id.rl_first);
 		rl_stop_yuejin = (RelativeLayout) findViewById(R.id.rl_stop_yuejin);
+		
+		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+		pvTime.setTime(new Date());
+		pvTime.setCyclic(true);
+		pvTime.setCancelable(true);
 	}
 
 	@Override
@@ -151,7 +164,22 @@ public class PatientHistoryActivity extends BaseActivity {
 		rl_last_time.setOnClickListener(this);
 		rl_children.setOnClickListener(this);
 		rl_stop_drink_time.setOnClickListener(this);
-
+		pvTime.setOnTimeSelectListener(new OnTimeSelectListener() {
+			
+			@Override
+			public void onTimeSelect(Date date) {
+				if(timeType.equals(Config.TYPE_LAST_TIME)){
+					menarche_etime = DateUtil.strTodate(DateUtil.DateToStamp(date));
+					tv_last_time_name.setText(menarche_etime);
+				} else if(timeType.equals(Config.TYPE_STOP_SMOKE_TIME)){
+					stop_smoke_time = DateUtil.strTodate(DateUtil.DateToStamp(date));
+					tv_stop_smoke_time_name.setText(stop_smoke_time);
+				} else if(timeType.equals(Config.TYPE_STOP_DRINK_TIME)){
+					stop_drink_time = DateUtil.strTodate(DateUtil.DateToStamp(date));
+					tv_stop_drink_name_time.setText(stop_drink_time);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -182,9 +210,11 @@ public class PatientHistoryActivity extends BaseActivity {
 			chooseStopSmoke.showPop(rl_stop_smoke, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_stop_smoke_time:
-			PopDatePicker datePicker = new PopDatePicker(this, null, this);
+			timeType = Config.TYPE_STOP_DRINK_TIME;
+			pvTime.show();
+			/*PopDatePicker datePicker = new PopDatePicker(this, null, this);
 			datePicker.setType(Config.TYPE_STOP_SMOKE_TIME);
-			datePicker.showPop(rl_stop_smoke_time, Gravity.BOTTOM, 0, 0);
+			datePicker.showPop(rl_stop_smoke_time, Gravity.BOTTOM, 0, 0);*/
 			break;
 		case R.id.rl_drink:
 			PopChooseDrink chooseDrink = new PopChooseDrink(this, null, this);
@@ -197,15 +227,19 @@ public class PatientHistoryActivity extends BaseActivity {
 			stopDrink.showPop(rl_stop_drink, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_stop_drink_time:
-			PopDatePicker stopDrinktime = new PopDatePicker(this, null, this);
+			timeType = Config.TYPE_STOP_DRINK_TIME;
+			pvTime.show();
+			/*PopDatePicker stopDrinktime = new PopDatePicker(this, null, this);
 			stopDrinktime.setType(Config.TYPE_STOP_DRINK_TIME);
-			stopDrinktime.showPop(rl_stop_drink, Gravity.BOTTOM, 0, 0);
+			stopDrinktime.showPop(rl_stop_drink, Gravity.BOTTOM, 0, 0);*/
 			break;
 
 		case R.id.rl_last_time:
-			PopDatePicker lastTime = new PopDatePicker(this, null, this);
+			timeType = Config.TYPE_LAST_TIME;
+			pvTime.show();
+			/*PopDatePicker lastTime = new PopDatePicker(this, null, this);
 			lastTime.setType(Config.TYPE_LAST_TIME);
-			lastTime.showPop(rl_last_time, Gravity.BOTTOM, 0, 0);
+			lastTime.showPop(rl_last_time, Gravity.BOTTOM, 0, 0);*/
 			break;
 		case R.id.rl_children:
 			// TODO
