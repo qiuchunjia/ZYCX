@@ -49,39 +49,14 @@ public class MeChooseTowerActivity extends BaseActivity {
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				ModelMeAddress address = (ModelMeAddress) parent
-						.getItemAtPosition(position);
-				mAddress.setWholeAddress(mAddress.getWholeAddress()
-						+ address.getTitle());
-				mAddress.setWholeId(mAddress.getWholeId()
-						+ address.getArea_id());
-				if (TextUtils.isEmpty(mAddress.getType())) {
-					modifyTheUserInfor(mAddress);
-				} else {
-					setReturnResultSeri(mAddress, Config.TYPE_ADDRESS);
-					onBackPressed();
-				}
-
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ModelMeAddress address = (ModelMeAddress) parent.getItemAtPosition(position);
+				mAddress.setTowerId(address.getArea_id());
+				mAddress.setTowerName(address.getTitle());
+				setReturnResultSeri(mAddress, Config.TYPE_ADDRESS);
+				onBackPressed();
 			}
-
 		});
-	}
-
-	/**
-	 * 修改用户信息
-	 * 
-	 * @param mAddress
-	 */
-	private void modifyTheUserInfor(ModelMeAddress Address) {
-		if (Address != null) {
-			ModelUser user = new ModelUser();
-			user.setLocation(Address.getWholeAddress());
-			user.setCity_ids(Address.getWholeId());
-			sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class,
-					REQUEST_GET);
-		}
 	}
 
 	@Override

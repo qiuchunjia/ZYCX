@@ -113,8 +113,7 @@ public class PatientInforActivity extends BaseActivity {
 			setEditContent();
 			if (checkTheContent()) {
 				ModelAddCase addCase = addDataToModel();
-				sendRequest(mApp.getMedRecordImpl().saveInfo(addCase),
-						ModelMsg.class, REQUEST_GET);
+				sendRequest(mApp.getMedRecordImpl().saveInfo(addCase), ModelMsg.class, REQUEST_GET);
 			}
 
 			break;
@@ -128,31 +127,24 @@ public class PatientInforActivity extends BaseActivity {
 			chooseMarry.showPop(rl_marry, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_nation:
-			mApp.startActivityForResult_qcj(this, ChooseNationActivity.class,
-					null);
+			mApp.startActivityForResult_qcj(this, ChooseNationActivity.class, null);
 			break;
 		case R.id.rl_education:
-			mApp.startActivityForResult_qcj(this,
-					ChooseEducationActivity.class, null);
+			mApp.startActivityForResult_qcj(this, ChooseEducationActivity.class, null);
 			break;
 		case R.id.rl_insurance:
-			PopChooseInsurance chooseInsurance = new PopChooseInsurance(this,
-					null, this);
+			PopChooseInsurance chooseInsurance = new PopChooseInsurance(this, null, this);
 			chooseInsurance.showPop(rl_insurance, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_hometown:
 			ModelMeAddress hometown = new ModelMeAddress();
 			hometown.setType(Config.TYPE_HOME);
-			mApp.startActivityForResult_qcj(this,
-					MeChooseProvinceActivity.class,
-					sendDataToBundle(hometown, null));
+			mApp.startActivityForResult_qcj(this, MeChooseProvinceActivity.class, sendDataToBundle(hometown, null));
 			break;
 		case R.id.rl_address:
 			ModelMeAddress address = new ModelMeAddress();
 			address.setType(Config.TYPE_ADDRESS);
-			mApp.startActivityForResult_qcj(this,
-					MeChooseProvinceActivity.class,
-					sendDataToBundle(address, null));
+			mApp.startActivityForResult_qcj(this, MeChooseProvinceActivity.class, sendDataToBundle(address, null));
 			break;
 		}
 
@@ -199,27 +191,26 @@ public class PatientInforActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Object object = getReturnResultSeri(resultCode, data,
-				Config.TYPE_ADDRESS);
+		Object object = getReturnResultSeri(resultCode, data, Config.TYPE_ADDRESS);
 		if (object instanceof ModelMeAddress) {
 			ModelMeAddress address = (ModelMeAddress) object;
+			String wholeAddress = address.getProvinceName() + "," + address.getCityName() + ","
+					+ address.getTowerName();
 			if (address.getType().equals(Config.TYPE_HOME)) {
-				tv_hometown_name.setText(address.getWholeAddress());
-				natives =address.getWholeAddress();
+				tv_hometown_name.setText(wholeAddress);
+				natives = wholeAddress;
 			} else if (address.getType().equals(Config.TYPE_ADDRESS)) {
-				tv_address_name.setText(address.getWholeAddress());
-				domicile = address.getWholeAddress();
+				tv_address_name.setText(wholeAddress);
+				domicile = wholeAddress;
 			}
 		}
-		Object object2 = getReturnResultSeri(resultCode, data,
-				Config.TYPE_EDUCATION);
+		Object object2 = getReturnResultSeri(resultCode, data, Config.TYPE_EDUCATION);
 		if (object2 instanceof String) {
 			String dataStr = (String) object2;
 			tv_education_name.setText(dataStr);
 			education = dataStr;
 		}
-		Object object3 = getReturnResultSeri(resultCode, data,
-				Config.TYPE_NATION);
+		Object object3 = getReturnResultSeri(resultCode, data, Config.TYPE_NATION);
 		if (object3 instanceof String) {
 			String nationdata = (String) object3;
 			nation = nationdata;

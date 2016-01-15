@@ -49,17 +49,12 @@ public class MeChooseCityActivity extends BaseActivity {
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				ModelMeAddress address = (ModelMeAddress) parent
-						.getItemAtPosition(position);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ModelMeAddress address = (ModelMeAddress) parent.getItemAtPosition(position);
 				mAddress.setArea_id(address.getArea_id());
-				mAddress.setWholeAddress(mAddress.getWholeAddress()
-						+ address.getTitle() + " ");
-				mAddress.setWholeId(mAddress.getWholeId()
-						+ address.getArea_id() + ",");
-				mApp.startActivityForResult_qcj(MeChooseCityActivity.this,
-						MeChooseTowerActivity.class,
+				mAddress.setCityId(address.getArea_id());
+				mAddress.setCityName(address.getTitle());
+				mApp.startActivityForResult_qcj(MeChooseCityActivity.this, MeChooseTowerActivity.class,
 						sendDataToBundle(mAddress, null));
 			}
 		});
@@ -68,8 +63,7 @@ public class MeChooseCityActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		mReturnData = (Model) getReturnResultSeri(resultCode, data,
-				Config.TYPE_ADDRESS);
+		mReturnData = (Model) getReturnResultSeri(resultCode, data, Config.TYPE_ADDRESS);
 	}
 
 	@Override
