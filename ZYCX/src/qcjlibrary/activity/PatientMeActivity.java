@@ -5,10 +5,13 @@ import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelMyCaseIndex;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.L;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.PreferenceUtil;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
