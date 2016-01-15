@@ -3,7 +3,6 @@ package qcjlibrary.activity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
@@ -14,7 +13,6 @@ import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopCommonProgress;
-import qcjlibrary.widget.popupview.PopDatePicker;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,10 +24,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -68,6 +66,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	private PopCommonProgress mProgress;
 	
 	private TimePickerView pvTime;
+	/** 不同时间选择框的类型**/
 	private String timeType;
 
 	@Override
@@ -173,6 +172,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 
 			break;
 		case R.id.rl_check_time:
+			hide();
 			timeType = Config.TYPE_CHECK_START_TIME;
 			pvTime.show();
 //			PopDatePicker datePicker = new PopDatePicker(this, null, this);
@@ -181,6 +181,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_check_time1:
+			hide();
 			timeType = Config.TYPE_CHECK_END_TIME;
 			pvTime.show();
 //			PopDatePicker datePicker1 = new PopDatePicker(this, null, this);
@@ -194,6 +195,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			mApp.startActivityForResult_qcj(this, ChooseLabWayActivity.class, null);
 			break;
 		case R.id.rl_lab_check_time1:
+			hide();
 			timeType = Config.TYPE_LAB_CHECK_TIME;
 			pvTime.show();
 //			PopDatePicker labdatePicker = new PopDatePicker(this, null, this);
@@ -204,6 +206,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			mApp.startActivityForResult_qcj(this, ChooseTreatWayActivity.class, null);
 			break;
 		case R.id.rl_vedio_check_time1:
+			hide();
 			timeType = Config.TYPE_VIDEO_CHECK_TIME;
 			pvTime.show();
 //			PopDatePicker videodatePicker = new PopDatePicker(this, null, this);
@@ -212,6 +215,12 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			break;
 		}
 
+	}
+	
+	private void hide(){
+		SociaxUIUtils.hideSoftKeyboard(this, et_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_lab_checkname);
+		SociaxUIUtils.hideSoftKeyboard(this, et_vedio_checkname);
 	}
 
 	@Override

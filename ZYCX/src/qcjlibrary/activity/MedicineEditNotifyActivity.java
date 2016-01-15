@@ -17,7 +17,9 @@ import qcjlibrary.widget.popupview.PopAlertTimeList;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -216,6 +218,13 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			//获取数据并且上传到服务器
 			userName = et_user.getText()+"";
 			medicineName = et_medicine_name.getText()+"";
+			if(userName.length() > 20){
+				ToastUtils.showLongToast(this, "用户名不得超过20字");
+				return;
+			} else if(medicineName.length() > 20){
+				ToastUtils.showLongToast(this, "药品名不得超过20字");
+				return;
+			}
 			if(!userName.equals("") && !medicineName.equals("")){
 				if(startTime != null){
 					//将数据保存到实体类中
