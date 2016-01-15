@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="400dp"
     android:background="@color/main_white_pure_color"
+    android:paddingTop="@dimen/margin_top_min"
     android:orientation="vertical" >
 
     <LinearLayout
