@@ -15,13 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:paddingRight="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
             <qcjlibrary.widget.RoundImageView
                 android:id="@+id/riv_user_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="@dimen/margin_left_small"
                 android:src="@drawable/morentouxiang02" />
 
@@ -41,8 +42,8 @@
                 android:id="@+id/menu_iv_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left_small"
                 android:layout_weight="0.5"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/gerenshezhiicon"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_big" />
@@ -58,6 +59,8 @@
             <ImageView
                 android:id="@+id/iv_home"
                 style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/homeicon" />
 
             <TextView
@@ -82,6 +85,8 @@
             <ImageView
                 android:id="@+id/iv_question"
                 style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/wentiicon" />
 
             <TextView
@@ -106,6 +111,8 @@
             <ImageView
                 android:id="@+id/iv_app"
                 style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/yingyongicon" />
 
             <TextView
@@ -130,6 +137,8 @@
             <ImageView
                 android:id="@+id/iv_cycle"
                 style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/quanziicon" />
 
             <TextView
@@ -154,6 +163,8 @@
             <ImageView
                 android:id="@+id/iv_periodical"
                 style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/qikanicon" />
 
             <TextView
