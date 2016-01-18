@@ -119,8 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_my"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/item_height"
-            android:visibility="gone" >
+             >
 
             <TextView
                 android:id="@+id/tv_name"
@@ -171,18 +172,27 @@
                 android:text="创建  2014-11-02"
                 android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
+            
+            <ImageView 
+                android:id="@+id/iv_arrow"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignBottom="@id/tv_update_day"
+                android:src="@drawable/arrow_right"
+                android:layout_alignParentRight="true"
+                />
 
             <TextView
                 android:id="@+id/tv_look"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_update_day"
-                android:layout_alignParentRight="true"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/arrow_right"
+                android:layout_toLeftOf="@id/iv_arrow"
+                android:layout_marginRight="5dp"
                 android:text="预览"
                 android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
+            
         </RelativeLayout>
 
         <RelativeLayout

@@ -604,11 +604,14 @@ public class HomeActivity extends BaseActivity {
 
 	// 展示排序下拉列表
 	private void showMenu(View v) {
+		TextView textNew;
+		TextView textHot;
+		TextView textMy = null;
 		if (mSortMenu == null) {
 			View menuView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.popmenu, null);
-			TextView textNew = (TextView) menuView.findViewById(R.id.txt_new);
-			TextView textHot = (TextView) menuView.findViewById(R.id.txt_hot);
-			TextView textMy = (TextView) menuView.findViewById(R.id.txt_my);
+			textNew = (TextView) menuView.findViewById(R.id.txt_new);
+			textHot = (TextView) menuView.findViewById(R.id.txt_hot);
+			textMy = (TextView) menuView.findViewById(R.id.txt_my);
 			mSortMenu = new PopupWindow(menuView, ViewGroup.LayoutParams.WRAP_CONTENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 			textNew.setOnClickListener(new OnClickListener() {
@@ -647,6 +650,11 @@ public class HomeActivity extends BaseActivity {
 					mSortMenu.dismiss();
 				}
 			});
+		}
+		if(isLogin() && textMy != null){
+			textMy.setVisibility(View.VISIBLE);
+		} else{
+			textMy.setVisibility(View.GONE);
 		}
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
 		params.alpha = 0.7f;

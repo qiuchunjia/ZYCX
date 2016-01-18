@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:gravity="right|center_vertical"
             android:textSize="12dp"
+            android:textColor="@color/text_more_gray"
             android:text="18:41"/>
     </LinearLayout>
 
