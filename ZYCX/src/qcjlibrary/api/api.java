@@ -862,15 +862,15 @@ public class api {
 				params.add(APP, API);
 				params.add(MOD, MEDRECORD);
 				params.add(ACT, SAVE_PRESENT);
-				params.add(DIAGNOSIS_ETIME, nowCase.getDiagnosis_etime());
-				params.add(DIAGNOSIS_HOSPITAL, nowCase.getDiagnosis_hospital());
-				params.add(DIAGNOSIS_WAY, nowCase.getDiagnosis_way());
-				params.add(LAB_EXAM_PROGRAM, nowCase.getLab_exam_program());
-				params.add(LAB_EXAM_TIME, nowCase.getLab_exam_time());
-				params.add(LAB_EXAM_HOSPITAL, nowCase.getLab_exam_hospital());
-				params.add(IMAGE_EXAM_PROGRAM, nowCase.getImage_exam_program());
-				params.add(IMAGE_EXAM_TIME, nowCase.getImage_exam_time());
-				params.add(IMAGE_EXAM_HOSPITAL, nowCase.getImage_exam_hospital());
+				params.add(DIAGNOSIS_ETIME, nowCase.getDiagnosis().getDiagnosis_etime());
+				params.add(DIAGNOSIS_HOSPITAL, nowCase.getDiagnosis().getDiagnosis_hospital());
+				params.add(DIAGNOSIS_WAY, nowCase.getDiagnosis().getDiagnosis_way());
+				params.add(LAB_EXAM_PROGRAM, nowCase.getLab_exam().getLab_exam_program());
+				params.add(LAB_EXAM_TIME, nowCase.getLab_exam().getLab_exam_time());
+				params.add(LAB_EXAM_HOSPITAL, nowCase.getLab_exam().getLab_exam_hospital());
+				params.add(IMAGE_EXAM_PROGRAM, nowCase.getImage_exam().getImage_exam_program());
+				params.add(IMAGE_EXAM_TIME, nowCase.getImage_exam().getImage_exam_time());
+				params.add(IMAGE_EXAM_HOSPITAL, nowCase.getImage_exam().getImage_exam_hospital());
 				if (nowCase.getDiagnosisList() != null) {
 					List<String> data = nowCase.getDiagnosisList();
 					for (int i = 0; i < data.size(); i++) {

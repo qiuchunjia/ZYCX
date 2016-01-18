@@ -30,85 +30,17 @@ public class ModelAddNowCase extends Model {
 	// diagnosis 诊断图片
 	// lab_exam 实验室检查图片
 	// image_exam 影像学检查图片
-	private String diagnosis_stime;
-	private String diagnosis_etime;
-	private String diagnosis_hospital;
-	private String diagnosis_way;
-	private String lab_exam_program;
-	private String lab_exam_time;
-	private String lab_exam_hospital;
-	private String image_exam_program;
-	private String image_exam_time;
-	private String image_exam_hospital;
+	
+	private String ctime; //创建时间
+	private String utime; //处理时间
+	private ModelDiagnosis diagnosis;
+	private ModelLab lab_exam;
+	private ModelImage image_exam;
 	private List<String> diagnosisList;
 	private List<String> lab_examList;
 	private List<String> image_examList;
-	
+
 	private List<ModelCaseResult> result;
-
-	public String getDiagnosis_stime() {
-		return diagnosis_stime;
-	}
-
-	public void setDiagnosis_stime(String diagnosis_stime) {
-		this.diagnosis_stime = diagnosis_stime;
-	}
-
-	public String getDiagnosis_etime() {
-		return diagnosis_etime;
-	}
-
-	public void setDiagnosis_etime(String diagnosis_etime) {
-		this.diagnosis_etime = diagnosis_etime;
-	}
-
-	public String getDiagnosis_hospital() {
-		return diagnosis_hospital;
-	}
-
-	public void setDiagnosis_hospital(String diagnosis_hospital) {
-		this.diagnosis_hospital = diagnosis_hospital;
-	}
-
-	public String getDiagnosis_way() {
-		return diagnosis_way;
-	}
-
-	public void setDiagnosis_way(String diagnosis_way) {
-		this.diagnosis_way = diagnosis_way;
-	}
-
-	public String getLab_exam_program() {
-		return lab_exam_program;
-	}
-
-	public void setLab_exam_program(String lab_exam_program) {
-		this.lab_exam_program = lab_exam_program;
-	}
-
-	public String getLab_exam_time() {
-		return lab_exam_time;
-	}
-
-	public void setLab_exam_time(String lab_exam_time) {
-		this.lab_exam_time = lab_exam_time;
-	}
-
-	public String getLab_exam_hospital() {
-		return lab_exam_hospital;
-	}
-
-	public void setLab_exam_hospital(String lab_exam_hospital) {
-		this.lab_exam_hospital = lab_exam_hospital;
-	}
-
-	public String getImage_exam_program() {
-		return image_exam_program;
-	}
-
-	public void setImage_exam_program(String image_exam_program) {
-		this.image_exam_program = image_exam_program;
-	}
 
 	public List<String> getDiagnosisList() {
 		return diagnosisList;
@@ -138,22 +70,6 @@ public class ModelAddNowCase extends Model {
 		return serialVersionUID;
 	}
 
-	public String getImage_exam_time() {
-		return image_exam_time;
-	}
-
-	public void setImage_exam_time(String image_exam_time) {
-		this.image_exam_time = image_exam_time;
-	}
-
-	public String getImage_exam_hospital() {
-		return image_exam_hospital;
-	}
-
-	public void setImage_exam_hospital(String image_exam_hospital) {
-		this.image_exam_hospital = image_exam_hospital;
-	}
-
 	public List<ModelCaseResult> getResult() {
 		return result;
 	}
@@ -162,5 +78,80 @@ public class ModelAddNowCase extends Model {
 		this.result = result;
 	}
 
-	
+	public String getCtime() {
+		return ctime;
+	}
+
+	public void setCtime(String ctime) {
+		this.ctime = ctime;
+	}
+
+	public String getUtime() {
+		return utime;
+	}
+
+	public void setUtime(String utime) {
+		this.utime = utime;
+	}
+
+	public ModelDiagnosis getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(ModelDiagnosis diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+	public ModelLab getLab_exam() {
+		return lab_exam;
+	}
+
+	public void setLab_exam(ModelLab lab_exam) {
+		this.lab_exam = lab_exam;
+	}
+
+	public ModelImage getImage_exam() {
+		return image_exam;
+	}
+
+	public void setImage_exam(ModelImage image_exam) {
+		this.image_exam = image_exam;
+	}
+
+	/**
+	 * 每一种检查返回的结果 
+	 * "list_name":"肿瘤标志物", 
+	 * "field_name":"我擦嘞",
+	 * "field_value":"松岛枫松岛枫松岛枫"
+	 */
+	public class Result {
+		private String list_name;
+		private String field_name;
+		private String field_value;
+
+		public String getList_name() {
+			return list_name;
+		}
+
+		public void setList_name(String list_name) {
+			this.list_name = list_name;
+		}
+
+		public String getField_name() {
+			return field_name;
+		}
+
+		public void setField_name(String field_name) {
+			this.field_name = field_name;
+		}
+
+		public String getField_value() {
+			return field_value;
+		}
+
+		public void setField_value(String field_value) {
+			this.field_value = field_value;
+		}
+
+	}
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView 
+        android:id="@+id/tv_list_name"
+        style="@style/text_base"
+        android:text="小便常规"
+        />
+    <TextView 
+        android:id="@+id/tv_field"
+        style="@style/text_base"
+        android:layout_below="@id/tv_list_name"
+        android:text="中性粒细胞:士大夫撒东方闪电"
+        />
+</RelativeLayout>
