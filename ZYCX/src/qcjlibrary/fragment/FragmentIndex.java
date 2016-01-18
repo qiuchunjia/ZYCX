@@ -90,6 +90,7 @@ public class FragmentIndex extends BaseFragment {
 				MyADViewModel viewModel = new MyADViewModel();
 				ModelAds modelAds = modelAdses.get(i);
 				viewModel.setImgUrl(modelAds.getBannerpic());
+				viewModel.setBannerurl(modelAds.getBannerurl());
 				myADViewModels.add(viewModel);
 			}
 			try {

@@ -5,45 +5,55 @@ package qcjlibrary.widget.ads;
  */
 public class MyADViewModel {
 
-    private String imgUrl;
-    private int ResouceId;
+	private String imgUrl;
+	private int ResouceId;
+	private String bannerurl;  //点击view后需要传的值
 
-    public MyADViewModel() {
+	public String getBannerurl() {
+		return bannerurl;
+	}
 
-    }
+	public void setBannerurl(String bannerurl) {
+		this.bannerurl = bannerurl;
+	}
 
-    public MyADViewModel(String imgUrl) {
+	public MyADViewModel() {
 
-        this.imgUrl = imgUrl;
+	}
 
-    }
+	public MyADViewModel(String imgUrl) {
 
-    public MyADViewModel(int resouceID) {
+		this.imgUrl = imgUrl;
 
-        this.ResouceId = resouceID;
+	}
 
-    }
+	public MyADViewModel(int resouceID) {
 
-    /**
-     * @return the imgUrl
-     */
-    public String getImgUrl() {
-        return imgUrl;
-    }
+		this.ResouceId = resouceID;
 
-    /**
-     * @param imgUrl the imgUrl to set
-     */
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
+	}
 
-    public int getResouceId() {
-        return ResouceId;
-    }
+	/**
+	 * @return the imgUrl
+	 */
+	public String getImgUrl() {
+		return imgUrl;
+	}
 
-    public void setResouceId(int resouceId) {
-        ResouceId = resouceId;
-    }
+	/**
+	 * @param imgUrl
+	 *            the imgUrl to set
+	 */
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public int getResouceId() {
+		return ResouceId;
+	}
+
+	public void setResouceId(int resouceId) {
+		ResouceId = resouceId;
+	}
 
 }

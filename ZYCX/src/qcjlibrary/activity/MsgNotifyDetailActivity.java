@@ -22,7 +22,6 @@ public class MsgNotifyDetailActivity extends BaseActivity {
 	private TextView tv_content;
 	private ModelNotifyNotice mNotice;
 
-
 	@Override
 	public String setCenterTitle() {
 		return "通知详情";
@@ -44,9 +43,7 @@ public class MsgNotifyDetailActivity extends BaseActivity {
 	public void initView() {
 		tv_system_notify = (TextView) findViewById(R.id.tv_system_notify);
 		tv_date = (TextView) findViewById(R.id.tv_date);
-
 		tv_notify_title = (TextView) findViewById(R.id.tv_notify_title);
-
 		tv_content = (TextView) findViewById(R.id.tv_content);
 
 	}
@@ -57,7 +54,7 @@ public class MsgNotifyDetailActivity extends BaseActivity {
 		if (mNotice != null) {
 			if (mNotice.getType().equals("answer")) {
 				tv_system_notify.setText("问答通知");
-				tv_notify_title.setText(mNotice.getQuestion_content());
+				tv_notify_title.setText(mNotice.getAnswer_content());
 			} else if (mNotice.getType().equals("weiba")) {
 				tv_system_notify.setText("经历小组通知");
 				tv_notify_title.setText(mNotice.getContent());

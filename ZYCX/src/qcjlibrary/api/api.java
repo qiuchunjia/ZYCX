@@ -628,6 +628,15 @@ public class api {
 			}
 			return null;
 		}
+
+		@Override
+		public RequestParams getProtocol() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, OAUTH);
+			params.add(ACT, GETPROTOCOL);
+			return params;
+		}
 	}
 
 	public static final class ExperienceImpl implements ExperienceIm {
@@ -792,6 +801,31 @@ public class api {
 				return params;
 			}
 			return null;
+		}
+
+		@Override
+		public RequestParams delOne(ModelNotifyNotice notice) {
+			if (notice != null) {
+				RequestParams params = new RequestParams();
+				params.add(APP, API);
+				params.add(MOD, NOTICE);
+				params.add(ACT, DELONE);
+				params.add(ID, notice.getId());
+				getTestToken(params);
+				Log.i("delOne", params.toString());
+				return params;
+			}
+			return null;
+		}
+
+		@Override
+		public RequestParams delAll() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, NOTICE);
+			params.add(ACT, DELALL);
+			getTestToken(params);
+			return params;
 		}
 
 	}
