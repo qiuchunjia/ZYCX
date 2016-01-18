@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -73,13 +74,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 			mId = Integer.valueOf(mDetail.getId());
 			mUid = Integer.valueOf(mDetail.getUid());
 			mTitle = mDetail.getTitle();
-		} else{
+		} else {
 			Intent intent = getIntent();
 			mId = intent.getIntExtra("id", 0);
 			mUid = intent.getIntExtra("uid", 0);
 			mTitle = intent.getStringExtra("title");
 			mDetail = new ModelZiXunDetail();
-			mDetail.setId(mId+"");
+			mDetail.setId(mId + "");
 		}
 		// mCid = getIntent().getIntExtra("cid", 0);
 		if (mId == 0 || mUid == 0)
@@ -130,6 +131,17 @@ public class ZiXUnContentActivity extends BaseActivity {
 		setBottomClick();
 		mCmtEdit.clearFocus();
 		mFaceView.setFaceAdapter(mFaceAdapter);
+		mCmtEdit.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					if (mFaceView.getVisibility() == View.VISIBLE) {
+						mFaceView.setVisibility(View.GONE);
+					}
+				}
+			}
+		});
 
 	}
 
@@ -166,16 +178,16 @@ public class ZiXUnContentActivity extends BaseActivity {
 		mTitleLayout.iv_title_right3.setImageResource(R.drawable.aa);
 		mTitleLayout.iv_title_right3.setVisibility(View.VISIBLE);
 		mTitleLayout.iv_title_right3.setOnClickListener(this);
-
+		mCmtEdit.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_praise:
-			if(isLogin()){
+			if (isLogin()) {
 				sendRequest(mApp.getZhiXunImpl().doPraise(mDetail), ModelMsg.class, BaseActivity.REQUEST_GET);
-			}else{
+			} else {
 				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
@@ -204,9 +216,9 @@ public class ZiXUnContentActivity extends BaseActivity {
 		case R.id.btn_share:
 			break;
 		case R.id.btn_comment:
-			if(isLogin()){
+			if (isLogin()) {
 				comment();
-			}else{
+			} else {
 				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
@@ -215,6 +227,11 @@ public class ZiXUnContentActivity extends BaseActivity {
 				collect(0);
 			else
 				collect(1);
+			break;
+		case R.id.edit_cmt:
+			if (mFaceView.getVisibility() == View.VISIBLE) {
+				mFaceView.setVisibility(View.GONE);
+			}
 			break;
 		}
 	}
@@ -241,10 +258,10 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	private void comment() {
 		String txt = mCmtEdit.getText().toString().trim();
-		if (TextUtils.isEmpty(txt)){
+		if (TextUtils.isEmpty(txt)) {
 			ToastUtils.showToast("评论内容不能为空！");
 			return;
-			}
+		}
 		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)
 				+ Utils.getTokenString(this);
 		NetComTools.getInstance(this).getNetJson(url, new JsonDataListener() {
