@@ -112,7 +112,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 			tv_has_update.setText("");
 			tv_has_update.append("已更新");
 			tv_has_update.append(SpanUtil.setForegroundColorSpan(post_detail.getChildCount() + "", 0, 0,
-					getResources().getColor(R.color.text_red)));
+					getResources().getColor(R.color.text_yellow)));
 			tv_has_update.append("篇");
 			List<String> tags = post_detail.getTags();
 			if (tags != null && tags.size() >= 0) {

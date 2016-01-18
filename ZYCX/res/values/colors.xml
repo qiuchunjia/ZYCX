@@ -21,8 +21,7 @@
     <!-- 主题颜色紅色 -->
     <color name="main_color">#349342</color>
     <!-- 辅助颜色 -->
-	<color name="bg_green_light">#EBF0F0</color> 
-	
+    <color name="bg_green_light">#EBF0F0</color>
 
     <!-- 辅助黑色 -->
     <color name="main_black_color">#333333</color>
@@ -45,7 +44,6 @@
     <!-- 标题正文 -->
     <color name="text_green">#349342</color>
     <color name="text_blue">#5cc5f0</color>
-
     <color name="text_user">#2f5e2f</color>
     <color name="text_yellow">#e39925</color>
     <color name="text_red">#f46565</color>

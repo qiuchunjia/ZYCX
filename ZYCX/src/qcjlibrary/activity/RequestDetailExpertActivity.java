@@ -178,7 +178,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 				}
 			});
 		}
-		if (answers != null) {
+		if (answers != null && answers.size() > 0) {
 			if (ll_expert_repaly.getChildCount() > 0) {
 				ll_expert_repaly.removeAllViews();
 			}

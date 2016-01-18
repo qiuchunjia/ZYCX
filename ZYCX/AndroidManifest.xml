@@ -355,14 +355,20 @@
             android:name="qcjlibrary.activity.PatientInforActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name="qcjlibrary.activity.PatientMeActivity" />
-        <activity android:name="qcjlibrary.activity.UseMedicineNotifyActivity" />
+        <activity
+            android:name="qcjlibrary.activity.UseMedicineNotifyActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name="qcjlibrary.activity.MedicineEditNotifyActivity" />
         <activity android:name="qcjlibrary.activity.CancerSingleActivity" />
         <activity android:name="qcjlibrary.activity.ExperienceCycleActivity" />
         <activity android:name="qcjlibrary.activity.ExperienceSendActivity" />
         <activity android:name="qcjlibrary.activity.ExperienceCycleDetail" />
-        <activity android:name="qcjlibrary.activity.RequestSendTopicActivity" />
-        <activity android:name="qcjlibrary.activity.RequestSendTopicCommitedActivity" />
+        <activity
+            android:name="qcjlibrary.activity.RequestSendTopicActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="qcjlibrary.activity.RequestSendTopicCommitedActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name="qcjlibrary.activity.RequestChooseCancerActivity" />
         <activity android:name="qcjlibrary.activity.RequestWayActivity" />
         <activity android:name="qcjlibrary.activity.RequestDetailCommonActivity" />
@@ -370,7 +376,9 @@
         <activity android:name="qcjlibrary.activity.RequestFlagActivity" />
         <activity android:name="qcjlibrary.activity.RequestSearchActivity" />
         <activity android:name="qcjlibrary.activity.ZhiXunFlagActivity" />
-        <activity android:name="qcjlibrary.activity.SearchNewActivity" />
+        <activity
+            android:name="qcjlibrary.activity.SearchNewActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name="qcjlibrary.activity.UserAgreenmentActivity" />
         <activity android:name="qcjlibrary.activity.SettingOneLineEditActivity" />
         <activity android:name="qcjlibrary.activity.CancerCategoryActivity" />
