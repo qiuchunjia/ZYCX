@@ -628,6 +628,15 @@ public class api {
 			}
 			return null;
 		}
+
+		@Override
+		public RequestParams getProtocol() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, OAUTH);
+			params.add(ACT, GETPROTOCOL);
+			return params;
+		}
 	}
 
 	public static final class ExperienceImpl implements ExperienceIm {
