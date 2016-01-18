@@ -3,7 +3,12 @@ package qcjlibrary.widget.ads;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.zhiyicx.zycx.R;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -18,10 +23,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.zhiyicx.zycx.R;
+import qcjlibrary.activity.BannerDetailActivity;
 
 /**
  * 
@@ -294,6 +296,18 @@ public class MyADView extends LinearLayout {
 				iv_pic.setImageResource(resouceID);
 			}
 			((ViewPager) container).addView(mView, 0);
+			// 设置点击事件调跳转到指定的webview
+			iv_pic.setTag(datas.get(position % mRealCount).getBannerurl());
+			iv_pic.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					String url = (String) v.getTag();
+					Intent intent = new Intent(mContext, BannerDetailActivity.class);
+					intent.putExtra("bannerurl", url);
+					mContext.startActivity(intent);
+				}
+			});
 			return mView;
 		}
 	}
@@ -316,8 +330,8 @@ public class MyADView extends LinearLayout {
 			default:
 				break;
 			}
-			 mHandler.removeMessages(MESSAGE_WHAT);
-			 mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, delay);
+			mHandler.removeMessages(MESSAGE_WHAT);
+			mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, delay);
 		}
 
 	};

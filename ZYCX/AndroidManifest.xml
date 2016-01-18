@@ -398,6 +398,7 @@
         <activity android:name="qcjlibrary.activity.ChooseLabWayActivity" />
         <activity android:name="qcjlibrary.activity.ChooseSurgeryWayActivity" />
         <activity android:name="qcjlibrary.activity.FoodTwoChooseActivity" />
+        <activity android:name="qcjlibrary.activity.BannerDetailActivity" />
         <activity android:name="qcjlibrary.activity.ChooseTreatWayActivity" />
         <activity
             android:name="qcjlibrary.activity.PatientNowHistoryActivity"
