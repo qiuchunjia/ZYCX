@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_white_pure_color"
     android:gravity="left"
-    android:padding="@dimen/margin_left_small" >
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tv_commit_time"
+        android:id="@+id/tv_title"
         style="@style/text_base"
-        android:layout_alignParentLeft="true"
-        android:text="提交时间:2015-01-01"
-        android:textColor="@color/text_more_gray"
-        android:textSize="@dimen/text_small" />
-
-    <TextView
-        android:id="@+id/tv_deal_time"
-        style="@style/text_base"
-        android:layout_alignParentRight="true"
-        android:text="处理时间:2015-01-01"
-        android:textColor="@color/text_more_gray"
-        android:textSize="@dimen/text_small" />
-
-    <TextView
-        android:id="@+id/tv_diagnosis"
-        style="@style/text_base"
-        android:layout_below="@id/tv_deal_time"
         android:text="诊断过程"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_big" />
@@ -33,19 +16,39 @@
     <TextView
         android:id="@+id/tv_time"
         style="@style/text_base"
-        android:layout_below="@id/tv_diagnosis"
         android:text="诊断时间：2015-01-01" />
+    <TextView 
+        android:id="@+id/tv_start" 
+        style="@style/text_base"
+        android:visibility="gone"
+        android:text="开始时间:2015.01.01"
+        />
+    <TextView 
+        android:id="@+id/tv_end" 
+        style="@style/text_base"
+        android:visibility="gone"
+        android:text="结束时间:2015.01.01"
+        />
 
     <TextView
         android:id="@+id/tv_hospital"
         style="@style/text_base"
-        android:layout_below="@id/tv_time"
         android:text="医院：四川省华西医院" />
 
     <TextView
-        android:id="@+id/tv_blood"
+        android:id="@+id/tv_way_or_program"
         style="@style/text_base"
-        android:layout_below="@id/tv_hospital"
+        android:visibility="gone"
         android:text="血常规：" />
-
-</RelativeLayout>
+    
+	<LinearLayout 
+	    android:id="@+id/ll_present_result"
+	    style="@style/text_base"
+	    android:orientation="vertical"
+	    >
+	</LinearLayout>
+	
+	<include 
+	    style="@style/text_base"
+	    layout="@layout/view_line_vertical"/>
+</LinearLayout>

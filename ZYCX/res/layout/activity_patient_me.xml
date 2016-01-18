@@ -56,7 +56,7 @@
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
 
-        <include 
+        <include
             android:id="@+id/defautl_1"
             layout="@layout/default_case_detail" />
 
@@ -233,7 +233,7 @@
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
 
-        <include 
+        <include
             android:id="@+id/defautl_2"
             layout="@layout/default_case_detail" />
 
@@ -374,7 +374,7 @@
             android:layout_marginRight="@dimen/margin_right_small"
             android:background="@color/text_green" />
 
-        <include 
+        <include
             android:id="@+id/defautl_3"
             layout="@layout/default_case_detail" />
 
@@ -382,11 +382,32 @@
             android:id="@+id/ll_now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:background="@color/main_white_pure_color"
-            android:padding="@dimen/margin_left_small" 
+            android:gravity="start"
             android:orientation="vertical"
-            >
+            android:padding="@dimen/margin_left_small" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/tv_commit_time"
+                    style="@style/text_base"
+                    android:layout_alignParentLeft="true"
+                    android:text="提交时间:2015-01-01"
+                    android:textColor="#C9CCC9"
+                    android:textSize="@dimen/text_small" />
+
+                <TextView
+                    android:id="@+id/tv_deal_time"
+                    style="@style/text_base"
+                    android:layout_alignParentRight="true"
+                    android:text="处理时间:2015-01-01"
+                    android:textColor="#C9CCC9"
+                    android:textSize="@dimen/text_small" />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

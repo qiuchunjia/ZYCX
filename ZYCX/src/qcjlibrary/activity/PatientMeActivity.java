@@ -5,13 +5,20 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelAddNowCase;
+import qcjlibrary.model.ModelAddNowCase.Result;
+import qcjlibrary.model.ModelDiagnosis;
+import qcjlibrary.model.ModelImage;
+import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMyCaseIndex;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.L;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -58,7 +65,9 @@ public class PatientMeActivity extends BaseActivity {
 
 	/*************** 添加现病史的控件 **************************/
 	private TextView tv_now_edit2;
-
+	private TextView tv_commit_time;
+	private TextView tv_deal_time;
+	
 	@Override
 	public String setCenterTitle() {
 		return "我的病历";
@@ -101,6 +110,8 @@ public class PatientMeActivity extends BaseActivity {
 		tv_now_edit2 = (TextView) findViewById(R.id.tv_now_edit2);
 		tv_child = (TextView) findViewById(R.id.tv_child);
 		tv_family = (TextView) findViewById(R.id.tv_family);
+		tv_commit_time = (TextView) findViewById(R.id.tv_commit_time);
+		tv_deal_time = (TextView) findViewById(R.id.tv_deal_time);
 		
 		ll_user = (LinearLayout) findViewById(R.id.ll_user);
 		ll_once = (LinearLayout) findViewById(R.id.ll_once);
@@ -227,9 +238,84 @@ public class PatientMeActivity extends BaseActivity {
 		if(present != null){
 			ll_now.setVisibility(View.VISIBLE);
 			defautl_3.setVisibility(View.GONE);
+			tv_commit_time.setText("提交时间："+present.getCtime());
+			tv_deal_time.setText("处理时间："+present.getUtime());
+			/**
+			 * 添加诊断过程
+			 * */
+			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
+			if(diagnosis_result != null && diagnosis_result.size() > 0){
+				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
+				//初始化控件
+				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
+				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
+				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
+				LinearLayout ll_present_result = (LinearLayout) item.findViewById(R.id.ll_present_result);
+				tv_time.setVisibility(View.GONE);
+				ll_now.addView(item);
+				ModelDiagnosis diagnosis = present.getDiagnosis();
+				tv_title.setText("诊断过程");
+				tv_time.setText("开始时间:"+diagnosis.getDiagnosis_stime());
+				tv_hospital.setText("医院:"+diagnosis.getDiagnosis_hospital());
+				setResultView(diagnosis_result, ll_present_result);
+			}
+			/**
+			 * 添加实验室检查
+			 * */
+			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
+			if(lab_result != null && lab_result.size() > 0){
+				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
+				//初始化控件
+				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
+				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
+				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
+				LinearLayout ll_present_result = (LinearLayout) item.findViewById(R.id.ll_present_result);
+				ll_now.addView(item);
+				ModelLab lab = present.getLab_exam();
+				tv_title.setText("实验室检查");
+				tv_time.setText("检查时间:"+lab.getLab_exam_time());
+				tv_hospital.setText("医院:"+lab.getLab_exam_hospital());
+				setResultView(lab_result, ll_present_result);
+			}
+			/**
+			 * 添加影像检查
+			 * */
+			List<Result> img_result = present.getImage_exam().getImage_exam_result();
+			if(img_result != null && img_result.size() > 0){
+				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
+				//初始化控件
+				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
+				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
+				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
+				LinearLayout ll_present_result = (LinearLayout) item.findViewById(R.id.ll_present_result);
+				ll_now.addView(item);
+				ModelImage imgData = present.getImage_exam();
+				tv_title.setText("影像学检查");
+				tv_time.setText("检查时间:"+imgData.getImage_exam_time());
+				tv_hospital.setText("医院:"+imgData.getImage_exam_hospital());
+				setResultView(img_result, ll_present_result);
+			}
+			
 		}
 	}
 
+	/**
+	 * 设置返回结果布局
+	 * @param List<Result> list
+	 * @param LinearLayout ll_present_result
+	 * */
+	private void setResultView(List<Result> list, LinearLayout ll_present_result){
+		for (int i = 0; i < list.size(); i++) {
+			View resultItem = LayoutInflater.from(this).inflate(R.layout.item_present_result, null);
+			ll_present_result.addView(resultItem);
+			TextView tv_list_name = (TextView) resultItem.findViewById(R.id.tv_list_name);
+			TextView tv_field = (TextView) resultItem.findViewById(R.id.tv_field);
+			Result mResult = list.get(i);
+			tv_list_name.setText(mResult.getList_name());
+			tv_field.setText(mResult.getField_name()+":"+mResult.getField_value());
+		}
+	}
+	
 	@Override
 	public void initListener() {
 		tv_edit.setOnClickListener(this);
