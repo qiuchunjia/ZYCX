@@ -19,9 +19,12 @@ public interface NotifyIm {
 	public static final String NOTICELIST = "noticelist"; // 消息-通知列表
 	public static final String DIGGLIST = "digglist"; // 消息-点赞列表
 	public static final String READNOTICE = "readnotice"; // 消息-点击消息标记为已读
+	public static final String DELONE = "delOne"; // 消息-删除一条系统通知
+	public static final String DELALL = "delAll"; // 消息-清空一个用户的系统通知
 
 	// 接口需要传的值的键
-	public static final String ID = "id"; 
+	public static final String ID = "id";
+
 	/**
 	 * 消息--评论列表
 	 * 
@@ -53,5 +56,20 @@ public interface NotifyIm {
 	 * @return
 	 */
 	public RequestParams readnotice(ModelNotifyNotice notice);
+
+	/**
+	 * 消息-删除一条系统通知
+	 * 
+	 * @param notice
+	 * @return
+	 */
+	public RequestParams delOne(ModelNotifyNotice notice);
+
+	/**
+	 * 消息-清空一个用户的系统通知
+	 * 
+	 * @return
+	 */
+	public RequestParams delAll();
 
 }

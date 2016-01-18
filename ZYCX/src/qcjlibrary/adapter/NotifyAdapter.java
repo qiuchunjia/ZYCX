@@ -57,8 +57,7 @@ public class NotifyAdapter extends BAdapter {
 			if (notice != null) {
 				if (notice.getType().equals("answer")) {
 					holder.tv_notify.setText("问答通知");
-					holder.tv_notify_content.setText(notice
-							.getQuestion_content());
+					holder.tv_notify_content.setText(notice.getAnswer_content());
 				} else if (notice.getType().equals("weiba")) {
 					holder.tv_notify.setText("经历小组通知");
 					holder.tv_notify_content.setText(notice.getContent());
@@ -80,14 +79,10 @@ public class NotifyAdapter extends BAdapter {
 	 */
 	private void initView(View convertView, ViewHolder holder) {
 		if (convertView != null && holder != null) {
-			holder.iv_msg_notify = (ImageView) convertView
-					.findViewById(R.id.iv_msg_notify);
-			holder.tv_notify = (TextView) convertView
-					.findViewById(R.id.tv_notify);
-			holder.tv_notify_content = (TextView) convertView
-					.findViewById(R.id.tv_notify_content);
-			holder.tv_notify_date = (TextView) convertView
-					.findViewById(R.id.tv_notify_date);
+			holder.iv_msg_notify = (ImageView) convertView.findViewById(R.id.iv_msg_notify);
+			holder.tv_notify = (TextView) convertView.findViewById(R.id.tv_notify);
+			holder.tv_notify_content = (TextView) convertView.findViewById(R.id.tv_notify_content);
+			holder.tv_notify_date = (TextView) convertView.findViewById(R.id.tv_notify_date);
 
 		}
 	}
@@ -95,21 +90,17 @@ public class NotifyAdapter extends BAdapter {
 	@Override
 	public void refreshNew() {
 
-		sendRequest(mApp.getNotifyImpl().noticelist(null),
-				ModelNotifyNotice.class, REQUEST_GET, REFRESH_NEW);
+		sendRequest(mApp.getNotifyImpl().noticelist(null), ModelNotifyNotice.class, REQUEST_GET, REFRESH_NEW);
 
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
-//		sendRequest(null, null, 1, 1);
-
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -117,7 +108,6 @@ public class NotifyAdapter extends BAdapter {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {

@@ -1,14 +1,16 @@
 package qcjlibrary.activity;
 
+import com.zhiyicx.zycx.R;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
 import qcjlibrary.fragment.FragmentNotify;
 import qcjlibrary.fragment.FragmentPraise;
 import qcjlibrary.fragment.FragmentReplay;
-
-import android.view.View;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
+import qcjlibrary.model.ModelMsg;
 
 /**
  * author：qiuchunjia time：下午3:05:41 类描述：这个类是实现
@@ -24,6 +26,8 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 	private FragmentNotify mNotifyFg;
 	private FragmentPraise mPraiseFg;
 	private FragmentReplay mReplayFg;
+
+	private Title mTitle;
 
 	@Override
 	public String setCenterTitle() {
@@ -54,9 +58,28 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		}
 		replaceFragment(R.id.rl_content, mReplayFg);
 		tv_msg.setBackgroundResource(R.drawable.view_border_green_left_solid_3);
-
 		tv_msg.setTextColor(getResources().getColor(R.color.text_white));
+		mTitle = getTitleClass();
+		mTitle.tv_title_right.setText("清空");
+		mTitle.tv_title_right.setVisibility(View.GONE);
+		mTitle.tv_title_right.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getNotifyImpl().delAll(), ModelMsg.class, REQUEST_GET);
+			}
+		});
+	}
+
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		Object object = super.onResponceSuccess(str, class1);
+		if (judgeTheMsg(object)) {
+			if (mNotifyFg != null) {
+				mNotifyFg.DeleteAllMessage();
+			}
+		}
+		return object;
 	}
 
 	@Override
@@ -68,6 +91,7 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 
 	@Override
 	public void onClick(View v) {
+		mTitle.tv_title_right.setVisibility(View.GONE);
 		switch (v.getId()) {
 		case R.id.tv_msg:
 			resetTextBg();
@@ -81,8 +105,7 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 
 		case R.id.tv_praise:
 			resetTextBg();
-			tv_praise
-					.setBackgroundResource(R.drawable.view_border_green_solid_0);
+			tv_praise.setBackgroundResource(R.drawable.view_border_green_solid_0);
 			tv_praise.setTextColor(getResources().getColor(R.color.text_white));
 			if (mPraiseFg == null) {
 				mPraiseFg = new FragmentPraise();
@@ -92,13 +115,13 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 			break;
 		case R.id.tv_notify:
 			resetTextBg();
-			tv_notify
-					.setBackgroundResource(R.drawable.view_border_green_right_solid_3);
+			tv_notify.setBackgroundResource(R.drawable.view_border_green_right_solid_3);
 			tv_notify.setTextColor(getResources().getColor(R.color.text_white));
 			if (mNotifyFg == null) {
 				mNotifyFg = new FragmentNotify();
 			}
 			replaceFragment(R.id.rl_content, mNotifyFg);
+			mTitle.tv_title_right.setVisibility(View.VISIBLE);
 			break;
 		}
 
