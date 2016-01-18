@@ -70,11 +70,11 @@ public class ExperienceCycleAdapter extends BAdapter {
 			holder.tv_howmany.setText("");
 			holder.tv_howmany.append("第");
 			holder.tv_howmany.append(SpanUtil.setForegroundColorSpan(detailItem.getChildCount() + "", 0, 0,
-					mBaseActivity.getResources().getColor(R.color.text_red)));
+					mBaseActivity.getResources().getColor(R.color.text_yellow)));
 			holder.tv_howmany.append("篇");
 			if (detailItem.getIs_praise().equals("1")) {
 				holder.iv_hand.setImageResource(R.drawable.zanicon02_red);
-				holder.tv_zhengnengliang.setTextColor(mBaseActivity.getResources().getColor(R.color.red));
+				holder.tv_zhengnengliang.setTextColor(mBaseActivity.getResources().getColor(R.color.text_red));
 			} else {
 				holder.iv_hand.setImageResource(R.drawable.zanicon);
 				holder.tv_zhengnengliang.setTextColor(mBaseActivity.getResources().getColor(R.color.text_more_gray));

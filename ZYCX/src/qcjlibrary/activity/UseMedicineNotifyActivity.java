@@ -1,12 +1,27 @@
 package qcjlibrary.activity;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import com.nostra13.universalimageloader.utils.L;
+import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.UseMedicineNotifyAdapter;
-import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.api.api.AlarmImpl;
 import qcjlibrary.broadcast.AlarmBroadCastReciever;
-import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.listview.base.swipelistview.SwipeMenu;
 import qcjlibrary.listview.base.swipelistview.SwipeMenuListView;
 import qcjlibrary.listview.base.swipelistview.SwipeMenuListView.OnMenuItemClickListener;
@@ -18,22 +33,6 @@ import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.SharedPreferencesUtil;
 import qcjlibrary.util.ToastUtils;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.media.AudioRecord.OnRecordPositionUpdateListener;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import com.nostra13.universalimageloader.utils.L;
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /**
  * author：tan time：下午5:7:01 类描述：用药提醒，闹钟界面

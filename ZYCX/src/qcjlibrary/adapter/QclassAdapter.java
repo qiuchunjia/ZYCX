@@ -64,15 +64,15 @@ public class QclassAdapter extends BAdapter {
 			if (mDetail != null) {
 				holder.tv_title.setText(mDetail.getCourse_name());
 				holder.tv_content.setText(mDetail.getContent());
-				String watch_num = mDetail.getWatch_num()+"";
-	            if(watch_num.length() > 3){
-	            	watch_num = "999+";
-	            }
+				String watch_num = mDetail.getWatch_num() + "";
+				if (watch_num.length() > 3) {
+					watch_num = "999+";
+				}
 				holder.tv_num.setText(watch_num);
 				holder.tv_update.setText("");
 				holder.tv_update.append(update_head);
 				holder.tv_update.append(SpanUtil.setForegroundColorSpan(mDetail.getVideo_num() + "", 0, 0,
-						mBaseActivity.getResources().getColor(R.color.text_red)));
+						mBaseActivity.getResources().getColor(R.color.text_yellow)));
 				holder.tv_update.append(update_tail);
 				mApp.displayImage(mDetail.getCover(), holder.iv_vedio);
 			}
@@ -104,12 +104,12 @@ public class QclassAdapter extends BAdapter {
 	@Override
 	public void refreshHeader(Model item, int count) {
 		refreshNew();
-//		if (item instanceof ModelQclassDetail) {
-//			ModelQclassDetail detail = (ModelQclassDetail) item;
-//			detail.setStatus(status);
-//			detail.setLastid(detail.getCourse_id() + "");
-//			requstMessage(detail, REFRESH_HEADER);
-//		}
+		// if (item instanceof ModelQclassDetail) {
+		// ModelQclassDetail detail = (ModelQclassDetail) item;
+		// detail.setStatus(status);
+		// detail.setLastid(detail.getCourse_id() + "");
+		// requstMessage(detail, REFRESH_HEADER);
+		// }
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class QclassAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelQclass) {
 			ModelQclass mQclass = (ModelQclass) object;
-			if(status == 2 && mList!= null){
+			if (status == 2 && mList != null) {
 				mList.clear();
 			}
 			return mQclass.getList();
