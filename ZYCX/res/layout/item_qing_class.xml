@@ -15,6 +15,7 @@
             android:id="@+id/fl_vedio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_alignParentRight="true" >
 
             <ImageView
@@ -78,6 +79,7 @@
             android:layout_below="@id/tv_content"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
             android:layout_toLeftOf="@id/fl_vedio"
             android:text="已更新5课"
             android:textColor="@color/text_more_gray"

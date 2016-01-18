@@ -385,6 +385,7 @@
             android:background="@color/main_white_pure_color"
             android:gravity="start"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="@dimen/margin_left_small" >
 
             <RelativeLayout

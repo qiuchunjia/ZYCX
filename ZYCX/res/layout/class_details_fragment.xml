@@ -32,8 +32,7 @@
                 android:layout_marginTop="@dimen/margin_top"
                 android:text="讲师"
                 android:textColor="@color/text_green"
-                android:textSize="@dimen/text_common"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_common" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -45,7 +44,6 @@
                     android:id="@+id/img_photo"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_centerVertical="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_launcher" />
 
@@ -57,8 +55,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/img_photo"
                     android:text="Name"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/text_common" />
 
                 <TextView
                     android:id="@+id/txt_tech_info"
@@ -78,10 +75,9 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/title_margin"
                 android:layout_marginTop="@dimen/margin_top"
-                android:text="课程介绍"
+                android:text="课程简介"
                 android:textColor="@color/text_green"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/txt_class_info"
