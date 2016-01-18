@@ -15,6 +15,7 @@ public class ModelZiXunDetail extends Model {
 	private String uid;
 	private String id;
 	private String title;
+	private String uname;
 	private String cover;
 	private String readCount;
 	private String cTime;
@@ -143,6 +144,14 @@ public class ModelZiXunDetail extends Model {
 
 	public void setIs_praise(String is_praise) {
 		this.is_praise = is_praise;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 
 	@Override
