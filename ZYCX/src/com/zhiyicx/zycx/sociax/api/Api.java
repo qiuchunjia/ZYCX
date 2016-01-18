@@ -89,8 +89,7 @@ public class Api {
 
 	private Api(Context context) {
 		Api.setContext(context);
-		String[] configHost = context.getResources().getStringArray(
-				R.array.site_url);
+		String[] configHost = context.getResources().getStringArray(R.array.site_url);
 		Api.setHost(configHost[0]);
 		Api.setPath(configHost[1]);
 		Api.post = new Post();
@@ -141,8 +140,7 @@ public class Api {
 		return uri;
 	}
 
-	private static Uri.Builder createThinksnsUrlBuild(String api, String mod,
-			String act) {
+	private static Uri.Builder createThinksnsUrlBuild(String api, String mod, String act) {
 		Uri.Builder uri = new Uri.Builder();
 		uri.scheme("http");
 		uri.authority("demo-qingko.zhiyicx.com");
@@ -178,8 +176,7 @@ public class Api {
 		return Api.Status.SUCCESS;
 	}
 
-	private static void checkHasVerifyError(JSONObject result)
-			throws VerifyErrorException, ApiException {
+	private static void checkHasVerifyError(JSONObject result) throws VerifyErrorException, ApiException {
 		if (result.has("code") && result.has("message")) {
 			try {
 				throw new VerifyErrorException(result.getString("message"));
@@ -189,8 +186,8 @@ public class Api {
 		}
 	}
 
-	private static SociaxItem getSociaxItem(ListData.DataType type,
-			JSONObject jsonObject) throws DataInvalidException, ApiException {
+	private static SociaxItem getSociaxItem(ListData.DataType type, JSONObject jsonObject)
+			throws DataInvalidException, ApiException {
 		if (type == ListData.DataType.COMMENT) {
 			return new Comment(jsonObject);
 		} else if (type == ListData.DataType.WEIBO) {
@@ -221,18 +218,14 @@ public class Api {
 
 		@Override
 		public User authorize(String uname, String password)
-				throws ApiException, UserDataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME,
-					ApiOauth.AUTHORIZE);
+				throws ApiException, UserDataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME, ApiOauth.AUTHORIZE);
 			Api.post.setUri(uri);
 			Log.i(APP_TAG, "uname=" + uname + ",password" + password);
 			try {
-				Log.i("加密密钥=========", encryptKey + "呵呵哒");
-				Api.post.append("uid", DES.encrypt1(uname, this.encryptKey))
-						.append("passwd",
-								DES.encrypt1(MD5.encryptMD5(password),
-										this.encryptKey));
+				this.encryptKey = "THINKSNS"; // 强行设置加密放松为thinksns的大写
+				Api.post.append("uid", DES.encrypt1(uname, this.encryptKey)).append("passwd",
+						DES.encrypt1(MD5.encryptMD5(password), this.encryptKey));
 			} catch (Exception e1) {
 				Log.d(APP_TAG, "api ====>>>  账号密码加密失败, wm " + e1.toString());
 				throw new ApiException("账号密码加密失败");
@@ -245,28 +238,22 @@ public class Api {
 				data = data.getJSONObject("data");
 				Api.checkHasVerifyError(data);
 				String oauth_token = data.getString("oauth_token");
-				String oauth_token_secret = data
-						.getString("oauth_token_secret");
+				String oauth_token_secret = data.getString("oauth_token_secret");
 				int uid = data.getInt("uid");
-				return new User(uid, uname, password, oauth_token,
-						oauth_token_secret);
+				return new User(uid, uname, password, oauth_token, oauth_token_secret);
 			} catch (JSONException e) {
 				Log.d(APP_TAG, "api ====>>>  验证失败");
 				throw new UserDataInvalidException("验证失败");
 			}
 		}
 
-		public User authorize(String uname, String password, String type_uid,
-				String type) throws ApiException, UserDataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME,
-					ApiOauth.AUTHORIZE);
+		public User authorize(String uname, String password, String type_uid, String type)
+				throws ApiException, UserDataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME, ApiOauth.AUTHORIZE);
 			Api.post.setUri(uri);
 			try {
 				Api.post.append("uid", DES.encrypt1(uname, this.encryptKey))
-						.append("passwd",
-								DES.encrypt1(MD5.encryptMD5(password),
-										this.encryptKey))
+						.append("passwd", DES.encrypt1(MD5.encryptMD5(password), this.encryptKey))
 						.append("type_uid", type_uid).append("type", type);
 			} catch (Exception e1) {
 				Log.d(APP_TAG, "api ====>>>  账号密码加密失败, wm " + e1.toString());
@@ -280,11 +267,9 @@ public class Api {
 				data = data.getJSONObject("data");
 				Api.checkHasVerifyError(data);
 				String oauth_token = data.getString("oauth_token");
-				String oauth_token_secret = data
-						.getString("oauth_token_secret");
+				String oauth_token_secret = data.getString("oauth_token_secret");
 				int uid = data.getInt("uid");
-				return new User(uid, uname, password, oauth_token,
-						oauth_token_secret);
+				return new User(uid, uname, password, oauth_token, oauth_token_secret);
 			} catch (JSONException e) {
 				Log.d(APP_TAG, "api ====>>>  验证失败");
 				throw new UserDataInvalidException("验证失败");
@@ -297,8 +282,7 @@ public class Api {
 
 		@Override
 		public Status requestEncrypKey() throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME,
-					ApiOauth.REQUEST_ENCRYP);
+			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME, ApiOauth.REQUEST_ENCRYP);
 			Api.post.setUri(uri);
 			Object result = Api.run(Api.post);
 
@@ -314,8 +298,7 @@ public class Api {
 
 		@Override
 		public int register(Object data) throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME,
-					ApiOauth.REGISTER);
+			Uri.Builder uri = Api.createUrlBuild(ApiOauth.MOD_NAME, ApiOauth.REGISTER);
 			Post post = new Post();
 			post.setUri(uri);
 			String[] dataArray = (String[]) data;
@@ -333,10 +316,8 @@ public class Api {
 
 	public static final class StatusesApi implements ApiStatuses {
 		@Override
-		public Weibo show(int id) throws ApiException,
-				WeiboDataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.SHOW);
+		public Weibo show(int id) throws ApiException, WeiboDataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.SHOW);
 			Api.get.setUri(uri);
 			Api.get.append("id", id);
 			Object result = Api.run(Api.get);
@@ -351,10 +332,8 @@ public class Api {
 		}
 
 		@Override
-		public boolean destroyWeibo(Weibo weibo) throws ApiException,
-				VerifyErrorException, DataInvalidException {
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.DESTROY);
+		public boolean destroyWeibo(Weibo weibo) throws ApiException, VerifyErrorException, DataInvalidException {
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.DESTROY);
 			Api.post.setUri(uri);
 			Api.post.append("id", weibo.getWeiboId());
 			Api.post.append("uid", weibo.getUid());
@@ -366,10 +345,8 @@ public class Api {
 		}
 
 		@Override
-		public boolean destroyComment(Comment coment) throws ApiException,
-				VerifyErrorException, DataInvalidException {
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.COMMENT_DESTROY);
+		public boolean destroyComment(Comment coment) throws ApiException, VerifyErrorException, DataInvalidException {
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.COMMENT_DESTROY);
 			Api.post.setUri(uri);
 			Api.post.append("id", coment.getCommentId());
 			Object result = Api.run(Api.post);
@@ -392,304 +369,246 @@ public class Api {
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> search(String key, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.SEARCH);
 			Api.get.append("key", key);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> searchHeader(String key, Weibo item,
-				int count) throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+		public ListData<SociaxItem> searchHeader(String key, Weibo item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.SEARCH);
 			Api.get.append("since_id", item.getWeiboId());
 			Api.get.append("key", key);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> searchFooter(String key, Weibo item,
-				int count) throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+		public ListData<SociaxItem> searchFooter(String key, Weibo item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.SEARCH);
 			Api.get.append("max_id", item.getWeiboId());
 			Api.get.append("key", key);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> mentions(int count) throws ApiException,
-				VerifyErrorException, ListAreEmptyException,
-				DataInvalidException {
+		public ListData<SociaxItem> mentions(int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.MENTION);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> mentionsHeader(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.MENTION);
 			Api.get.append("since_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> mentionsFooter(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.MENTION);
 			Api.get.append("max_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> friendsTimeline(int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.FRIENDS_TIMELINE);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> friendsHeaderTimeline(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 
 			this.beforeTimeline(ApiStatuses.FRIENDS_TIMELINE);
 			Api.get.append("since_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> friendsFooterTimeline(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.FRIENDS_TIMELINE);
 			Api.get.append("max_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> publicTimeline(int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.PUBLIC_TIMELINE);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> publicHeaderTimeline(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.PUBLIC_TIMELINE);
 			Api.get.append("since_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> publicFooterTimeline(Weibo item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.PUBLIC_TIMELINE);
 			Api.get.append("max_id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> userTimeline(User user, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.USER_TIMELINE);
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> userHeaderTimeline(User user, Weibo item,
-				int count) throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+		public ListData<SociaxItem> userHeaderTimeline(User user, Weibo item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.USER_TIMELINE);
 			Api.get.append("since_id", item.getWeiboId());
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> userFooterTimeline(User user, Weibo item,
-				int count) throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+		public ListData<SociaxItem> userFooterTimeline(User user, Weibo item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.USER_TIMELINE);
 			Api.get.append("max_id", item.getWeiboId());
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.WEIBO);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.WEIBO);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<Comment> commentTimeline(int count)
-				throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_TIMELINE);
-			return (ListData<Comment>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<Comment>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<Comment> commentHeaderTimeline(Comment item, int count)
-				throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_TIMELINE);
 			Api.get.append("since_id", item.getCommentId());
-			return (ListData<Comment>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<Comment>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<Comment> commentFooterTimeline(Comment item, int count)
-				throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.COMMENT_TIMELINE);
 			Api.get.append("max_id", item.getCommentId());
-			return (ListData<Comment>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<Comment>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 			// TODO Auto-generated method stub
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> commentMyTimeline(int count)
-				throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_BY_ME);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentMyHeaderTimeline(Comment item,
-				int count) throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+		public ListData<SociaxItem> commentMyHeaderTimeline(Comment item, int count)
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_BY_ME);
 			Api.get.append("since_id", item.getCommentId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentMyFooterTimeline(Comment item,
-				int count) throws ApiException, VerifyErrorException,
-				ListAreEmptyException, DataInvalidException {
+		public ListData<SociaxItem> commentMyFooterTimeline(Comment item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.COMMENT_BY_ME);
 			Api.get.append("max_id", item.getCommentId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentForWeiboTimeline(Weibo item,
-				int count) throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+		public ListData<SociaxItem> commentForWeiboTimeline(Weibo item, int count)
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENTS);
 			Api.get.append("id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentForWeiboHeaderTimeline(Weibo item,
-				Comment comment, int count) throws ApiException,
-				DataInvalidException, VerifyErrorException,
-				ListAreEmptyException {
+		public ListData<SociaxItem> commentForWeiboHeaderTimeline(Weibo item, Comment comment, int count)
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENTS);
 			Api.get.append("since_id", comment.getCommentId());
 			Api.get.append("id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentForWeiboFooterTimeline(Weibo item,
-				Comment comment, int count) throws ApiException,
-				VerifyErrorException, ListAreEmptyException,
-				DataInvalidException {
+		public ListData<SociaxItem> commentForWeiboFooterTimeline(Weibo item, Comment comment, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.COMMENTS);
 			Api.get.append("max_id", comment.getCommentId());
 			Api.get.append("id", item.getWeiboId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.COMMENT);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.COMMENT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> commentReceiveMyTimeline(int count)
-				throws ApiException, DataInvalidException,
-				VerifyErrorException, ListAreEmptyException {
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_RECEIVE_ME);
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentReceiveMyHeaderTimeline(
-				Comment item, int count) throws ApiException,
-				DataInvalidException, VerifyErrorException,
-				ListAreEmptyException {
+		public ListData<SociaxItem> commentReceiveMyHeaderTimeline(Comment item, int count)
+				throws ApiException, DataInvalidException, VerifyErrorException, ListAreEmptyException {
 			this.beforeTimeline(ApiStatuses.COMMENT_RECEIVE_ME);
 			Api.get.append("since_id", item.getCommentId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> commentReceiveMyFooterTimeline(
-				Comment item, int count) throws ApiException,
-				VerifyErrorException, ListAreEmptyException,
-				DataInvalidException {
+		public ListData<SociaxItem> commentReceiveMyFooterTimeline(Comment item, int count)
+				throws ApiException, VerifyErrorException, ListAreEmptyException, DataInvalidException {
 			this.beforeTimeline(ApiStatuses.COMMENT_RECEIVE_ME);
 			Api.get.append("max_id", item.getCommentId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.RECEIVE);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.RECEIVE);
 		}
 
 		/**
@@ -698,46 +617,36 @@ public class Api {
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> following(User user, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOOLOWING);
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOOLOWING);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followingHeader(User user,
-				Follow firstUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOOLOWING);
+		public ListData<SociaxItem> followingHeader(User user, Follow firstUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOOLOWING);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("since_id", firstUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followingFooter(User user, Follow lastUser,
-				int count) throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOOLOWING);
+		public ListData<SociaxItem> followingFooter(User user, Follow lastUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOOLOWING);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("max_id", lastUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		/**
@@ -746,46 +655,36 @@ public class Api {
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> followers(User user, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWERS);
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWERS);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followersHeader(User user,
-				Follow firstUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWERS);
+		public ListData<SociaxItem> followersHeader(User user, Follow firstUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWERS);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("since_id", firstUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followersFooter(User user, Follow lastUser,
-				int count) throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWERS);
+		public ListData<SociaxItem> followersFooter(User user, Follow lastUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWERS);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("max_id", lastUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		/**
@@ -794,96 +693,75 @@ public class Api {
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> followEach(User user, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWEACH);
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWEACH);
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followEachHeader(User user,
-				Follow firstUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWEACH);
+		public ListData<SociaxItem> followEachHeader(User user, Follow firstUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWEACH);
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("since_id", firstUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> followEachFooter(User user,
-				Follow lastUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-					ApiUsers.FOLLOWEACH);
+		public ListData<SociaxItem> followEachFooter(User user, Follow lastUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.FOLLOWEACH);
 			Log.e("uri", "uri+" + uri.toString());
 			Api.get.setUri(uri);
 			Api.get.append("user_id", user.getUid());
 			Api.get.append("max_id", lastUser.getFollowId());
-			return (ListData<SociaxItem>) this.afterTimeLine(count,
-					ListData.DataType.FOLLOW);
+			return (ListData<SociaxItem>) this.afterTimeLine(count, ListData.DataType.FOLLOW);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListData<SociaxItem> searchUser(String user, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiStatuses.SEARCH_USER);
 			Api.get.append("key", user);
 
-			return (ListData<SociaxItem>) afterTimeLine(count,
-					ListData.DataType.SEARCH_USER);
+			return (ListData<SociaxItem>) afterTimeLine(count, ListData.DataType.SEARCH_USER);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> searchHeaderUser(String user,
-				User firstUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public ListData<SociaxItem> searchHeaderUser(String user, User firstUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			// TODO Auto-generated method stub
 			this.beforeTimeline(ApiStatuses.SEARCH_USER);
 			Api.get.append("key", user);
 			Api.get.append("since_id", firstUser.getUid());
-			return (ListData<SociaxItem>) afterTimeLine(count,
-					ListData.DataType.SEARCH_USER);
+			return (ListData<SociaxItem>) afterTimeLine(count, ListData.DataType.SEARCH_USER);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public ListData<SociaxItem> searchFooterUser(String user,
-				User lastUser, int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public ListData<SociaxItem> searchFooterUser(String user, User lastUser, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiStatuses.SEARCH_USER);
 			Api.get.append("key", user);
 			Api.get.append("max_id", lastUser.getUid());
-			return (ListData<SociaxItem>) afterTimeLine(count,
-					ListData.DataType.SEARCH_USER);
+			return (ListData<SociaxItem>) afterTimeLine(count, ListData.DataType.SEARCH_USER);
 		}
 
 		@Override
-		public int update(Weibo weibo) throws ApiException,
-				VerifyErrorException, UpdateException {
+		public int update(Weibo weibo) throws ApiException, VerifyErrorException, UpdateException {
 			if (weibo.isNullForContent())
 				throw new UpdateContentEmptyException();
 			if (!weibo.checkContent())
 				throw new UpdateContentBigException();
 
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.UPDATE);
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.UPDATE);
 			Api.post.setUri(uri);
 			Api.post.append("content", weibo.getContent());
 			Api.post.append("from", Weibo.From.ANDROID.ordinal() + "");
@@ -904,16 +782,14 @@ public class Api {
 		}
 
 		@Override
-		public boolean comment(Comment comment) throws ApiException,
-				VerifyErrorException, UpdateException, DataInvalidException {
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.COMMENT);
+		public boolean comment(Comment comment)
+				throws ApiException, VerifyErrorException, UpdateException, DataInvalidException {
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.COMMENT);
 			comment.checkCommentCanAdd();
 
 			Api.post.setUri(uri);
 
-			Api.post.append("content", comment.getContent())
-					.append("row_id", comment.getStatus().getWeiboId() + "")
+			Api.post.append("content", comment.getContent()).append("row_id", comment.getStatus().getWeiboId() + "")
 					.append("ifShareFeed", comment.getType().ordinal() + "")
 					.append("from", Weibo.From.ANDROID.ordinal() + "");
 			if (comment.getAppName() != null)
@@ -940,12 +816,10 @@ public class Api {
 		}
 
 		@Override
-		public boolean upload(Weibo weibo, File file) throws ApiException,
-				VerifyErrorException, UpdateException {
+		public boolean upload(Weibo weibo, File file) throws ApiException, VerifyErrorException, UpdateException {
 			String result = null;
 			try {
-				Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-						ApiStatuses.UPLOAD);
+				Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.UPLOAD);
 
 				// File file1 = new File("/sdcard","test.jpg");
 				// byte [] content = readFileImage(file1);
@@ -954,8 +828,8 @@ public class Api {
 				// FormFile formFile = new FormFile(byteIn
 				// ,file1.getName(),"pic","application/octet-stream") ;
 
-				FormFile formFile = new FormFile(Compress.compressPic(file),
-						file.getName(), "pic", "application/octet-stream");
+				FormFile formFile = new FormFile(Compress.compressPic(file), file.getName(), "pic",
+						"application/octet-stream");
 				Api.post.setUri(uri);
 				HashMap<String, String> param = new HashMap<String, String>();
 				param.put("content", weibo.getContent());
@@ -979,17 +853,14 @@ public class Api {
 
 		@Override
 		public boolean repost(Weibo weibo, boolean comment)
-				throws ApiException, VerifyErrorException, UpdateException,
-				DataInvalidException {
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.REPOST);
+				throws ApiException, VerifyErrorException, UpdateException, DataInvalidException {
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.REPOST);
 
 			Api.post.setUri(uri);
 			if (weibo.getTranspond().isNullForTranspond()) {
 				Api.post.append("id", weibo.getTranspond().getWeiboId() + "");
 			} else {
-				Api.post.append("id", weibo.getTranspond().getTranspondId()
-						+ "");
+				Api.post.append("id", weibo.getTranspond().getTranspondId() + "");
 			}
 			Api.post.append("content", weibo.getContent());
 			if (comment) {
@@ -1011,20 +882,17 @@ public class Api {
 		}
 
 		private ListData<?> afterTimeLine(int count, ListData.DataType type)
-				throws ApiException, ListAreEmptyException,
-				VerifyErrorException, DataInvalidException {
+				throws ApiException, ListAreEmptyException, VerifyErrorException, DataInvalidException {
 			Api.get.append("count", count);
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
-			if (type == ListData.DataType.COMMENT
-					|| type == ListData.DataType.RECEIVE) {
+			if (type == ListData.DataType.COMMENT || type == ListData.DataType.RECEIVE) {
 				if (result.equals("null"))
 					throw new CommentListAreEmptyException();
 			} else if (type == ListData.DataType.WEIBO) {
 				if (result.equals("null"))
 					throw new WeiBoListAreEmptyException();
-			} else if (type == ListData.DataType.USER
-					|| type == ListData.DataType.FOLLOW
+			} else if (type == ListData.DataType.USER || type == ListData.DataType.FOLLOW
 					|| type == ListData.DataType.SEARCH_USER) {
 				if (result.equals("null"))
 					throw new UserListAreEmptyException();
@@ -1036,15 +904,12 @@ public class Api {
 				for (int i = 0; i < length; i++) {
 					JSONObject itemData = data.getJSONObject(i);
 					try {
-						SociaxItem weiboData = this.getSociaxItem(type,
-								itemData);
+						SociaxItem weiboData = this.getSociaxItem(type, itemData);
 						// if(!weiboData.checkValid()) continue;
 						list.add(weiboData);
 					} catch (DataInvalidException e) {
 						Log.e(TAG, "json error wm :" + e.toString());
-						Log.e(TAG,
-								"has one invalid item with string:"
-										+ data.getString(i));
+						Log.e(TAG, "has one invalid item with string:" + data.getString(i));
 						continue;
 					}
 				}
@@ -1061,9 +926,8 @@ public class Api {
 			}
 		}
 
-		private SociaxItem getSociaxItem(ListData.DataType type,
-				JSONObject jsonObject) throws DataInvalidException,
-				ApiException {
+		private SociaxItem getSociaxItem(ListData.DataType type, JSONObject jsonObject)
+				throws DataInvalidException, ApiException {
 			if (type == ListData.DataType.COMMENT) {
 				return new Comment(jsonObject);
 			} else if (type == ListData.DataType.WEIBO) {
@@ -1083,11 +947,9 @@ public class Api {
 		}
 
 		@Override
-		public int unRead() throws ApiException, VerifyErrorException,
-				DataInvalidException {
+		public int unRead() throws ApiException, VerifyErrorException, DataInvalidException {
 			// TODO Auto-generated method stub
-			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME,
-					ApiStatuses.UN_READ);
+			Uri.Builder uri = Api.createUrlBuild(ApiStatuses.MOD_NAME, ApiStatuses.UN_READ);
 			Api.get.setUri(uri);
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
@@ -1109,9 +971,8 @@ public class Api {
 	public static final class Message implements ApiMessage {
 
 		@Override
-		public ListData<SociaxItem> inbox(int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public ListData<SociaxItem> inbox(int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.BOX);
 			Api.get.append("count", count);
 			ListData<SociaxItem> list = new ListData<SociaxItem>();
@@ -1120,10 +981,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> inboxHeader(
-				com.zhiyicx.zycx.sociax.modle.Message message, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+		public ListData<SociaxItem> inboxHeader(com.zhiyicx.zycx.sociax.modle.Message message, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.BOX);
 			Api.get.append("count", count);
 			Api.get.append("since_id", message.getListId());
@@ -1133,10 +992,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> inboxFooter(
-				com.zhiyicx.zycx.sociax.modle.Message message, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+		public ListData<SociaxItem> inboxFooter(com.zhiyicx.zycx.sociax.modle.Message message, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.BOX);
 			Api.get.append("count", count);
 			Api.get.append("max_id", message.getListId());
@@ -1146,10 +1003,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> outbox(
-				com.zhiyicx.zycx.sociax.modle.Message message, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+		public ListData<SociaxItem> outbox(com.zhiyicx.zycx.sociax.modle.Message message, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.SHOW);
 			Api.get.append("id", message.getListId());
 			Api.get.append("count", count);
@@ -1159,10 +1014,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> outboxHeader(
-				com.zhiyicx.zycx.sociax.modle.Message message, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+		public ListData<SociaxItem> outboxHeader(com.zhiyicx.zycx.sociax.modle.Message message, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.SHOW);
 			Api.get.append("count", count);
 			Api.get.append("id", message.getListId());
@@ -1173,10 +1026,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> outboxFooter(
-				com.zhiyicx.zycx.sociax.modle.Message message, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+		public ListData<SociaxItem> outboxFooter(com.zhiyicx.zycx.sociax.modle.Message message, int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.SHOW);
 			Api.get.append("count", count);
 			Api.get.append("id", message.getListId());
@@ -1187,8 +1038,7 @@ public class Api {
 		}
 
 		@Override
-		public com.zhiyicx.zycx.sociax.modle.Message show(
-				com.zhiyicx.zycx.sociax.modle.Message message)
+		public com.zhiyicx.zycx.sociax.modle.Message show(com.zhiyicx.zycx.sociax.modle.Message message)
 				throws ApiException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.SHOW);
 			Api.get.append("id", message.getListId());
@@ -1215,11 +1065,9 @@ public class Api {
 				com.zhiyicx.zycx.sociax.modle.Message mainMessage = null;
 				for (int i = 0; i < length; i++) {
 					if (type) {
-						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(
-								data.getJSONObject(i));
+						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(data.getJSONObject(i));
 					} else {
-						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(
-								data.getJSONObject(i), false);
+						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(data.getJSONObject(i), false);
 					}
 					// if(!tempData.checkValid()) continue;
 					list.add(mainMessage);
@@ -1236,9 +1084,8 @@ public class Api {
 			}
 		}
 
-		private void getMessageList(ListData<SociaxItem> list, boolean type,
-				String tag) throws DataInvalidException, VerifyErrorException,
-				ApiException {
+		private void getMessageList(ListData<SociaxItem> list, boolean type, String tag)
+				throws DataInvalidException, VerifyErrorException, ApiException {
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
 			try {
@@ -1247,11 +1094,9 @@ public class Api {
 				com.zhiyicx.zycx.sociax.modle.Message mainMessage = null;
 				for (int i = 0; i < length; i++) {
 					if (type) {
-						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(
-								data.getJSONObject(i));
+						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(data.getJSONObject(i));
 					} else {
-						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(
-								data.getJSONObject(i), false);
+						mainMessage = new com.zhiyicx.zycx.sociax.modle.Message(data.getJSONObject(i), false);
 					}
 					// if(!tempData.checkValid()) continue;
 					list.add(mainMessage);
@@ -1263,8 +1108,7 @@ public class Api {
 					Api.checkHasVerifyError(data);
 
 				} catch (JSONException e1) {
-					Log.e(APP_TAG,
-							"api =====> get message footer wm " + e1.toString());
+					Log.e(APP_TAG, "api =====> get message footer wm " + e1.toString());
 				}
 			}
 		}
@@ -1273,12 +1117,10 @@ public class Api {
 		public boolean createNew(com.zhiyicx.zycx.sociax.modle.Message message)
 				throws ApiException, DataInvalidException, VerifyErrorException {
 			// message.checkMessageCanAdd();
-			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME,
-					ApiMessage.CREATE);
+			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME, ApiMessage.CREATE);
 			Api.post.setUri(uri);
 			Api.post.append("to_uid", message.getToUid());
-			Api.post.append("title", message.getTitle()).append("content",
-					message.getContent());
+			Api.post.append("title", message.getTitle()).append("content", message.getContent());
 			Object result = Api.run(Api.post);
 			Api.checkResult(result);
 			if (result.equals("\"false\"") || result.equals("\"0\""))
@@ -1287,9 +1129,8 @@ public class Api {
 		}
 
 		@Override
-		public void show(com.zhiyicx.zycx.sociax.modle.Message message,
-				ListData<SociaxItem> list) throws ApiException,
-				DataInvalidException, VerifyErrorException {
+		public void show(com.zhiyicx.zycx.sociax.modle.Message message, ListData<SociaxItem> list)
+				throws ApiException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiMessage.SHOW);
 			Api.get.append("id", message.getListId());
 			Object result = Api.run(Api.get);
@@ -1325,11 +1166,9 @@ public class Api {
 		public int[] create(com.zhiyicx.zycx.sociax.modle.Message message)
 				throws ApiException, DataInvalidException, VerifyErrorException {
 			// message.checkMessageCanAdd();
-			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME,
-					ApiMessage.CREATE);
+			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME, ApiMessage.CREATE);
 			Api.post.setUri(uri);
-			Api.post.append("title", message.getTitle()).append("content",
-					message.getContent());
+			Api.post.append("title", message.getTitle()).append("content", message.getContent());
 			Object result = Api.run(Api.post);
 			Api.checkResult(result);
 			try {
@@ -1356,8 +1195,7 @@ public class Api {
 		public boolean reply(com.zhiyicx.zycx.sociax.modle.Message message)
 				throws ApiException, DataInvalidException, VerifyErrorException {
 			// message.checkMessageCanReply();
-			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME,
-					ApiMessage.REPLY);
+			Uri.Builder uri = Api.createUrlBuild(ApiMessage.MOD_NAME, ApiMessage.REPLY);
 			Api.post.setUri(uri);
 			// Api.post.append("id",
 			// message.getSourceMessage().getMessageId()).append("content",
@@ -1380,8 +1218,7 @@ public class Api {
 
 	public static final class Friendships implements ApiFriendships {
 		@Override
-		public boolean show(User friends) throws ApiException,
-				VerifyErrorException {
+		public boolean show(User friends) throws ApiException, VerifyErrorException {
 			this.beforeTimeline(ApiFriendships.SHOW);
 			Api.get.append("user_id", friends.getUid());
 			Object result = Api.run(Api.get);
@@ -1393,8 +1230,7 @@ public class Api {
 				throw new ApiException();
 			}
 			String resultString = (String) result;
-			return resultString.equals("\"havefollow\"")
-					|| resultString.equals("\"eachfollow\"");
+			return resultString.equals("\"havefollow\"") || resultString.equals("\"eachfollow\"");
 		}
 
 		private void beforeTimeline(String act) {
@@ -1403,30 +1239,24 @@ public class Api {
 		}
 
 		@Override
-		public boolean create(User user) throws ApiException,
-				VerifyErrorException, DataInvalidException {
+		public boolean create(User user) throws ApiException, VerifyErrorException, DataInvalidException {
 			return this.doApiRuning(user, Api.post, ApiUsers.FOLLOW_CREATE);
 		}
 
 		@Override
-		public boolean destroy(User user) throws ApiException,
-				VerifyErrorException, DataInvalidException {
+		public boolean destroy(User user) throws ApiException, VerifyErrorException, DataInvalidException {
 			// TODO Auto-generated method stub
 			return this.doApiRuning(user, Api.post, ApiUsers.FOLLOW_DESTROY);
 		}
 
 		@Override
-		public boolean addBlackList(User user) throws ApiException,
-				VerifyErrorException, DataInvalidException {
-			return this.doApiRuning(user, Api.post,
-					ApiFriendships.ADDTOBLACKLIST);
+		public boolean addBlackList(User user) throws ApiException, VerifyErrorException, DataInvalidException {
+			return this.doApiRuning(user, Api.post, ApiFriendships.ADDTOBLACKLIST);
 		}
 
 		@Override
-		public boolean delBlackList(User user) throws ApiException,
-				VerifyErrorException, DataInvalidException {
-			return this.doApiRuning(user, Api.post,
-					ApiFriendships.DELTOBLACKLIST);
+		public boolean delBlackList(User user) throws ApiException, VerifyErrorException, DataInvalidException {
+			return this.doApiRuning(user, Api.post, ApiFriendships.DELTOBLACKLIST);
 		}
 
 		private boolean doApiRuning(User user, Request res, String act)
@@ -1500,8 +1330,7 @@ public class Api {
 					if (datas.has("is_followed")) {
 						String tempString = datas.getString("is_followed");
 						if (act.equals(ApiFriendships.FOLLOWTOPIC)) {
-							return tempString.equals("havefollow") ? true
-									: false;
+							return tempString.equals("havefollow") ? true : false;
 						} else if (act.equals(ApiFriendships.UNFOLLOWTOPIC)) {
 							return tempString.equals("unfollow") ? true : false;
 						}
@@ -1522,9 +1351,8 @@ public class Api {
 	public static final class Favorites implements ApiFavorites {
 
 		@Override
-		public ListData<SociaxItem> index(int count) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public ListData<SociaxItem> index(int count)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiFavorites.INDEX);
 			try {
 				Api.get.append("count", count);
@@ -1537,8 +1365,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> indexHeader(Weibo weibo, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiFavorites.INDEX);
 			Api.get.append("count", count);
 			Api.get.append("since_id", weibo.getWeiboId());
@@ -1547,8 +1374,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> indexFooter(Weibo weibo, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiFavorites.INDEX);
 			Api.get.append("count", count);
 			Api.get.append("max_id", weibo.getWeiboId());
@@ -1556,14 +1382,12 @@ public class Api {
 		}
 
 		@Override
-		public boolean create(Weibo weibo) throws ApiException,
-				DataInvalidException, VerifyErrorException {
+		public boolean create(Weibo weibo) throws ApiException, DataInvalidException, VerifyErrorException {
 			return this.doApiRuning(weibo, Api.post, ApiFavorites.CREATE);
 		}
 
 		@Override
-		public boolean isFavorite(Weibo weibo) throws ApiException,
-				DataInvalidException, VerifyErrorException {
+		public boolean isFavorite(Weibo weibo) throws ApiException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiFavorites.IS_FAVORITE);
 			Api.get.append("id", weibo.getWeiboId());
 			Object result = Api.run(Api.get);
@@ -1588,8 +1412,7 @@ public class Api {
 		}
 
 		@Override
-		public boolean destroy(Weibo weibo) throws ApiException,
-				DataInvalidException, VerifyErrorException {
+		public boolean destroy(Weibo weibo) throws ApiException, DataInvalidException, VerifyErrorException {
 			return this.doApiRuning(weibo, Api.post, ApiFavorites.DESTROY);
 		}
 
@@ -1618,8 +1441,7 @@ public class Api {
 			return Integer.parseInt(data) > 0;
 		}
 
-		public ListData<SociaxItem> getList() throws VerifyErrorException,
-				ApiException, ListAreEmptyException {
+		public ListData<SociaxItem> getList() throws VerifyErrorException, ApiException, ListAreEmptyException {
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
 			try {
@@ -1635,8 +1457,7 @@ public class Api {
 							continue;
 						list.add(weiboData);
 					} catch (WeiboDataInvalidException e) {
-						Log.e(TAG, "has one invalid weibo item with string:"
-								+ data.getString(i));
+						Log.e(TAG, "has one invalid weibo item with string:" + data.getString(i));
 					}
 				}
 				return list;
@@ -1655,9 +1476,8 @@ public class Api {
 	// 多站点网站
 	public static final class Sites implements ApiSites {
 		@Override
-		public ListData<SociaxItem> getSisteList() throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public ListData<SociaxItem> getSisteList()
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			ListData<SociaxItem> list = null;
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
@@ -1673,9 +1493,7 @@ public class Api {
 							SociaxItem siteData = new ApproveSite(itemData);
 							list.add(siteData);
 						} catch (SiteDataInvalidException e) {
-							Log.e(TAG,
-									"has one invalid weibo item with string:"
-											+ data.getString(i));
+							Log.e(TAG, "has one invalid weibo item with string:" + data.getString(i));
 						}
 					}
 				}
@@ -1693,9 +1511,8 @@ public class Api {
 		}
 
 		@Override
-		public boolean getSiteStatus(ApproveSite as) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public boolean getSiteStatus(ApproveSite as)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiSites.GET_SITE_STATUS);
 			Api.get.append("id", as.getSite_id());
 			Object result = Api.run(Api.get);
@@ -1715,15 +1532,13 @@ public class Api {
 		}
 
 		private void beforeTimeline(String act) {
-			Uri.Builder uri = Api.createThinksnsUrlBuild(Api.APP_NAME,
-					ApiSites.MOD_NAME, act);
+			Uri.Builder uri = Api.createThinksnsUrlBuild(Api.APP_NAME, ApiSites.MOD_NAME, act);
 			Api.get.setUri(uri);
 		}
 
 		@Override
 		public ListData<SociaxItem> newSisteList(int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			// TODO Auto-generated method stub
 			this.beforeTimeline(ApiSites.GET_SITE_LIST);
 			Api.get.append("count", count);
@@ -1732,8 +1547,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getSisteListHeader(ApproveSite as, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			// TODO Auto-generated method stub
 			this.beforeTimeline(ApiSites.GET_SITE_LIST);
 			Api.get.append("count", count);
@@ -1743,8 +1557,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getSisteListFooter(ApproveSite as, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			// TODO Auto-generated method stub
 			Api.get.append("count", count);
 			Api.get.append("max_id", as.getSite_id());
@@ -1753,13 +1566,11 @@ public class Api {
 
 		// dev.thinksns.com/ts/2.0/index.php?app=home&mod=Widget&act=addonsRequest&addon=Login&hook=isSinaLoginAvailable
 		@Override
-		public boolean isSupport() throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
-			Uri.Builder uri = Api.createForCheck("home", "Widget",
-					"addonsRequest");
+		public boolean isSupport()
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createForCheck("home", "Widget", "addonsRequest");
 			Api.get.setUri(uri);
-			Api.get.append("addon", "Login").append("hook",
-					"isSinaLoginAvailable");
+			Api.get.append("addon", "Login").append("hook", "isSinaLoginAvailable");
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
 
@@ -1774,11 +1585,9 @@ public class Api {
 		}
 
 		@Override
-		public boolean isSupportReg() throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
-			Uri.Builder uri = Api.createForCheck("home", "Public",
-					"isRegisterAvailable");
+		public boolean isSupportReg()
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
+			Uri.Builder uri = Api.createForCheck("home", "Public", "isRegisterAvailable");
 			Api.get.setUri(uri);
 
 			Api.get.append("wap_to_normal", 1);
@@ -1798,8 +1607,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> searchSisteList(String key, int count)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			// TODO Auto-generated method stub
 			this.beforeTimeline(ApiSites.GET_SITE_LIST);
 			Api.get.append("count", count);
@@ -1815,8 +1623,7 @@ public class Api {
 	public static final class Users implements ApiUsers {
 
 		@Override
-		public User show(User user) throws ApiException, DataInvalidException,
-				VerifyErrorException {
+		public User show(User user) throws ApiException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline("show");
 			Api.get.append("user_id", user.getUid());
 			if (user.getUserName() != null) {
@@ -1840,9 +1647,8 @@ public class Api {
 
 		// 返回通知，@，私信
 		@Override
-		public NotifyCount notificationCount(int uid) throws ApiException,
-				ListAreEmptyException, DataInvalidException,
-				VerifyErrorException {
+		public NotifyCount notificationCount(int uid)
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiUsers.NOTIFICATION_COUNT);
 			Api.get.append("user_id", uid);
 			Object result = Api.run(Api.get);
@@ -1870,8 +1676,7 @@ public class Api {
 		 */
 		@Override
 		public ListData<SociaxItem> getNotificationList(int uid)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline(ApiUsers.NOTIFICATIONLIST);
 			Api.get.append("user_id", uid);
 			Object result = Api.run(Api.get);
@@ -1902,8 +1707,7 @@ public class Api {
 
 		@Override
 		public boolean unsetNotificationCount(Type type, int uid)
-				throws ApiException, ListAreEmptyException,
-				DataInvalidException, VerifyErrorException {
+				throws ApiException, ListAreEmptyException, DataInvalidException, VerifyErrorException {
 			this.beforeTimeline("Notifytion", "set_notify_read");
 			NotifyCount notifycount = new NotifyCount();
 			for (NotifyCount.Type t : NotifyCount.Type.values()) {
@@ -1958,10 +1762,9 @@ public class Api {
 		public boolean uploadFace(File file) throws ApiException {
 			String temp = "0";
 			try {
-				Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-						ApiUsers.UPLOAD_FACE);
-				FormFile formFile = new FormFile(Compress.compressPic(file),
-						file.getName(), "Filedata", "application/octet-stream");
+				Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.UPLOAD_FACE);
+				FormFile formFile = new FormFile(Compress.compressPic(file), file.getName(), "Filedata",
+						"application/octet-stream");
 				Api.post.setUri(uri);
 				HashMap<String, String> param = new HashMap<String, String>();
 				param.put("token", Request.getToken());
@@ -1981,11 +1784,10 @@ public class Api {
 		public boolean uploadFace(Bitmap bitmap, File file) throws ApiException {
 			String temp = "0";
 			try {
-				Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME,
-						ApiUsers.UPLOAD_FACE);
+				Uri.Builder uri = Api.createUrlBuild(ApiUsers.MOD_NAME, ApiUsers.UPLOAD_FACE);
 
-				FormFile formFile = new FormFile(Compress.compressPic(bitmap),
-						file.getName(), "Filedata", "application/octet-stream");
+				FormFile formFile = new FormFile(Compress.compressPic(bitmap), file.getName(), "Filedata",
+						"application/octet-stream");
 				Api.post.setUri(uri);
 				HashMap<String, String> param = new HashMap<String, String>();
 				param.put("token", Request.getToken());
@@ -2005,8 +1807,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getRecentTopic() throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME,
-					ApiStatuses.MOD_NAME, ApiUsers.RECENT_TOPIC);
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiStatuses.MOD_NAME, ApiUsers.RECENT_TOPIC);
 			Api.get.setUri(uri);
 			Object result = Api.run(Api.get);
 			ListData<SociaxItem> listData = null;
@@ -2029,8 +1830,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getRecentAt() throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME,
-					ApiStatuses.MOD_NAME, ApiUsers.RECENT_USER);
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiStatuses.MOD_NAME, ApiUsers.RECENT_USER);
 			Api.get.setUri(uri);
 			Object result = Api.run(Api.get);
 			ListData<SociaxItem> listData = null;
@@ -2054,10 +1854,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getUserCategory(String type)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.GET_USER_CATEGORY);
+		public ListData<SociaxItem> getUserCategory(String type) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.GET_USER_CATEGORY);
 			ListData<SociaxItem> listData = null;
 			Get get = new Get();
 			get.setUri(uri);
@@ -2104,8 +1902,7 @@ public class Api {
 
 		}
 
-		private ListData<SociaxItem> packageChildData(JSONArray ja)
-				throws Exception {
+		private ListData<SociaxItem> packageChildData(JSONArray ja) throws Exception {
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			for (int i = 0; i < ja.length(); i++) {
 				JSONObject joTemp = (JSONObject) ja.get(i);
@@ -2117,8 +1914,7 @@ public class Api {
 			return listData;
 		}
 
-		private ListData<SociaxItem> packageData(JSONObject jo)
-				throws JSONException {
+		private ListData<SociaxItem> packageData(JSONObject jo) throws JSONException {
 
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			ListData<SociaxItem> listData2 = null;
@@ -2142,8 +1938,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getUserFollower() throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.GET_USER_FOLLOWER);
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.GET_USER_FOLLOWER);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			;
 			Get get = new Get();
@@ -2163,8 +1958,7 @@ public class Api {
 
 		@Override
 		public boolean checkint(String la, String lo) throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.CHECKIN);
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.CHECKIN);
 			Post post = new Post();
 			post.setUri(uri);
 			post.append("latitude", la);
@@ -2182,10 +1976,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getNeighbor(String la, String lo)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.NEIGHBOR);
+		public ListData<SociaxItem> getNeighbor(String la, String lo) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.NEIGHBOR);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			Get get = new Get();
 			get.setUri(uri);
@@ -2205,10 +1997,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> searchByArea(String key)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.SEARCH_BY_AREA);
+		public ListData<SociaxItem> searchByArea(String key) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.SEARCH_BY_AREA);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			Get get = new Get();
 			get.setUri(uri);
@@ -2228,8 +2018,7 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> searchByTag(String key) throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.SEARCH_BY_TAG);
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.SEARCH_BY_TAG);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			Get get = new Get();
 			get.setUri(uri);
@@ -2248,10 +2037,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> searchByVerifyCategory(String key)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.SEARCH_BY_VERIFY_CATEGORY);
+		public ListData<SociaxItem> searchByVerifyCategory(String key) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.SEARCH_BY_VERIFY_CATEGORY);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			Get get = new Get();
 			get.setUri(uri);
@@ -2270,10 +2057,8 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> searchByUesrCategory(String key)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME,
-					ApiUsers.SEARCH_BY_UESR_CATEGORY);
+		public ListData<SociaxItem> searchByUesrCategory(String key) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(APP_NAME, ApiUsers.MOD_NAME, ApiUsers.SEARCH_BY_UESR_CATEGORY);
 			ListData<SociaxItem> listData = new ListData<SociaxItem>();
 			Get get = new Get();
 			get.setUri(uri);
@@ -2299,8 +2084,7 @@ public class Api {
 	public static final class STContacts implements ApiContact {
 
 		@Override
-		public ListData<SociaxItem> getContactCategoryList(int departId)
-				throws ApiException {
+		public ListData<SociaxItem> getContactCategoryList(int departId) throws ApiException {
 			// TODO Auto-generated method stub
 			beforeTimeline(ApiContact.GET_DEPARTMENT_LIST);
 			if (departId > 0)
@@ -2314,17 +2098,14 @@ public class Api {
 					int length = data.length();
 					list = new ListData<SociaxItem>();
 					if (departId <= 0) {
-						ContactCategory cc1 = new ContactCategory(-2, "我的联系人",
-								"department");
-						ContactCategory cc2 = new ContactCategory(-1, "所有同事",
-								"department");
+						ContactCategory cc1 = new ContactCategory(-2, "我的联系人", "department");
+						ContactCategory cc2 = new ContactCategory(-1, "所有同事", "department");
 						list.add(cc1);
 						list.add(cc2);
 					}
 					for (int i = 0; i < length; i++) {
 						JSONObject jsonObject = data.getJSONObject(i);
-						ContactCategory contactCategory = new ContactCategory(
-								jsonObject);
+						ContactCategory contactCategory = new ContactCategory(jsonObject);
 						contactCategory.setType("department");
 						list.add(contactCategory);
 					}
@@ -2373,8 +2154,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getContactListFooter(Contact contact,
-				int count) throws ApiException {
+		public ListData<SociaxItem> getContactListFooter(Contact contact, int count) throws ApiException {
 			// TODO Auto-generated method stub
 			beforeTimeline(ApiContact.GET_ALL_COLLEAGUE);
 			Api.get.append("max_id", contact.getUid());
@@ -2402,8 +2182,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getColleagueByDepartment(int departId)
-				throws ApiException {
+		public ListData<SociaxItem> getColleagueByDepartment(int departId) throws ApiException {
 			beforeTimeline(ApiContact.GET_COLLEAGUE_BY_DEPARTMENT);
 			Api.get.append("id", departId);
 			Object result = Api.run(Api.get);
@@ -2429,8 +2208,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getColleagueByDepartmentFooter(
-				int departId, ContactCategory category, int count)
+		public ListData<SociaxItem> getColleagueByDepartmentFooter(int departId, ContactCategory category, int count)
 				throws ApiException {
 			// TODO Auto-generated method stub
 			return null;
@@ -2474,8 +2252,7 @@ public class Api {
 			return doApiRuning(user, Api.post, ApiContact.CONTACTER_DESTROY);
 		}
 
-		private boolean doApiRuning(User user, Request res, String act)
-				throws ApiException {
+		private boolean doApiRuning(User user, Request res, String act) throws ApiException {
 			Uri.Builder uri = Api.createUrlBuild(ApiContact.MOD_NAME, act);
 			Api.post.setUri(uri);
 			Api.post.append("user_id", user.getUid());
@@ -2495,8 +2272,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getDataByDepartment(int departId,
-				int isDepart) throws ApiException {
+		public ListData<SociaxItem> getDataByDepartment(int departId, int isDepart) throws ApiException {
 			// TODO Auto-generated method stub
 			beforeTimeline(ApiContact.GET_DATA_BY_DEPARTMENT);
 			Api.get.append("id", departId);
@@ -2515,11 +2291,9 @@ public class Api {
 
 						Contact contact2 = null;
 						if (jsonObject.has("type")) {
-							if (jsonObject.getString("type").equals(
-									"department")) {
+							if (jsonObject.getString("type").equals("department")) {
 								contact2 = new ContactCategory(jsonObject);
-							} else if (jsonObject.getString("type").equals(
-									"user")) {
+							} else if (jsonObject.getString("type").equals("user")) {
 								contact2 = new Contact(jsonObject);
 							}
 						} else {
@@ -2536,8 +2310,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getDataByDepartmentFooter(int departId,
-				int isDepart) throws ApiException {
+		public ListData<SociaxItem> getDataByDepartmentFooter(int departId, int isDepart) throws ApiException {
 			beforeTimeline(ApiContact.GET_DATA_BY_DEPARTMENT);
 			Api.get.append("id", departId);
 			Object result = Api.run(Api.get);
@@ -2565,8 +2338,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> searchColleague(String key)
-				throws ApiException {
+		public ListData<SociaxItem> searchColleague(String key) throws ApiException {
 			// TODO Auto-generated method stub
 			beforeTimeline(ApiContact.SEARCH_COLLEAGUE);
 			Api.get.append("key", key);
@@ -2631,8 +2403,7 @@ public class Api {
 		}
 
 		@Override
-		public boolean createTaskCate(TaskCategory tCategory)
-				throws ApiException {
+		public boolean createTaskCate(TaskCategory tCategory) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.post.setUri(beforeTimeline(ApiTask.CREATE_TASK_CATEGORY));
 			Api.post.append("category_name", tCategory.getName());
@@ -2653,8 +2424,7 @@ public class Api {
 		}
 
 		@Override
-		public boolean destroyTaskCate(TaskCategory tCategory)
-				throws ApiException {
+		public boolean destroyTaskCate(TaskCategory tCategory) throws ApiException {
 			Api.post.setUri(beforeTimeline(ApiTask.DESTROY_TASK_CATEGORY));
 			Api.post.append("category_id", tCategory.gettId());
 			Object result = Api.run(Api.post);
@@ -2696,8 +2466,7 @@ public class Api {
 		}
 
 		@Override
-		public boolean shareTaskCate(TaskCategory tCategory)
-				throws ApiException {
+		public boolean shareTaskCate(TaskCategory tCategory) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.post.setUri(beforeTimeline(ApiTask.SHARE_TASK_CATEGORY));
 			Api.post.append("category_id", tCategory.gettId());
@@ -2716,8 +2485,7 @@ public class Api {
 		}
 
 		@Override
-		public boolean delShareTaskCate(TaskCategory tCategory)
-				throws ApiException {
+		public boolean delShareTaskCate(TaskCategory tCategory) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.post.setUri(beforeTimeline(ApiTask.CANCEL_SHARE_TASK_CATEGORY));
 			Api.post.append("category_id", tCategory.gettId());
@@ -2735,8 +2503,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getTaskListByCategory(TaskCategory tCategory)
-				throws ApiException {
+		public ListData<SociaxItem> getTaskListByCategory(TaskCategory tCategory) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.get.setUri(beforeTimeline(ApiTask.GET_TASK_BY_CATEGORY));
 			Api.get.append("category_id", tCategory.gettId());
@@ -2914,8 +2681,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getTaskByType(TaskCategory tCategory)
-				throws ApiException {
+		public ListData<SociaxItem> getTaskByType(TaskCategory tCategory) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.get.setUri(beforeTimeline(ApiTask.GET_TASK_BY_TYPE));
 			Api.get.append("type", tCategory.getCataType());
@@ -2951,8 +2717,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> getShareUser(int ctaeId)
-				throws ApiException {
+		public ListData<SociaxItem> getShareUser(int ctaeId) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.get.setUri(beforeTimeline(ApiTask.GET_SHARE_USERS));
 			Api.get.append("category_id", ctaeId);
@@ -2980,8 +2745,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> getTaskBySearchKey(String key)
-				throws ApiException {
+		public ListData<SociaxItem> getTaskBySearchKey(String key) throws ApiException {
 			// TODO Auto-generated method stub
 			Api.get.setUri(beforeTimeline(ApiTask.SEARCH_TASK));
 			Api.get.append("keyword", key);
@@ -3048,8 +2812,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> searchQuestion(String key)
-				throws ApiException {
+		public ListData<SociaxItem> searchQuestion(String key) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiQuestion.SEARCH_QUESTION));
 			Api.get.append("keyword", key);
 			Object result = Api.run(Api.get);
@@ -3122,8 +2885,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> searchCategory(String key)
-				throws ApiException {
+		public ListData<SociaxItem> searchCategory(String key) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiQuestion.SEARCH_CATEGORY));
 			Api.get.append("keyword", key);
 			Object result = Api.run(Api.get);
@@ -3150,8 +2912,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> getQuestionByCate(int cateId)
-				throws ApiException {
+		public ListData<SociaxItem> getQuestionByCate(int cateId) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiQuestion.GET_QUESTION_BY_CATEGORY));
 			Api.get.append("category_id", cateId);
 			Object result = Api.run(Api.get);
@@ -3197,8 +2958,7 @@ public class Api {
 
 		@SuppressWarnings("finally")
 		@Override
-		public ListData<SociaxItem> getDocumentCategoryList()
-				throws ApiException {
+		public ListData<SociaxItem> getDocumentCategoryList() throws ApiException {
 			beforeTimeline(ApiDocument.CATEGORY_LIST);
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
@@ -3210,8 +2970,7 @@ public class Api {
 					list = new ListData<SociaxItem>();
 					for (int i = 0; i < length; i++) {
 						JSONObject jsonObject = data.getJSONObject(i);
-						ContactCategory contactCategory = new ContactCategory(
-								jsonObject);
+						ContactCategory contactCategory = new ContactCategory(jsonObject);
 						list.add(contactCategory);
 					}
 				}
@@ -3352,16 +3111,14 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> getWeibasHeader(Weiba weiba, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> getWeibasHeader(Weiba weiba, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.GET_WEIBAS));
 			Api.get.append("since_id", weiba.getWeibaId());
 			return getWeibaList(Api.run(Api.get));
 		}
 
 		@Override
-		public List<SociaxItem> getWeibasFooter(Weiba weiba, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> getWeibasFooter(Weiba weiba, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.GET_WEIBAS));
 			Api.get.append("max_id", weiba.getWeibaId());
 			return getWeibaList(Api.run(Api.get));
@@ -3429,8 +3186,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> getPostsHeader(int weibaId, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> getPostsHeader(int weibaId, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.GET_POSTS));
 			Api.get.append("id", weibaId);
 			Api.get.append("page", page);
@@ -3439,8 +3195,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> getPostsFooter(int weibaId, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> getPostsFooter(int weibaId, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.GET_POSTS));
 			Api.get.append("id", weibaId);
 			Api.get.append("page", page);
@@ -3454,8 +3209,7 @@ public class Api {
 			Api.get.append("id", postsId);
 			String result = (String) Api.run(get);
 			try {
-				return (!result.equals("null")) ? new Posts(new JSONObject(
-						result)) : null;
+				return (!result.equals("null")) ? new Posts(new JSONObject(result)) : null;
 			} catch (DataInvalidException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
@@ -3472,8 +3226,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> getCommentListHeader(int postId, int page,
-				int count) throws ApiException {
+		public List<SociaxItem> getCommentListHeader(int postId, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.COMMENT_LIST));
 			Api.get.append("id", postId);
 			Api.get.append("page", page);
@@ -3482,8 +3235,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> getCommentListFooter(int postId, int page,
-				int count) throws ApiException {
+		public List<SociaxItem> getCommentListFooter(int postId, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.COMMENT_LIST));
 			Api.get.append("id", postId);
 			Api.get.append("page", page);
@@ -3560,8 +3312,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> followingPostsHeader(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> followingPostsHeader(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.FOLLOWING_POSTS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3569,8 +3320,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> followingPostsFooter(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> followingPostsFooter(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.FOLLOWING_POSTS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3584,8 +3334,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> postedsHeader(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> postedsHeader(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.POSTEDS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3593,8 +3342,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> postedsFooter(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> postedsFooter(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.POSTEDS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3608,8 +3356,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> commentedsHeader(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> commentedsHeader(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.COMMENTEDS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3617,8 +3364,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> commentedsFooter(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> commentedsFooter(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.COMMENTEDS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3632,8 +3378,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> favoritePostsListHeader(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> favoritePostsListHeader(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.FAVORITE_POSTS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3641,8 +3386,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> favoritePostsListFooter(int page, int count)
-				throws ApiException {
+		public List<SociaxItem> favoritePostsListFooter(int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.FAVORITE_POSTS));
 			Api.get.append("page", page);
 			Api.get.append("count", count);
@@ -3657,8 +3401,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> searchWeibaHeader(String key, int page,
-				int count) throws ApiException {
+		public List<SociaxItem> searchWeibaHeader(String key, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.SEARCH_WEIBA));
 			Api.get.append("keyword", key);
 			Api.get.append("page", page);
@@ -3667,8 +3410,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> searchWeibaFooter(String key, int page,
-				int count) throws ApiException {
+		public List<SociaxItem> searchWeibaFooter(String key, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.SEARCH_WEIBA));
 			Api.get.append("keyword", key);
 			Api.get.append("page", page);
@@ -3684,8 +3426,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> searchPostHeader(String key, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> searchPostHeader(String key, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.SEARCH_POST));
 			Api.get.append("keyword", key);
 			Api.get.append("page", page);
@@ -3694,8 +3435,7 @@ public class Api {
 		}
 
 		@Override
-		public List<SociaxItem> searchPostFooter(String key, int page, int count)
-				throws ApiException {
+		public List<SociaxItem> searchPostFooter(String key, int page, int count) throws ApiException {
 			Api.get.setUri(beforeTimeline(ApiWeiba.SEARCH_POST));
 			Api.get.append("keyword", key);
 			Api.get.append("page", page);
@@ -3712,35 +3452,28 @@ public class Api {
 
 		@Override
 		public ListData<SociaxItem> getAllChannel() throws ApiException {
-			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME,
-					ApiChannel.GET_ALL_CHANNEL));
+			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME, ApiChannel.GET_ALL_CHANNEL));
 			return getChannelList(Api.run(Api.get));
 		}
 
 		@Override
-		public ListData<SociaxItem> getChannelFeed(int channelId)
-				throws ApiException {
-			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME,
-					ApiChannel.GET_CHANNEL_FEED));
+		public ListData<SociaxItem> getChannelFeed(int channelId) throws ApiException {
+			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME, ApiChannel.GET_CHANNEL_FEED));
 			Api.get.append("category_id", channelId);
 			return getChannelFeedList(Api.run(Api.get));
 		}
 
 		@Override
-		public ListData<SociaxItem> getChannelHeaderFeed(Weibo weibo,
-				int channelId) throws ApiException {
-			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME,
-					ApiChannel.GET_CHANNEL_FEED));
+		public ListData<SociaxItem> getChannelHeaderFeed(Weibo weibo, int channelId) throws ApiException {
+			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME, ApiChannel.GET_CHANNEL_FEED));
 			Api.get.append("category_id", channelId);
 			Api.get.append("max_id", weibo.getWeiboId());
 			return getChannelFeedList(Api.run(Api.get));
 		}
 
 		@Override
-		public ListData<SociaxItem> getChannelFooterFeed(Weibo weibo,
-				int channelId) throws ApiException {
-			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME,
-					ApiChannel.GET_CHANNEL_FEED));
+		public ListData<SociaxItem> getChannelFooterFeed(Weibo weibo, int channelId) throws ApiException {
+			Api.get.setUri(Api.createUrlBuild(ApiChannel.MOD_NAME, ApiChannel.GET_CHANNEL_FEED));
 			Api.get.append("category_id", channelId);
 			Api.get.append("since_id", weibo.getWeiboId());
 			return getChannelFeedList(Api.run(Api.get));
@@ -3787,8 +3520,7 @@ public class Api {
 				try {
 					list = new ListData<SociaxItem>();
 					JSONObject itemData = new JSONObject(result.toString());
-					for (Iterator iterator = itemData.keys(); iterator
-							.hasNext();) {
+					for (Iterator iterator = itemData.keys(); iterator.hasNext();) {
 						String key = (String) iterator.next();
 						JSONObject jsonObject = itemData.getJSONObject(key);
 						Channel c = new Channel(jsonObject);
@@ -3830,14 +3562,12 @@ public class Api {
 				}
 
 			} catch (JSONException e) {
-				Log.d(TAG,
-						"get group show statues type error wm " + e.toString());
+				Log.d(TAG, "get group show statues type error wm " + e.toString());
 			}
 			return list;
 		}
 
-		private ListData<SociaxItem> getStatueList(Object result,
-				ListData.DataType type) {
+		private ListData<SociaxItem> getStatueList(Object result, ListData.DataType type) {
 			ListData<SociaxItem> list = null;
 			try {
 				JSONArray data = new JSONArray((String) result);
@@ -3846,8 +3576,7 @@ public class Api {
 				for (int i = 0; i < length; i++) {
 					try {
 						JSONObject itemData = data.getJSONObject(i);
-						SociaxItem weiboData = Api
-								.getSociaxItem(type, itemData);
+						SociaxItem weiboData = Api.getSociaxItem(type, itemData);
 						list.add(weiboData);
 					} catch (Exception e) {
 						Log.e(TAG, "json itme  error wm :" + e.toString());
@@ -3861,8 +3590,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatuses(int count, int type)
-				throws ApiException {
+		public ListData<SociaxItem> showStatuses(int count, int type) throws ApiException {
 			Get get = new Get();
 			get.setUri(baseUrl(ApiGroup.SHOW_STATUSES));
 			get.append("count", count);
@@ -3873,8 +3601,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatusesHeader(Weibo item, int count,
-				int type) throws ApiException {
+		public ListData<SociaxItem> showStatusesHeader(Weibo item, int count, int type) throws ApiException {
 			Get get = new Get();
 			get.setUri(baseUrl(ApiGroup.SHOW_STATUSES));
 			get.append("count", count);
@@ -3886,8 +3613,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatusesFooter(Weibo item, int count,
-				int type) throws ApiException {
+		public ListData<SociaxItem> showStatusesFooter(Weibo item, int count, int type) throws ApiException {
 			Get get = new Get();
 			get.setUri(baseUrl(ApiGroup.SHOW_STATUSES));
 			get.append("count", count);
@@ -3899,8 +3625,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showAtmeStatuses(int count)
-				throws ApiException {
+		public ListData<SociaxItem> showAtmeStatuses(int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_ATME_STATUSES));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3908,8 +3633,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showAtmeStatusesHeader(Weibo item, int count)
-				throws ApiException {
+		public ListData<SociaxItem> showAtmeStatusesHeader(Weibo item, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_ATME_STATUSES));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3919,8 +3643,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showAtmeStatusesFooter(Weibo item, int count)
-				throws ApiException {
+		public ListData<SociaxItem> showAtmeStatusesFooter(Weibo item, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_ATME_STATUSES));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3929,8 +3652,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatusComments(int count)
-				throws ApiException {
+		public ListData<SociaxItem> showStatusComments(int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_STATUS_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3939,8 +3661,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatusCommentsHeader(
-				ReceiveComment item, int count) throws ApiException {
+		public ListData<SociaxItem> showStatusCommentsHeader(ReceiveComment item, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_STATUS_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3951,8 +3672,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> showStatusCommentsFooter(
-				ReceiveComment item, int count) throws ApiException {
+		public ListData<SociaxItem> showStatusCommentsFooter(ReceiveComment item, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.SHOW_STATUS_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3972,8 +3692,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> groupMembersHeader(User user, int count)
-				throws ApiException {
+		public ListData<SociaxItem> groupMembersHeader(User user, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.GROUP_MEMBERS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3983,8 +3702,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> groupMembersFooter(User user, int count)
-				throws ApiException {
+		public ListData<SociaxItem> groupMembersFooter(User user, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.GROUP_MEMBERS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -3994,8 +3712,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> weiboComments(Weibo item, Comment comment,
-				int count) throws ApiException {
+		public ListData<SociaxItem> weiboComments(Weibo item, Comment comment, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.WEIBO_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -4004,8 +3721,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> weiboCommentsHeader(Weibo item,
-				Comment comment, int count) throws ApiException {
+		public ListData<SociaxItem> weiboCommentsHeader(Weibo item, Comment comment, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.WEIBO_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -4016,8 +3732,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> weiboCommentsFooter(Weibo item,
-				Comment comment, int count) throws ApiException {
+		public ListData<SociaxItem> weiboCommentsFooter(Weibo item, Comment comment, int count) throws ApiException {
 			Api.get.setUri(baseUrl(ApiGroup.WEIBO_COMMENTS));
 			Api.get.append("count", count);
 			Api.get.append("gid", 106);
@@ -4029,8 +3744,7 @@ public class Api {
 
 		@Override
 		public boolean updateStatus(Weibo weibo) throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME,
-					ApiGroup.UPDATE_STATUS);
+			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME, ApiGroup.UPDATE_STATUS);
 
 			Api.post.setUri(uri);
 			Api.post.append("content", weibo.getContent());
@@ -4048,11 +3762,10 @@ public class Api {
 		public boolean uploadStatus(Weibo weibo, File file) throws ApiException {
 			String result = null;
 			try {
-				Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME,
-						ApiGroup.UPLOAD_STATUS);
+				Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME, ApiGroup.UPLOAD_STATUS);
 
-				FormFile formFile = new FormFile(Compress.compressPic(file),
-						file.getName(), "pic", "application/octet-stream");
+				FormFile formFile = new FormFile(Compress.compressPic(file), file.getName(), "pic",
+						"application/octet-stream");
 				Api.post.setUri(uri);
 				HashMap<String, String> param = new HashMap<String, String>();
 				param.put("content", weibo.getContent());
@@ -4068,17 +3781,14 @@ public class Api {
 		}
 
 		@Override
-		public boolean repostStatuses(Weibo weibo, boolean isComment)
-				throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME,
-					ApiGroup.REPOST_STATUSES);
+		public boolean repostStatuses(Weibo weibo, boolean isComment) throws ApiException {
+			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME, ApiGroup.REPOST_STATUSES);
 
 			Api.post.setUri(uri);
 			if (weibo.getTranspond().isNullForTranspond()) {
 				Api.post.append("id", weibo.getTranspond().getWeiboId() + "");
 			} else {
-				Api.post.append("id", weibo.getTranspond().getTranspondId()
-						+ "");
+				Api.post.append("id", weibo.getTranspond().getTranspondId() + "");
 			}
 			Api.post.append("content", weibo.getContent());
 			if (isComment) {
@@ -4096,14 +3806,11 @@ public class Api {
 
 		@Override
 		public boolean commentStatuses(Comment comment) throws ApiException {
-			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME,
-					ApiGroup.COMMENT_STATUSES);
+			Uri.Builder uri = Api.createUrlBuild(ApiGroup.MOD_NAME, ApiGroup.COMMENT_STATUSES);
 			Api.post.setUri(uri);
 
-			Api.post.append("content", comment.getContent())
-					.append("row_id", comment.getStatus().getWeiboId() + "")
-					.append("ifShareFeed", comment.getType().ordinal() + "")
-					.append("gid", "106")
+			Api.post.append("content", comment.getContent()).append("row_id", comment.getStatus().getWeiboId() + "")
+					.append("ifShareFeed", comment.getType().ordinal() + "").append("gid", "106")
 					.append("from", Weibo.From.ANDROID.ordinal() + "");
 
 			if (!comment.isNullForReplyComment()) {
@@ -4177,8 +3884,7 @@ public class Api {
 	public static final class NotifytionApi implements ApiNotifytion {
 
 		@Override
-		public ListData<SociaxItem> getNotifyByCount(int uid)
-				throws ApiException {
+		public ListData<SociaxItem> getNotifyByCount(int uid) throws ApiException {
 			beforeTimeline(ApiNotifytion.GET_NOTIFY_BY_COUNT);
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
@@ -4229,8 +3935,7 @@ public class Api {
 		}
 
 		@Override
-		public ListData<SociaxItem> getSystemNotify(int uid)
-				throws ApiException {
+		public ListData<SociaxItem> getSystemNotify(int uid) throws ApiException {
 			beforeTimeline(ApiNotifytion.GET_SYSTEM_NOTIFY);
 			Object result = Api.run(Api.get);
 			Api.checkResult(result);
