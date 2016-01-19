@@ -106,8 +106,8 @@ public class FragmentCaseIndex extends BaseFragment {
 			tv_name.setText(caseIndex.getRealname());
 			tv_gender.setText(caseIndex.getSex());
 			tv_age.setText(caseIndex.getAge());
-			tv_update_day.setText(caseIndex.getUtime());
-			tv_create_day.setText(caseIndex.getCtime());
+			tv_update_day.setText("更新       " + caseIndex.getUtime());
+			tv_create_day.setText("创建       " + caseIndex.getCtime());
 		}
 	}
 
