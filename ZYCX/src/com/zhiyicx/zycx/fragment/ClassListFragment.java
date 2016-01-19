@@ -166,9 +166,9 @@ public class ClassListFragment extends Fragment
                 String id = jsonObject.getString("id");
                 if(!TextUtils.isEmpty(id) && !TextUtils.isEmpty(mdefId)
                         && id.equals(mdefId))
-                    holder.mIndImg.setImageResource(R.drawable.class_index_on);
+                    holder.mIndImg.setImageResource(R.drawable.xuanzhong);
                 else
-                    holder.mIndImg.setImageResource(R.drawable.class_index);
+                    holder.mIndImg.setImageResource(R.drawable.weixuanzhong);
 
                 //holder.mPlayBtn.setOnClickListener(new ClassClickListener(position));
             }catch (Exception e)

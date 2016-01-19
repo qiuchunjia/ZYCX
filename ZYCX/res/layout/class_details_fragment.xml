@@ -65,6 +65,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/img_photo"
                     android:text="INFO1"
+                    android:lineSpacingExtra="5dp"
                     android:textColor="@color/text_more_gray"
                     android:textSize="@dimen/text_common" />
             </RelativeLayout>
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/title_margin"
                 android:text="INFO2"
+                android:lineSpacingExtra="5dp"
                 android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </LinearLayout>

@@ -136,6 +136,7 @@
             android:name=".activity.QClassDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
+            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -408,6 +409,10 @@
             <!-- 癌友帮二期开发新增加页面end -->
         </activity>
         <activity android:name="qcjlibrary.activity.QclassDetailActivity" />
+        <activity 
+            android:name="qcjlibrary.activity.QclassCmtSendActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:screenOrientation="portrait" />
 
         <receiver android:name="qcjlibrary.broadcast.AlarmBroadCastReciever" >
             <intent-filter android:priority="1000" >
