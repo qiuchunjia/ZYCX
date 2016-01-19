@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_qclass_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_gray_color"
@@ -11,18 +12,11 @@
         android:layout_weight="1"
         android:gravity="center" >
 
-        <ImageView
+        <WebView
             android:id="@+id/iv_qclass_play"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/apk" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true" 
-            android:src="@drawable/playicon02"/>
+            android:scaleType="centerCrop" />
     </RelativeLayout>
 
     

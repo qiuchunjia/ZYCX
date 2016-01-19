@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Window;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import qcjlibrary.util.L;
@@ -45,7 +48,13 @@ public class QClassPlayActivity extends Activity {
             }
         });
         mPlayView.setPadding(0,0,0,0);
-
+        mPlayView.setWebChromeClient(new WebChromeClient());
+        WebSettings setting = mPlayView.getSettings();
+        setting.setPluginState(PluginState.ON);
+        setting.setLoadWithOverviewMode(true);
+        setting.getUseWideViewPort();
+        setting.setJavaScriptEnabled(true);
+        setting.setJavaScriptCanOpenWindowsAutomatically(true);
         /*String vid = getIntent().getStringExtra("vid");
         String stamp = String.valueOf(System.currentTimeMillis() / 1000);
         String secert = "d34ce7d56040bc1b0cfc2cc153901cb0";
@@ -62,10 +71,18 @@ public class QClassPlayActivity extends Activity {
             finish();
         String data = String.format(mHtmlData,"100%","100%", vid, embsig);*/
         String url = getIntent().getStringExtra("vurl");
-        mPlayView.getSettings().setJavaScriptEnabled(true);
-        mPlayView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mPlayView.loadUrl(url + Utils.getTokenString(this));
     }
 
-
+    @Override
+    protected void onResume() {
+    	// TODO 自动生成的方法存根
+    	super.onResume();
+    }
+    
+    @Override
+    protected void onPause() {
+    	// TODO 自动生成的方法存根
+    	super.onPause();
+    }
 }

@@ -1,6 +1,7 @@
 package com.zhiyicx.zycx.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -15,8 +16,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
+import android.webkit.WebChromeClient.CustomViewCallback;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebSettings.PluginState;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
@@ -48,6 +57,7 @@ import com.zhiyicx.zycx.widget.PagerSlidingTabStrip;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -76,7 +86,6 @@ public class QClassDetailsActivity extends BaseActivity
 	// private PopupWindow mCmdWindow = null;
 	// private EditText mCmtEdit = null;
 
-	private ImageView iv_qclass_play;
 	private TextView tv_title_right;
 
 	private String mDefVurl = null;
@@ -86,6 +95,13 @@ public class QClassDetailsActivity extends BaseActivity
 	private String mTitle = null;
 	private String cover;
 	private Title title;
+	/** 视频播放 **/
+	private WebView iv_qclass_play;
+	private String urlStr;
+	private LinearLayout ll_qclass_detail;
+	private WebChromeClient chromeClient = null;
+	private View myView = null;
+	private WebChromeClient.CustomViewCallback myCallBack = null;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,13 +136,14 @@ public class QClassDetailsActivity extends BaseActivity
 			break;
 		case R.id.iv_qclass_play:
 			// 跳转播放
-			String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid=" + Utils.getUid(this);
+			// String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId
+			// + "&uid=" + Utils.getUid(this);
 			// Intent intent = new Intent(this, QClassPlayActivity.class);
 			// intent.putExtra("vurl", urlStr);
 			// startActivity(intent);
-			Uri uri = Uri.parse(urlStr);
-			Intent it = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(it);
+			// Uri uri = Uri.parse(urlStr);
+			// Intent it = new Intent(Intent.ACTION_VIEW, uri);
+			// startActivity(it);
 			break;
 		}
 	}
@@ -154,6 +171,8 @@ public class QClassDetailsActivity extends BaseActivity
 		mDefId = id;
 		mDefVid = vid;
 		// toPlay();
+		urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid=" + Utils.getUid(this);
+		iv_qclass_play.loadUrl(urlStr + Utils.getTokenString(this));
 	}
 
 	@Override
@@ -199,12 +218,11 @@ public class QClassDetailsActivity extends BaseActivity
 	@Override
 	public void initIntent() {
 		Bundle bundle = getIntent().getExtras();
-		if(bundle != null){
-			ModelQclassDetail mDetail = (ModelQclassDetail) 
-					bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
+		if (bundle != null) {
+			ModelQclassDetail mDetail = (ModelQclassDetail) bundle.getSerializable(Config.ACTIVITY_TRANSFER_BUNDLE);
 			mCid = mDetail.getCourse_id();
 			cover = mDetail.getCover();
-		} 
+		}
 		if (mCid == -1) {
 			finish();
 		}
@@ -223,15 +241,27 @@ public class QClassDetailsActivity extends BaseActivity
 		title.iv_title_right3.setImageResource(R.drawable.fenxiang);
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
-		iv_qclass_play = (ImageView) findViewById(R.id.iv_qclass_play);
+		iv_qclass_play = (WebView) findViewById(R.id.iv_qclass_play);
 		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
+		ll_qclass_detail = (LinearLayout) findViewById(R.id.ll_qclass_detail);
+		// 设置WebView
+		iv_qclass_play.setPadding(0, 0, 0, 0);
+		chromeClient = new MyChromeClient();
+		iv_qclass_play.setWebChromeClient(new WebChromeClient());
+		WebSettings setting = iv_qclass_play.getSettings();
+		setting.setPluginState(PluginState.ON);
+		setting.setLoadWithOverviewMode(true);
+		setting.getUseWideViewPort();
+		setting.setJavaScriptEnabled(true);
+		setting.setJavaScriptCanOpenWindowsAutomatically(true);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 	}
 
 	@Override
 	public void initData() {
 		if (!TextUtils.isEmpty(cover)) {
 			mPreview = (ImageView) findViewById(R.id.img_preview);
-			mApp.displayImage(cover, iv_qclass_play);
+			// mApp.displayImage(cover, iv_qclass_play);
 			L.d("Cathy", "cover : " + cover);
 		}
 		loadInfo(mCid);
@@ -243,6 +273,12 @@ public class QClassDetailsActivity extends BaseActivity
 		iv_qclass_play.setOnClickListener(this);
 		tv_title_right.setOnClickListener(this);
 		title.iv_title_right3.setOnClickListener(this);
+		iv_qclass_play.setWebViewClient(new WebViewClient() {
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -352,8 +388,59 @@ public class QClassDetailsActivity extends BaseActivity
 		mTabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm));
 		mTabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
 		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, dm));
-		mTabs.setIndicatorColor(Color.parseColor("#45c01a"));
-		mTabs.setSelectedTextColor(Color.parseColor("#45c01a"));
+		mTabs.setIndicatorColor(Color.parseColor("#ffffff"));
+		mTabs.setSelectedTextColor(Color.parseColor("#349342"));
 		mTabs.setTabBackground(0);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO 自动生成的方法存根
+		super.onPause();
+		try {
+			iv_qclass_play.getClass().getMethod("onPause").invoke(iv_qclass_play, (Object[]) null);
+		} catch (Exception e) {
+			L.d("停止播放" + e.toString());
+		}
+	}
+
+	public class MyChromeClient extends WebChromeClient {
+
+		@Override
+		public void onShowCustomView(View view, CustomViewCallback callback) {
+			if (myView != null) {
+				callback.onCustomViewHidden();
+				return;
+			}
+			ll_qclass_detail.removeView(iv_qclass_play);
+			ll_qclass_detail.addView(view);
+			myView = view;
+			myCallBack = callback;
+		}
+
+		@Override
+		public void onHideCustomView() {
+			if (myView == null) {
+				return;
+			}
+			ll_qclass_detail.removeView(myView);
+			myView = null;
+			ll_qclass_detail.addView(iv_qclass_play);
+			myCallBack.onCustomViewHidden();
+		}
+
+		@Override
+		public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+			// TODO Auto-generated method stub
+			Log.d("ZR",
+					consoleMessage.message() + " at " + consoleMessage.sourceId() + ":" + consoleMessage.lineNumber());
+			return super.onConsoleMessage(consoleMessage);
+		}
 	}
 }
