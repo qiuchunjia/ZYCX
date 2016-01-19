@@ -231,7 +231,7 @@ public class PatientMeActivity extends BaseActivity {
 			tv_job.setText("职业：" + info.getProfession());
 			tv_education.setText("文化程度：" + info.getEducation());
 			tv_pretect.setText("保险形式：" + info.getInsform());
-			tv_hometown.setText("籍贯：" + info.getDomicile());
+			tv_hometown.setText("籍贯：" + info.getNatives());
 			tv_address.setText("居住地：" + info.getDomicile()); // TODO
 			tv_height.setText("身高：" + info.getHeight() + "cm");
 			tv_weight.setText("体重：" + info.getWeight() + "kg");

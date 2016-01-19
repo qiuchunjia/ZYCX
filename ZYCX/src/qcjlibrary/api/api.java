@@ -846,7 +846,7 @@ public class api {
 				params.add(PROFESSION, addCase.getProfession());
 				params.add(EDUCATION, addCase.getEducation());
 				params.add(INSFORM, addCase.getInsform());
-				params.add(NATIVES, addCase.getNation());
+				params.add(NATIVES, addCase.getNatives());
 				params.add(DOMICILE, addCase.getDomicile());
 				params.add(HEIGHT, addCase.getHeight());
 				params.add(WEIGHT, addCase.getWeight());
