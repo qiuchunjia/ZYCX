@@ -527,9 +527,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	public void setTextSize(int textSizePx) {
-		DisplayMetrics dm = getResources().getDisplayMetrics();
-		this.tabTextSize = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_SP, 15, dm);// textSizePx;
+		this.tabTextSize = textSizePx;
 		updateTabStyles();
 	}
 

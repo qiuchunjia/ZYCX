@@ -389,7 +389,8 @@ public class QClassDetailsActivity extends BaseActivity
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		mTabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm));
 		mTabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
-		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, dm));
+		//mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, dm));
+		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, dm));
 		mTabs.setIndicatorColor(Color.parseColor("#ffffff"));
 		mTabs.setSelectedTextColor(Color.parseColor("#349342"));
 		mTabs.setTabBackground(0);
