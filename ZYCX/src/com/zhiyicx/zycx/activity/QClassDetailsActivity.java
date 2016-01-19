@@ -13,7 +13,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.ConsoleMessage;
@@ -284,6 +286,17 @@ public class QClassDetailsActivity extends BaseActivity
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
 				return true;
+			}
+		});
+		iv_qclass_play.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				iv_qclass_play.stopLoading();
+				Intent intent = new Intent(QClassDetailsActivity.this, QClassPlayActivity.class);
+				intent.putExtra("vurl", urlStr);
+				startActivity(intent);
+				return false;
 			}
 		});
 	}
