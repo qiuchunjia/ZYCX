@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/view_border_gray_gray_50"
                 android:text="2015"
                 android:textColor="@color/text_white"
@@ -104,7 +104,7 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:maxLines="2"
-                android:text="[查看更多]"
+                android:text="[查看全部]"
                 android:textColor="@color/text_blue"
                 android:textSize="@dimen/text_common" />
 
