@@ -653,7 +653,7 @@ public class HomeActivity extends BaseActivity {
 		}
 		if(isLogin() && textMy != null){
 			textMy.setVisibility(View.VISIBLE);
-		} else{
+		} else if(!isLogin() && textMy != null){
 			textMy.setVisibility(View.GONE);
 		}
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();

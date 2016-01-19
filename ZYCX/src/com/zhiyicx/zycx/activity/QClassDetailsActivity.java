@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import qcjlibrary.activity.QclassCmtSendActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
@@ -96,6 +97,8 @@ public class QClassDetailsActivity extends BaseActivity
 	private String cover;
 	private Title title;
 	/** 视频播放 **/
+	private LinearLayout info_layout;
+	private LinearLayout ll_fullscreen;
 	private WebView iv_qclass_play;
 	private String urlStr;
 	private LinearLayout ll_qclass_detail;
@@ -126,21 +129,22 @@ public class QClassDetailsActivity extends BaseActivity
 			// Utils.shareVidoe(this, mController, mTitle, mDefVurl);
 			break;
 		case R.id.tv_title_right:
-			// 弹出评论PopWindow ,先判断是否登录
+			// 先判断是否登录
 			if (isLogin()) {
-				PopQclassCmt mCmt = new PopQclassCmt(this, null, this);
-				mCmt.showPop(iv_qclass_play, Gravity.CENTER, 0, 0);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("mDefId", mDefId);
+				mApp.startActivity_qcj(this, QclassCmtSendActivity.class, bundle);
 			} else {
 				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
 		case R.id.iv_qclass_play:
 			// 跳转播放
-			// String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId
-			// + "&uid=" + Utils.getUid(this);
-			// Intent intent = new Intent(this, QClassPlayActivity.class);
-			// intent.putExtra("vurl", urlStr);
-			// startActivity(intent);
+//			 String urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId
+//			 + "&uid=" + Utils.getUid(this);
+//			 Intent intent = new Intent(this, QClassPlayActivity.class);
+//			 intent.putExtra("vurl", urlStr);
+//			 startActivity(intent);
 			// Uri uri = Uri.parse(urlStr);
 			// Intent it = new Intent(Intent.ACTION_VIEW, uri);
 			// startActivity(it);
@@ -244,17 +248,20 @@ public class QClassDetailsActivity extends BaseActivity
 		iv_qclass_play = (WebView) findViewById(R.id.iv_qclass_play);
 		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
 		ll_qclass_detail = (LinearLayout) findViewById(R.id.ll_qclass_detail);
+		info_layout = (LinearLayout) findViewById(R.id.info_layout);
+		ll_fullscreen = (LinearLayout) findViewById(R.id.ll_fullscreen);
 		// 设置WebView
 		iv_qclass_play.setPadding(0, 0, 0, 0);
 		chromeClient = new MyChromeClient();
+		//暂时无法全屏
 		iv_qclass_play.setWebChromeClient(new WebChromeClient());
 		WebSettings setting = iv_qclass_play.getSettings();
 		setting.setPluginState(PluginState.ON);
-		setting.setLoadWithOverviewMode(true);
+		setting.setLoadWithOverviewMode(true);//居中
 		setting.getUseWideViewPort();
 		setting.setJavaScriptEnabled(true);
 		setting.setJavaScriptCanOpenWindowsAutomatically(true);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 	}
 
 	@Override
@@ -281,11 +288,6 @@ public class QClassDetailsActivity extends BaseActivity
 		});
 	}
 
-	@Override
-	public Object onPopResult(Object object) {
-		sendCmt(object.toString());
-		return super.onPopResult(object);
-	}
 
 	/**
 	 * 发送评论到服务器
@@ -397,6 +399,9 @@ public class QClassDetailsActivity extends BaseActivity
 	protected void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
+		if(mCmtFgmt != null){
+			mCmtFgmt.loadCmtData(mDefId);
+		}
 	}
 
 	@Override
@@ -418,8 +423,11 @@ public class QClassDetailsActivity extends BaseActivity
 				callback.onCustomViewHidden();
 				return;
 			}
-			ll_qclass_detail.removeView(iv_qclass_play);
-			ll_qclass_detail.addView(view);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			iv_qclass_play.setVisibility(View.GONE);
+			info_layout.setVisibility(View.GONE);
+			ll_fullscreen.setVisibility(View.VISIBLE);
+			ll_fullscreen.addView(view);
 			myView = view;
 			myCallBack = callback;
 		}
@@ -429,9 +437,12 @@ public class QClassDetailsActivity extends BaseActivity
 			if (myView == null) {
 				return;
 			}
-			ll_qclass_detail.removeView(myView);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			ll_fullscreen.setVisibility(View.GONE);
+			iv_qclass_play.setVisibility(View.VISIBLE);
+			info_layout.setVisibility(View.VISIBLE);
+			ll_fullscreen.removeView(myView);
 			myView = null;
-			ll_qclass_detail.addView(iv_qclass_play);
 			myCallBack.onCustomViewHidden();
 		}
 

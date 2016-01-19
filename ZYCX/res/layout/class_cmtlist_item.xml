@@ -21,7 +21,6 @@
         android:layout_toRightOf="@id/img_photo"
         android:textColor="@color/text_green"
         android:textSize="@dimen/text_big"
-        android:textStyle="bold"
         android:text="name1"/>
     <TextView
         android:id="@+id/txt_content"

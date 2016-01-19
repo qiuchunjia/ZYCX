@@ -112,7 +112,7 @@
     <string name="qclass_tab_5">养生抄</string>
 
     <string-array name="site_url">
-         /*****测试用这个demo-qingko.zhiyicx.com/****正式用www.qingko.com/***/                <item>demo-qingko.zhiyicx.com/</item>
+         /*****测试用这个demo-qingko.zhiyicx.com/****正式用www.qingko.com/***/                        <item>demo-qingko.zhiyicx.com/</item>
         <item>/index.php</item>
     </string-array>
 
@@ -142,5 +142,6 @@
     <!-- 轻课堂 -->
     <string name="update_header">已更新</string>
     <string name="update_tail">课</string>
+    <string name="title_activity_qclass_cmt_send">QclassCmtSendActivity</string>
 
 </resources>

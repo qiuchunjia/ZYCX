@@ -6,20 +6,12 @@
     android:background="@color/main_gray_color"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <WebView
+        android:id="@+id/iv_qclass_play"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center" >
+        android:layout_weight="1" />
 
-        <WebView
-            android:id="@+id/iv_qclass_play"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-    </RelativeLayout>
-
-    
     <LinearLayout
         android:id="@+id/info_layout"
         android:layout_width="match_parent"
@@ -32,7 +24,7 @@
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="40dp" />
-        
+
         <android.support.v4.view.ViewPager
             android:id="@+id/vPager"
             android:layout_width="wrap_content"
@@ -43,5 +35,12 @@
             android:flipInterval="30"
             android:persistentDrawingCache="animation" />
     </LinearLayout>
-
+    
+    <LinearLayout
+        android:id="@+id/ll_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        ></LinearLayout>
 </LinearLayout>
