@@ -12,6 +12,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.zhiyicx.zycx.R;
 
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,6 +24,7 @@ import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelCaseIndex;
 import qcjlibrary.util.ToastUtils;
+import qcjlibrary.widget.popupview.PopImportFile;
 
 /**
  * author：qiuchunjia time：下午4:03:45 类描述：这个类是实现
@@ -132,6 +134,11 @@ public class FragmentCaseIndex extends BaseFragment {
 			break;
 
 		case R.id.rl_down:
+			if (mCaseIndex == null) {
+				ToastUtils.showToast("暂无病例信息");
+				sendRequest(mApp.getMedRecordImpl().index(), ModelCaseIndex.class, REQUEST_GET);
+				return;
+			}
 			if (!TextUtils.isEmpty(mCaseIndex.getUrl())) {
 				downloadFile(mCaseIndex.getUrl(), mApp.getFilePath().toString(), "病例导出.png");
 			} else {
@@ -164,7 +171,7 @@ public class FragmentCaseIndex extends BaseFragment {
 	/**
 	 * 下载文件
 	 */
-	private void downloadFile(String fileUrl, String dir, String filename) {
+	private void downloadFile(String fileUrl, final String dir, String filename) {
 		final File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdir();
@@ -185,7 +192,8 @@ public class FragmentCaseIndex extends BaseFragment {
 					try {
 						outputStream = new FileOutputStream(wholeFile);
 						outputStream.write(arg2, 0, arg2.length);
-						ToastUtils.showToast(wholeFile.toString());
+						PopImportFile importFile = new PopImportFile(getActivity(), dir.toString(), null);
+						importFile.showPop(rl_mycase, Gravity.CENTER, 0, 0);
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

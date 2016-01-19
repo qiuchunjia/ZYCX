@@ -20,6 +20,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.ToastUtils;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
@@ -90,7 +91,7 @@ public abstract class BAdapter extends BaseAdapter {
 
 	/**
 	 * 真正的獲取數據，先查看是否存在缓存，如果存在就调用缓存的， 如果不存在就調用refreshnew（）獲取的數據加載到adapter里面
-	 * */
+	 */
 	public void doRefreshNew() {
 		// 先获取缓存
 		// TODO
@@ -126,6 +127,7 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
+
 	/**
 	 * 刷新头部的第二种方式
 	 * 
@@ -283,7 +285,6 @@ public abstract class BAdapter extends BaseAdapter {
 		return null;
 	}
 
-
 	public void setListView(BaseListView listView) {
 		this.mListView = listView;
 	}
@@ -308,23 +309,22 @@ public abstract class BAdapter extends BaseAdapter {
 		return mList;
 	}
 
-	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
+	/************************************
+	 * 网络请求传递，以及返回数据解析
+	 ***************************************/
 	private Request mRequst;
 	public static final int REQUEST_GET = 0;
 	public static final int REQUEST_POST = 1;
 
-	public void sendRequest(RequestParams params,
-			Class<? extends Model> modeltype, int requsetType, int RefreshType) {
+	public void sendRequest(RequestParams params, Class<? extends Model> modeltype, int requsetType, int RefreshType) {
 		if (params != null && modeltype != null) {
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
 			if (requsetType == 0) {
-				mRequst.get(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype, RefreshType));
+				mRequst.get(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype, RefreshType));
 			} else {
-				mRequst.post(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype, RefreshType));
+				mRequst.post(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype, RefreshType));
 			}
 		} else {
 			// TODO 专门用来测试
@@ -349,8 +349,7 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
+		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			ToastUtils.showToast("请求异常");
 		}
 
@@ -367,15 +366,15 @@ public abstract class BAdapter extends BaseAdapter {
 					Object object = onResponceSuccess(result, type);
 					if (object != null) {
 						if (object instanceof ModelMsg) {
-							ToastUtils.showToast(((ModelMsg) object)
-									.getMessage() + "");
+							if (!TextUtils.isEmpty(((ModelMsg) object).getMessage())) {
+								ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+							}
 							dismissTheProgress();
 						} else {
 							Object objectResult = getReallyList(object, type);
 							if (objectResult instanceof List<?>) {
 								List<Model> list = (List<Model>) objectResult;
-								if (RefreshType == REFRESH_NEW
-										|| RefreshType == REFRESH_HEADER) {
+								if (RefreshType == REFRESH_NEW || RefreshType == REFRESH_HEADER) {
 									addHeadList(list);
 								} else {
 									addFooterList(list);

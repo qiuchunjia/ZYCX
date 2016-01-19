@@ -14,6 +14,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.zhiyicx.zycx.R;
 
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMyCaseIndex;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.ToastUtils;
+import qcjlibrary.widget.popupview.PopImportFile;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -156,7 +158,7 @@ public class PatientMeActivity extends BaseActivity {
 	/**
 	 * 下载文件
 	 */
-	private void downloadFile(String fileUrl, String dir, String filename) {
+	private void downloadFile(String fileUrl, final String dir, String filename) {
 		final File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdir();
@@ -177,7 +179,8 @@ public class PatientMeActivity extends BaseActivity {
 					try {
 						outputStream = new FileOutputStream(wholeFile);
 						outputStream.write(arg2, 0, arg2.length);
-						ToastUtils.showToast(wholeFile.toString());
+						PopImportFile importFile = new PopImportFile(PatientMeActivity.this, dir.toString(), null);
+						importFile.showPop(ll_user, Gravity.CENTER, 0, 0);
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
