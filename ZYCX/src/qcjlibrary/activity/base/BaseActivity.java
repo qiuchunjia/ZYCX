@@ -19,13 +19,8 @@ import org.apache.http.Header;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.util.PreferenceUtil;
@@ -47,6 +42,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,6 +63,8 @@ import qcjlibrary.util.Anim;
 import qcjlibrary.util.BitmapUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Uri2Path;
+import qcjlibrary.widget.popupview.PopCommonLoading;
+import qcjlibrary.widget.popupview.base.PopView;
 import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 
 /**
@@ -74,9 +72,8 @@ import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
  * 
  * @pdOid
  */
-public abstract class BaseActivity extends FragmentActivity implements
-		OnClickListener, HttpResponceListener, TitleInterface,
-		PopResultListener {
+public abstract class BaseActivity extends FragmentActivity
+		implements OnClickListener, HttpResponceListener, TitleInterface, PopResultListener {
 	/**
 	 * activity的总布局，加入mTitleLayout和mBodyLayout
 	 * 
@@ -114,8 +111,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 * 使用友盟来分享就是爽爽哒
 	 */
 	// 首先在您的Activity中添加如下成员变量
-	final UMSocialService mController = UMServiceFactory
-			.getUMSocialService("com.umeng.share");
+	final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -160,8 +156,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	/** 初始化公共布局 */
 	private void initTheCommonLayout() {
-		mLayout = (RelativeLayout) mInflater.inflate(R.layout.comom_layout,
-				null);
+		mLayout = (RelativeLayout) mInflater.inflate(R.layout.comom_layout, null);
 		mTitlell = (LinearLayout) mLayout.findViewById(R.id.ll_Title);
 		mContentll = (FrameLayout) mLayout.findViewById(R.id.ll_content);
 		mBottomll = (LinearLayout) mLayout.findViewById(R.id.ll_bottom);
@@ -370,8 +365,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 * 打开相册
 	 */
 	public void openTheGalley() {
-		Intent intent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		startActivityForResult(intent, IMAGE_CODE);
 	}
 
@@ -387,8 +381,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 * 获取本地视频列表
 	 */
 	public void openVedioFile() {
-		Intent intent = new Intent(Intent.ACTION_PICK,
-				MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
 		startActivityForResult(intent, VEDIO_CODE);
 	}
 
@@ -411,8 +404,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	public void shootVideo() {
 		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 		// 设置视频大小
-		intent.putExtra(android.provider.MediaStore.EXTRA_SIZE_LIMIT,
-				20 * 1024 * 1024); // 设置为20M
+		intent.putExtra(android.provider.MediaStore.EXTRA_SIZE_LIMIT, 20 * 1024 * 1024); // 设置为20M
 		startActivityForResult(intent, SHOOT_VIDEO);
 	}
 
@@ -433,13 +425,10 @@ public abstract class BaseActivity extends FragmentActivity implements
 			} else if (requestCode == CAPTURE_CODE) {
 				String sdStatus = Environment.getExternalStorageState();
 				if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-					Log.i("TestFile",
-							"SD card is not avaiable/writeable right now.");
+					Log.i("TestFile", "SD card is not avaiable/writeable right now.");
 					return;
 				}
-				String name = DateFormat.format("yyyyMMdd_hhmmss",
-						Calendar.getInstance(Locale.CHINA))
-						+ ".jpg";
+				String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
 				Bundle bundle = data.getExtras();
 				Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
 				FileOutputStream b = null;
@@ -482,7 +471,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 		return null;
 	}
 
-	/************************* 设置返回上一个activity的数据 以及获取activity传来的数据 ******************************/
+	/*************************
+	 * 设置返回上一个activity的数据 以及获取activity传来的数据
+	 ******************************/
 	public static final int ACTIVTIY_TRANFER = 2; // 用于activity数据传递
 
 	/**
@@ -517,8 +508,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 	 *            区分传的值
 	 * @return
 	 */
-	public Serializable getReturnResultSeri(int resultCode, Intent intent,
-			String flag) {
+	public Serializable getReturnResultSeri(int resultCode, Intent intent, String flag) {
 		String defaultFlag = Config.ACTIVITY_TRANSFER_BUNDLE;
 		if (resultCode == BaseActivity.ACTIVTIY_TRANFER && intent != null) {
 			if (flag != null) {
@@ -565,7 +555,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 		return null;
 	}
 
-	/************************* 设置返回上一个activity的数据 end ******************************/
+	/*************************
+	 * 设置返回上一个activity的数据 end
+	 ******************************/
 
 	/**
 	 * 获取文件
@@ -596,21 +588,40 @@ public abstract class BaseActivity extends FragmentActivity implements
 		return bitmap;
 	}
 
-	// ----------------------------------我是本区域邪恶的分界线------------------------------------------------------
-	    /**判断用户是否登录
-	     * @return
-	     */
-      public boolean isLogin(){
-    	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(this);
-    	  String token=preferenceUtil.getString("oauth_token", "");
-    	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
-    	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
-    		 return true ;
-    	  }
-			return false;
-	 }
+	/*********** 加载数据调用 ****************************/
+	private PopView popView;
 
-	/**************************** uri 与 filepath互转 *********************************************/
+	public void loadingView(View view) {
+		popView = new PopCommonLoading(this, null, null);
+		popView.showPop(view, Gravity.CENTER, 0, 0);
+	}
+
+	public void hideLoadingView() {
+		if (popView != null) {
+			popView.mPopWindow.dismiss();
+			popView = null;
+		}
+	}
+
+	// ----------------------------------我是本区域邪恶的分界线------------------------------------------------------
+	/**
+	 * 判断用户是否登录
+	 * 
+	 * @return
+	 */
+	public boolean isLogin() {
+		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(this);
+		String token = preferenceUtil.getString("oauth_token", "");
+		String token_secret = preferenceUtil.getString("oauth_token_secret", "");
+		if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(token_secret)) {
+			return true;
+		}
+		return false;
+	}
+
+	/****************************
+	 * uri 与 filepath互转
+	 *********************************************/
 	/**
 	 * 通过视频uri获取视频文件路径
 	 * 
@@ -653,23 +664,22 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	}
 
-	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
+	/************************************
+	 * 网络请求传递，以及返回数据解析
+	 ***************************************/
 	private Request mRequst;
 	public static final int REQUEST_GET = 0;
 	public static final int REQUEST_POST = 1;
 
-	public void sendRequest(RequestParams params,
-			Class<? extends Model> modeltype, int requsetType) {
+	public void sendRequest(RequestParams params, Class<? extends Model> modeltype, int requsetType) {
 		if (params != null && modeltype != null) {
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
 			if (requsetType == REQUEST_GET) {
-				mRequst.get(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype));
+				mRequst.get(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype));
 			} else {
-				mRequst.post(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype));
+				mRequst.post(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype));
 			}
 		}
 
@@ -723,8 +733,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 		}
 
 		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
+		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			ToastUtils.showToast("请求异常");
 		}
 
@@ -745,7 +754,9 @@ public abstract class BaseActivity extends FragmentActivity implements
 
 	}
 
-	/************************************ 网络请求传递，以及返回数据解析end ***************************************/
+	/************************************
+	 * 网络请求传递，以及返回数据解析end
+	 ***************************************/
 	/************** popWindow返回的数据 *******************************/
 	public Object onPopResult(Object object) {
 		return object;

@@ -135,6 +135,7 @@ public class PatientMeActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
+		this.loadingView(ll_user);
 		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -197,6 +198,7 @@ public class PatientMeActivity extends BaseActivity {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
+		this.hideLoadingView();
 		if (object instanceof ModelMyCaseIndex) {
 			mCaseIndex = (ModelMyCaseIndex) object;
 			addInfroToView(mCaseIndex.getInfo());

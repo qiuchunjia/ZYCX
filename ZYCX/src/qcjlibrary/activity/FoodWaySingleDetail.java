@@ -2,21 +2,20 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.zhiyicx.zycx.R;
+
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.FoodFuctionGvAdapter;
 import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelFoodWayDetailInfo;
 import qcjlibrary.widget.MyGridView;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
 
 /**
  * author：qiuchunjia time：下午4:17:17 类描述：这个类是实现
@@ -92,9 +91,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
-
 		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData), ModelFoodWayDetail.class, REQUEST_GET);
-
 	}
 
 	@Override

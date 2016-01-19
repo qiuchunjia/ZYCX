@@ -1,7 +1,5 @@
 package qcjlibrary.fragment;
 
-
-
 import java.util.List;
 
 import qcjlibrary.activity.FoodCategoryActivity;
@@ -30,7 +28,6 @@ public class FragementFood extends BaseFragment {
 	@Override
 	public void initIntentData() {
 
-
 	}
 
 	@Override
@@ -51,14 +48,19 @@ public class FragementFood extends BaseFragment {
 
 	@Override
 	public void initData() {
+		sendRequest(mApp.getFoodImpl().index(), ModelFoodIndex.class, REQUEST_GET);
+	}
 
-		sendRequest(mApp.getFoodImpl().index(), ModelFoodIndex.class,
-				REQUEST_GET);
+	@Override
+	public void onResume() {
+		super.onResume();
+//		mActivity.loadingView();
 	}
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
+		mActivity.hideLoadingView();
 		if (object instanceof ModelFoodIndex) {
 			mFoodIndex = (ModelFoodIndex) object;
 			addDataToView(mFoodIndex.getFood());
@@ -79,18 +81,15 @@ public class FragementFood extends BaseFragment {
 			for (int i = 0; i < foods.size(); i++) {
 				final ModelFood food = foods.get(i);
 				view = mInflater.inflate(R.layout.item_food_choose, null);
-				TextView tv_foot_name = (TextView) view
-						.findViewById(R.id.tv_foot_name);
-				TextView tv_number = (TextView) view
-						.findViewById(R.id.tv_number);
+				TextView tv_foot_name = (TextView) view.findViewById(R.id.tv_foot_name);
+				TextView tv_number = (TextView) view.findViewById(R.id.tv_number);
 				tv_number.setText(food.getCount() + "");
 				tv_foot_name.setText(food.getType_name() + "");
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						mApp.startActivity_qcj(getActivity(),
-								FoodCategoryActivity.class,
+						mApp.startActivity_qcj(getActivity(), FoodCategoryActivity.class,
 								mActivity.sendDataToBundle(food, null));
 					}
 				});
