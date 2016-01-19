@@ -26,19 +26,16 @@ import com.zhiyicx.zycx.R;
 public class FoodWayActivity extends BaseActivity {
 	private ImageView iv_find;
 	private EditText et_find;
-
 	private TextView tv_find;
 	private LinearLayout ll_find;
 	private RelativeLayout rl_find;
 	private ImageView iv_find_main;
-
 
 	private RelativeLayout rl_content;
 	Title mTitle;
 
 	private FragementFood mFragmentFood;
 	private FragementFoodWay mFragmentFoodWay;
-
 
 	ModelFoodSearch mFoodSearch; // 搜索需要传送的数据
 
@@ -50,7 +47,6 @@ public class FoodWayActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
 
 	}
 
@@ -84,13 +80,12 @@ public class FoodWayActivity extends BaseActivity {
 		mTitle.iv_1_choose.setVisibility(View.VISIBLE);
 	}
 
-
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
+		hideLoadingView();
 		if (object instanceof ModelFoodSearchIndex) {
-			mApp.startActivity_qcj(this, FoodCategoryActivity.class,
-					sendDataToBundle(mFoodSearch, null));
+			mApp.startActivity_qcj(this, FoodCategoryActivity.class, sendDataToBundle(mFoodSearch, null));
 		} else {
 			ToastUtils.showToast("暂时没有相关内容！");
 		}
@@ -113,8 +108,7 @@ public class FoodWayActivity extends BaseActivity {
 						mFragmentFoodWay = new FragementFoodWay();
 					}
 					replaceFragment(R.id.rl_content, mFragmentFoodWay);
-					mTitle.iv_1_choose
-							.setImageResource(R.drawable.segmented_control);
+					mTitle.iv_1_choose.setImageResource(R.drawable.segmented_control);
 
 				} else {
 					isSecond = false;
@@ -123,8 +117,7 @@ public class FoodWayActivity extends BaseActivity {
 						mFragmentFood = new FragementFood();
 					}
 					replaceFragment(R.id.rl_content, mFragmentFood);
-					mTitle.iv_1_choose
-							.setImageResource(R.drawable.segmented_control_02);
+					mTitle.iv_1_choose.setImageResource(R.drawable.segmented_control_02);
 				}
 			}
 		});
@@ -154,8 +147,8 @@ public class FoodWayActivity extends BaseActivity {
 				} else {
 					mFoodSearch.setState(0);
 				}
-				sendRequest(mApp.getFoodImpl().food_search(mFoodSearch),
-						ModelFoodSearchIndex.class, REQUEST_GET);
+				this.loadingView(ll_find);
+				sendRequest(mApp.getFoodImpl().food_search(mFoodSearch), ModelFoodSearchIndex.class, REQUEST_GET);
 			}
 			break;
 		}

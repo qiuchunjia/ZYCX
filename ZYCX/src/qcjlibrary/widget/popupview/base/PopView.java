@@ -113,6 +113,11 @@ public abstract class PopView implements PopInterface {
 		return popupWindow;
 	}
 
+	public PopupWindow setPopWidthAndHeight4(View dataView) {
+		PopupWindow popupWindow = new PopupWindow(dataView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		return popupWindow;
+	}
+
 	public PopResultListener getResultListener() {
 		return mResultListener;
 	}

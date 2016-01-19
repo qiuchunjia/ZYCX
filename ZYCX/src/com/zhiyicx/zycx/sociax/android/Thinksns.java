@@ -119,8 +119,7 @@ public class Thinksns extends Application {
 		return this.getOauth().requestEncrypKey();
 	}
 
-	public void startActivity(Activity now, Class<? extends Activity> target,
-			Bundle data) {
+	public void startActivity(Activity now, Class<? extends Activity> target, Bundle data) {
 		Intent intent = new Intent();
 		intent.setClass(now, target);
 		if (data != null) {
@@ -134,8 +133,7 @@ public class Thinksns extends Application {
 		Anim.in(now);
 	}
 
-	public void startActivityForResult(Activity now,
-			Class<? extends Activity> target, Bundle data) {
+	public void startActivityForResult(Activity now, Class<? extends Activity> target, Bundle data) {
 		Intent intent = new Intent();
 		intent.setClass(now, target);
 		if (data != null) {
@@ -157,8 +155,7 @@ public class Thinksns extends Application {
 		ApproveSite as = null;
 		if (db.hasSites() == 0) {
 			as = new ApproveSite();
-			as.setUrl("http://"
-					+ getResources().getStringArray(R.array.site_url)[0]);
+			as.setUrl("http://" + getResources().getStringArray(R.array.site_url)[0]);
 			as.setName(getResources().getString(R.string.app_name));
 			db.addSites(as);
 			mCommonLog.d("save initial site ...	");
@@ -176,8 +173,7 @@ public class Thinksns extends Application {
 			this.api = Api.getInstance(getApplicationContext(), false, null);
 		} else {
 			Log.i(TAG, "app site info of db " + as.getUrl());
-			this.api = Api.getInstance(getApplicationContext(), true,
-					dealUrl(as.getUrl()));
+			this.api = Api.getInstance(getApplicationContext(), true, dealUrl(as.getUrl()));
 		}
 		Thinksns.setMySite(as);
 	}
@@ -185,18 +181,22 @@ public class Thinksns extends Application {
 	public Api getApi() {
 		return this.api;
 	}
-    /**判断用户是否登录
-     * @return
-     */
-  public boolean isLogin(){
-	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
-	  String token=preferenceUtil.getString("oauth_token", "");
-	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
-	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
-		 return true ;
-	  }
+
+	/**
+	 * 判断用户是否登录
+	 * 
+	 * @return
+	 */
+	public boolean isLogin() {
+		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
+		String token = preferenceUtil.getString("oauth_token", "");
+		String token_secret = preferenceUtil.getString("oauth_token_secret", "");
+		if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(token_secret)) {
+			return true;
+		}
 		return false;
- }
+	}
+
 	public static WeakHashMap<String, Bitmap> getImageCache() {
 		return imageCache;
 	}
@@ -227,8 +227,7 @@ public class Thinksns extends Application {
 	}
 
 	public FavoritWeiboSqlHelper getFavoritWeiboSql() {
-		FavoritWeiboSqlHelper db = FavoritWeiboSqlHelper
-				.getInstance(getApplicationContext());
+		FavoritWeiboSqlHelper db = FavoritWeiboSqlHelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
@@ -240,22 +239,19 @@ public class Thinksns extends Application {
 	}
 
 	public MyMessageSqlhelper getMyMessageSql() {
-		MyMessageSqlhelper db = MyMessageSqlhelper
-				.getInstance(getApplicationContext());
+		MyMessageSqlhelper db = MyMessageSqlhelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
 
 	public ChatMsgSqlhelper getChatMsgSql() {
-		ChatMsgSqlhelper db = ChatMsgSqlhelper
-				.getInstance(getApplicationContext());
+		ChatMsgSqlhelper db = ChatMsgSqlhelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
 
 	public MyCommentSqlHelper getMyCommentSql() {
-		MyCommentSqlHelper db = MyCommentSqlHelper
-				.getInstance(getApplicationContext());
+		MyCommentSqlHelper db = MyCommentSqlHelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
@@ -267,8 +263,7 @@ public class Thinksns extends Application {
 	}
 
 	public RemindSqlHelper getRemindSql() {
-		RemindSqlHelper db = RemindSqlHelper
-				.getInstance(getApplicationContext());
+		RemindSqlHelper db = RemindSqlHelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
@@ -280,15 +275,13 @@ public class Thinksns extends Application {
 	 */
 
 	public ChannelSqlHelper getChannelSql() {
-		ChannelSqlHelper db = ChannelSqlHelper
-				.getInstance(getApplicationContext());
+		ChannelSqlHelper db = ChannelSqlHelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
 
 	public AttachSqlHelper getAttachSqlHelper() {
-		AttachSqlHelper db = AttachSqlHelper
-				.getInstance(getApplicationContext());
+		AttachSqlHelper db = AttachSqlHelper.getInstance(getApplicationContext());
 		sqlHelper.add(db);
 		return db;
 	}
@@ -522,7 +515,9 @@ public class Thinksns extends Application {
 		getAtMeSql().clearCacheDB();
 	}
 
-	/******************************* 2015-11-6 qcj添加 ******************************************/
+	/*******************************
+	 * 2015-11-6 qcj添加
+	 ******************************************/
 	private static Thinksns mApp;
 	/** 定义一个user，整個app都用它 */
 	private static ModelUser mUser;
@@ -553,23 +548,27 @@ public class Thinksns extends Application {
 
 	// ------------------------获取缓存-----------------------------------------------------------
 	/*********************** imageLoader初始化 ***********************************/
+
 	/**
 	 * 获取保存图片的路径
 	 * 
 	 * @return
 	 */
 	public File getImagePath() {
-		File cacheDir = StorageUtils.getOwnCacheDirectory(
-				getApplicationContext(), "qingke/image");
+		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "qingke/image");
 		return cacheDir;
+	}
+
+	public File getFilePath() {
+		final File dir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "qingke/file");
+		return dir;
 	}
 
 	public ImageLoader initImageLoader() {
 		// 创建默认的ImageLoader配置参数
 		if (mImageLoader == null) {
 			File cacheDir = getImagePath();
-			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-					this)
+			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
 					.memoryCacheExtraOptions(480, 800)
 					// default = device screen dimensions
 					.threadPoolSize(3)
@@ -578,20 +577,16 @@ public class Thinksns extends Application {
 					// default
 					.tasksProcessingOrder(QueueProcessingType.FIFO)
 					// default
-					.denyCacheImageMultipleSizesInMemory()
-					.memoryCache(new LruMemoryCache(10 * 1024 * 1024))
-					.memoryCacheSize(10 * 1024 * 1024)
-					.memoryCacheSizePercentage(13)
+					.denyCacheImageMultipleSizesInMemory().memoryCache(new LruMemoryCache(10 * 1024 * 1024))
+					.memoryCacheSize(10 * 1024 * 1024).memoryCacheSizePercentage(13)
 					// default
 					.diskCache(new UnlimitedDiskCache(cacheDir))
 					// 自定义缓存路径
 					// default
-					.diskCacheSize(80 * 1024 * 1024)
-					.diskCacheFileCount(100)
+					.diskCacheSize(80 * 1024 * 1024).diskCacheFileCount(100)
 					.diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
 					.imageDownloader(new BaseImageDownloader(this)) // default
-					.defaultDisplayImageOptions(
-							DisplayImageOptions.createSimple()) // default
+					.defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
 					.writeDebugLogs().writeDebugLogs().build();
 			ImageLoader.getInstance().init(config);// 全局初始化此配置
 			mImageLoader = ImageLoader.getInstance();
@@ -633,8 +628,7 @@ public class Thinksns extends Application {
 	 */
 	public int getAppVersion(Context context) {
 		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(
-					context.getPackageName(), 0);
+			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
 			return info.versionCode;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -646,10 +640,8 @@ public class Thinksns extends Application {
 		ImageLoader loader = initImageLoader();
 		// 显示图片的配置
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.default_image_small)
-				.showImageOnFail(R.drawable.default_image_small)
-				.cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnLoading(R.drawable.default_image_small).showImageOnFail(R.drawable.default_image_small)
+				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		loader.displayImage(path, imageView, options);
 	}
 
@@ -665,8 +657,7 @@ public class Thinksns extends Application {
 	 */
 	public static ModelUser getUser() {
 		mUser = new ModelUser();
-		SharedPreferences preferences = getContext().getSharedPreferences(
-				Config.USER_DATA, MODE_PRIVATE);
+		SharedPreferences preferences = getContext().getSharedPreferences(Config.USER_DATA, MODE_PRIVATE);
 		String sex = preferences.getString(Config.SEX, "男");
 		String intro = preferences.getString(Config.INTRO, null);
 		String cancer = preferences.getString(Config.CANCER, null);
@@ -693,8 +684,8 @@ public class Thinksns extends Application {
 	 *            需要保存的用户
 	 */
 	public void saveUser(ModelUser user) {
-		SharedPreferences preferences = getApplicationContext()
-				.getSharedPreferences(Config.USER_DATA, Activity.MODE_PRIVATE);
+		SharedPreferences preferences = getApplicationContext().getSharedPreferences(Config.USER_DATA,
+				Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
 		// public static final String SEX = "sex";
 		// public static final String INTRO = "intro";
@@ -764,8 +755,7 @@ public class Thinksns extends Application {
 	// -----------------------------获取api------------------------------------------------------
 
 	// -----------------------------获取api 结束-----------------------------
-	public void startActivity_qcj(Activity now,
-			Class<? extends Activity> target, Bundle data) {
+	public void startActivity_qcj(Activity now, Class<? extends Activity> target, Bundle data) {
 		Intent intent = new Intent();
 		intent.setClass(now, target);
 		if (data != null) {
@@ -781,8 +771,7 @@ public class Thinksns extends Application {
 		Anim.in(now);
 	}
 
-	public void startActivity(Activity now, Class<? extends Activity> target,
-			Bundle data, int flag) {
+	public void startActivity(Activity now, Class<? extends Activity> target, Bundle data, int flag) {
 		Intent intent = new Intent();
 		intent.setClass(now, target);
 		intent.setFlags(flag); // 注意本行的FLAG设置
@@ -797,8 +786,7 @@ public class Thinksns extends Application {
 		Anim.in(now);
 	}
 
-	public void startActivityForResult_qcj(Activity now,
-			Class<? extends Activity> target, Bundle data) {
+	public void startActivityForResult_qcj(Activity now, Class<? extends Activity> target, Bundle data) {
 		Intent intent = new Intent();
 		intent.setClass(now, target);
 		if (data != null) {
@@ -822,8 +810,7 @@ public class Thinksns extends Application {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo mNetworkInfo = mConnectivityManager
-					.getActiveNetworkInfo();
+			NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
 			if (mNetworkInfo != null) {
 				return mNetworkInfo.isAvailable();
 			}

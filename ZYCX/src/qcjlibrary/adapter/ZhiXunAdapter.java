@@ -78,10 +78,9 @@ public class ZhiXunAdapter extends BAdapter {
 					mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_photo);
 					holder.tv_content.setText(modelZiXunDetail.getTitle());
 					holder.tv_date.setText(modelZiXunDetail.getcTime());
-					// holder.tv_from = (TextView) convertView
-					// .findViewById(R.id.tv_from);
+					holder.tv_from.setText("来自:" + modelZiXunDetail.getUname());
 					String count = modelZiXunDetail.getReadCount();
-					if(count.length() > 3){
+					if (count.length() > 3) {
 						count = "999+";
 					}
 					holder.tv_num.setText(count);

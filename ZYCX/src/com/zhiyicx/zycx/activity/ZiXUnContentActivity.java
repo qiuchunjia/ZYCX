@@ -17,8 +17,10 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -179,6 +181,20 @@ public class ZiXUnContentActivity extends BaseActivity {
 		mTitleLayout.iv_title_right3.setVisibility(View.VISIBLE);
 		mTitleLayout.iv_title_right3.setOnClickListener(this);
 		mCmtEdit.setOnClickListener(this);
+		mContent.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					if (mFaceView.getVisibility() == View.VISIBLE) {
+						mFaceView.setVisibility(View.GONE);
+					}
+					SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), mCmtEdit);
+				}
+				return false;
+			}
+		});
+		// 点击后隐藏标签和输入框 如果有的话
 	}
 
 	@Override

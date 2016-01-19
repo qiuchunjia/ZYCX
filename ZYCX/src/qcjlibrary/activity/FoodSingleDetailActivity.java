@@ -87,9 +87,13 @@ public class FoodSingleDetailActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getFoodImpl().food_detail(mFoodData),
-				ModelFoodIdDetail.class, REQUEST_GET);
+		sendRequest(mApp.getFoodImpl().food_detail(mFoodData), ModelFoodIdDetail.class, REQUEST_GET);
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	@Override
@@ -146,8 +150,7 @@ public class FoodSingleDetailActivity extends BaseActivity {
 
 				String[] dataArray = foodeffect.split("，");
 				Log.i("effect", dataArray.toString());
-				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this,
-						dataArray);
+				FoodFuctionGvAdapter adapter = new FoodFuctionGvAdapter(this, dataArray);
 				gv_function.setAdapter(adapter);
 			}
 			tv_category_value.setText(info.getFood_forcancer());

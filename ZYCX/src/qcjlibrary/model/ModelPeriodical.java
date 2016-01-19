@@ -7,6 +7,7 @@ import qcjlibrary.model.base.Model;
 public class ModelPeriodical extends Model {
 	/**
 	 * 期刊首页数据
+	 * 
 	 * @author Tan
 	 * @since 1.6
 	 */
@@ -17,31 +18,30 @@ public class ModelPeriodical extends Model {
 	private String pid;
 	private String periodical_name;
 	private String sort;
+	private String lastsort;
 
-	
-	
 	public ModelPeriodical() {
 		super();
 	}
-	
+
 	public ModelPeriodical(JSONObject data) {
 		try {
-			if(data.has("cover")){
+			if (data.has("cover")) {
 				setCover(data.getString("cover"));
 			}
-			if(data.has("periodical_num")){
+			if (data.has("periodical_num")) {
 				setPeriodical_num(data.getString("periodical_num"));
 			}
-			if(data.has("ctime")){
+			if (data.has("ctime")) {
 				setCtime(data.getString("ctime"));
 			}
-			if(data.has("pid")){
+			if (data.has("pid")) {
 				setPid(data.getString("pid"));
 			}
-			if(data.has("periodical_name")){
+			if (data.has("periodical_name")) {
 				setPeriodical_name(data.getString("periodical_name"));
 			}
-			if(data.has("sort")){
+			if (data.has("sort")) {
 				setSort(data.getString("sort"));
 			}
 		} catch (Exception e) {
@@ -95,5 +95,17 @@ public class ModelPeriodical extends Model {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public String getLastsort() {
+		return lastsort;
+	}
+
+	public void setLastsort(String lastsort) {
+		this.lastsort = lastsort;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

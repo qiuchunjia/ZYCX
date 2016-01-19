@@ -30,7 +30,6 @@ import com.zhiyicx.zycx.R;
 
 public class MePerioAdapter extends BAdapter {
 
-	
 	public MePerioAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 	}
@@ -72,12 +71,9 @@ public class MePerioAdapter extends BAdapter {
 	 */
 	private void initView(View convertView, ViewHolder holder) {
 		if (convertView != null && holder != null) {
-			holder.iv_perio_icon = (ImageView) convertView
-					.findViewById(R.id.iv_perio_icon);
-			holder.tv_title = (TextView) convertView
-					.findViewById(R.id.tv_title);
-			holder.tv_title_flag = (TextView) convertView
-					.findViewById(R.id.tv_title_flag);
+			holder.iv_perio_icon = (ImageView) convertView.findViewById(R.id.iv_perio_icon);
+			holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+			holder.tv_title_flag = (TextView) convertView.findViewById(R.id.tv_title_flag);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 		}
 	}
@@ -89,18 +85,19 @@ public class MePerioAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		if(item instanceof ModelPeriodical){
-			ModelPeriodical mData = (ModelPeriodical) item;
-			mData.setLastid(mData.getSort()+"");
-			requstMessage(mData, REFRESH_HEADER);
-		}
+		// if(item instanceof ModelPeriodical){
+		// ModelPeriodical mData = (ModelPeriodical) item;
+		// mData.setLastid(mData.getSort()+"");
+		// requstMessage(mData, REFRESH_HEADER);
+		// }
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		if(item instanceof ModelPeriodical){
+		if (item instanceof ModelPeriodical) {
 			ModelPeriodical mData = (ModelPeriodical) item;
-			mData.setMaxid(mData.getSort()+"");
+			mData.setLastsort(mData.getSort());
 			requstMessage(mData, REFRESH_FOOTER);
 		}
 	}
@@ -111,10 +108,9 @@ public class MePerioAdapter extends BAdapter {
 		return 0;
 	}
 
-
 	@Override
 	public Object getReallyList(Object object, Class type2) {
-		if(object instanceof List<?>){
+		if (object instanceof List<?>) {
 			@SuppressWarnings("unchecked")
 			List<ModelPeriodical> list = (List<ModelPeriodical>) object;
 			return list;
@@ -126,7 +122,7 @@ public class MePerioAdapter extends BAdapter {
 		PeriodicalImpl impl = new PeriodicalImpl();
 		sendRequest(impl.index(mData), ModelPeriodical.class, REQUEST_GET, type);
 	}
-	
+
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		// TODO 自动生成的方法存根

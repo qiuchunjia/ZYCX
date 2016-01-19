@@ -353,7 +353,7 @@
                 android:layout_toRightOf="@id/tv_now_histroy"
                 android:background="@drawable/view_border_green_white_3"
                 android:gravity="center"
-                android:text="编辑"
+                android:text="添加"
                 android:textColor="@color/text_green"
                 android:textSize="@dimen/text_common" />
 
@@ -385,7 +385,6 @@
             android:background="@color/main_white_pure_color"
             android:gravity="start"
             android:orientation="vertical"
-            
             android:padding="@dimen/margin_left_small" >
 
             <LinearLayout
@@ -399,8 +398,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="提交时间:2015-01-01"
                     android:maxLines="2"
+                    android:text="提交时间:2015-01-01"
                     android:textColor="#C9CCC9"
                     android:textSize="@dimen/text_small" />
 
@@ -410,8 +409,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="处理时间:2015-01-01"
                     android:maxLines="2"
+                    android:text="处理时间:2015-01-01"
                     android:textColor="#C9CCC9"
                     android:textSize="@dimen/text_small" />
             </LinearLayout>

@@ -1,10 +1,10 @@
 package qcjlibrary.activity;
 
 import com.zhiyicx.zycx.R;
+
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import qcjlibrary.activity.base.BaseActivity;
 
 public class BannerDetailActivity extends BaseActivity {
@@ -37,7 +37,6 @@ public class BannerDetailActivity extends BaseActivity {
 	public void initData() {
 		mUrl = "http://" + mUrl;
 		view_qikan.loadUrl(mUrl);
-
 	}
 
 	@Override

@@ -58,6 +58,7 @@ public class api {
 
 	public static final String APPNAME = "3g";
 	public static final String API = "api";
+	public static final String LASTSORT = "lastsort";
 
 	/**
 	 * 添加token到params
@@ -258,12 +259,10 @@ public class api {
 			params.add(APP, APPNAME);
 			params.add(MOD, PERIODICAL);
 			params.add(ACT, INDEX);
-			if (mData.getLastid() != null && mData.getLastid().equals("")) {
-				params.add(LASTID, mData.getLastid());
+			if (!TextUtils.isEmpty(mData.getLastsort())) {
+				params.add(LASTSORT, mData.getLastsort());
 			}
-			if (mData.getMaxid() != null && !mData.getMaxid().equals("")) {
-				params.add(MAXID, mData.getMaxid());
-			}
+			Log.i("PeriodicalImpl_index", params.toString());
 			return params;
 		}
 
@@ -847,7 +846,7 @@ public class api {
 				params.add(PROFESSION, addCase.getProfession());
 				params.add(EDUCATION, addCase.getEducation());
 				params.add(INSFORM, addCase.getInsform());
-				params.add(NATIVES, addCase.getNation());
+				params.add(NATIVES, addCase.getNatives());
 				params.add(DOMICILE, addCase.getDomicile());
 				params.add(HEIGHT, addCase.getHeight());
 				params.add(WEIGHT, addCase.getWeight());

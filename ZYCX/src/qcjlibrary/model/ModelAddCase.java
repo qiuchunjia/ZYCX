@@ -1,5 +1,7 @@
 package qcjlibrary.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import qcjlibrary.model.base.Model;
 
 /**
@@ -44,10 +46,12 @@ public class ModelAddCase extends Model {
 	private String profession;
 	private String education;
 	private String insform;
+	@SerializedName("native")
 	private String natives;
 	private String domicile;
 	private String height;
 	private String weight;
+	private String url;
 
 	public String getRealname() {
 		return realname;
@@ -147,6 +151,14 @@ public class ModelAddCase extends Model {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

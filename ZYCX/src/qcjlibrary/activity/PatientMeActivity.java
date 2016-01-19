@@ -1,7 +1,27 @@
 
 package qcjlibrary.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.http.Header;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.zhiyicx.zycx.R;
+
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelAddCase;
 import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelAddNowCase;
@@ -11,18 +31,8 @@ import qcjlibrary.model.ModelImage;
 import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMyCaseIndex;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.L;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import java.util.List;
-
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.sociax.android.Thinksns;
-import com.zhiyicx.zycx.util.PreferenceUtil;
+import qcjlibrary.util.ToastUtils;
+import qcjlibrary.widget.popupview.PopImportFile;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -54,11 +64,11 @@ public class PatientMeActivity extends BaseActivity {
 	private TextView tv_first;
 	private TextView tv_child;
 	private TextView tv_family;
-	/** 数据展示项**/
+	/** 数据展示项 **/
 	private LinearLayout ll_user;
 	private LinearLayout ll_once;
 	private LinearLayout ll_now;
-	/** 缺省页**/
+	/** 缺省页 **/
 	private LinearLayout defautl_1;
 	private LinearLayout defautl_2;
 	private LinearLayout defautl_3;
@@ -67,7 +77,9 @@ public class PatientMeActivity extends BaseActivity {
 	private TextView tv_now_edit2;
 	private TextView tv_commit_time;
 	private TextView tv_deal_time;
-	
+
+	private ModelMyCaseIndex mCaseIndex;
+
 	@Override
 	public String setCenterTitle() {
 		return "我的病历";
@@ -85,7 +97,7 @@ public class PatientMeActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
-		//titleSetRightImage(R.drawable.);
+		titleSetRightImage(R.drawable.daochu);
 		tv_edit = (TextView) findViewById(R.id.tv_edit);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_gender = (TextView) findViewById(R.id.tv_gender);
@@ -112,7 +124,7 @@ public class PatientMeActivity extends BaseActivity {
 		tv_family = (TextView) findViewById(R.id.tv_family);
 		tv_commit_time = (TextView) findViewById(R.id.tv_commit_time);
 		tv_deal_time = (TextView) findViewById(R.id.tv_deal_time);
-		
+
 		ll_user = (LinearLayout) findViewById(R.id.ll_user);
 		ll_once = (LinearLayout) findViewById(R.id.ll_once);
 		ll_now = (LinearLayout) findViewById(R.id.ll_now);
@@ -123,18 +135,75 @@ public class PatientMeActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getMedRecordImpl().myMedRecord(),
-				ModelMyCaseIndex.class, REQUEST_GET);
+		this.loadingView(ll_user);
+		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
+		Title title = getTitleClass();
+		title.iv_title_right1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mCaseIndex == null) {
+					ToastUtils.showToast("暂无病例信息");
+					sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
+					return;
+				}
+				if (!TextUtils.isEmpty(mCaseIndex.getInfo().getUrl())) {
+					downloadFile(mCaseIndex.getInfo().getUrl(), mApp.getFilePath().toString(), "病例导出.png");
+				} else {
+					ToastUtils.showToast("暂无病例信息");
+				}
+			}
+		});
+	}
+
+	/**
+	 * 下载文件
+	 */
+	private void downloadFile(String fileUrl, final String dir, String filename) {
+		final File file = new File(dir);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		final File wholeFile = new File(dir + "/" + filename);
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get(fileUrl, new AsyncHttpResponseHandler() {
+
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				ToastUtils.showToast("导出失败！");
+			}
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				if (arg0 == 200) {
+					FileOutputStream outputStream;
+					try {
+						outputStream = new FileOutputStream(wholeFile);
+						outputStream.write(arg2, 0, arg2.length);
+						PopImportFile importFile = new PopImportFile(PatientMeActivity.this, dir.toString(), null);
+						importFile.showPop(ll_user, Gravity.CENTER, 0, 0);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
 	}
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
+		this.hideLoadingView();
 		if (object instanceof ModelMyCaseIndex) {
-			ModelMyCaseIndex caseIndex = (ModelMyCaseIndex) object;
-			addInfroToView(caseIndex.getInfo());
-			addHistroyToView(caseIndex.getHistory());
-			addPresentToView(caseIndex.getPresent());
+			mCaseIndex = (ModelMyCaseIndex) object;
+			addInfroToView(mCaseIndex.getInfo());
+			addHistroyToView(mCaseIndex.getHistory());
+			addPresentToView(mCaseIndex.getPresent());
 		}
 		return object;
 	}
@@ -164,7 +233,7 @@ public class PatientMeActivity extends BaseActivity {
 			tv_job.setText("职业：" + info.getProfession());
 			tv_education.setText("文化程度：" + info.getEducation());
 			tv_pretect.setText("保险形式：" + info.getInsform());
-			tv_hometown.setText("籍贯：" + info.getDomicile());
+			tv_hometown.setText("籍贯：" + info.getNatives());
 			tv_address.setText("居住地：" + info.getDomicile()); // TODO
 			tv_height.setText("身高：" + info.getHeight() + "cm");
 			tv_weight.setText("体重：" + info.getWeight() + "kg");
@@ -208,7 +277,7 @@ public class PatientMeActivity extends BaseActivity {
 			 * 
 			 * 
 			 * 
-			 * *****/
+			 *****/
 			tv_drink.setText("饮酒：");
 			if (history.getDrink().equals("1")) {
 				tv_drink.append("饮酒，");
@@ -228,25 +297,25 @@ public class PatientMeActivity extends BaseActivity {
 			tv_family.setText("家族史：" + history.getFamily_history());
 		}
 	}
-	
+
 	/**
 	 * 添加现病史到界面
 	 * 
 	 * @param present
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
-		if(present != null){
+		if (present != null) {
 			ll_now.setVisibility(View.VISIBLE);
 			defautl_3.setVisibility(View.GONE);
-			tv_commit_time.setText("提交时间："+present.getCtime());
-			tv_deal_time.setText("处理时间："+present.getUtime());
+			tv_commit_time.setText("提交时间：" + present.getCtime());
+			tv_deal_time.setText("处理时间：" + present.getUtime());
 			/**
 			 * 添加诊断过程
-			 * */
+			 */
 			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
-			if(diagnosis_result != null && diagnosis_result.size() > 0){
+			if (diagnosis_result != null && diagnosis_result.size() > 0) {
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
-				//初始化控件
+				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
 				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
 				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
@@ -255,17 +324,17 @@ public class PatientMeActivity extends BaseActivity {
 				ll_now.addView(item);
 				ModelDiagnosis diagnosis = present.getDiagnosis();
 				tv_title.setText("诊断过程");
-				tv_time.setText("开始时间:"+diagnosis.getDiagnosis_stime());
-				tv_hospital.setText("医院:"+diagnosis.getDiagnosis_hospital());
+				tv_time.setText("开始时间:" + diagnosis.getDiagnosis_stime());
+				tv_hospital.setText("医院:" + diagnosis.getDiagnosis_hospital());
 				setResultView(diagnosis_result, ll_present_result);
 			}
 			/**
 			 * 添加实验室检查
-			 * */
+			 */
 			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
-			if(lab_result != null && lab_result.size() > 0){
+			if (lab_result != null && lab_result.size() > 0) {
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
-				//初始化控件
+				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
 				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
 				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
@@ -273,17 +342,17 @@ public class PatientMeActivity extends BaseActivity {
 				ll_now.addView(item);
 				ModelLab lab = present.getLab_exam();
 				tv_title.setText("实验室检查");
-				tv_time.setText("检查时间:"+lab.getLab_exam_time());
-				tv_hospital.setText("医院:"+lab.getLab_exam_hospital());
+				tv_time.setText("检查时间:" + lab.getLab_exam_time());
+				tv_hospital.setText("医院:" + lab.getLab_exam_hospital());
 				setResultView(lab_result, ll_present_result);
 			}
 			/**
 			 * 添加影像检查
-			 * */
+			 */
 			List<Result> img_result = present.getImage_exam().getImage_exam_result();
-			if(img_result != null && img_result.size() > 0){
+			if (img_result != null && img_result.size() > 0) {
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
-				//初始化控件
+				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
 				TextView tv_time = (TextView) item.findViewById(R.id.tv_time);
 				TextView tv_hospital = (TextView) item.findViewById(R.id.tv_hospital);
@@ -291,20 +360,23 @@ public class PatientMeActivity extends BaseActivity {
 				ll_now.addView(item);
 				ModelImage imgData = present.getImage_exam();
 				tv_title.setText("影像学检查");
-				tv_time.setText("检查时间:"+imgData.getImage_exam_time());
-				tv_hospital.setText("医院:"+imgData.getImage_exam_hospital());
+				tv_time.setText("检查时间:" + imgData.getImage_exam_time());
+				tv_hospital.setText("医院:" + imgData.getImage_exam_hospital());
 				setResultView(img_result, ll_present_result);
 			}
-			
+
 		}
 	}
 
 	/**
 	 * 设置返回结果布局
-	 * @param List<Result> list
-	 * @param LinearLayout ll_present_result
-	 * */
-	private void setResultView(List<Result> list, LinearLayout ll_present_result){
+	 * 
+	 * @param List<Result>
+	 *            list
+	 * @param LinearLayout
+	 *            ll_present_result
+	 */
+	private void setResultView(List<Result> list, LinearLayout ll_present_result) {
 		for (int i = 0; i < list.size(); i++) {
 			View resultItem = LayoutInflater.from(this).inflate(R.layout.item_present_result, null);
 			ll_present_result.addView(resultItem);
@@ -312,10 +384,10 @@ public class PatientMeActivity extends BaseActivity {
 			TextView tv_field = (TextView) resultItem.findViewById(R.id.tv_field);
 			Result mResult = list.get(i);
 			tv_list_name.setText(mResult.getList_name());
-			tv_field.setText(mResult.getField_name()+":"+mResult.getField_value());
+			tv_field.setText(mResult.getField_name() + ":" + mResult.getField_value());
 		}
 	}
-	
+
 	@Override
 	public void initListener() {
 		tv_edit.setOnClickListener(this);
@@ -327,17 +399,14 @@ public class PatientMeActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_edit:
-			mApp.startActivity_qcj(this, PatientInforActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientInforActivity.class, sendDataToBundle(new Model(), null));
 			break;
 
 		case R.id.tv_edit2:
-			mApp.startActivity_qcj(this, PatientHistoryActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.tv_now_edit2:
-			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class,
-					sendDataToBundle(null, null));
+			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(null, null));
 			break;
 
 		}
