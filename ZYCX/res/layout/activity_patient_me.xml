@@ -385,13 +385,7 @@
             android:background="@color/main_white_pure_color"
             android:gravity="start"
             android:orientation="vertical"
-<<<<<<< HEAD
-            android:padding="@dimen/margin_left_small"
-            android:visibility="gone" >
-=======
-            
             android:padding="@dimen/margin_left_small" >
->>>>>>> 22ca6560aa715a0f23535da60afdbb3078e07680
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -404,8 +398,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="提交时间:2015-01-01"
                     android:maxLines="2"
+                    android:text="提交时间:2015-01-01"
                     android:textColor="#C9CCC9"
                     android:textSize="@dimen/text_small" />
 
@@ -415,8 +409,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="处理时间:2015-01-01"
                     android:maxLines="2"
+                    android:text="处理时间:2015-01-01"
                     android:textColor="#C9CCC9"
                     android:textSize="@dimen/text_small" />
             </LinearLayout>
