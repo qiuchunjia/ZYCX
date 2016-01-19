@@ -48,6 +48,7 @@ public class ModelAddCase extends Model {
 	private String domicile;
 	private String height;
 	private String weight;
+	private String url;
 
 	public String getRealname() {
 		return realname;
@@ -149,4 +150,13 @@ public class ModelAddCase extends Model {
 		return serialVersionUID;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	
 }
