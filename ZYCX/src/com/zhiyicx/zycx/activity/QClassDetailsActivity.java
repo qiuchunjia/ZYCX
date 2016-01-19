@@ -1,10 +1,28 @@
 package com.zhiyicx.zycx.activity;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMSsoHandler;
+import com.zhiyicx.zycx.LoginActivity;
+import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.adapter.ListFragmentAdapter;
+import com.zhiyicx.zycx.config.MyConfig;
+import com.zhiyicx.zycx.fragment.ClassCmtFragment;
+import com.zhiyicx.zycx.fragment.ClassDetailsFragment;
+import com.zhiyicx.zycx.fragment.ClassListFragment;
+import com.zhiyicx.zycx.net.JsonDataListener;
+import com.zhiyicx.zycx.net.NetComTools;
+import com.zhiyicx.zycx.util.Utils;
+import com.zhiyicx.zycx.widget.PagerSlidingTabStrip;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,19 +32,14 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
-import android.webkit.WebChromeClient.CustomViewCallback;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import qcjlibrary.activity.QclassCmtSendActivity;
 import qcjlibrary.activity.base.BaseActivity;
@@ -35,31 +48,7 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelQclassDetail;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.util.L;
-import qcjlibrary.widget.popupview.PopQclassCmt;
 import qcjlibrary.widget.popupview.PopShareContent;
-
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.sso.UMSsoHandler;
-import com.zhiyicx.zycx.LoginActivity;
-import com.zhiyicx.zycx.R;
-import com.zhiyicx.zycx.config.MyConfig;
-import com.zhiyicx.zycx.fragment.ClassCmtFragment;
-import com.zhiyicx.zycx.fragment.ClassDetailsFragment;
-import com.zhiyicx.zycx.fragment.ClassListFragment;
-import com.zhiyicx.zycx.adapter.ListFragmentAdapter;
-import com.zhiyicx.zycx.net.JsonDataListener;
-import com.zhiyicx.zycx.net.NetComTools;
-import com.zhiyicx.zycx.net.StringDataListener;
-import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
-import com.zhiyicx.zycx.util.Utils;
-import com.zhiyicx.zycx.widget.PagerSlidingTabStrip;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 /**
  * 轻课堂详细界面
