@@ -372,6 +372,8 @@ public abstract class BAdapter extends BaseAdapter {
 						if (object instanceof ModelMsg) {
 							if (!TextUtils.isEmpty(((ModelMsg) object).getMessage())) {
 								ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+							} else {
+								ToastUtils.showToast("没有更多数据了！");
 							}
 							dismissTheProgress();
 						} else {

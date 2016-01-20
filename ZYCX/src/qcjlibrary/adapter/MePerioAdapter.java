@@ -1,25 +1,21 @@
 package qcjlibrary.adapter;
 
 import java.util.List;
-import qcjlibrary.activity.base.BaseActivity;
-import qcjlibrary.adapter.base.BAdapter;
-import qcjlibrary.adapter.base.ViewHolder;
-import qcjlibrary.api.api.PeriodicalImpl;
-import qcjlibrary.api.api.ZhiXunImpl;
-import qcjlibrary.fragment.base.BaseFragment;
-import qcjlibrary.model.ModelPeriodical;
-import qcjlibrary.model.ModelPeriodicalIndex;
-import qcjlibrary.model.ModelZiXun;
-import qcjlibrary.model.ModelZiXunDetail;
-import qcjlibrary.model.base.Model;
-import qcjlibrary.response.DataAnalyze;
-import qcjlibrary.util.L;
+
+import com.zhiyicx.zycx.R;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.zhiyicx.zycx.R;
+import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.adapter.base.ViewHolder;
+import qcjlibrary.api.api.PeriodicalImpl;
+import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelPeriodical;
+import qcjlibrary.model.base.Model;
+import qcjlibrary.response.DataAnalyze;
 
 /**
  * author：qiuchunjia time：下午5:06:10

@@ -23,9 +23,8 @@ import android.widget.ListAdapter;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /** listview的基类 ，任何listview都可以继承它，减少代码的冗余 */
-public abstract class BaseListView extends XListView implements
-		XListView.IXListViewListener {
-	private static final int MAX_COUNT = 12; // 小于这个就隐藏footer或者显示出来
+public abstract class BaseListView extends XListView implements XListView.IXListViewListener {
+	private static final int MAX_COUNT = 11; // 小于这个就隐藏footer或者显示出来
 
 	public BaseListView(Context context) {
 		super(context, null);
@@ -38,8 +37,6 @@ public abstract class BaseListView extends XListView implements
 		initSet(context);
 		initXListView();
 	}
-
-
 
 	// /** mlist數據 */
 	private List<Model> mList;
@@ -119,8 +116,7 @@ public abstract class BaseListView extends XListView implements
 	}
 
 	private String getTime() {
-		return new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA)
-				.format(new Date());
+		return new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA).format(new Date());
 	}
 
 	/**
