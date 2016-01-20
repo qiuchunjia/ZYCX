@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.renn.rennsdk.oauth.ResourcesUtils;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
@@ -137,6 +138,7 @@ public class SearchNewActivity extends BaseActivity {
 		mViewpager.setCurrentItem(index);
 		toX = offset * index;
 		setLineAnimator(fromX, toX);
+		setTabColor(index);
 	}
 
 	@Override
@@ -196,6 +198,7 @@ public class SearchNewActivity extends BaseActivity {
 			public void onPageSelected(int arg0) {
 				toX = offset * arg0;
 				setLineAnimator(fromX, toX);
+				setTabColor(index);
 				fromX = toX;
 			}
 
@@ -267,6 +270,7 @@ public class SearchNewActivity extends BaseActivity {
 			// 传入起止位置，开启动画
 			toX = offset * index;
 			setLineAnimator(fromX, toX);
+			setTabColor(index);
 			// 将前一个结束位置重置为开始位置
 			fromX = toX;
 		}
@@ -336,5 +340,35 @@ public class SearchNewActivity extends BaseActivity {
 	private void setLineAnimator(float fromX, float toX) {
 		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX)
 				.setDuration(500).start();
+	}
+	
+	private void setTabColor(int index){
+		int black = getResources().getColor(R.color.text_black);
+		int green = getResources().getColor(R.color.text_green);
+		tv_webo.setTextColor(black);
+		tv_request.setTextColor(black);
+		tv_zhixun.setTextColor(black);
+		tv_qclass.setTextColor(black);
+		tv_food.setTextColor(black);
+		switch (index) {
+		case 0:
+			tv_webo.setTextColor(green);
+			break;
+		case 1:
+			tv_request.setTextColor(green);
+			break;
+		case 2:
+			tv_zhixun.setTextColor(green);
+			break;
+		case 3:
+			tv_qclass.setTextColor(green);
+			break;
+		case 4:
+			tv_food.setTextColor(green);
+			break;
+
+		default:
+			break;
+		}
 	}
 }
