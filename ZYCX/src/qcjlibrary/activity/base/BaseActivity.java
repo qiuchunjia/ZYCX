@@ -26,6 +26,7 @@ import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.util.PreferenceUtil;
 
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -42,6 +43,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -720,8 +722,10 @@ public abstract class BaseActivity extends FragmentActivity
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			ToastUtils.showToast("请求异常");
+			//ToastUtils.showToast("请求异常");
 			LoadingDialogUtl.hideLoadingView();
+			//请求异常，展示提示图
+			onRequestFailed();
 		}
 
 		@Override
@@ -736,10 +740,30 @@ public abstract class BaseActivity extends FragmentActivity
 				String result = new String(arg2);
 				Log.i("test", result.toString());
 				LoadingDialogUtl.hideLoadingView();
+				onRequestSuccess();
 				onResponceSuccess(result, type);
 			}
 		}
 
+	}
+	
+	/** 缺省视图**/
+	private View view;
+	private View getDefaultView(){
+		view = LayoutInflater.from(this).inflate(R.layout.common_default_layout, null);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
+				LayoutParams.MATCH_PARENT, Gravity.CENTER);
+		view.setLayoutParams(params);
+		return view;
+	}
+	public View onRequestFailed(){
+		return getDefaultView();
+	}
+	
+	public View onRequestSuccess(){
+		View view = getDefaultView();
+		view.setVisibility(View.GONE);
+		return view;
 	}
 
 	/************************************

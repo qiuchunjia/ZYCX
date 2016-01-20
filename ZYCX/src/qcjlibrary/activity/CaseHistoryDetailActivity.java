@@ -3,7 +3,10 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.model.ModelCaseRecord;
 import qcjlibrary.model.ModelCaseRecordResult;
+import qcjlibrary.model.ModelExperienceDetail;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -19,6 +22,11 @@ public class CaseHistoryDetailActivity extends BaseActivity {
 	private TextView tv_detail_title;
 	private TextView tv_content;
 	private ModelCaseRecord mRecord;
+	/** 网络异常时的缺省图 **/
+	private View defaultView;
+	private boolean isFirst = false;
+	private LinearLayout ll_casehistorydetail_parent;
+	private int count;
 
 	@Override
 	public String setCenterTitle() {
@@ -40,13 +48,14 @@ public class CaseHistoryDetailActivity extends BaseActivity {
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		tv_detail_title = (TextView) findViewById(R.id.tv_detail_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
-
+		ll_casehistorydetail_parent = (LinearLayout) findViewById(R.id.ll_casehistorydetail_parent);
 	}
 
 	@Override
 	public void initData() {
 		sendRequest(mApp.getMedRecordImpl().resultInfo(mRecord),
 				ModelCaseRecordResult.class, REQUEST_GET);
+		count = ll_casehistorydetail_parent.getChildCount();
 	}
 
 	@Override
@@ -88,4 +97,42 @@ public class CaseHistoryDetailActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getMedRecordImpl().resultInfo(mRecord),
+						ModelCaseRecordResult.class, REQUEST_GET);
+			}
+		});
+		for (int i = 0; i < count; i++) {
+			ll_casehistorydetail_parent.getChildAt(i).setVisibility(View.GONE);
+		}
+		if(!isFirst){
+			isFirst = true;
+			ll_casehistorydetail_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+		
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		for (int i = 0; i < count; i++) {
+			ll_casehistorydetail_parent.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		if(defaultView != null){
+			defaultView.setVisibility(View.GONE);
+		}
+		return defaultView;
+	}
+	
 }

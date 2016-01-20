@@ -6,12 +6,15 @@ import com.zhiyicx.zycx.R;
 
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.ExperienceCycleAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.model.ModelCaseRecordResult;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.ModelExperiencePostDetail;
 import qcjlibrary.model.ModelExperiencePostDetailInfo;
@@ -39,6 +42,12 @@ public class ExperienceCycleActivity extends BaseActivity {
 	public TextView tv_flag_value3;
 
 	private ModelExperiencePostDetail mDetail;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = false;
+	private int count;
+	private LinearLayout ll_experiencecycle_parent;
 
 	@Override
 	public String setCenterTitle() {
@@ -64,6 +73,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 		tv_flag_value1 = (TextView) findViewById(R.id.tv_flag_value1);
 		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
 		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
+		ll_experiencecycle_parent = (LinearLayout) findViewById(R.id.ll_experiencecycle_parent);
 
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
@@ -78,6 +88,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		sendRequest(mApp.getExperienceImpl().postDetail(mItemData), ModelExperiencePostDetail.class, REQUEST_GET);
 		setTagViewGone();
+		count = ll_experiencecycle_parent.getChildCount();
 	}
 
 	private void setTagViewGone() {
@@ -166,5 +177,41 @@ public class ExperienceCycleActivity extends BaseActivity {
 			break;
 
 		}
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getExperienceImpl().postDetail(mItemData), 
+						ModelExperiencePostDetail.class, REQUEST_GET);
+			}
+		});
+		for (int i = 0; i < count; i++) {
+			ll_experiencecycle_parent.getChildAt(i).setVisibility(View.GONE);
+		}
+		if(!isFirst){
+			isFirst = true;
+			ll_experiencecycle_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		for (int i = 0; i < count; i++) {
+			ll_experiencecycle_parent.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		if(defaultView != null){
+			defaultView.setVisibility(View.GONE);
+		}
+		return defaultView;
 	}
 }
