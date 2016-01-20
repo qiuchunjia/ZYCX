@@ -198,7 +198,7 @@ public class SearchNewActivity extends BaseActivity {
 			public void onPageSelected(int arg0) {
 				toX = offset * arg0;
 				setLineAnimator(fromX, toX);
-				setTabColor(index);
+				setTabColor(arg0);
 				fromX = toX;
 			}
 
