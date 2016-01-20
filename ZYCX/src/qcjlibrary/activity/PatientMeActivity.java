@@ -77,6 +77,7 @@ public class PatientMeActivity extends BaseActivity {
 	private TextView tv_now_edit2;
 	private TextView tv_commit_time;
 	private TextView tv_deal_time;
+	private LinearLayout ll_time;
 
 	private ModelMyCaseIndex mCaseIndex;
 
@@ -131,6 +132,7 @@ public class PatientMeActivity extends BaseActivity {
 		defautl_1 = (LinearLayout) findViewById(R.id.defautl_1);
 		defautl_2 = (LinearLayout) findViewById(R.id.defautl_2);
 		defautl_3 = (LinearLayout) findViewById(R.id.defautl_3);
+		ll_time = (LinearLayout) findViewById(R.id.ll_time);
 	}
 
 	@Override
@@ -303,6 +305,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
 		if (present != null) {
+			ll_time.setVisibility(View.VISIBLE);
 			ll_now.setVisibility(View.VISIBLE);
 			defautl_3.setVisibility(View.GONE);
 			tv_commit_time.setText("提交时间：" + present.getCtime());
