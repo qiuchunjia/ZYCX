@@ -22,7 +22,6 @@ import com.zhiyicx.zycx.R;
 
 public class FragementFood extends BaseFragment {
 	private LinearLayout ll_food; // 用于动态添加布局文件
-
 	private ModelFoodIndex mFoodIndex;
 
 	@Override
@@ -38,6 +37,7 @@ public class FragementFood extends BaseFragment {
 	@Override
 	public void initView() {
 		ll_food = (LinearLayout) findViewById(R.id.ll_food);
+		findViewById(R.id.iv_xuxian).setVisibility(View.GONE);
 		findViewById(R.id.rl_cancer_category).setVisibility(View.GONE);
 		findViewById(R.id.rl_cancer).setVisibility(View.GONE);
 	}
@@ -54,13 +54,12 @@ public class FragementFood extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		mActivity.loadingView();
+		// mActivity.loadingView();
 	}
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
-		mActivity.hideLoadingView();
 		if (object instanceof ModelFoodIndex) {
 			mFoodIndex = (ModelFoodIndex) object;
 			addDataToView(mFoodIndex.getFood());

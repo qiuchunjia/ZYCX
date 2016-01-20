@@ -112,7 +112,7 @@
     <string name="qclass_tab_5">养生抄</string>
 
     <string-array name="site_url">
-         /*****测试用这个demo-qingko.zhiyicx.com/****正式用www.qingko.com/***/                        <item>demo-qingko.zhiyicx.com/</item>
+         /*****测试用这个demo-qingko.zhiyicx.com/****正式用www.qingko.com/***/                                 <item>demo-qingko.zhiyicx.com/</item>
         <item>/index.php</item>
     </string-array>
 

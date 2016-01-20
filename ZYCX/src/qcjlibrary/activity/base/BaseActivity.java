@@ -42,7 +42,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,10 +60,9 @@ import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.response.HttpResponceListener;
 import qcjlibrary.util.Anim;
 import qcjlibrary.util.BitmapUtil;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Uri2Path;
-import qcjlibrary.widget.popupview.PopCommonLoading;
-import qcjlibrary.widget.popupview.base.PopView;
 import qcjlibrary.widget.popupview.base.PopView.PopResultListener;
 
 /**
@@ -589,19 +587,6 @@ public abstract class BaseActivity extends FragmentActivity
 	}
 
 	/*********** 加载数据调用 ****************************/
-	private PopView popView;
-
-	public void loadingView(View view) {
-		popView = new PopCommonLoading(this, null, null);
-		popView.showPop(view, Gravity.CENTER, 0, 0);
-	}
-
-	public void hideLoadingView() {
-		if (popView != null) {
-			popView.mPopWindow.dismiss();
-			popView = null;
-		}
-	}
 
 	// ----------------------------------我是本区域邪恶的分界线------------------------------------------------------
 	/**
@@ -673,6 +658,7 @@ public abstract class BaseActivity extends FragmentActivity
 
 	public void sendRequest(RequestParams params, Class<? extends Model> modeltype, int requsetType) {
 		if (params != null && modeltype != null) {
+			LoadingDialogUtl.loadingView(this); // 请求的时候加载动画
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
@@ -735,6 +721,7 @@ public abstract class BaseActivity extends FragmentActivity
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			ToastUtils.showToast("请求异常");
+			LoadingDialogUtl.hideLoadingView();
 		}
 
 		@Override
@@ -748,6 +735,7 @@ public abstract class BaseActivity extends FragmentActivity
 			if (arg2 != null) {
 				String result = new String(arg2);
 				Log.i("test", result.toString());
+				LoadingDialogUtl.hideLoadingView();
 				onResponceSuccess(result, type);
 			}
 		}
