@@ -7,11 +7,14 @@ import com.zhiyicx.zycx.R;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.FoodFuctionGvAdapter;
+import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelFoodSearch1;
 import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelFoodWayDetailInfo;
@@ -47,6 +50,12 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	private ModelFoodSearch1 mFoodData;
 	private ModelFoodWayDetail mDetail;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = false;
+	private int count;
+	private LinearLayout ll_foodway_parent;
 
 	@Override
 	public String setCenterTitle() {
@@ -91,6 +100,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	@Override
 	public void initData() {
+		count = ll_foodway_parent.getChildCount();
 		sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData), ModelFoodWayDetail.class, REQUEST_GET);
 	}
 
@@ -171,4 +181,40 @@ public class FoodWaySingleDetail extends BaseActivity {
 
 	}
 
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getFoodImpl().food_side_detail(mFoodData), 
+						ModelFoodWayDetail.class, REQUEST_GET);
+			}
+		});
+		for (int i = 0; i < count; i++) {
+			ll_foodway_parent.getChildAt(i).setVisibility(View.GONE);
+		}
+		if(!isFirst){
+			isFirst = true;
+			ll_foodway_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+		
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		for (int i = 0; i < count; i++) {
+			ll_foodway_parent.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		if(defaultView != null){
+			defaultView.setVisibility(View.GONE);
+		}
+		return defaultView;
+	}
 }

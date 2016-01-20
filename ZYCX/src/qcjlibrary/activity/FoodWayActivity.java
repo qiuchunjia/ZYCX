@@ -153,4 +153,16 @@ public class FoodWayActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		return super.onRequestFailed();
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		return super.onRequestSuccess();
+	}
+	
 }
