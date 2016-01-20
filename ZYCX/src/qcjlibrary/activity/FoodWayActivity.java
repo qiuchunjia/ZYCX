@@ -83,7 +83,6 @@ public class FoodWayActivity extends BaseActivity {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
-		hideLoadingView();
 		if (object instanceof ModelFoodSearchIndex) {
 			mApp.startActivity_qcj(this, FoodCategoryActivity.class, sendDataToBundle(mFoodSearch, null));
 		} else {
@@ -147,7 +146,6 @@ public class FoodWayActivity extends BaseActivity {
 				} else {
 					mFoodSearch.setState(0);
 				}
-				this.loadingView(ll_find);
 				sendRequest(mApp.getFoodImpl().food_search(mFoodSearch), ModelFoodSearchIndex.class, REQUEST_GET);
 			}
 			break;

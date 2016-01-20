@@ -60,7 +60,6 @@ public class FragementFood extends BaseFragment {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
-		mActivity.hideLoadingView();
 		if (object instanceof ModelFoodIndex) {
 			mFoodIndex = (ModelFoodIndex) object;
 			addDataToView(mFoodIndex.getFood());

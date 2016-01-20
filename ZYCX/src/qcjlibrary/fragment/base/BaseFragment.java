@@ -26,6 +26,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.response.HttpResponceListener;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -56,8 +57,7 @@ import com.zhiyicx.zycx.util.PreferenceUtil;
  * fragment的基类，其它fragment必須實現他，不要隨意修改這個基類
  * 
  **/
-public abstract class BaseFragment extends Fragment implements OnClickListener,
-		HttpResponceListener {
+public abstract class BaseFragment extends Fragment implements OnClickListener, HttpResponceListener {
 	/** adapter 基类 */
 	private BAdapter mAdapter;
 	/** listview基类 */
@@ -79,8 +79,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 	// public FragmentManager mFManager = getChildFragmentManager();
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (mView == null) {
 			mApp = (Thinksns) getActivity().getApplication();
 			mActivity = (BaseActivity) getActivity();
@@ -103,18 +102,20 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 		return mView;
 	}
 
-    /**判断用户是否登录
-     * @return
-     */
-  public boolean isLogin(){
-	  PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
-	  String token=preferenceUtil.getString("oauth_token", "");
-	  String token_secret=preferenceUtil.getString("oauth_token_secret", "");
-	  if(!TextUtils.isEmpty(token)&&!TextUtils.isEmpty(token_secret)){
-		 return true ;
-	  }
+	/**
+	 * 判断用户是否登录
+	 * 
+	 * @return
+	 */
+	public boolean isLogin() {
+		PreferenceUtil preferenceUtil = PreferenceUtil.getInstance(getActivity());
+		String token = preferenceUtil.getString("oauth_token", "");
+		String token_secret = preferenceUtil.getString("oauth_token_secret", "");
+		if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(token_secret)) {
+			return true;
+		}
 		return false;
- }
+	}
 
 	/**
 	 * @param viewid
@@ -189,8 +190,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 				Uri originalUri = data.getData();
 				Log.i("TestFile", originalUri.toString());
 				if (originalUri != null) {
-					Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver,
-							originalUri);
+					Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
 					compressPhotoAndDisplay(bitmap);
 					String filename = getFileByUri(originalUri);
 					getFile(filename);
@@ -198,12 +198,10 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 			} else if (requestCode == CAPTURE_CODE) {
 				String sdStatus = Environment.getExternalStorageState();
 				if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-					Log.i("TestFile",
-							"SD card is not avaiable/writeable right now.");
+					Log.i("TestFile", "SD card is not avaiable/writeable right now.");
 					return;
 				}
-				String name = new DateFormat().format("yyyyMMdd_hhmmss",
-						Calendar.getInstance(Locale.CHINA)) + ".jpg";
+				String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
 				Toast.makeText(getActivity(), name, Toast.LENGTH_LONG).show();
 				Bundle bundle = data.getExtras();
 				Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
@@ -245,10 +243,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 	private String getFileByUri(Uri originalUri) {
 		// 获取照片文件路径
 		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = getActivity().managedQuery(originalUri, proj, null,
-				null, null);
-		int actual_image_column_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
+		int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		String img_path = cursor.getString(actual_image_column_index);
 		Log.i("imagePath", img_path + "");
@@ -288,8 +284,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 	 * 打开相册
 	 */
 	public void openTheGalley() {
-		Intent intent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		startActivityForResult(intent, IMAGE_CODE);
 	}
 
@@ -303,23 +298,23 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 
 	// ----------------------------------我是本区域邪恶的分界线------------------------------------------------------
 
-	/************************************ 网络请求传递，以及返回数据解析 ***************************************/
+	/************************************
+	 * 网络请求传递，以及返回数据解析
+	 ***************************************/
 	private Request mRequst;
 	public static final int REQUEST_GET = 0;
 	public static final int REQUEST_POST = 1;
 
-	public void sendRequest(RequestParams params,
-			Class<? extends Model> modeltype, int requsetType) {
+	public void sendRequest(RequestParams params, Class<? extends Model> modeltype, int requsetType) {
 		if (params != null && modeltype != null) {
+			LoadingDialogUtl.loadingView(getActivity());
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
 			if (requsetType == 0) {
-				mRequst.get(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype));
+				mRequst.get(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype));
 			} else {
-				mRequst.post(mApp.getHostUrl(), params,
-						new MyAsyncHttpResponseHandler(modeltype));
+				mRequst.post(mApp.getHostUrl(), params, new MyAsyncHttpResponseHandler(modeltype));
 			}
 		}
 
@@ -373,8 +368,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 		}
 
 		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
+		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+			LoadingDialogUtl.hideLoadingView();
 			ToastUtils.showToast("请求异常");
 		}
 
@@ -388,11 +383,14 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 			if (arg2 != null) {
 				String result = new String(arg2);
+				LoadingDialogUtl.hideLoadingView();
 				onResponceSuccess(result, type);
 			}
 		}
 
 	}
 
-	/************************************ 网络请求传递，以及返回数据解析end ***************************************/
+	/************************************
+	 * 网络请求传递，以及返回数据解析end
+	 ***************************************/
 }
