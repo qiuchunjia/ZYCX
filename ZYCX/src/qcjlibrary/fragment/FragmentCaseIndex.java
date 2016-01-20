@@ -86,7 +86,6 @@ public class FragmentCaseIndex extends BaseFragment {
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
-		mActivity.hideLoadingView(); // 隐藏动画
 		if (object instanceof ModelCaseIndex) {
 			mCaseIndex = (ModelCaseIndex) object;
 			rl_nodata.setVisibility(View.GONE);

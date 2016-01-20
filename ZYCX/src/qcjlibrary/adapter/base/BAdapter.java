@@ -19,6 +19,7 @@ import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
 import android.util.Log;
@@ -318,6 +319,7 @@ public abstract class BAdapter extends BaseAdapter {
 
 	public void sendRequest(RequestParams params, Class<? extends Model> modeltype, int requsetType, int RefreshType) {
 		if (params != null && modeltype != null) {
+
 			if (mRequst == null) {
 				mRequst = Request.getSingleRequest();
 			}
@@ -351,6 +353,7 @@ public abstract class BAdapter extends BaseAdapter {
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			ToastUtils.showToast("请求异常");
+
 		}
 
 		@Override
@@ -360,6 +363,7 @@ public abstract class BAdapter extends BaseAdapter {
 
 		@Override
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+
 			if (arg2 != null) {
 				String result = new String(arg2);
 				if (result != null) {
