@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:background="@color/main_white_pure_color"
         android:padding="@dimen/margin_left_small" >
-
+        
         <FrameLayout
             android:id="@+id/fl_vedio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_alignBottom="@+id/tv_update"
+            android:paddingBottom="4dp"
             android:layout_alignParentRight="true" >
 
             <ImageView
@@ -44,7 +45,7 @@
             android:maxLines="1"
             android:text="我也是抗癌小手"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_common" />
 
         <TextView
             android:id="@+id/tv_content"
@@ -56,6 +57,7 @@
             android:layout_toLeftOf="@id/fl_vedio"
             android:ellipsize="end"
             android:maxLines="2"
+            android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
             android:text="我也是抗癌黑呵呵呵呵呵呵会飞的发顺丰的法定假发的康师傅骄傲的叫法埃德加小手"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
@@ -85,6 +87,8 @@
             android:text="已更新5课"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
+
+
     </RelativeLayout>
 
 </LinearLayout>

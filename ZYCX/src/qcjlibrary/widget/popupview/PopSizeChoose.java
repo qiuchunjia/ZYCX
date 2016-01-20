@@ -47,6 +47,7 @@ public class PopSizeChoose extends PopView {
 	@Override
 	public void initPopData(Object object) {
 		mUrl = (String) object;
+		setSelectedText(mUrl);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class PopSizeChoose extends PopView {
 			public void onClick(View v) {
 				if (!mUrl.contains("&size=large")) {
 					mUrl = mUrl + "&size=large";
-					setSelectedText(tv_big, tv_small);
+					setSelectedText(mUrl);
 				}
 			}
 		});
@@ -72,7 +73,7 @@ public class PopSizeChoose extends PopView {
 			public void onClick(View v) {
 				if (mUrl.contains("&size=large")) {
 					mUrl = mUrl.replace("&size=large", "");
-					setSelectedText(tv_small, tv_big);
+					setSelectedText(mUrl);
 				}
 			}
 		});
@@ -91,8 +92,13 @@ public class PopSizeChoose extends PopView {
 	 * @param TextView selected
 	 * @param TextView another
 	 * */
-	private void setSelectedText(TextView selected, TextView another){
-		selected.setTextColor(mActivity.getResources().getColor(R.color.text_green));
-		another.setTextColor(mActivity.getResources().getColor(R.color.text_black));
+	private void setSelectedText(String url){
+		if(url.contains("&size=large")){
+			tv_big.setTextColor(mActivity.getResources().getColor(R.color.text_green));
+			tv_small.setTextColor(mActivity.getResources().getColor(R.color.text_black));
+		} else{
+			tv_big.setTextColor(mActivity.getResources().getColor(R.color.text_black));
+			tv_small.setTextColor(mActivity.getResources().getColor(R.color.text_green));
+		}
 	}
 }

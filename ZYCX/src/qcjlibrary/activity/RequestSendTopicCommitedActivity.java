@@ -62,25 +62,31 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 				ModelRequestItem item = new ModelRequestItem();
 				item.setQuestion_id(mAsk.getQid());
 				if (mAsk.getIs_expert().equals("0")) {
-					mApp.startActivity_qcj(
-							RequestSendTopicCommitedActivity.this,
-							RequestDetailCommonActivity.class,
+					mApp.startActivity_qcj(RequestSendTopicCommitedActivity.this, RequestDetailCommonActivity.class,
 							sendDataToBundle(item, null));
 				} else if (mAsk.getIs_expert().equals("1")) {
-					mApp.startActivity_qcj(
-							RequestSendTopicCommitedActivity.this,
-							RequestDetailExpertActivity.class,
+					mApp.startActivity_qcj(RequestSendTopicCommitedActivity.this, RequestDetailExpertActivity.class,
 							sendDataToBundle(item, null));
 				}
 			}
 			break;
 		case R.id.tv_title_right:
-			//onBackPressed();
-			//完成后跳转到问答首页，传递问答首页的位置到首页
-			mApp.startActivity(RequestSendTopicCommitedActivity.this, 
-					HomeActivity.class, sendDataToBundle(2, null));
+			// onBackPressed();
+			skipToHome();
 			break;
 		}
+	}
 
+	@Override
+	public void onBackPressed() {
+		// TODO 自动生成的方法存根
+		super.onBackPressed();
+		skipToHome();
+	}
+
+	private void skipToHome() {
+		// 完成后跳转到问答首页，传递问答首页的位置到首页
+		mApp.startActivity(RequestSendTopicCommitedActivity.this, 
+				HomeActivity.class, sendDataToBundle(2, null));
 	}
 }

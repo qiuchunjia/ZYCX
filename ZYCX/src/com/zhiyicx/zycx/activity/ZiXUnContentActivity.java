@@ -62,6 +62,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private String mChangeSizeUrl; // 改变字体的url
 
 	private int mCurrentPraise;
+	private boolean isBig = false;
 
 	@Override
 	public String setCenterTitle() {
