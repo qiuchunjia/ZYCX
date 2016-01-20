@@ -8,6 +8,7 @@ import java.util.List;
 import com.nostra13.universalimageloader.utils.L;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
+import com.zhiyicx.zycx.util.Utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -131,7 +132,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		if (object instanceof List<?>) {
 			if (mList != null) {
 				mList.clear();
-				mList.addAll((List<ModelAlertData>) object);
+				List<ModelAlertData> newList = (List<ModelAlertData>) object;
+				if(newList != null && newList.size() > 0){
+					mList.addAll(newList);
+				}
 				if (mAdapter != null) {
 					mAdapter.notifyDataSetChanged();
 				} else {
@@ -144,12 +148,26 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			}
 		}
 		if (object instanceof ModelMsg) {
-			isDel = false;
+			
 			ModelMsg msg = (ModelMsg) object;
-			if (msg.getCode() == 0) {
-				sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+			if(isDel){
+				if(msg.getCode() == 0){
+					ToastUtils.showLongToast(this, "删除成功");
+					if(mList.size() == 1){
+						mList.remove(0);
+						mAdapter.notifyDataSetChanged();
+						return object;
+					}
+					sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+				} else{
+					ToastUtils.showLongToast(this, "删除失败");
+				}
+			} else{
+				if(msg.getCode() == 0){
+					//缺省页
+					ToastUtils.showLongToast(this, "暂无服药提醒数据");
+				}
 			}
-			ToastUtils.showLongToast(getApplicationContext(), msg.getMessage());
 		}
 		return object;
 	}
