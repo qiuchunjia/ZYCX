@@ -352,7 +352,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 					SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this, mCmtEdit);
 				} else if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
-					mFace.setImageResource(R.drawable.face_bar);
+					mFace.setImageResource(R.drawable.smile_face);
 					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}
@@ -364,7 +364,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			public void onClick(View v) {
 				if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
-					mFace.setImageResource(R.drawable.key_bar);
+					mFace.setImageResource(R.drawable.keyboard);
 					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}

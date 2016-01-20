@@ -76,6 +76,7 @@ public class HomeActivity extends BaseActivity {
 	private String TAG = "HomeActivity";
 	private DrawerLayout mDrawer;
 	private FragmentMenu mMenu;
+	private LinearLayout ll_all_tab;
 
 	private Title mTitle; // 标题
 	/** 轻课堂界面排序方法下标 **/
@@ -196,6 +197,7 @@ public class HomeActivity extends BaseActivity {
 		IB_home_bottom_question = (ImageView) findViewById(R.id.IB_home_bottom_question);
 		IB_home_bottom_qikan = (ImageView) findViewById(R.id.IB_home_bottom_qikan);
 		IB_home_bottom_web = (ImageView) findViewById(R.id.IB_home_bottom_web);
+		ll_all_tab = (LinearLayout) findViewById(R.id.ll_all_tab);
 	}
 
 	@Override
@@ -246,6 +248,7 @@ public class HomeActivity extends BaseActivity {
 		mQikanLayout.setOnClickListener(this);
 		mQuestionLayout.setOnClickListener(this);
 		mWebLayout.setOnClickListener(this);
+		ll_all_tab.setOnClickListener(this);  //事件拦截，防止点击空白区域跳到咨询详情或者卿课堂详情，反正是醉了
 
 	}
 
@@ -651,9 +654,9 @@ public class HomeActivity extends BaseActivity {
 				}
 			});
 		}
-		if(isLogin() && textMy != null){
+		if (isLogin() && textMy != null) {
 			textMy.setVisibility(View.VISIBLE);
-		} else if(!isLogin() && textMy != null){
+		} else if (!isLogin() && textMy != null) {
 			textMy.setVisibility(View.GONE);
 		}
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
