@@ -37,7 +37,7 @@
             android:maxLines="1"
             android:text="肺癌晚期怎么治fdsfdsfffffffffff？"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_answer"
@@ -51,7 +51,7 @@
             android:maxLines="2"
             android:text="冷先生：胸部的磁共振结果如何？如果结果都没有出现转移"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_common" />
     </RelativeLayout>
     <!-- 专家回复 -->
 

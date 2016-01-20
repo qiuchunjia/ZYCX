@@ -292,7 +292,7 @@ public class QClassDetailsActivity extends BaseActivity
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				iv_qclass_play.stopLoading();
+				//iv_qclass_play.stopLoading();
 				Intent intent = new Intent(QClassDetailsActivity.this, QClassPlayActivity.class);
 				intent.putExtra("vurl", urlStr);
 				startActivity(intent);
@@ -415,6 +415,13 @@ public class QClassDetailsActivity extends BaseActivity
 		super.onResume();
 		if(mCmtFgmt != null){
 			mCmtFgmt.loadCmtData(mDefId);
+		}
+		if(iv_qclass_play != null){
+			try {
+				iv_qclass_play.getClass().getMethod("onResume").invoke(iv_qclass_play,(Object[])null);
+			} catch (Exception e) {
+				L.d("继续播放" + e.toString());
+			} 
 		}
 	}
 

@@ -224,7 +224,8 @@ public class SearchNewActivity extends BaseActivity {
 				finish();
 			} else {
 				isChanged = false;
-				// 搜索
+				// 搜索，并清空搜索框
+				et_search.setText("");
 				searchData();
 			}
 			break;
