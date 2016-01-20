@@ -47,7 +47,13 @@ public class CancerSingleActivity extends BaseActivity {
 	@Override
 	public void initIntent() {
 		mExperienceData = (ModelExperience) getDataFromIntent(getIntent(), null);
-		titleSetCenterTitle(mExperienceData.getWeiba_name());
+		String titleName = mExperienceData.getWeiba_name();
+		if (titleName.length() > 4) {
+			titleName = titleName.substring(0, 4) + "...";
+			titleSetCenterTitle(titleName);
+		} else {
+			titleSetCenterTitle(mExperienceData.getWeiba_name());
+		}
 	}
 
 	@Override

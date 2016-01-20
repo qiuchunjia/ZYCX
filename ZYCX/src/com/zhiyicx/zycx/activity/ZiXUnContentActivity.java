@@ -140,6 +140,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					if (mFaceView.getVisibility() == View.VISIBLE) {
+						mFace.setImageResource(R.drawable.smile_face);
 						mFaceView.setVisibility(View.GONE);
 					}
 				}
@@ -189,6 +190,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					if (mFaceView.getVisibility() == View.VISIBLE) {
 						mFaceView.setVisibility(View.GONE);
+						mFace.setImageResource(R.drawable.smile_face);
 					}
 					SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), mCmtEdit);
 				}
@@ -349,7 +351,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (mFaceView.getVisibility() == View.GONE) {
 					mFaceView.setVisibility(View.VISIBLE);
-					mFace.setImageResource(R.drawable.key_bar);
+					mFace.setImageResource(R.drawable.keyboard);
 					SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this, mCmtEdit);
 				} else if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
