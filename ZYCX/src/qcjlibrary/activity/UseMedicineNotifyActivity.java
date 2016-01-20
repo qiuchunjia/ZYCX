@@ -87,7 +87,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		});
 		mList = new ArrayList<Model>();
 		impl = new AlarmImpl();
-		sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+		//sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
 	}
 
 	@Override
@@ -263,4 +263,11 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		sendRequest(impl.index(), ModelAlertData.class, REQUEST_GET);
+	}
+	
 }

@@ -255,7 +255,6 @@ public class QClassDetailsActivity extends BaseActivity
 		// 设置WebView
 		iv_qclass_play.setPadding(0, 0, 0, 0);
 		chromeClient = new MyChromeClient();
-		//暂时无法全屏
 		iv_qclass_play.setWebChromeClient(new WebChromeClient());
 		WebSettings setting = iv_qclass_play.getSettings();
 		setting.setPluginState(PluginState.ON);
@@ -350,7 +349,8 @@ public class QClassDetailsActivity extends BaseActivity
 			mDefVurl = jsonObject.getString("v_url");
 			mDefVid = jsonObject.optString("default_vid");
 		}
-
+		urlStr = mDefVurl + "&course_id=" + mCid + "&id=" + mDefId + "&uid=" + Utils.getUid(this);
+		iv_qclass_play.loadUrl(urlStr + Utils.getTokenString(this));
 		// toPlay();
 		mListfgmt = ClassListFragment.newInstance(mTitle, array, mDefId);
 		mListfgmt.setPlayListener(this);

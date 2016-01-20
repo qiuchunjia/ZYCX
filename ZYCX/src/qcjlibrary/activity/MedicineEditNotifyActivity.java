@@ -311,8 +311,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		if(object instanceof ModelMsg){
 			ModelMsg msg = (ModelMsg) object;
 			if(msg.getCode() == 0){
-				//上传完毕后跳转到闹钟list界面
-				mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
+				//上传完毕后关闭当前页面，回到闹钟List界面
+				//mApp.startActivity(this, UseMedicineNotifyActivity.class, null);
+				finish();
 			}
 			ToastUtils.showLongToast(this, msg.getMessage());
 		}
