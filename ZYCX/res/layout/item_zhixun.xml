@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_white_pure_color"
-        android:paddingLeft="@dimen/margin_left_small"
-        android:paddingRight="@dimen/margin_right_small"
-        android:paddingTop="@dimen/margin_top" >
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/margin_top" 
+        android:paddingRight="@dimen/margin_top" >
 
         <ImageView
             android:id="@+id/iv_photo"

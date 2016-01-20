@@ -14,10 +14,16 @@ import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopSingleCancer;
+import android.app.ActionBar.LayoutParams;
+import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.LoginActivity;
@@ -38,6 +44,12 @@ public class CancerSingleActivity extends BaseActivity {
 	private ImageView iv_bottom_arrow;
 	private ModelExperience mExperienceData; // activity传过来的id
 	ModelExperienceDetail mDetail; // 获取头部的信息
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = false;
+	/** 父布局**/
+	private LinearLayout ll_cancersingle_parent;
+	private RelativeLayout rl_cancersing_head;
 
 	@Override
 	public String setCenterTitle() {
@@ -69,6 +81,8 @@ public class CancerSingleActivity extends BaseActivity {
 		tv_cancer_content = (TextView) findViewById(R.id.tv_cancer_content);
 		iv_bottom_arrow = (ImageView) findViewById(R.id.iv_bottom_arrow);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
+		ll_cancersingle_parent = (LinearLayout) findViewById(R.id.ll_cancersingle_parent);
+		rl_cancersing_head = (RelativeLayout) findViewById(R.id.rl_cancersing_head);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(getApplicationContext(), 1));
 		mAdapter = new CancerTopicAdapter(this, mExperienceData);
 		mCommonListView.setAdapter(mAdapter);
@@ -151,5 +165,36 @@ public class CancerSingleActivity extends BaseActivity {
 			break;
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getExperienceImpl().detail(mExperienceData), ModelExperienceDetail.class, REQUEST_GET);
+			}
+		});
+		mCommonListView.setVisibility(View.GONE);
+		rl_cancersing_head.setVisibility(View.GONE);
+		if(!isFirst){
+			isFirst = true;
+			ll_cancersingle_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		mCommonListView.setVisibility(View.VISIBLE);
+		rl_cancersing_head.setVisibility(View.VISIBLE);
+		return defaultView;
 	}
 }

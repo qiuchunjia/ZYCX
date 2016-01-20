@@ -93,6 +93,7 @@ public class ZiXunListAdapter extends LoadListAdapter {
 			JSONObject jsonObject = list.get(i);
 			holder.mTitle.setText(jsonObject.get("title").toString());
 			holder.mDate.setText(jsonObject.get("cTime").toString());
+			holder.mFrom.setText("来自:" + jsonObject.get("uname").toString());
 			String count = jsonObject.get("readCount").toString();
 			if(count.length() > 3){
 				count = "999+";

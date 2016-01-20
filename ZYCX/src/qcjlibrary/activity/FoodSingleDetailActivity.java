@@ -4,6 +4,7 @@ import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.adapter.FoodFuctionGvAdapter;
+import qcjlibrary.model.ModelExperiencePostDetail;
 import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelFoodIdDetailInfo;
 import qcjlibrary.model.ModelFoodSearch0;
@@ -11,7 +12,9 @@ import qcjlibrary.widget.MyGridView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,6 +48,12 @@ public class FoodSingleDetailActivity extends BaseActivity {
 	private MyGridView gv_function; // 添加功效的布局
 	private ModelFoodSearch0 mFoodData;
 	private ModelFoodIdDetail mDetail;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = false;
+	private int count;
+	private LinearLayout ll_foodcategory_parent;
 
 	@Override
 	public String setCenterTitle() {
@@ -82,13 +91,14 @@ public class FoodSingleDetailActivity extends BaseActivity {
 		iv_relate4 = (ImageView) findViewById(R.id.iv_relate4);
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
 		gv_function = (MyGridView) findViewById(R.id.gv_function);
+		ll_foodcategory_parent = (LinearLayout) findViewById(R.id.ll_foodcategory_parent);
 
 	}
 
 	@Override
 	public void initData() {
 		sendRequest(mApp.getFoodImpl().food_detail(mFoodData), ModelFoodIdDetail.class, REQUEST_GET);
-
+		count = ll_foodcategory_parent.getChildCount();
 	}
 
 	@Override
@@ -167,4 +177,40 @@ public class FoodSingleDetailActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getFoodImpl().food_detail(mFoodData), 
+						ModelFoodIdDetail.class, REQUEST_GET);
+			}
+		});
+		for (int i = 0; i < count; i++) {
+			ll_foodcategory_parent.getChildAt(i).setVisibility(View.GONE);
+		}
+		if(!isFirst){
+			isFirst = true;
+			ll_foodcategory_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		for (int i = 0; i < count; i++) {
+			ll_foodcategory_parent.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		if(defaultView != null){
+			defaultView.setVisibility(View.GONE);
+		}
+		return defaultView;
+	}
+	
 }

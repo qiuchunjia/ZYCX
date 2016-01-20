@@ -66,5 +66,12 @@ public class CaseHistoryActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		return super.onRequestFailed();
+		
+	}
 
 }
