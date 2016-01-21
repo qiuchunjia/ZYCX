@@ -272,6 +272,8 @@ public class PatientMeActivity extends BaseActivity {
 					tv_smoke.append("已戒烟,");
 					tv_smoke.append("戒烟时间" + history.getStop_smoke_time());
 				}
+			} else{
+				tv_smoke.append("不抽烟");
 			}
 			/***
 			 * 
@@ -297,9 +299,11 @@ public class PatientMeActivity extends BaseActivity {
 					tv_drink.append("已戒酒，");
 					tv_drink.append("戒酒时间" + history.getStop_drink_time());
 				}
+			} else{
+				tv_drink.append("不饮酒");
 			}
-			tv_first.setText("月经史：");
-			if (history.getMenarche_age() != null) {
+			if (history.getMenarche_age() != null && history.getMenarche_age().equals(" ")) {
+				tv_first.setText("月经史：");
 				tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
 				tv_first.append("末次月经时间" + history.getMenarche_etime());
 			}

@@ -14,6 +14,7 @@ import com.zhiyicx.zycx.R;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelCaseIndex;
+import qcjlibrary.model.ModelExperience;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopImportFile;
 
@@ -47,7 +50,7 @@ public class FragmentCaseIndex extends BaseFragment {
 	private LinearLayout ll_notify;
 	private LinearLayout ll_food;
 	private ModelCaseIndex mCaseIndex; // 病例首页的数据
-
+	
 	@Override
 	public void initIntentData() {
 
@@ -207,5 +210,5 @@ public class FragmentCaseIndex extends BaseFragment {
 		});
 
 	}
-
+	
 }
