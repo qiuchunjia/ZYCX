@@ -39,9 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="@dimen/userNameSize"
-                android:textStyle="bold" />
+                android:textColor="@color/text_green"
+                android:textSize="@dimen/text_common" />
 
             <TextView
                 android:id="@+id/weibo_ctime"
@@ -49,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="TextView"
+                android:visibility="gone"
                 android:textColor="@color/timeColor"
                 android:textSize="@dimen/timeSize" />
         </RelativeLayout>
@@ -61,8 +61,8 @@
             android:layout_marginTop="-5dp"
             android:layout_weight="1.0"
             android:text="TextView"
-            android:textColor="@color/font"
-            android:textSize="@dimen/contentSize" />
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_small" />
 
         <LinearLayout
             android:id="@+id/image_layout"

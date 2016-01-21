@@ -406,6 +406,7 @@ public class QClassDetailsActivity extends BaseActivity
 		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, dm));
 		mTabs.setIndicatorColor(Color.parseColor("#ffffff"));
 		mTabs.setSelectedTextColor(Color.parseColor("#349342"));
+		mTabs.setTextColor(Color.parseColor("#9a9f9b"));
 		mTabs.setTabBackground(0);
 	}
 

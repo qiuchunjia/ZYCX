@@ -140,7 +140,7 @@ public class WebActivity extends BaseActivity {
 		mFragmentsList.add(commentFragment);
 		mFragmentsList.add(collectFragment);
 
-		String[] titles = new String[] { "首页", "@我", "评论", "收藏" };
+		String[] titles = new String[] { "首页", "@我的", "评论", "收藏" };
 		mPager.setAdapter(new ListFragmentAdapter(getSupportFragmentManager(), mFragmentsList, titles));
 		mTabs.setViewPager(mPager);
 		mTabs.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -155,9 +155,10 @@ public class WebActivity extends BaseActivity {
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		mTabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm));
 		mTabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
-		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, dm));
+		mTabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, dm));
 		mTabs.setIndicatorColor(Color.parseColor("#45c01a"));
-		mTabs.setSelectedTextColor(Color.parseColor("#45c01a"));
+		mTabs.setSelectedTextColor(Color.parseColor("#349342"));
+		mTabs.setTextColor(Color.parseColor("#9a9f9b"));
 		mTabs.setTabBackground(0);
 	}
 
