@@ -62,7 +62,11 @@ public class ExperienceCycleAdapter extends BAdapter {
 				holder.tv_date_year.setVisibility(View.GONE);
 			}
 			ModelExperiencePostDetailItem detailItem = (ModelExperiencePostDetailItem) mList.get(position);
-			holder.tv_date_month.setText(DateUtil.StampToMonth(detailItem.getCtime()) + "月");
+			String mon = DateUtil.StampToMonth(detailItem.getCtime());
+			if(mon.equals("0")){
+				mon = "1";
+			}
+			holder.tv_date_month.setText(mon + "月");
 			holder.tv_date_day.setText(DateUtil.StampToDay(detailItem.getCtime()));
 			holder.tv_date_week.setText(DateUtil.StampToWeek(detailItem.getCtime()));
 			holder.tv_date_year.setText(DateUtil.StampToYear(detailItem.getCtime()));

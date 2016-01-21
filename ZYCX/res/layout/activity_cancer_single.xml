@@ -28,7 +28,7 @@
             android:layout_toRightOf="@id/iv_cancer_icon"
             android:text="肺癌"
             android:textColor="@color/text_green"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_common" />
 
         <TextView
             android:id="@+id/tv_cancer_content"

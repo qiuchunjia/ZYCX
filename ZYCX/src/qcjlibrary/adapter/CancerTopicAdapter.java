@@ -9,6 +9,7 @@ import qcjlibrary.model.ModelExperienceDetail;
 import qcjlibrary.model.ModelExperienceDetailItem1;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.L;
 import qcjlibrary.util.SpanUtil;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class CancerTopicAdapter extends BAdapter {
 			Model model = mList.get(position);
 			if (model instanceof ModelExperienceDetailItem1) {
 				ModelExperienceDetailItem1 detailItem1 = (ModelExperienceDetailItem1) model;
-				holder.tv_topic_title.setText(detailItem1.getContent());
+				holder.tv_topic_title.setText(detailItem1.getTitle());
 				holder.tv_topic_advice.setVisibility(View.GONE);
 				if (detailItem1.getRecommend().equals("1")) {
 					holder.tv_topic_advice.setVisibility(View.VISIBLE);

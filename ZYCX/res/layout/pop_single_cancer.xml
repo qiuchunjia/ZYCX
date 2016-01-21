@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_white_pure_color"
+    android:background="@color/main_white_bg_color"
     android:orientation="vertical"
     android:paddingBottom="@dimen/margin_bottom_big" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/main_white_pure_color"
+        android:background="@color/main_white_bg_color"
         android:padding="@dimen/margin_left_small" >
 
         <qcjlibrary.widget.RoundImageView
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_cancer_member"
             android:text="24"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_blue"
             android:textSize="@dimen/text_common" />
 
         <TextView
@@ -101,18 +101,24 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_cancer_experience"
             android:text="19"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_blue"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_cancer_content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_small"
-        android:layout_marginRight="@dimen/margin_right_small"
-        android:text="成员费解啊的客服机读卡实际放卡死的积分卡的数据发生的风纪扣撒的剑法的链接！"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text_common" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never" >
+
+        <TextView
+            android:id="@+id/tv_cancer_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginRight="@dimen/margin_right_small"
+            android:text="成员费解啊的客服机读卡实际放卡死的积分卡的数据发生的风纪扣撒的剑法的链接！"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_common" />
+    </ScrollView>
 
 </LinearLayout>
