@@ -27,6 +27,7 @@ import qcjlibrary.model.ModelAddHistoryCase;
 import qcjlibrary.model.ModelAddNowCase;
 import qcjlibrary.model.ModelAddNowCase.Result;
 import qcjlibrary.model.ModelDiagnosis;
+import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelImage;
 import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMyCaseIndex;
@@ -80,6 +81,12 @@ public class PatientMeActivity extends BaseActivity {
 	private LinearLayout ll_time;
 
 	private ModelMyCaseIndex mCaseIndex;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = false;
+	private int count;
+	private LinearLayout ll_patientme_parent;
 
 	@Override
 	public String setCenterTitle() {
@@ -133,10 +140,13 @@ public class PatientMeActivity extends BaseActivity {
 		defautl_2 = (LinearLayout) findViewById(R.id.defautl_2);
 		defautl_3 = (LinearLayout) findViewById(R.id.defautl_3);
 		ll_time = (LinearLayout) findViewById(R.id.ll_time);
+		
+		ll_patientme_parent = (LinearLayout) findViewById(R.id.ll_patientme_parent);
 	}
 
 	@Override
 	public void initData() {
+		count = ll_patientme_parent.getChildCount();
 		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -156,7 +166,7 @@ public class PatientMeActivity extends BaseActivity {
 			}
 		});
 	}
-
+	
 	/**
 	 * 下载文件
 	 */
@@ -262,6 +272,8 @@ public class PatientMeActivity extends BaseActivity {
 					tv_smoke.append("已戒烟,");
 					tv_smoke.append("戒烟时间" + history.getStop_smoke_time());
 				}
+			} else{
+				tv_smoke.append("不抽烟");
 			}
 			/***
 			 * 
@@ -287,9 +299,11 @@ public class PatientMeActivity extends BaseActivity {
 					tv_drink.append("已戒酒，");
 					tv_drink.append("戒酒时间" + history.getStop_drink_time());
 				}
+			} else{
+				tv_drink.append("不饮酒");
 			}
-			tv_first.setText("月经史：");
-			if (history.getMenarche_age() != null) {
+			if (history.getMenarche_age() != null && history.getMenarche_age().equals(" ")) {
+				tv_first.setText("月经史：");
 				tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
 				tv_first.append("末次月经时间" + history.getMenarche_etime());
 			}
@@ -413,5 +427,44 @@ public class PatientMeActivity extends BaseActivity {
 		}
 
 	}
+	
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getMedRecordImpl().myMedRecord(), 
+						ModelMyCaseIndex.class, REQUEST_GET);
+			}
+		});
+		for (int i = 0; i < count; i++) {
+			ll_patientme_parent.getChildAt(i).setVisibility(View.GONE);
+		}
+		if(!isFirst){
+			isFirst = true;
+			ll_patientme_parent.addView(defaultView); 
+		} else{
+			defaultView.setVisibility(View.VISIBLE);
+		}
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		for (int i = 0; i < count; i++) {
+			ll_patientme_parent.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		if(defaultView != null){
+			defaultView.setVisibility(View.GONE);
+		}
+		return defaultView;
+	}
+	
 
 }

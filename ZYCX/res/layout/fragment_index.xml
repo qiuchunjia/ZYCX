@@ -172,7 +172,7 @@
                         android:id="@+id/tv_hot_request5"
                         style="@style/text_index"
                         android:layout_below="@+id/iv_choose5"
-                        android:text="电子简历" />
+                        android:text="电子病历" />
                 </RelativeLayout>
 
                 <include layout="@layout/view_line_hor" >

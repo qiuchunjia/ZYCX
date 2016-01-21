@@ -37,8 +37,8 @@ public class PopChooseSmoke extends PopView {
 
 	@Override
 	public void initPopData(Object object) {
-		tv_praise.setText("抽烟");
-		tv_cancle.setText("不抽烟");
+		tv_praise.setText("不抽烟");
+		tv_cancle.setText("抽烟");
 	}
 
 	@Override

@@ -6,13 +6,13 @@
     <solid android:color="@color/text_blue" />
     <!-- 设置按钮的四个角为弧形 -->
     <!-- android:radius 弧形的半径 -->
-    <corners android:radius="3dp" />
+   <!--  <corners android:radius="3dp" /> -->
 
     <!-- padding：Button里面的文字与Button边界的间隔 -->
     <padding
-        android:bottom="5dp"
+        android:bottom="2dp"
         android:left="5dp"
         android:right="5dp"
-        android:top="5dp" />
+        android:top="2dp" />
 
 </shape>

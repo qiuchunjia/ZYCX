@@ -28,6 +28,7 @@ import java.util.Date;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -60,7 +61,7 @@ public class PatientHistoryActivity extends BaseActivity {
 	private TextView tv_last_time_name;
 	private EditText et_stop_yuejins;
 	private RelativeLayout rl_children;
-	private TextView tv_children_name;
+	private EditText et_childs_num;
 	private EditText et_family_historys;
 	private RelativeLayout rl_stop_drink_time;
 	private TextView tv_stop_drink_name_time;
@@ -120,7 +121,7 @@ public class PatientHistoryActivity extends BaseActivity {
 		tv_last_time_name = (TextView) findViewById(R.id.tv_last_time_name);
 		et_stop_yuejins = (EditText) findViewById(R.id.et_stop_yuejins);
 		rl_children = (RelativeLayout) findViewById(R.id.rl_children);
-		tv_children_name = (TextView) findViewById(R.id.tv_children_name);
+		et_childs_num = (EditText) findViewById(R.id.et_childs_num);
 		et_family_historys = (EditText) findViewById(R.id.et_family_historys);
 		rl_stop_drink_time = (RelativeLayout) findViewById(R.id.rl_stop_drink_time);
 		tv_stop_drink_name_time = (TextView) findViewById(R.id.tv_stop_drink_name_time);
@@ -187,6 +188,7 @@ public class PatientHistoryActivity extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
 			setEditContent();
+			hideKeyBoard();
 			if (checkTheContent()) {
 				ModelAddHistoryCase historyCase = addDataToModel();
 				Log.i("addHistory", historyCase.toString());
@@ -196,20 +198,24 @@ public class PatientHistoryActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_eat:
+			hideKeyBoard();
 			PopEatingHabit habit = new PopEatingHabit(this, null, this);
 			habit.showPop(rl_eat, Gravity.BOTTOM, 0, 0);
 			break;
 
 		case R.id.rl_smoke:
+			hideKeyBoard();
 			PopChooseSmoke chooseSmoke = new PopChooseSmoke(this, null, this);
 			chooseSmoke.showPop(rl_smoke, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_stop_smoke:
+			hideKeyBoard();
 			PopChooseStopSmoke chooseStopSmoke = new PopChooseStopSmoke(this,
 					null, this);
 			chooseStopSmoke.showPop(rl_stop_smoke, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_stop_smoke_time:
+			hideKeyBoard();
 			timeType = Config.TYPE_STOP_DRINK_TIME;
 			pvTime.show();
 			/*PopDatePicker datePicker = new PopDatePicker(this, null, this);
@@ -217,16 +223,19 @@ public class PatientHistoryActivity extends BaseActivity {
 			datePicker.showPop(rl_stop_smoke_time, Gravity.BOTTOM, 0, 0);*/
 			break;
 		case R.id.rl_drink:
+			hideKeyBoard();
 			PopChooseDrink chooseDrink = new PopChooseDrink(this, null, this);
 			chooseDrink.showPop(rl_drink, Gravity.BOTTOM, 0, 0);
 			break;
 
 		case R.id.rl_stop_drink:
+			hideKeyBoard();
 			PopChooseStopDrink stopDrink = new PopChooseStopDrink(this, null,
 					this);
 			stopDrink.showPop(rl_stop_drink, Gravity.BOTTOM, 0, 0);
 			break;
 		case R.id.rl_stop_drink_time:
+			hideKeyBoard();
 			timeType = Config.TYPE_STOP_DRINK_TIME;
 			pvTime.show();
 			/*PopDatePicker stopDrinktime = new PopDatePicker(this, null, this);
@@ -235,6 +244,7 @@ public class PatientHistoryActivity extends BaseActivity {
 			break;
 
 		case R.id.rl_last_time:
+			hideKeyBoard();
 			timeType = Config.TYPE_LAST_TIME;
 			pvTime.show();
 			/*PopDatePicker lastTime = new PopDatePicker(this, null, this);
@@ -242,7 +252,7 @@ public class PatientHistoryActivity extends BaseActivity {
 			lastTime.showPop(rl_last_time, Gravity.BOTTOM, 0, 0);*/
 			break;
 		case R.id.rl_children:
-			// TODO
+			
 			break;
 
 		}
@@ -343,7 +353,7 @@ public class PatientHistoryActivity extends BaseActivity {
 	private String menarche_age;// 初潮年纪
 	private String menarche_etime;// 末次月经时间
 	private String amenorrhoea_age;// 闭经年龄
-	private String childs = "一子一女";// 子女
+	private String childs;// 子女
 	private String family_history;// 家族史
 
 	/**
@@ -353,7 +363,7 @@ public class PatientHistoryActivity extends BaseActivity {
 		med_history = et_name.getText().toString();
 		allergy_history = et_allergy_name.getText().toString();
 		per_history = et_single_name.getText().toString();
-
+		childs = et_childs_num.getText().toString();
 		smoke_age = et_smoke_year.getText().toString();
 		smoke_time = et_smoke_gen.getText().toString();
 		drink_age = et_drink_year.getText().toString();
@@ -362,6 +372,23 @@ public class PatientHistoryActivity extends BaseActivity {
 		amenorrhoea_age = et_stop_yuejins.getText().toString();
 		family_history = et_family_historys.getText().toString();
 
+	}
+	
+	/**
+	 * 隐藏软键盘
+	 * */
+	private void hideKeyBoard(){
+		SociaxUIUtils.hideSoftKeyboard(this, et_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_allergy_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_single_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_smoke_year);
+		SociaxUIUtils.hideSoftKeyboard(this, et_smoke_gen);
+		SociaxUIUtils.hideSoftKeyboard(this, et_drink_year);
+		SociaxUIUtils.hideSoftKeyboard(this, et_drink_much);
+		SociaxUIUtils.hideSoftKeyboard(this, et_first);
+		SociaxUIUtils.hideSoftKeyboard(this, et_stop_yuejins);
+		SociaxUIUtils.hideSoftKeyboard(this, et_family_historys);
+		SociaxUIUtils.hideSoftKeyboard(this, et_childs_num);
 	}
 
 	/**

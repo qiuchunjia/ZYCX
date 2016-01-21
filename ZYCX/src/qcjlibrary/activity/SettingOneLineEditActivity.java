@@ -4,6 +4,7 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -117,9 +118,13 @@ public class SettingOneLineEditActivity extends BaseActivity {
 	private void sendContent(int position, String content) {
 		switch (position) {
 		case DECLARATION:
-			mUserData.setIntro(content);
-			sendRequest(mApp.getUserImpl().edituserdata(mUserData),
-					ModelMsg.class, REQUEST_GET);
+			if(content.length() < 28){
+				mUserData.setIntro(content);
+				sendRequest(mApp.getUserImpl().edituserdata(mUserData),
+						ModelMsg.class, REQUEST_GET);
+			} else{
+				ToastUtils.showLongToast(this, "字数不可超过28个字");
+			}
 			break;
 
 		case NICK:

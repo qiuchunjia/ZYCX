@@ -30,7 +30,7 @@
                 android:layout_marginLeft="@dimen/margin_left"
                 android:layout_toRightOf="@id/iv_user"
                 android:background="@null"
-                android:hint="设置登陆密码"
+                android:hint="设置登录密码"
                 android:password="true"
                 android:cursorVisible="true"
                 android:textCursorDrawable="@null"

@@ -102,6 +102,10 @@ public class RegisterActivity2 extends BaseActivity implements JsonDataListener 
 	 * 注册方法
 	 */
 	public void register() {
+		if(et_pwd.getText().toString().trim().length() < 6){
+			Toast.makeText(this, "密码不可小于6位", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		if (!et_pwd.getText().toString().trim()
 				.equals(et_pwd_sure.getText().toString().trim())) {
 			Toast.makeText(this, "两次输入密码不同", Toast.LENGTH_SHORT).show();

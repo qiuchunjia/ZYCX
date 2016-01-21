@@ -29,6 +29,7 @@ import qcjlibrary.response.HttpResponceListener;
 import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -42,6 +43,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,6 +52,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 import com.zhiyicx.zycx.util.PreferenceUtil;
 
@@ -370,6 +373,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			LoadingDialogUtl.hideLoadingView();
+			onRequestFailed();
 			ToastUtils.showToast("请求异常");
 		}
 
@@ -382,6 +386,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 		@Override
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 			if (arg2 != null) {
+				onRequestSuccess();
 				String result = new String(arg2);
 				LoadingDialogUtl.hideLoadingView();
 				onResponceSuccess(result, type);
@@ -393,4 +398,23 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 	/************************************
 	 * 网络请求传递，以及返回数据解析end
 	 ***************************************/
+	
+	/** 缺省视图**/
+	private View view;
+	private View getDefaultView(){
+		view = LayoutInflater.from(getActivity()).inflate(R.layout.common_default_layout, null);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
+				LayoutParams.MATCH_PARENT, Gravity.CENTER);
+		view.setLayoutParams(params);
+		return view;
+	}
+	public View onRequestFailed(){
+		return getDefaultView();
+	}
+	
+	public View onRequestSuccess(){
+		View view = getDefaultView();
+		view.setVisibility(View.GONE);
+		return view;
+	}
 }

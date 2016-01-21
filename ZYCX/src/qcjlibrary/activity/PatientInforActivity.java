@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：上午10:55:26 类描述：这个类是实现
@@ -110,6 +111,7 @@ public class PatientInforActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
+			hideKeyBoard();
 			setEditContent();
 			if (checkTheContent()) {
 				ModelAddCase addCase = addDataToModel();
@@ -118,11 +120,13 @@ public class PatientInforActivity extends BaseActivity {
 
 			break;
 		case R.id.rl_gender:
+			hideKeyBoard();
 			PopChooseGender chooseGender = new PopChooseGender(this, null, this);
 			chooseGender.showPop(rl_gender, Gravity.BOTTOM, 0, 0);
 			break;
 
 		case R.id.rl_marry:
+			hideKeyBoard();
 			PopChooseMarry chooseMarry = new PopChooseMarry(this, null, this);
 			chooseMarry.showPop(rl_marry, Gravity.BOTTOM, 0, 0);
 			break;
@@ -133,6 +137,7 @@ public class PatientInforActivity extends BaseActivity {
 			mApp.startActivityForResult_qcj(this, ChooseEducationActivity.class, null);
 			break;
 		case R.id.rl_insurance:
+			hideKeyBoard();
 			PopChooseInsurance chooseInsurance = new PopChooseInsurance(this, null, this);
 			chooseInsurance.showPop(rl_insurance, Gravity.BOTTOM, 0, 0);
 			break;
@@ -322,5 +327,16 @@ public class PatientInforActivity extends BaseActivity {
 		addCase.setHeight(height);
 		addCase.setWeight(weight);
 		return addCase;
+	}
+	
+	/**
+	 * 隐藏软键盘
+	 * */
+	private void hideKeyBoard(){
+		SociaxUIUtils.hideSoftKeyboard(this, et_name);
+		SociaxUIUtils.hideSoftKeyboard(this, et_age);
+		SociaxUIUtils.hideSoftKeyboard(this, et_job);
+		SociaxUIUtils.hideSoftKeyboard(this, et_heights);
+		SociaxUIUtils.hideSoftKeyboard(this, et_weights);
 	}
 }

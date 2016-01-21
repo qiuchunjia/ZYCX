@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import qcjlibrary.activity.base.BaseActivity;
@@ -35,6 +36,7 @@ public class ForgetPwdActivity1 extends BaseActivity {
 	private Button mIbBtn_next;
 	private TextView mIB_forget_getcode;
 	private EditText et_phoneOrmail, et_forget_phonecode;
+	private RelativeLayout rl_agreenment;
 	String accountNumber, codeNumber;
 	HttpReturnData httpReturnData = new HttpReturnData();
 
@@ -60,6 +62,8 @@ public class ForgetPwdActivity1 extends BaseActivity {
 		mIB_forget_getcode = (TextView) findViewById(R.id.tv_vertify_code);
 		et_phoneOrmail = (EditText) findViewById(R.id.et_mobile);
 		et_forget_phonecode = (EditText) findViewById(R.id.et_vertify);
+		rl_agreenment = (RelativeLayout) findViewById(R.id.rl_agreenment);
+		rl_agreenment.setVisibility(View.GONE);
 	}
 
 	@Override

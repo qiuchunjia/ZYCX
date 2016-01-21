@@ -137,6 +137,7 @@ public class CancerSingleActivity extends BaseActivity {
 	@Override
 	public void initListener() {
 		iv_bottom_arrow.setOnClickListener(this);
+		rl_cancersing_head.setOnClickListener(this);
 	}
 
 	@Override
@@ -157,7 +158,7 @@ public class CancerSingleActivity extends BaseActivity {
 			}
 			break;
 
-		case R.id.iv_bottom_arrow:
+		case R.id.rl_cancersing_head:
 			if (mDetail != null) {
 				PopSingleCancer popSingleCancer = new PopSingleCancer(this, mDetail.getInfo(), this);
 				popSingleCancer.showPop(mTitlell, -1, 0, 0);
