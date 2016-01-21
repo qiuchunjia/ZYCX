@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.http.HttpClientConnection;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.sociax.exception.ApiException;
 import com.zhiyicx.zycx.sociax.exception.CommentListAreEmptyException;
 import com.zhiyicx.zycx.sociax.exception.DataInvalidException;
@@ -68,6 +71,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+import qcjlibrary.util.L;
 
 public class Api {
 	public static final String TAG = "ThinksnsApi";
@@ -232,7 +236,7 @@ public class Api {
 			}
 			Object result = Api.run(Api.post);
 			Api.checkResult(result);
-
+			
 			try {
 				JSONObject data = new JSONObject((String) result);
 				data = data.getJSONObject("data");
@@ -240,6 +244,11 @@ public class Api {
 				String oauth_token = data.getString("oauth_token");
 				String oauth_token_secret = data.getString("oauth_token_secret");
 				int uid = data.getInt("uid");
+				//获取用户信息
+				String url = MyConfig.HOST+"&app=api&mod=Personage&act=index&oauth_token="+
+						oauth_token+"&oauth_token_secret="+oauth_token_secret;
+				//此处需要请求用户数据
+				//Api.get.setUri(url);
 				return new User(uid, uname, password, oauth_token, oauth_token_secret);
 			} catch (JSONException e) {
 				Log.d(APP_TAG, "api ====>>>  验证失败");
@@ -261,7 +270,7 @@ public class Api {
 			}
 			Object result = Api.run(Api.post);
 			Api.checkResult(result);
-
+			
 			try {
 				JSONObject data = new JSONObject((String) result);
 				data = data.getJSONObject("data");
@@ -1843,7 +1852,6 @@ public class Api {
 					User tempUser = new User();
 					tempUser.setUserName(jsonUser.getString("uname"));
 					tempUser.setFace(jsonUser.getString("avatar_small"));
-
 					listData.add(tempUser);
 				}
 			} catch (Exception e) {

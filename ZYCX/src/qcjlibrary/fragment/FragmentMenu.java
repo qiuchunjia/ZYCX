@@ -81,7 +81,7 @@ public class FragmentMenu extends BaseFragment {
 		layoutParams.bottomMargin = (int) (UIUtils.getWindowHeight(getActivity()) * 0.1) - 2;
 		btn_quit.setLayoutParams(layoutParams);
 		if (!isLogin()) {
-			btn_quit.setText("请登录");
+			btn_quit.setText("登录");
 		}
 		/*
 		 * mUser = mApp.getUser(); if (TextUtils.isEmpty(mUser.getAvatar())) {
@@ -218,5 +218,6 @@ public class FragmentMenu extends BaseFragment {
 		} else {
 			addDataToIcon(mUser);
 		}
+		//sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 }
