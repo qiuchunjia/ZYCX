@@ -31,7 +31,7 @@ public class ModelExperiencePostDetailInfo extends Model {
 	private String status;
 	private String title;
 	private String post_uid;
-	private List<String> tags;
+	private String tags;
 	private String ctime;
 	private String userface;
 	private String childCount;
@@ -69,11 +69,12 @@ public class ModelExperiencePostDetailInfo extends Model {
 		this.post_uid = post_uid;
 	}
 
-	public List<String> getTags() {
+	
+	public String getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(String tags) {
 		this.tags = tags;
 	}
 
