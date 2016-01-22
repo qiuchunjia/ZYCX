@@ -95,6 +95,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
 		gv_contain = (MyGridView) findViewById(R.id.gv_contain);
 		gv_function = (MyGridView) findViewById(R.id.gv_function);
+		ll_foodway_parent = (LinearLayout) findViewById(R.id.ll_foodway_parent);
 
 	}
 
@@ -122,6 +123,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 	 */
 	private void addInfoToView(ModelFoodWayDetailInfo info) {
 		if (info != null) {
+			titleSetCenterTitle(info.getSide_name());
 			tv_food_name.setText(info.getSide_name());
 			mApp.displayImage(info.getImgSrc(), iv_food_icon);
 			// TODO 添加圆形的控件
@@ -134,6 +136,10 @@ public class FoodWaySingleDetail extends BaseActivity {
 			}
 			tv_food_way_value.setText(info.getZuofa());
 			tv_category_value.setText(info.getFangzhi_cancer());
+			String suitable = info.getShiyi();
+			if(!TextUtils.isEmpty(suitable)){
+				tv_flag.setText(suitable);
+			}
 			String foodeffect = info.getGongxiao();
 			if (!TextUtils.isEmpty(foodeffect)) {
 				String[] dataArray = foodeffect.split("，");

@@ -150,10 +150,19 @@ public class FoodSingleDetailActivity extends BaseActivity {
 	 */
 	private void addInfoToView(ModelFoodIdDetailInfo info) {
 		if (info != null) {
+			titleSetCenterTitle(info.getFood_name());
 			tv_food_name.setText(info.getFood_name());
 			mApp.displayImage(info.getImgSrc(), iv_food_icon);
 			tv_food_main_value.setText(info.getFood_anticancer());
 			tv_function_value.setText(info.getFood_tumor());
+			String suitable = info.getFood_suitable();
+			if(!TextUtils.isEmpty(suitable)){
+				tv_flag.setText(suitable);
+			}
+			String taboo = info.getFood_taboo();
+			if(!TextUtils.isEmpty(taboo)){
+				tv_flag2.setText(taboo);
+			}
 			// TODO 添加圆形的控件
 			String foodeffect = info.getFood_effect();
 			if (!TextUtils.isEmpty(foodeffect)) {

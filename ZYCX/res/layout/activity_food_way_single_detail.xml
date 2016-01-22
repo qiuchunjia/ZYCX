@@ -68,9 +68,10 @@
 
                 <qcjlibrary.widget.MyGridView
                     android:id="@+id/gv_contain"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numColumns="3"
+                    android:horizontalSpacing="@dimen/margin_top_big"
                     android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
@@ -110,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:numColumns="3"
+                    android:horizontalSpacing="@dimen/margin_top_big"
                     android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>

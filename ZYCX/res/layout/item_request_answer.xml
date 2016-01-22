@@ -19,10 +19,11 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_right_small"
             android:layout_marginTop="@dimen/margin_top"
-            android:background="@drawable/view_border_blue_3"
+            android:background="@drawable/view_border_blue_solid_3"
             android:text="推荐"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_big"
+            android:layout_alignBaseline="@id/tv_title"
+            android:textSize="20sp"
             android:visibility="visible" />
 
         <TextView

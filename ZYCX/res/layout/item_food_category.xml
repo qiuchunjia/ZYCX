@@ -19,6 +19,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
             android:src="@drawable/default_image_small" />
 
         <TextView
@@ -44,7 +45,7 @@
             android:maxLines="2"
             android:text="功效：调中健脾，一品宁夏去参加基督教的绝佳的得紧紧的经得紧紧的"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_small" />
 
         <TextView
             android:id="@+id/tv_cancer"
@@ -58,7 +59,7 @@
             android:maxLines="1"
             android:text="针对癌种：所有癌症"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="@dimen/text_small" />
     </RelativeLayout>
 
     <View
