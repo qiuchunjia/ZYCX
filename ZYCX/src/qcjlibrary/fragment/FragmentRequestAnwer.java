@@ -17,8 +17,12 @@ import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 import android.animation.ObjectAnimator;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -57,6 +61,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
 
 	private ModelRequestItem mRequestItem; // 请求数据
+	
+	private float y;
+	private float offset;
 
 	@Override
 	public void initIntentData() {
@@ -147,6 +154,28 @@ public class FragmentRequestAnwer extends BaseFragment {
 		ll_2.setOnClickListener(this);
 		ll_3.setOnClickListener(this);
 		ll_4.setOnClickListener(this);
+		
+		mCommonListView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				
+			}
+		});
+		
+		mCommonListView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				y = event.getY();
+				return false;
+			}
+		});
 	}
 
 	@Override
