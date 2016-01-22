@@ -7,6 +7,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/ll_request_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_white_pure_color"

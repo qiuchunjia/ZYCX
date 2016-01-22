@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -15,6 +16,9 @@ import android.widget.AdapterView;
  */
 
 public class CommonListView extends BaseListView {
+	
+	public float offset;
+	public float mLastY;
 
 	public CommonListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -42,6 +46,13 @@ public class CommonListView extends BaseListView {
 			Bundle data = activity.sendDataToBundle(sendData, null);
 			mApp.startActivity_qcj(activity, activityClass, data);
 		}
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		// TODO 自动生成的方法存根
+		
+		return super.onTouchEvent(ev);
 	}
 
 }
