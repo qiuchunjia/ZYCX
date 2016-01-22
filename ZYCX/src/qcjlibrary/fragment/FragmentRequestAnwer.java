@@ -187,9 +187,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 //					break;
 //				case MotionEvent.ACTION_MOVE:
 //					float offset = event.getY() - mLastY;
-//					long time = Math.abs((long) (offset / 100));
+//					long time = Math.abs((long) (offset / 10)) * 1000;
 //					setAnimator(ll_top, offset, 500);
-//					setAnimator(mCommonListView, offset, 500);
+//					setAnimator(mCommonListView, offset, time);
 //					llTop = ll_request_head.getTop();
 //					tvTop = tv_1.getTop();
 //					//mLastY = event.getY();
