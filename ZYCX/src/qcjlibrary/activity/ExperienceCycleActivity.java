@@ -125,9 +125,10 @@ public class ExperienceCycleActivity extends BaseActivity {
 			tv_has_update.append(SpanUtil.setForegroundColorSpan(post_detail.getChildCount() + "", 0, 0,
 					getResources().getColor(R.color.text_yellow)));
 			tv_has_update.append("篇");
-			String tags = post_detail.getTags();
-			if (tags != null && tags.length() > 0) {
-				String[] array = tags.split("，");
+			//接口修改为字符串
+			String tag = post_detail.getTags();
+			if (tag != null && tag.length() > 0) {
+				String[] array = tag.split("，");
 				for (int i = 0; i < array.length; i++) {
 					if (i == 0) {
 						tv_flag_value1.setText(array[i]);

@@ -332,7 +332,7 @@ public class SearchNewActivity extends BaseActivity {
 	}
 
 	/**
-	 * 导航栏指示线
+	 * 导航栏指示线动画
 	 * 
 	 * @param float fromX 起始X位置
 	 * @param float toX 目标X位置
