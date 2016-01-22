@@ -171,7 +171,7 @@
                 android:id="@+id/tv_periodical"
                 style="@style/text_home"
                 android:layout_toRightOf="@id/iv_periodical"
-                android:text="我的期刊" />
+                android:text="我的园地" />
 
             <ImageView
                 android:id="@+id/iv_periodical_next"

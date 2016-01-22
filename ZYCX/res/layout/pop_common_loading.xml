@@ -3,21 +3,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/main_white_bg_color"
+    android:alpha="0.7"
+    android:background="@drawable/view_border_green_new"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="@dimen/item_height" >
+    android:orientation="horizontal" >
 
     <ProgressBar
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateDrawable="@drawable/loading_rotate_200"
+        android:indeterminateDuration="200"
+        android:indeterminateOnly="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:text="加载中..."
-        android:textColor="@color/text_more_gray"
+        android:textColor="@color/text_gray"
         android:textSize="@dimen/text_small" />
 
 </LinearLayout>
