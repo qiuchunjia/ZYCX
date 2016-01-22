@@ -119,7 +119,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 		if (post_detail != null) {
 			tv_date = (TextView) findViewById(R.id.tv_date);
 			mApp.displayImage(post_detail.getUserface(), iv_cycle_icon);
-			tv_username.setText(post_detail.getTitle());
+			tv_username.setText(post_detail.getUsername());
 			tv_has_update.setText("");
 			tv_has_update.append("已更新");
 			tv_has_update.append(SpanUtil.setForegroundColorSpan(post_detail.getChildCount() + "", 0, 0,

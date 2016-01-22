@@ -35,6 +35,7 @@ public class ModelExperiencePostDetailInfo extends Model {
 	private String ctime;
 	private String userface;
 	private String childCount;
+	private String username;
 
 	public String getPost_id() {
 		return post_id;
@@ -103,5 +104,15 @@ public class ModelExperiencePostDetailInfo extends Model {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
 
 }
