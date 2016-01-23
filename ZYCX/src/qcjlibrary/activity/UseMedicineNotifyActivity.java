@@ -162,6 +162,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				} else{
 					ToastUtils.showLongToast(this, "删除失败");
 				}
+				isDel = false;
 			} else{
 				if(msg.getCode() == 0){
 					//缺省页
@@ -187,12 +188,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		}
 		String[] timeArr = timeList.split(",");
 		for (int i = 0; i < timeArr.length; i++) {
-			int id = 0;
-			id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
-					mData.getId() + ":" + i, id);
+			/** 区分不同闹钟的ID **/
+			int id = Integer.parseInt(mData.getId()+""+i);
 			//提醒
 			if (mData.getIs_remind() == 0) {
-				/** 区分不同闹钟的ID **/
 				if (timeArr[i] != null) {
 					long currentMillis = System.currentTimeMillis();
 					Calendar mCalendar = Calendar.getInstance();
@@ -227,14 +226,15 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
 					 * 发送一个广播 getService(Context, int, Intent, int) 开启一个服务
 					 */
-					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					mIntent.setAction("alarm.alert.short");
+					Log.d("Cathy", "id:"+id);
 					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 							PendingIntent.FLAG_CANCEL_CURRENT);
 					mManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),
 							intervalMillis, mPendingIntent);
-					SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
+					//SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				}
 			} else{
 				//不提醒则取消
@@ -242,6 +242,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
 				mIntent.setAction("alarm.alert.short");
 				L.d("Cathy", "cancel alert");
+				/** 区分不同闹钟的ID **/
 				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 						PendingIntent.FLAG_CANCEL_CURRENT);
