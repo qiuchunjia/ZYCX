@@ -319,16 +319,14 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
 		if (present != null) {
-			ll_time.setVisibility(View.VISIBLE);
-			ll_now.setVisibility(View.VISIBLE);
-			defautl_3.setVisibility(View.GONE);
-			tv_commit_time.setText("提交时间：" + present.getCtime());
-			tv_deal_time.setText("处理时间：" + present.getUtime());
+			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
+			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
+			List<Result> img_result = present.getImage_exam().getImage_exam_result();
 			/**
 			 * 添加诊断过程
 			 */
-			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
 			if (diagnosis_result != null && diagnosis_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -346,8 +344,8 @@ public class PatientMeActivity extends BaseActivity {
 			/**
 			 * 添加实验室检查
 			 */
-			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
 			if (lab_result != null && lab_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -364,8 +362,8 @@ public class PatientMeActivity extends BaseActivity {
 			/**
 			 * 添加影像检查
 			 */
-			List<Result> img_result = present.getImage_exam().getImage_exam_result();
 			if (img_result != null && img_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -381,6 +379,14 @@ public class PatientMeActivity extends BaseActivity {
 			}
 
 		}
+	}
+
+	private void setPresentToView(ModelAddNowCase present) {
+		ll_time.setVisibility(View.VISIBLE);
+		ll_now.setVisibility(View.VISIBLE);
+		defautl_3.setVisibility(View.GONE);
+		tv_commit_time.setText("提交时间：" + present.getCtime());
+		tv_deal_time.setText("处理时间：" + present.getUtime());
 	}
 
 	/**
