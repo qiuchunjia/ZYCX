@@ -105,13 +105,15 @@
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_big" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="62dp"
+            android:background="@color/main_gray_color" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:layout_marginLeft="62dp"
-        android:background="@color/main_gray_color" />
     <!-- 我的提问 -->
 
     <RelativeLayout
@@ -159,13 +161,15 @@
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_big" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="62dp"
+            android:background="@color/main_gray_color" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:layout_marginLeft="62dp"
-        android:background="@color/main_gray_color" />
     <!-- 我的应用 -->
 
     <RelativeLayout
@@ -213,13 +217,15 @@
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_big" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="62dp"
+            android:background="@color/main_gray_color" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:layout_marginLeft="62dp"
-        android:background="@color/main_gray_color" />
     <!-- 我的圈子 -->
 
     <RelativeLayout
@@ -267,13 +273,15 @@
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_big" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="62dp"
+            android:background="@color/main_gray_color" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:layout_marginLeft="62dp"
-        android:background="@color/main_gray_color" />
     <!-- 我的期刊 -->
 
     <RelativeLayout

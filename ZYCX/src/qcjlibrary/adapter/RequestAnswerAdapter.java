@@ -32,6 +32,7 @@ import qcjlibrary.util.SpanUtil;
 
 public class RequestAnswerAdapter extends BAdapter {
 	private Model mRequestData;
+	private int page = 0;
 
 	public RequestAnswerAdapter(BaseActivity activity, Model data) {
 		super(activity, null);
@@ -135,7 +136,8 @@ public class RequestAnswerAdapter extends BAdapter {
 			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem item = (ModelRequestItem) mRequestData;
-			item.setLastid(null);
+			page = 0;
+			item.setPage(page);
 			// 这个接口用于首页
 			Log.i("anwer", item.toString() + "");
 			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class, 0, REFRESH_NEW);
@@ -183,7 +185,9 @@ public class RequestAnswerAdapter extends BAdapter {
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem data = (ModelRequestItem) mRequestData;
 			// 这个接口用于首页
-			data.setLastid(requestItem.getQuestion_id());
+			//data.setLastid(requestItem.getQuestion_id());
+			page++;
+			data.setPage(page);
 			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_FOOTER);
 		} else if (mRequestData instanceof ModelRequestFlag) {
 			// 这个接口用于标签

@@ -45,6 +45,7 @@ public class ModelRequestItem extends Model {
 	private String id;// id 癌种分类id 选填
 	private String status;// status 是否解决 选填
 	private String type;// type提分分类 新增 选填（0-治疗类 1-护理类 2-康复类）
+	private int page;
 
 
 
@@ -210,6 +211,15 @@ public class ModelRequestItem extends Model {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 	@Override

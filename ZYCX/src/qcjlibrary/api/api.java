@@ -286,7 +286,8 @@ public class api {
 			if (item != null) {
 				params.add(ID, item.getId());
 				params.add(TYPE, item.getType());
-				params = getChangePage(params, item);
+				params.add(PAGE, String.valueOf(item.getPage()));
+				//params = getChangePage(params, item);
 				Log.i("RequestParamsIndex", params.toString());
 				return params;
 			}
@@ -454,6 +455,15 @@ public class api {
 			params.add(MOD, ASK);
 			params.add(ACT, MYASK);
 			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams getMedrecordState() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, ASK);
+			params.add(ACT, MEDRECORD_STATE);
+			return getToken(params);
 		}
 	}
 

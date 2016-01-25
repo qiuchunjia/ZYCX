@@ -603,6 +603,7 @@ public class HomeActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+		initIcon(mTitle);
 	}
 
 	// 展示排序下拉列表

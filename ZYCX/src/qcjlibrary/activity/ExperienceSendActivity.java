@@ -127,6 +127,7 @@ public class ExperienceSendActivity extends BaseActivity {
 				return;
 			}
 		}
+		((TextView)view).setTextColor(getResources().getColor(R.color.text_green));
 		view.setBackgroundResource(R.drawable.view_border_green_pure_0);
 		tagsList.add(tag);
 	}

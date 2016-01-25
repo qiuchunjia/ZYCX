@@ -27,6 +27,8 @@ public class ModelRequestAsk extends Model {
 	 * type 问题分类 0-治疗类 1-护理类 2-康复类
 	 * 
 	 * topics 标签 选填
+	 * 
+	 * status 是否完善病历信息
 	 */
 	private static final long serialVersionUID = 1L;
 	private String qid;
@@ -36,6 +38,7 @@ public class ModelRequestAsk extends Model {
 	private String cid;
 	private String type;
 	private String topics;
+	private String status;
 
 	public String getQid() {
 		return qid;
@@ -97,4 +100,13 @@ public class ModelRequestAsk extends Model {
 		return serialVersionUID;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
 }

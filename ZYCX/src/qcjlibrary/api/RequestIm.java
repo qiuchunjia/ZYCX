@@ -44,6 +44,9 @@ public interface RequestIm {
 	public static final String AUID = "auid";
 	public static final String AID = "aid";
 	public static final String TID = "tid";
+	public static final String PAGE = "page";
+	
+	public static final String MEDRECORD_STATE = "medrecord_state";
 
 	/**
 	 * 问答首页
@@ -146,4 +149,9 @@ public interface RequestIm {
 	 * @return
 	 */
 	public RequestParams myAsk();
+	
+	/**
+	 * 获取病历信息
+	 * */
+	public RequestParams getMedrecordState();
 }
