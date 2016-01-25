@@ -120,6 +120,11 @@ public class RequestAddFlagActivity extends BaseActivity {
 			String content = et_content.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
 				if(!content.startsWith(" ")){
+					//限制标签长度
+					if(content.length() > 10){
+						ToastUtils.showLongToast(this, "不可超过10个字符");
+						return;
+					}
 					//判断输入的标签是否已经存在
 					boolean isExist = false;
 					for (int i = 0; i < mFlags.size(); i++) {
@@ -227,7 +232,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 					mAddFlags = mAddFlags + mFlags.get(i).getTitle() + ",";
 				}
 			}
-			if (mAddFlags != null) {
+			if (!TextUtils.isEmpty(mAddFlags)) {
 				mAddFlags = mAddFlags.substring(0, mAddFlags.length() - 1);
 				return true;
 			}

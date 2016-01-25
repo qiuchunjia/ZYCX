@@ -93,7 +93,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="微博"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="问答"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="资讯"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -123,7 +123,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="轻课堂"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -133,7 +133,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="食疗"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </LinearLayout>
 

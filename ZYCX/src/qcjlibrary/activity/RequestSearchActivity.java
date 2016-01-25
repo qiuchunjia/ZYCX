@@ -8,18 +8,24 @@ import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelRequest;
+import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestSearch;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午5:33:01 类描述：这个类是实现
@@ -33,6 +39,10 @@ public class RequestSearchActivity extends BaseActivity {
 	private ImageView iv_zoom;
 	private List<Model> mItemList;
 	private ModelRequestSearch mSearch;
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = true;
+	private LinearLayout ll_commonlist_parent;
 
 	@Override
 	public String setCenterTitle() {
@@ -54,6 +64,7 @@ public class RequestSearchActivity extends BaseActivity {
 		mSearch = new ModelRequestSearch();
 		et_find = (EditText) findViewById(R.id.et_find);
 		iv_zoom = (ImageView) findViewById(R.id.iv_zoom);
+		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(
 				getApplicationContext(), 20));
@@ -84,6 +95,7 @@ public class RequestSearchActivity extends BaseActivity {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequest) {
+			SociaxUIUtils.hideSoftKeyboard(this, et_find);
 			ModelRequest request = (ModelRequest) object;
 			Object data = request.getList();
 			mItemList = (List<Model>) data;
@@ -106,7 +118,6 @@ public class RequestSearchActivity extends BaseActivity {
 			String searchStr = et_find.getText().toString();
 			if (searchStr != null || !searchStr.equals("")) {
 				mSearch.setKey(searchStr);
-				ToastUtils.showToast("搜索中...");
 				sendRequest(mApp.getRequestImpl().search(mSearch),
 						ModelRequest.class, REQUEST_GET);
 			} else {
@@ -115,6 +126,37 @@ public class RequestSearchActivity extends BaseActivity {
 			break;
 
 		}
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String searchStr = et_find.getText().toString();
+				if (searchStr != null || !searchStr.equals("")) {
+					mSearch.setKey(searchStr);
+					sendRequest(mApp.getRequestImpl().search(mSearch),
+							ModelRequest.class, REQUEST_GET);
+				} else {
+					ToastUtils.showToast("内容不能为空");
+				}
+			}
+		});
+		isFirst = DefaultLayoutUtil.showDefault(ll_commonlist_parent, defaultView, isFirst);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(ll_commonlist_parent, defaultView);
+		return defaultView;
 	}
 
 }

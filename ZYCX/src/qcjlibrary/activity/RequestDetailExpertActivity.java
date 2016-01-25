@@ -7,12 +7,14 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
+import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestDetailExpert;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
@@ -22,11 +24,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -58,6 +63,13 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private ModelRequestItem mRequestItem;
 	// 返回的数据
 	private ModelRequestDetailExpert mDetailExpert;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = true;
+	private RelativeLayout rl_request_02;
+	private LinearLayout ll_request_expert;
+	private FrameLayout frame_request_expert;
 
 	@Override
 	public String setCenterTitle() {
@@ -85,7 +97,8 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
-
+		ll_request_expert = (LinearLayout) findViewById(R.id.ll_request_expert);
+		rl_request_02 = (RelativeLayout) findViewById(R.id.rl_request_02);
 		ll_expert_repaly = (LinearLayout) findViewById(R.id.ll_expert_repaly);
 		ll_expert_repaly.setVisibility(View.GONE);
 		et_content = (EditText) findViewById(R.id.et_content);
@@ -95,12 +108,14 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		tv_expertcontent = (TextView) findViewById(R.id.tv_expertcontent);
 		find_more = (TextView) findViewById(R.id.find_more);
 		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
+		frame_request_expert = (FrameLayout) findViewById(R.id.frame_request_expert);
 	}
 
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
+		SociaxUIUtils.hideSoftKeyboard(this, et_content);
 		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailExpert.class, REQUEST_GET);
 	}
 
@@ -349,6 +364,31 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			sendRequest(mApp.getRequestImpl().answerComment(answerComom), ModelMsg.class, REQUEST_GET);
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getRequestImpl().answer(mRequestItem), 
+						ModelRequestDetailExpert.class, REQUEST_GET);
+			}
+		});
+		isFirst = DefaultLayoutUtil.showDefault(frame_request_expert, defaultView, isFirst);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(frame_request_expert, defaultView);
+		return defaultView;
 	}
 
 }

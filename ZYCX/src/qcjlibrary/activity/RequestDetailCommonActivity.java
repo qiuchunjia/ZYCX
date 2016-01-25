@@ -5,17 +5,22 @@ import java.util.List;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelExperience;
+import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestFlag;
@@ -23,6 +28,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
@@ -46,6 +52,13 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	private LinearLayout ll_relate;
 	private LinearLayout ll_answer;
 	private TextView tv_other;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = true;
+	private FrameLayout frame_request_common;
+	private LinearLayout ll_request_detail;
+	private RelativeLayout rl_request_01;
 
 	// 数据model赛
 	private ModelRequestItem mRequestItem;
@@ -78,8 +91,11 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
 		ll_answer = (LinearLayout) findViewById(R.id.ll_answer);
+		ll_request_detail = (LinearLayout) findViewById(R.id.ll_request_detail);
 		ll_add_answer = (LinearLayout) findViewById(R.id.ll_add_answer);
 		tv_other = (TextView) findViewById(R.id.tv_other);
+		rl_request_01 = (RelativeLayout) findViewById(R.id.rl_request_01);
+		frame_request_common = (FrameLayout) findViewById(R.id.frame_request_common);
 	}
 
 	@Override
@@ -288,5 +304,30 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			break;
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getRequestImpl().answer(mRequestItem), 
+						ModelRequestDetailCommon.class, REQUEST_GET);
+			}
+		});
+		isFirst = DefaultLayoutUtil.showDefault(frame_request_common, defaultView, isFirst);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(frame_request_common, defaultView);
+		return defaultView;
 	}
 }

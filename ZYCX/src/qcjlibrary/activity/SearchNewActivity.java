@@ -343,7 +343,7 @@ public class SearchNewActivity extends BaseActivity {
 	}
 	
 	private void setTabColor(int index){
-		int black = getResources().getColor(R.color.text_black);
+		int black = getResources().getColor(R.color.text_more_gray);
 		int green = getResources().getColor(R.color.text_green);
 		tv_webo.setTextColor(black);
 		tv_request.setTextColor(black);

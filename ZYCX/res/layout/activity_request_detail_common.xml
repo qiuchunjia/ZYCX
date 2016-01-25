@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_request_common"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_white_bg_color" >
@@ -10,6 +11,7 @@
         android:background="@color/main_white_bg_color" >
 
         <LinearLayout
+            android:id="@+id/ll_request_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_white_bg_color"
@@ -138,6 +140,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
+                <!--
                 <include layout="@layout/view_line_vertical" />
 
                 <View
@@ -145,12 +148,14 @@
                     android:layout_height="@dimen/line_height"
                     android:layout_marginTop="@dimen/margin_left_small"
                     android:background="@color/main_gray_color" />
+                -->
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_left_small"
                 android:background="@color/main_white_pure_color"
                 android:drawableLeft="@drawable/a"
                 android:drawablePadding="5dp"
@@ -169,6 +174,7 @@
                 android:orientation="vertical" >
             </LinearLayout>
 
+            <!--
             <include layout="@layout/view_line_vertical" />
 
             <View
@@ -176,10 +182,12 @@
                 android:layout_height="@dimen/line_height"
                 android:layout_marginTop="@dimen/margin_left_small"
                 android:background="@color/main_gray_color" />
+            -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_left_small"
                 android:background="@color/main_white_pure_color"
                 android:paddingBottom="@dimen/margin_bottom_big"
                 android:paddingLeft="@dimen/margin_left_small"
@@ -189,8 +197,9 @@
                     android:id="@+id/tv_relate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_top_big"
                     android:gravity="left"
+                    android:paddingTop="@dimen/margin_top_big"
+                    android:paddingBottom="5dp"
                     android:text="相关问题"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_big" />
@@ -200,7 +209,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_relate"
-                    android:layout_marginTop="@dimen/margin_top_big"
                     android:orientation="vertical" >
                 </LinearLayout>
             </RelativeLayout>
@@ -208,12 +216,17 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/rl_request_01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/main_white_pure_color"
-        android:paddingBottom="@dimen/margin_bottom"
-        android:paddingTop="@dimen/margin_left_small" >
+        android:paddingBottom="@dimen/margin_bottom" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/main_gray_color" />
 
         <LinearLayout
             android:id="@+id/ll_answer"
@@ -222,6 +235,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:background="@color/text_green"
             android:gravity="center"
             android:orientation="horizontal"

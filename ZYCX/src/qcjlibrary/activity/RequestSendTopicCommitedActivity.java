@@ -46,7 +46,8 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-
+		title.tv_title_left.setVisibility(View.GONE);
+		title.iv_title_left.setVisibility(View.GONE);
 	}
 
 	@Override

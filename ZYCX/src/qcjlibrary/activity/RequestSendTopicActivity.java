@@ -37,6 +37,8 @@ public class RequestSendTopicActivity extends BaseActivity {
 	private String mTitle;
 	private String mContent;
 	private String mType;
+	//是否提示超过限制
+	private boolean isAtten = false;
 
 	@Override
 	public String setCenterTitle() {
@@ -100,8 +102,11 @@ public class RequestSendTopicActivity extends BaseActivity {
 			editEnd = et_content.getSelectionEnd();
 			Log.i("select", "start=" + editStart + ",end=" + editEnd);
 			if (temp.length() > 140) {
-				Toast.makeText(RequestSendTopicActivity.this, "你输入的字数已经超过了限制！",
-						Toast.LENGTH_SHORT).show();
+				if(!isAtten){
+					isAtten = true;
+					Toast.makeText(RequestSendTopicActivity.this, "你输入的字数已经超过了限制！",
+							Toast.LENGTH_SHORT).show();
+				}
 				s.delete(editStart - 1, editEnd);
 				int tempSelection = editStart;
 				et_content.setText(s);
@@ -138,8 +143,8 @@ public class RequestSendTopicActivity extends BaseActivity {
 			getDataFromView();
 			if (judgeTheData()) {
 				mAsk.setType(mType);
-				mAsk.setContent(mTitle);
-				mAsk.setQuestion_detail(mContent);
+				mAsk.setContent(mTitle.trim());
+				mAsk.setQuestion_detail(mContent.trim());
 				mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
 						sendDataToBundle(mAsk, null));
 			}
@@ -183,7 +188,7 @@ public class RequestSendTopicActivity extends BaseActivity {
 	}
 
 	private boolean judgeTheData() {
-		if (mTitle == null || mTitle.equals("")) {
+		if (mTitle == null || mTitle.equals("") || mTitle.equals(" ")) {
 			ToastUtils.showToast("标题不能为空");
 			return false;
 		} 
@@ -191,11 +196,11 @@ public class RequestSendTopicActivity extends BaseActivity {
 			ToastUtils.showToast("标题长度不能大于30");
 			return false;
 		}
-		if (mContent == null || mContent.equals("")) {
+		if (mContent == null || mContent.equals("") || mContent.equals(" ")) {
 			ToastUtils.showToast("内容不能为空");
 			return false;
 		}
-		if (mType == null || mType.equals("")) {
+		if (mType == null || mType.equals("") || mType.equals(" ")) {
 			ToastUtils.showToast("请选择类型");
 			return false;
 		}
