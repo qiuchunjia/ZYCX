@@ -367,9 +367,11 @@ public class HomeActivity extends BaseActivity {
 		case index_Default:
 			if (mDefaultFragment == null) {
 				mDefaultFragment = new FragmentIndex();
-				transaction.add(R.id.content, mDefaultFragment);
+				//transaction.add(R.id.content, mDefaultFragment);
+				transaction.replace(R.id.content, mDefaultFragment);
 			} else {
-				transaction.show(mDefaultFragment);
+				transaction.replace(R.id.content, mDefaultFragment);
+				//transaction.show(mDefaultFragment);
 			}
 			break;
 		case index_zhixun:
@@ -400,10 +402,11 @@ public class HomeActivity extends BaseActivity {
 		case index_qustion:
 			if (mAnwergmt == null) {
 				mAnwergmt = new FragmentRequestAnwer();
-				transaction.add(R.id.content, mAnwergmt);
+				//transaction.add(R.id.content, mAnwergmt);
 			} else {
-				transaction.show(mAnwergmt);
+				//transaction.show(mAnwergmt);
 			}
+			transaction.replace(R.id.content, mAnwergmt);
 			// if (mQustionFgmt == null) {
 			// mQustionFgmt = new QuestionFragment();
 			// transaction.add(R.id.content, mQustionFgmt);
@@ -415,10 +418,11 @@ public class HomeActivity extends BaseActivity {
 		case index_qikan:
 			if (mExpegmt == null) {
 				mExpegmt = new FragmentExperience();
-				transaction.add(R.id.content, mExpegmt);
+				//transaction.add(R.id.content, mExpegmt);
 			} else {
-				transaction.show(mExpegmt);
+				//transaction.show(mExpegmt);
 			}
+			transaction.replace(R.id.content, mExpegmt);
 			// if (mQiKanFgmt == null) {
 			// mQiKanFgmt = new QiKanFragment();
 			// transaction.add(R.id.content, mQiKanFgmt);
@@ -430,10 +434,11 @@ public class HomeActivity extends BaseActivity {
 		case index_web:
 			if (mCaseFgmt == null) {
 				mCaseFgmt = new FragmentCaseIndex();
-				transaction.add(R.id.content, mCaseFgmt);
+				//transaction.add(R.id.content, mCaseFgmt);
 			} else {
-				transaction.show(mCaseFgmt);
+				//transaction.show(mCaseFgmt);
 			}
+			transaction.replace(R.id.content, mCaseFgmt);
 			// if (mWebFgmt == null) {
 			// mWebFgmt = new WebFragment();
 			// transaction.add(R.id.content, mWebFgmt);

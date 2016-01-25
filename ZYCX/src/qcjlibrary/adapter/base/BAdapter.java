@@ -415,14 +415,18 @@ public abstract class BAdapter extends BaseAdapter {
 		return view;
 	}
 	public View onRequestFailed(){
-		mRequestLinstener.onFailed(getDefaultView());
+		if(mRequestLinstener != null){
+			mRequestLinstener.onFailed(getDefaultView());
+		}
 		return getDefaultView();
 	}
 	
 	public View onRequestSuccess(){
 		View view = getDefaultView();
 		view.setVisibility(View.GONE);
-		mRequestLinstener.onSuccess(getDefaultView());
+		if(mRequestLinstener != null){
+			mRequestLinstener.onSuccess(getDefaultView());
+		}
 		return view;
 	}
 	
