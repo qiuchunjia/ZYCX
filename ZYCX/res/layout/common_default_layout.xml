@@ -26,6 +26,7 @@
         android:layout_marginTop="@dimen/margin_top_30"
         android:background="@drawable/view_border_gray_white"
         android:text="点击刷新"
+        android:clickable="true"
         android:textColor="@color/text_more_gray"
         android:textSize="@dimen/text_small" />
 

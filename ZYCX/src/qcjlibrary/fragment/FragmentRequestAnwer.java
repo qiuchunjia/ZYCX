@@ -158,21 +158,21 @@ public class FragmentRequestAnwer extends BaseFragment {
 			public void onSuccess(View view) {
 				defaultView = view;
 				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, defaultView);
-				TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
-				tv_reload.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						mAdapter.doRefreshNew();
-					}
-				});
 			}
 			
 			@Override
 			public void onFailed(View view) {
 				defaultView = view;
 				isFirst = DefaultLayoutUtil.showDefault(ll_commonlist_parent, view, isFirst);
-				
+				TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+				tv_reload.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Log.d("Cathy", "onClick");
+						mAdapter.doRefreshNew();
+					}
+				});
 			}
 		});
 	}
