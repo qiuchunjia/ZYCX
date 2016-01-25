@@ -213,5 +213,6 @@ public class RequestAnswerAdapter extends BAdapter {
 		}
 		return null;
 	}
+	
 
 }

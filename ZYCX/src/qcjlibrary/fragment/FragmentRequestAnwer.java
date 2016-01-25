@@ -7,12 +7,15 @@ import qcjlibrary.activity.RequestDetailExpertActivity;
 import qcjlibrary.activity.RequestSearchActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.adapter.base.OnRequestLinstner;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 import android.animation.ObjectAnimator;
@@ -20,6 +23,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -71,6 +75,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 	//private float offset;
 	private int llTop;
 	private int tvTop;
+	
+	private View defaultView;
+	private boolean isFirst = true;
 
 	@Override
 	public void initIntentData() {
@@ -104,7 +111,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 		tv_4 = (TextView) findViewById(R.id.tv_4);
 		
 		ll_request_head = (LinearLayout) findViewById(R.id.ll_request_head);
-		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_request_head);
+		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
 
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
@@ -142,6 +149,32 @@ public class FragmentRequestAnwer extends BaseFragment {
 		mRequestItem.setType(type);
 		mAdapter = new RequestAnswerAdapter(this, mRequestItem);
 		mCommonListView.setAdapter(mAdapter);
+		/**
+		 * 监听是否成功请求数据
+		 * */
+		mAdapter.setOnRequestLinstner(new OnRequestLinstner() {
+			
+			@Override
+			public void onSuccess(View view) {
+				defaultView = view;
+				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, defaultView);
+				TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+				tv_reload.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mAdapter.doRefreshNew();
+					}
+				});
+			}
+			
+			@Override
+			public void onFailed(View view) {
+				defaultView = view;
+				isFirst = DefaultLayoutUtil.showDefault(ll_commonlist_parent, view, isFirst);
+				
+			}
+		});
 	}
 
 	@SuppressWarnings("unchecked")

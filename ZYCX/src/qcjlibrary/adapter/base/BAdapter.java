@@ -21,13 +21,17 @@ import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
+import android.app.ActionBar.LayoutParams;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.BaseAdapter;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /** adapter的基類，不要輕易修改這個類 */
@@ -353,7 +357,7 @@ public abstract class BAdapter extends BaseAdapter {
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			ToastUtils.showToast("请求异常");
-			
+			onRequestFailed();
 		}
 
 		@Override
@@ -365,6 +369,7 @@ public abstract class BAdapter extends BaseAdapter {
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 
 			if (arg2 != null) {
+				onRequestSuccess();
 				String result = new String(arg2);
 				if (result != null) {
 					Object object = onResponceSuccess(result, type);
@@ -399,6 +404,31 @@ public abstract class BAdapter extends BaseAdapter {
 	public Object onResponceSuccess(String str, Class class1) {
 		return DataAnalyze.parseDataByGson(str, class1);
 	}
-
+	
+	/** 缺省视图**/
+	private View view;
+	private View getDefaultView(){
+		view = mInflater.inflate(R.layout.common_default_layout, null);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
+				LayoutParams.MATCH_PARENT, Gravity.CENTER);
+		view.setLayoutParams(params);
+		return view;
+	}
+	public View onRequestFailed(){
+		mRequestLinstener.onFailed(getDefaultView());
+		return getDefaultView();
+	}
+	
+	public View onRequestSuccess(){
+		View view = getDefaultView();
+		view.setVisibility(View.GONE);
+		mRequestLinstener.onSuccess(getDefaultView());
+		return view;
+	}
+	
+	private OnRequestLinstner mRequestLinstener;
+	public void setOnRequestLinstner(OnRequestLinstner mRequestLinstener){
+		this.mRequestLinstener = mRequestLinstener;
+	}
 	public abstract Object getReallyList(Object object, Class type2);
 }

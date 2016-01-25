@@ -7,13 +7,18 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.zhiyicx.zycx.R;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import qcjlibrary.adapter.QclassFragmentAdapter;
 import qcjlibrary.api.api;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelQclassCategory;
 import qcjlibrary.model.ModelZiXun;
+import qcjlibrary.util.DefaultLayoutUtil;
 
 /**
  * 轻课堂首页
@@ -28,6 +33,10 @@ public class FragmentQclassIndex extends BaseFragment {
 	private ViewPager vPager;
 	private List<ModelQclassCategory> mCategoryList;
 	private ImageView iv_right_arrow;
+	
+	private View defaultView;
+	private LinearLayout ll_fragment_list;
+	private boolean isFirst = true;
 
 	@Override
 	public void initIntentData() {
@@ -44,6 +53,7 @@ public class FragmentQclassIndex extends BaseFragment {
 		tabpagerIndicator = (TabPageIndicator) findViewById(R.id.tabpagerIndicator);
 		vPager = (ViewPager) findViewById(R.id.vPager);
 		iv_right_arrow = (ImageView) findViewById(R.id.iv_right_arrow);
+		ll_fragment_list = (LinearLayout) findViewById(R.id.ll_fragment_list);
 	}
 
 	@Override
@@ -92,4 +102,27 @@ public class FragmentQclassIndex extends BaseFragment {
 	public void onClick(View v) {
 	}
 
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+			}
+		});
+		isFirst = DefaultLayoutUtil.showDefault(ll_fragment_list, defaultView, isFirst);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);
+		return defaultView;
+	}
 }
