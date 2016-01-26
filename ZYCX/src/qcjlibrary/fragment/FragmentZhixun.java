@@ -1,12 +1,15 @@
 package qcjlibrary.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.viewpagerindicator.TabPageIndicator;
 import com.zhiyicx.zycx.R;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import qcjlibrary.adapter.FragmentAdapter;
 import qcjlibrary.api.api;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelQclass;
 import qcjlibrary.model.ModelZiXun;
 import qcjlibrary.model.ModelZiXunCategory;
 import qcjlibrary.util.DefaultLayoutUtil;
@@ -33,6 +37,7 @@ public class FragmentZhixun extends BaseFragment {
 	
 	private View defaultView;
 	private LinearLayout ll_fragment_list;
+	private LinearLayout ll_fragment_in;
 
 	@Override
 	public void initIntentData() {
@@ -50,7 +55,8 @@ public class FragmentZhixun extends BaseFragment {
 		vPager = (ViewPager) findViewById(R.id.vPager);
 		iv_right_arrow = (ImageView) findViewById(R.id.iv_right_arrow);
 		ll_fragment_list = (LinearLayout) findViewById(R.id.ll_fragment_list);
-		sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+		ll_fragment_in = (LinearLayout) findViewById(R.id.ll_fragment_in);
+		//sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
 	}
 
 	@Override
@@ -86,7 +92,7 @@ public class FragmentZhixun extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mList.size() == 0) {
+		if (mList != null) {
 			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
 		}
 	}
@@ -114,7 +120,7 @@ public class FragmentZhixun extends BaseFragment {
 	public View onRequestFailed() {
 		// TODO 自动生成的方法存根
 		defaultView = super.onRequestFailed();
-		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		TextView tv_reload = (TextView) findViewById(R.id.tv_reload);
 		tv_reload.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -122,7 +128,8 @@ public class FragmentZhixun extends BaseFragment {
 				sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
 			}
 		});
-		DefaultLayoutUtil.showDefault(ll_fragment_list, defaultView);
+		ll_fragment_in.setVisibility(View.VISIBLE);
+		//DefaultLayoutUtil.showDefault(ll_fragment_list, defaultView);
 		return defaultView;
 	}
 	
@@ -130,8 +137,10 @@ public class FragmentZhixun extends BaseFragment {
 	public View onRequestSuccess() {
 		// TODO 自动生成的方法存根
 		defaultView = super.onRequestSuccess();
-		DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);
+		ll_fragment_in.setVisibility(View.GONE);
+		//DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);
 		return defaultView;
 	}
+	
 
 }

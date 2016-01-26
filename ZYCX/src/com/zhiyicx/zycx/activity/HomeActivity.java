@@ -368,11 +368,10 @@ public class HomeActivity extends BaseActivity {
 			if (mDefaultFragment == null) {
 				mDefaultFragment = new FragmentIndex();
 				//transaction.add(R.id.content, mDefaultFragment);
-				transaction.replace(R.id.content, mDefaultFragment);
 			} else {
-				transaction.replace(R.id.content, mDefaultFragment);
 				//transaction.show(mDefaultFragment);
 			}
+			transaction.replace(R.id.content, mDefaultFragment);
 			break;
 		case index_zhixun:
 			if (mZiXunFgmt == null) {
@@ -380,6 +379,7 @@ public class HomeActivity extends BaseActivity {
 				mZiXunFgmt = new FragmentZhixun();
 				//transaction.add(R.id.content, mZiXunFgmt);
 			} else {
+				mZiXunFgmt = new FragmentZhixun();
 				// 如果MessageFragment不为空，则直接将它显示出来
 				//transaction.show(mZiXunFgmt);
 			}
@@ -391,6 +391,7 @@ public class HomeActivity extends BaseActivity {
 				mQClassFgmt = new FragmentQclassIndex();
 				//transaction.add(R.id.content, mQClassFgmt);
 			} else {
+				mQClassFgmt = new FragmentQclassIndex();
 				//transaction.show(mQClassFgmt);
 			}
 			transaction.replace(R.id.content, mQClassFgmt);
