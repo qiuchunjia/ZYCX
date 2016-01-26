@@ -10,6 +10,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 
 import android.view.View;
@@ -58,7 +59,10 @@ public class PraiseAdapter extends BAdapter {
 				mApp.displayImage(dig.getUserface(), holder.riv_msg_icon);
 				holder.tv_user.setText(dig.getUsername());
 				holder.tv_date.setText(dig.getTime());
-				holder.tv_other_replay.setText(dig.getMyname() + ":"
+				holder.tv_other_replay.setText("");
+				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(dig.getMyname() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_green)));
+				holder.tv_other_replay.append(": "
 						+ dig.getFeed_data());
 			}
 

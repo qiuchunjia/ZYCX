@@ -7,29 +7,48 @@
     android:padding="@dimen/margin_left_small" >
 
     <qcjlibrary.widget.RoundImageView
-
-   
         android:id="@+id/riv_msg_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/default_image_small" />
 
-    <TextView
-        android:id="@+id/tv_user"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_user" 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_alignTop="@id/riv_msg_icon"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_toRightOf="@id/riv_msg_icon"
-        android:text="呵呵哒"
-        android:textColor="@color/text_user"
+        >
+        <TextView
+        android:id="@+id/tv_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="呵呵哒呵呵哒呵呵哒"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:textColor="@color/text_green"
         android:textSize="@dimen/text_very_big" />
-
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.8"
+            android:text="03月20日 10:42"
+            android:gravity="right"
+            android:textColor="@color/text_more_gray"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_user"
+        android:layout_below="@id/ll_user"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_marginTop="@dimen/margin_top"
         android:layout_toRightOf="@id/riv_msg_icon"
@@ -40,9 +59,7 @@
 
     <TextView
         android:id="@+id/tv_other_replay"
-
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
         android:layout_marginLeft="@dimen/margin_left_small"
@@ -65,16 +82,6 @@
         android:layout_marginTop="@dimen/margin_top"
         android:layout_toRightOf="@id/riv_msg_icon" >
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="5dp"
-            android:text="03月20日 10:42"
-            android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_small" />
     </RelativeLayout>
 
 </RelativeLayout>

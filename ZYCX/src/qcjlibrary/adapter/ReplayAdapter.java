@@ -13,6 +13,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,10 @@ public class ReplayAdapter extends BAdapter {
 				mApp.displayImage(commment.getUserface(), holder.riv_msg_icon);
 				holder.tv_user.setText(commment.getUsername());
 				holder.tv_title.setText(commment.getContent());
-				holder.tv_other_replay.setText(commment.getMyname()
+				holder.tv_other_replay.setText("");
+				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(commment.getMyname() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_green)));
+				holder.tv_other_replay.append(": "
 						+ commment.getOriginal_content());
 				holder.tv_date.setText(commment.getTime());
 				holder.tv_replay.setTag(commment);
