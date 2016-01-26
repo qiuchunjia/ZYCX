@@ -6,6 +6,7 @@ import java.util.List;
 import com.viewpagerindicator.TabPageIndicator;
 import com.zhiyicx.zycx.R;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -36,7 +37,6 @@ public class FragmentQclassIndex extends BaseFragment {
 	
 	private View defaultView;
 	private LinearLayout ll_fragment_list;
-	private boolean isFirst = true;
 
 	@Override
 	public void initIntentData() {
@@ -60,6 +60,7 @@ public class FragmentQclassIndex extends BaseFragment {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelQclass) {
+			Log.d("Cathy", "onResponceSuccess");
 			ModelQclass result = (ModelQclass) object;
 			ModelQclassCategory recommend = new ModelQclassCategory();
 			recommend.setClass_id(0);
@@ -87,7 +88,7 @@ public class FragmentQclassIndex extends BaseFragment {
 		super.onResume();
 		// 网络不好的时间会用到
 		if (mCategoryList != null && mCategoryList.size() == 0) {
-			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+			sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 		}
 	}
 
@@ -111,10 +112,11 @@ public class FragmentQclassIndex extends BaseFragment {
 			
 			@Override
 			public void onClick(View v) {
-				sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+				Log.d("Cathy", "onRequestFailed onClick");
+				sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 			}
 		});
-		isFirst = DefaultLayoutUtil.showDefault(ll_fragment_list, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(ll_fragment_list, defaultView);
 		return defaultView;
 	}
 	
@@ -122,6 +124,7 @@ public class FragmentQclassIndex extends BaseFragment {
 	public View onRequestSuccess() {
 		// TODO 自动生成的方法存根
 		defaultView = super.onRequestSuccess();
+		Log.d("Cathy", "onRequestSuccess");
 		DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);
 		return defaultView;
 	}

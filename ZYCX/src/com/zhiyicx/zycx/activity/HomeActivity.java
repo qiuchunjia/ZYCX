@@ -360,7 +360,7 @@ public class HomeActivity extends BaseActivity {
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
-		hideFragments(transaction);
+		//hideFragments(transaction);
 		setChangeTitle(index);
 		resetBottomImage();
 		switch (index) {
@@ -378,20 +378,22 @@ public class HomeActivity extends BaseActivity {
 			if (mZiXunFgmt == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mZiXunFgmt = new FragmentZhixun();
-				transaction.add(R.id.content, mZiXunFgmt);
+				//transaction.add(R.id.content, mZiXunFgmt);
 			} else {
 				// 如果MessageFragment不为空，则直接将它显示出来
-				transaction.show(mZiXunFgmt);
+				//transaction.show(mZiXunFgmt);
 			}
+			transaction.replace(R.id.content, mZiXunFgmt);
 			// mZixunLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qclass:
 			if (mQClassFgmt == null) {
 				mQClassFgmt = new FragmentQclassIndex();
-				transaction.add(R.id.content, mQClassFgmt);
+				//transaction.add(R.id.content, mQClassFgmt);
 			} else {
-				transaction.show(mQClassFgmt);
+				//transaction.show(mQClassFgmt);
 			}
+			transaction.replace(R.id.content, mQClassFgmt);
 			/*
 			 * if (mQClassFgmt == null) { mQClassFgmt = new QClassFragment();
 			 * transaction.add(R.id.content, mQClassFgmt); } else {

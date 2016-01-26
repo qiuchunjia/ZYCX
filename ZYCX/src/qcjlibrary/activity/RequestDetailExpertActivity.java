@@ -379,7 +379,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 						ModelRequestDetailExpert.class, REQUEST_GET);
 			}
 		});
-		isFirst = DefaultLayoutUtil.showDefault(frame_request_expert, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(frame_request_expert, defaultView);
 		return defaultView;
 	}
 	

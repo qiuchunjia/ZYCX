@@ -278,12 +278,12 @@ public class PatientHistoryActivity extends BaseActivity {
 			} else if (modelPop.getType().equals(Config.TYPE_SMOKE)) {
 				if (modelPop.getDataStr().equals("0")) {
 					smoke = "0";
-					tv_smoke_name.setText("抽烟");
-					isSmoke(true);
-				} else {
-					smoke = "1";
 					tv_smoke_name.setText("不抽烟");
 					isSmoke(false);
+				} else {
+					smoke = "1";
+					tv_smoke_name.setText("抽烟");
+					isSmoke(true);
 				}
 
 			} else if (modelPop.getType().equals(Config.TYPE_STOP_SMOKE)) {

@@ -42,7 +42,6 @@ public class RequestDetailResponceActivity extends BaseActivity {
 	
 	/** 网络异常时的缺省图**/
 	private View defaultView;
-	private boolean isFirst = true;
 	private FrameLayout frame_request_responce;
 
 	ModelRequestAnswerComom mAnswerCommon;
@@ -75,7 +74,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 		et_content = (EditText) findViewById(R.id.et_content);
 		tv_send = (TextView) findViewById(R.id.tv_send);
-		frame_request_responce = (FrameLayout) findViewById(R.id.frame_request_common);
+		frame_request_responce = (FrameLayout) findViewById(R.id.frame_request_responce);
 
 	}
 
@@ -223,7 +222,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 				}
 			}
 		});
-		isFirst = DefaultLayoutUtil.showDefault(frame_request_responce, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(frame_request_responce, defaultView);
 		return defaultView;
 	}
 	

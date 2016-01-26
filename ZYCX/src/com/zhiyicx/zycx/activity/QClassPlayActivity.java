@@ -78,11 +78,26 @@ public class QClassPlayActivity extends Activity {
     protected void onResume() {
     	// TODO 自动生成的方法存根
     	super.onResume();
+    	if(mPlayView != null){
+			try {
+				mPlayView.getClass().getMethod("onResume").invoke(mPlayView,(Object[])null);
+			} catch (Exception e) {
+				L.d("继续播放" + e.toString());
+			} 
+		}
     }
     
     @Override
     protected void onPause() {
     	// TODO 自动生成的方法存根
     	super.onPause();
+    	if(mPlayView != null){
+    		try {
+        		mPlayView.getClass().getMethod("onPause").invoke(mPlayView, (Object[]) null);
+    		} catch (Exception e) {
+    			L.d("停止播放" + e.toString());
+    		}
+		}
+    	
     }
 }

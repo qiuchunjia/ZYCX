@@ -55,10 +55,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	
 	/** 网络异常时的缺省图**/
 	private View defaultView;
-	private boolean isFirst = true;
 	private FrameLayout frame_request_common;
-	private LinearLayout ll_request_detail;
-	private RelativeLayout rl_request_01;
 
 	// 数据model赛
 	private ModelRequestItem mRequestItem;
@@ -91,10 +88,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
 		ll_answer = (LinearLayout) findViewById(R.id.ll_answer);
-		ll_request_detail = (LinearLayout) findViewById(R.id.ll_request_detail);
 		ll_add_answer = (LinearLayout) findViewById(R.id.ll_add_answer);
 		tv_other = (TextView) findViewById(R.id.tv_other);
-		rl_request_01 = (RelativeLayout) findViewById(R.id.rl_request_01);
 		frame_request_common = (FrameLayout) findViewById(R.id.frame_request_common);
 	}
 
@@ -319,7 +314,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 						ModelRequestDetailCommon.class, REQUEST_GET);
 			}
 		});
-		isFirst = DefaultLayoutUtil.showDefault(frame_request_common, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(frame_request_common, defaultView);
 		return defaultView;
 	}
 	

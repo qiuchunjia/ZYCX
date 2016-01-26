@@ -41,7 +41,6 @@ public class RequestSearchActivity extends BaseActivity {
 	private ModelRequestSearch mSearch;
 	/** 网络异常时的缺省图**/
 	private View defaultView;
-	private boolean isFirst = true;
 	private LinearLayout ll_commonlist_parent;
 
 	@Override
@@ -147,7 +146,7 @@ public class RequestSearchActivity extends BaseActivity {
 				}
 			}
 		});
-		isFirst = DefaultLayoutUtil.showDefault(ll_commonlist_parent, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(ll_commonlist_parent, defaultView);
 		return defaultView;
 	}
 	

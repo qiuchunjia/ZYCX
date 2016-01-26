@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="回复/评论我的"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_praise"
@@ -33,7 +33,7 @@
             android:gravity="center"
             android:text="赞"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_notify"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="通知"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <RelativeLayout

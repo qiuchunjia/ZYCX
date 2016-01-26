@@ -76,9 +76,6 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private int llTop;
 	private int tvTop;
 	
-	private View defaultView;
-	private boolean isFirst = true;
-
 	@Override
 	public void initIntentData() {
 
@@ -156,15 +153,13 @@ public class FragmentRequestAnwer extends BaseFragment {
 			
 			@Override
 			public void onSuccess(View view) {
-				defaultView = view;
-				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, defaultView);
+				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, view);
 			}
 			
 			@Override
 			public void onFailed(View view) {
-				defaultView = view;
-				isFirst = DefaultLayoutUtil.showDefault(ll_commonlist_parent, view, isFirst);
-				TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+				DefaultLayoutUtil.showDefault(ll_commonlist_parent, view);
+				TextView tv_reload = (TextView) view.findViewById(R.id.tv_reload);
 				tv_reload.setOnClickListener(new OnClickListener() {
 					
 					@Override
