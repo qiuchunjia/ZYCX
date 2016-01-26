@@ -405,9 +405,10 @@
             android:name="qcjlibrary.activity.PatientNowHistoryActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".activity.WebActivity" >
-
-            <!-- 癌友帮二期开发新增加页面end -->
         </activity>
+        <activity android:name="qcjlibrary.activity.RequestAnwerCommonActivity"/>
+        <activity android:name="qcjlibrary.activity.RequestAnwerExpertActivity"/>
+            <!-- 癌友帮二期开发新增加页面end -->
         <activity android:name="qcjlibrary.activity.QclassDetailActivity" />
         <activity 
             android:name="qcjlibrary.activity.QclassCmtSendActivity"

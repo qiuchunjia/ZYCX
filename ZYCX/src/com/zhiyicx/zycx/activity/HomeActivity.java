@@ -41,6 +41,7 @@ import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
+import qcjlibrary.fragment.FragmentRequestAnwerIndex;
 import qcjlibrary.fragment.FragmentZhixun;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
@@ -58,7 +59,7 @@ public class HomeActivity extends BaseActivity {
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
 	private FragmentCaseIndex mCaseFgmt;
 	private FragmentExperience mExpegmt;
-	private FragmentRequestAnwer mAnwergmt;
+	private FragmentRequestAnwerIndex mAnwergmt;
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
 	public static final int index_zhixun = 0;
@@ -404,7 +405,7 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case index_qustion:
 			if (mAnwergmt == null) {
-				mAnwergmt = new FragmentRequestAnwer();
+				mAnwergmt = new FragmentRequestAnwerIndex();
 				//transaction.add(R.id.content, mAnwergmt);
 			} else {
 				//transaction.show(mAnwergmt);
@@ -529,13 +530,15 @@ public class HomeActivity extends BaseActivity {
 			titleSetCenterTitle("问答");
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
-			mTitle.iv_title_right1.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this, RequestWayActivity.class,
-							sendDataToBundle(new Model(), null));
+					ModelSearchIndex mData = new ModelSearchIndex();
+					mData.setIndex(1);
+					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
+							sendDataToBundle(mData, "index"));
 				}
 			});
 			break;
