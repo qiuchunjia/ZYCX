@@ -122,7 +122,7 @@ public class QClassListAdapter extends LoadListAdapter {
             holder.mVideoCnt.setText("");
 			holder.mVideoCnt.append(update_head);
 			holder.mVideoCnt.append(SpanUtil.setForegroundColorSpan(jsonObject.get("video_num") + "", 0, 0,
-					Thinksns.getContext().getResources().getColor(R.color.text_red)));
+					Thinksns.getContext().getResources().getColor(R.color.text_yellow)));
 			holder.mVideoCnt.append(update_tail);
             NetComTools.getInstance(mContext).loadNetImage(holder.mPreview,
                     jsonObject.get("cover").toString(),
