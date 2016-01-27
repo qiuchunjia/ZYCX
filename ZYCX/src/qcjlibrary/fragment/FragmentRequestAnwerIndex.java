@@ -3,8 +3,11 @@ package qcjlibrary.fragment;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import qcjlibrary.activity.ExpertRequestActivity;
 import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.RequestAnwerCommonActivity;
 import qcjlibrary.activity.RequestAnwerExpertActivity;
@@ -79,8 +82,9 @@ public class FragmentRequestAnwerIndex extends BaseFragment{
 		if(object instanceof ModelRequestAsk){
 			medrecord_state = ((ModelRequestAsk)object).getStatus();
 			if(medrecord_state.equals("1")){
-				mApp.startActivity_qcj(getActivity(), RequestAnwerExpertActivity.class, 
-						null);
+				Intent mIntent = new Intent(getActivity(), ExpertRequestActivity.class);
+				mIntent.putExtra("fromIndex", true);
+				startActivity(mIntent);
 			} else{
 				ToastUtils.showLongToast(getActivity(), "请先完善病历信息！");
 				mApp.startActivity_qcj(getActivity(), PatientMeActivity.class, 

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import qcjlibrary.activity.MeAplicationActivity;
 import qcjlibrary.activity.MeCenterActivity;
 import qcjlibrary.activity.MePerioActivity;
+import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestMyAskActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelUser;
@@ -45,6 +46,7 @@ public class FragmentMenu extends BaseFragment {
 	private RelativeLayout rl_app;
 	private RelativeLayout rl_cycle;
 	private RelativeLayout rl_periodical;
+	private RelativeLayout rl_msgnotify;
 	private Button btn_quit;
 
 	private ModelUser mUser;
@@ -70,6 +72,7 @@ public class FragmentMenu extends BaseFragment {
 		rl_app = (RelativeLayout) findViewById(R.id.rl_app);
 		rl_cycle = (RelativeLayout) findViewById(R.id.rl_cycle);
 		rl_periodical = (RelativeLayout) findViewById(R.id.rl_periodical);
+		rl_msgnotify = (RelativeLayout) findViewById(R.id.rl_msgnotify);
 		btn_quit = (Button) findViewById(R.id.btn_quit);
 
 	}
@@ -117,6 +120,7 @@ public class FragmentMenu extends BaseFragment {
 		rl_app.setOnClickListener(this);
 		rl_cycle.setOnClickListener(this);
 		rl_periodical.setOnClickListener(this);
+		rl_msgnotify.setOnClickListener(this);
 		btn_quit.setOnClickListener(this);
 	}
 
@@ -154,6 +158,9 @@ public class FragmentMenu extends BaseFragment {
 			break;
 		case R.id.rl_periodical:
 			mApp.startActivity_qcj(getActivity(), MePerioActivity.class, mActivity.sendDataToBundle(new Model(), null));
+			break;
+		case R.id.rl_msgnotify:
+			mApp.startActivity_qcj(getActivity(), MsgNotifyPraiseActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
 			if (isLogin()) {

@@ -150,6 +150,8 @@ public interface RequestIm {
 	 */
 	public RequestParams myAsk();
 	
+	public RequestParams myAskDetail();
+	
 	/**
 	 * 获取病历信息
 	 * */

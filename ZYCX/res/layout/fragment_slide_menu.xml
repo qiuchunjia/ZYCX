@@ -178,6 +178,31 @@
                 style="@style/img_home"
                 android:src="@drawable/arrows_right_write" />
         </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/rl_msgnotify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginTop="@dimen/margin_left_small" >
+
+            <ImageView
+                android:id="@+id/iv_msgnotify"
+                style="@style/text_home"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/index" />
+
+            <TextView
+                android:id="@+id/tv_msgnotify"
+                style="@style/text_home"
+                android:layout_toRightOf="@id/iv_msgnotify"
+                android:text="我的消息" />
+
+            <ImageView
+                android:id="@+id/iv_msgnotify_next"
+                style="@style/img_home"
+                android:src="@drawable/arrows_right_write" />
+        </RelativeLayout>
     </LinearLayout>
 
     <Button

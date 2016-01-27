@@ -37,7 +37,7 @@ public class MePerioActivity extends BaseActivity {
 	@Override
 	public String setCenterTitle() {
 
-		return "我的期刊";
+		return "我的园地";
 
 	}
 

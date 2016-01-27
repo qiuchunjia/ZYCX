@@ -11,6 +11,7 @@ import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestDetailExpert;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
@@ -78,7 +79,15 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		//mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		Model model = (Model) getDataFromIntent(getIntent(), null);
+		if(model instanceof ModelRequestItem){
+			mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		} else if(model instanceof ModelRequestMyAsk){
+			ModelRequestMyAsk mAsk = (ModelRequestMyAsk) model;
+			mRequestItem = new ModelRequestItem();
+			mRequestItem.setQuestion_id(mAsk.getQuestion_id());
+		}
 	}
 
 	@Override

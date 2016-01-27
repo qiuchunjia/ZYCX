@@ -465,6 +465,13 @@ public class api {
 			params.add(ACT, MEDRECORD_STATE);
 			return getToken(params);
 		}
+
+		@Override
+		public RequestParams myAskDetail() {
+			RequestParams params = new RequestParams();
+			
+			return null;
+		}
 	}
 
 	public static final class FoodImpl implements FoodIm {
