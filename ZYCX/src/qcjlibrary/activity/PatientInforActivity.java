@@ -12,6 +12,7 @@ import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopChooseInsurance;
 import qcjlibrary.widget.popupview.PopChooseMarry;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +48,7 @@ public class PatientInforActivity extends BaseActivity {
 	private TextView tv_address_name;
 	private EditText et_heights;
 	private EditText et_weights;
+	private ModelAddCase info;
 
 	@Override
 	public String setCenterTitle() {
@@ -55,7 +57,7 @@ public class PatientInforActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		info = (ModelAddCase) getDataFromIntent(getIntent(), "info");
 	}
 
 	@Override
@@ -86,6 +88,36 @@ public class PatientInforActivity extends BaseActivity {
 		tv_address_name = (TextView) findViewById(R.id.tv_address_name);
 		et_heights = (EditText) findViewById(R.id.et_heights);
 		et_weights = (EditText) findViewById(R.id.et_weights);
+		
+		if(info != null){
+			et_name.setText(info.getRealname());
+			sex = info.getSex();
+			if(sex.equals("1")){
+				tv_gender_name.setText("男");
+			} else{
+				tv_gender_name.setText("女");
+			}
+			et_age.setText(info.getAge());
+			marriage = info.getMarriage();
+			if(marriage.equals("0")){
+				tv_marry_name.setText("未婚");
+			} else{
+				tv_marry_name.setText("已婚");
+			}
+			tv_nation_name.setText(info.getNation());
+			profession = info.getProfession();
+			et_job.setText(info.getProfession());
+			education = info.getEducation();
+			tv_education_name.setText(info.getEducation());
+			insform = info.getInsform();
+			tv_insurance_name.setText(info.getInsform());
+			natives = info.getNatives();
+			tv_hometown_name.setText(info.getNatives());
+			domicile = info.getDomicile();
+			tv_address_name.setText(info.getDomicile());
+			et_heights.setText(info.getHeight()+"cm");
+			et_weights.setText(info.getWeight()+"kg");
+		}
 	}
 
 	@Override

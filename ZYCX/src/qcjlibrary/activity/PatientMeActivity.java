@@ -89,6 +89,10 @@ public class PatientMeActivity extends BaseActivity {
 	private int count;
 	private LinearLayout ll_patientme_parent;
 	private LinearLayout ll_common_default;
+	
+	private ModelAddCase sendInfo;
+	private ModelAddHistoryCase sendHistory;
+	private ModelAddNowCase sendPresent;
 
 	@Override
 	public String setCenterTitle() {
@@ -150,7 +154,6 @@ public class PatientMeActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		count = ll_patientme_parent.getChildCount();
-		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(new OnClickListener() {
 
@@ -228,6 +231,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addInfroToView(ModelAddCase info) {
 		if (info != null) {
+			sendInfo = info;
 			ll_user.setVisibility(View.VISIBLE);
 			defautl_1.setVisibility(View.GONE);
 			tv_username.setText(info.getRealname());
@@ -260,6 +264,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addHistroyToView(ModelAddHistoryCase history) {
 		if (history != null) {
+			sendHistory = history;
 			ll_once.setVisibility(View.VISIBLE);
 			defautl_2.setVisibility(View.GONE);
 			tv_user_histroy.setText("既往史：" + history.getMed_history());
@@ -322,6 +327,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
 		if (present != null) {
+			sendPresent = present;
 			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
 			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
 			List<Result> img_result = present.getImage_exam().getImage_exam_result();
@@ -423,18 +429,25 @@ public class PatientMeActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_edit:
-			mApp.startActivity_qcj(this, PatientInforActivity.class, sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientInforActivity.class, sendDataToBundle(sendInfo, "info"));
 			break;
 
 		case R.id.tv_edit2:
-			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(sendHistory, "history"));
 			break;
 		case R.id.tv_now_edit2:
-			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(null, null));
+			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(sendPresent, "present"));
 			break;
 
 		}
 
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 	}
 	
 	

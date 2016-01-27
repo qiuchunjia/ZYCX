@@ -52,7 +52,7 @@ public class PopEatingHabit extends PopView {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("荤");
+				modelPop.setDataStr("荤素均衡");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
@@ -61,7 +61,7 @@ public class PopEatingHabit extends PopView {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("素");
+				modelPop.setDataStr("荤食习惯");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}
@@ -71,7 +71,7 @@ public class PopEatingHabit extends PopView {
 
 			@Override
 			public void onClick(View v) {
-				modelPop.setDataStr("荤素搭配");
+				modelPop.setDataStr("素食习惯");
 				listener.onPopResult(modelPop);
 				mPopWindow.dismiss();
 			}

@@ -77,6 +77,7 @@ public class PatientHistoryActivity extends BaseActivity {
 	
 	private TimePickerView pvTime;
 	private String timeType;
+	private ModelAddHistoryCase history;
 	
 	@Override
 	public String setCenterTitle() {
@@ -85,7 +86,7 @@ public class PatientHistoryActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		history = (ModelAddHistoryCase) getDataFromIntent(getIntent(), "history");
 	}
 
 	@Override
@@ -137,6 +138,29 @@ public class PatientHistoryActivity extends BaseActivity {
 		pvTime.setTime(new Date());
 		pvTime.setCyclic(true);
 		pvTime.setCancelable(true);
+		
+		if(history != null){
+			et_name.setText(history.getMed_history());
+			et_allergy_name.setText(history.getAllergy_history());
+			et_single_name.setText(history.getPer_history());
+			tv_eat_name.setText(history.getEating_habit());
+			smoke = history.getSmoke();
+			if(smoke.equals("0")){
+				tv_smoke_name.setText("不抽烟");
+				isSmoke(false);
+			} else{
+				tv_smoke_name.setText("抽烟");
+				isSmoke(true);
+			}
+			drink = history.getDrink();
+			if(drink.equals("0")){
+				tv_drink_name.setText("不饮酒");
+				isDrink(false);
+			} else{
+				tv_drink_name.setText("饮酒");
+				isDrink(true);
+			}
+		}
 	}
 
 	@Override

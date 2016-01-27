@@ -73,7 +73,7 @@ public class ExpertRequestAdapter extends BAdapter {
                     if (myAsk.getEvaluate().equals("1")) {
                         holder.tv_agree.setText("满意评价");
                         holder.tv_agree.setVisibility(View.VISIBLE);
-                    } else if (myAsk.getEvaluate().equals("1")) {
+                    } else if (myAsk.getEvaluate().equals("2")) {
                         holder.tv_noagree.setText("不满意评价");
                         holder.tv_noagree.setVisibility(View.VISIBLE);
                     } else {
@@ -138,9 +138,11 @@ public class ExpertRequestAdapter extends BAdapter {
 
     @Override
     public void refreshFooter(Model item, int count) {
-        ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
-        myAsk.setLastid(myAsk.getQuestion_id());
-        sendRequest(mApp.getUserImpl().myQuestion(myAsk), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+    	if(item instanceof ModelRequestMyAsk){
+    		ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
+    		myAsk.setLastid(myAsk.getQuestion_id());
+    		sendRequest(mApp.getUserImpl().myQuestion(myAsk), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+    	}
     }
 
     @Override
@@ -158,8 +160,8 @@ public class ExpertRequestAdapter extends BAdapter {
         return object;
     }
 
-    @Override
-    public void addHeadList(List<Model> list) {
-        addHeadListWay2(list);
-    }
+//    @Override
+//    public void addHeadList(List<Model> list) {
+//        addHeadListWay2(list);
+//    }
 }
