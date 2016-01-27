@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
@@ -123,6 +124,7 @@ public class ExperienceSendActivity extends BaseActivity {
 		for (int i = 0; i < tagsList.size(); i++) {
 			if (tagsList.get(i).equals(tag)) {
 				view.setBackgroundResource(R.color.text_white);
+				((TextView)view).setTextColor(getResources().getColor(R.color.text_black));
 				tagsList.remove(tag);
 				return;
 			}
@@ -155,6 +157,7 @@ public class ExperienceSendActivity extends BaseActivity {
 			String content = et_content.getText().toString();
 			String date = tv_choosedate.getText().toString();
 			String chooseTags = getTagsFromList(tagsList);
+			Log.d("Cathy", "chooseTags "+chooseTags);
 			if (judgeTheSend(title, date, content, chooseTags)) {
 				mSendData.setTitle(title);
 				mSendData.setBody(content);
