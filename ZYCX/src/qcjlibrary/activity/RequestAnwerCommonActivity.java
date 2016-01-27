@@ -35,6 +35,7 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.MyScrollView;
+import qcjlibrary.widget.ScrollViewListener;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 
 public class RequestAnwerCommonActivity extends BaseActivity{
@@ -229,6 +230,14 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		});
 		
 		
+		sc_request_common.setScrollViewListener(new ScrollViewListener() {
+			
+			@Override
+			public void onScrollChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
+				Log.d("Cathy", "ll_top.getTop() = "+ll_top.getTop());
+			}
+		});
+		
 		/**
 		 * 监听是否成功请求数据
 		 */
@@ -317,8 +326,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	public void onWindowFocusChanged(boolean hasFocus) {
 		// TODO 自动生成的方法存根
 		super.onWindowFocusChanged(hasFocus);
-		llTop = ll_request_head.getTop();
-		tvTop = tv_1.getTop();
+		Log.d("Cathy", "ll_top.getTop() = "+ll_top.getTop());
 	}
 
 }

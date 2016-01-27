@@ -57,10 +57,9 @@ public class MyScrollView extends ScrollView{
 //                } else{
 //                	return false;
 //                }
-                Log.d("Cathy", "yScrollDistance = "+yScrollDistance);
-                if(!isFirstItem && (yScrollDistance > 3 || yScrollDistance < -3)){
-                	return false;
-                }
+//                if(mTop >= offset){
+//                	return false;
+//                }
         }
 
         return super.onInterceptTouchEvent(ev);
@@ -73,6 +72,14 @@ public class MyScrollView extends ScrollView{
 			isFirstItem = false;
 		}
 	}
+	
+	private int mTop;
+	private int offset;
+	public void setFirstTop(int top, int offset){
+		this.mTop = top;
+		this.offset = offset;
+	}
+	
 
 	@Override
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
@@ -89,6 +96,15 @@ public class MyScrollView extends ScrollView{
 		} else{
 			yScrollDistance = t - oldt;
 		}
+		
+		if(mLinstener != null){
+			mLinstener.onScrollChanged(this, l, t, oldl, oldt);
+		}
+	}
+	
+	private ScrollViewListener mLinstener;
+	public void setScrollViewListener(ScrollViewListener l){
+		this.mLinstener = l;
 	}
 	
 }

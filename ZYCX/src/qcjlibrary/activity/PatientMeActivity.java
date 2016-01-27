@@ -267,7 +267,7 @@ public class PatientMeActivity extends BaseActivity {
 			tv_useraddress.setText("个人史：" + history.getPer_history());
 			tv_food_habit.setText("饮食习惯：" + history.getEating_habit());
 			tv_smoke.setText("抽烟：");
-			if (history.getSmoke().equals("0")) {
+			if (history.getSmoke().equals("1")) {
 				tv_smoke.append("抽烟,");
 				tv_smoke.append(history.getSmoke_age() + "开始,");
 				tv_smoke.append(history.getSmoke_time() + "根/日,");
