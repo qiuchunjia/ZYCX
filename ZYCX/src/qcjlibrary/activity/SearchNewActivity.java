@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -228,7 +229,7 @@ public class SearchNewActivity extends BaseActivity {
 			} else {
 				isChanged = false;
 				// 搜索，并清空搜索框
-				et_search.setText("");
+				//et_search.setText("");
 				searchData();
 			}
 			break;

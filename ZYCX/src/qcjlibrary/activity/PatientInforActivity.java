@@ -89,35 +89,6 @@ public class PatientInforActivity extends BaseActivity {
 		et_heights = (EditText) findViewById(R.id.et_heights);
 		et_weights = (EditText) findViewById(R.id.et_weights);
 		
-		if(info != null){
-			et_name.setText(info.getRealname());
-			sex = info.getSex();
-			if(sex.equals("1")){
-				tv_gender_name.setText("男");
-			} else{
-				tv_gender_name.setText("女");
-			}
-			et_age.setText(info.getAge());
-			marriage = info.getMarriage();
-			if(marriage.equals("0")){
-				tv_marry_name.setText("未婚");
-			} else{
-				tv_marry_name.setText("已婚");
-			}
-			tv_nation_name.setText(info.getNation());
-			profession = info.getProfession();
-			et_job.setText(info.getProfession());
-			education = info.getEducation();
-			tv_education_name.setText(info.getEducation());
-			insform = info.getInsform();
-			tv_insurance_name.setText(info.getInsform());
-			natives = info.getNatives();
-			tv_hometown_name.setText(info.getNatives());
-			domicile = info.getDomicile();
-			tv_address_name.setText(info.getDomicile());
-			et_heights.setText(info.getHeight()+"cm");
-			et_weights.setText(info.getWeight()+"kg");
-		}
 	}
 
 	@Override
@@ -125,6 +96,42 @@ public class PatientInforActivity extends BaseActivity {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 
+		if(info != null){
+			//获取数据
+			realname = info.getRealname();
+			sex = info.getSex();
+			age = info.getAge();
+			marriage = info.getMarriage();
+			nation = info.getNation();
+			profession = info.getProfession();
+			education = info.getEducation();
+			insform = info.getInsform();
+			natives = info.getNatives();
+			domicile = info.getDomicile();
+			height = info.getHeight();
+			weight = info.getWeight();
+			//设置数据
+			et_name.setText(realname);
+			if(sex.equals("0")){
+				tv_gender_name.setText("男");
+			} else{
+				tv_gender_name.setText("女");
+			}
+			et_age.setText(age);
+			if(marriage.equals("0")){
+				tv_marry_name.setText("未婚");
+			} else{
+				tv_marry_name.setText("已婚");
+			}
+			tv_nation_name.setText(nation);
+			et_job.setText(profession);
+			tv_education_name.setText(education);
+			tv_insurance_name.setText(insform);
+			tv_hometown_name.setText(natives);
+			tv_address_name.setText(domicile);
+			et_heights.setText(height);
+			et_weights.setText(weight);
+		}
 	}
 
 	@Override

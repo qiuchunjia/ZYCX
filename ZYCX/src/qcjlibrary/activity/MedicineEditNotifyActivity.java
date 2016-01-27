@@ -165,6 +165,13 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			if(isOpen == 0){
 				iv_notify_open.setImageResource(R.drawable.switch_on);
 			}
+		} else{
+			//如果是一个新的闹钟，设置初始信息
+			startTime = DateUtil.strTodate2(String.valueOf(System.currentTimeMillis()));
+        	tv_start_time.setText(startTime);
+        	period = "1";
+        	med_num = 1;
+        	timeList = "8:00";
 		}
 	}
 

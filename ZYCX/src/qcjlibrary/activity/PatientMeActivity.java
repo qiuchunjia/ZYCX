@@ -11,6 +11,7 @@ import org.apache.http.Header;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.text.TextUtils;
@@ -264,7 +265,6 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addHistroyToView(ModelAddHistoryCase history) {
 		if (history != null) {
-			sendHistory = history;
 			ll_once.setVisibility(View.VISIBLE);
 			defautl_2.setVisibility(View.GONE);
 			tv_user_histroy.setText("既往史：" + history.getMed_history());
@@ -310,13 +310,21 @@ public class PatientMeActivity extends BaseActivity {
 			} else{
 				tv_drink.append("不饮酒");
 			}
-			if (history.getMenarche_age() != null && history.getMenarche_age().equals(" ")) {
-				tv_first.setText("月经史：");
-				tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
-				tv_first.append("末次月经时间" + history.getMenarche_etime());
-			}
 			tv_child.setText("子女：" + history.getChilds());
 			tv_family.setText("家族史：" + history.getFamily_history());
+			if(sendInfo != null){
+				if (sendInfo.getSex().equals("1") && history.getMenarche_age() != null 
+						&& history.getMenarche_age().equals(" ")) {
+					history.setSex("1");
+					tv_first.setText("月经史：");
+					tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
+					tv_first.append("末次月经时间" + history.getMenarche_etime());
+				} else{
+					tv_first.setVisibility(View.GONE);
+					history.setSex("0");
+				}
+			}
+			sendHistory = history;
 		}
 	}
 

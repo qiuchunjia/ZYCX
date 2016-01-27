@@ -139,28 +139,7 @@ public class PatientHistoryActivity extends BaseActivity {
 		pvTime.setCyclic(true);
 		pvTime.setCancelable(true);
 		
-		if(history != null){
-			et_name.setText(history.getMed_history());
-			et_allergy_name.setText(history.getAllergy_history());
-			et_single_name.setText(history.getPer_history());
-			tv_eat_name.setText(history.getEating_habit());
-			smoke = history.getSmoke();
-			if(smoke.equals("0")){
-				tv_smoke_name.setText("不抽烟");
-				isSmoke(false);
-			} else{
-				tv_smoke_name.setText("抽烟");
-				isSmoke(true);
-			}
-			drink = history.getDrink();
-			if(drink.equals("0")){
-				tv_drink_name.setText("不饮酒");
-				isDrink(false);
-			} else{
-				tv_drink_name.setText("饮酒");
-				isDrink(true);
-			}
-		}
+		
 	}
 
 	@Override
@@ -171,10 +150,77 @@ public class PatientHistoryActivity extends BaseActivity {
 		isSmoke(false);
 		isDrink(false);
 		modelUser = mApp.getUser();
-		if (modelUser.getSex().equals("男")) {
+		if (modelUser.getSex().equals("1")) {
 			isGirl(false);
 		} else {
 			isGirl(true);
+		}
+		
+		if(history != null){
+			//获取数据
+			med_history = history.getMed_history();
+			allergy_history = history.getAllergy_history();
+			per_history = history.getPer_history();
+			eating_habit = history.getEating_habit();
+			smoke = history.getSmoke();
+			drink = history.getDrink();
+			menarche_age = history.getMenarche_age();
+			menarche_etime = history.getMenarche_etime();
+			amenorrhoea_age = history.getAmenorrhoea_age();
+			childs = history.getChilds();
+			family_history = history.getFamily_history();
+			//设置数据
+			et_name.setText(med_history);
+			et_allergy_name.setText(allergy_history);
+			et_single_name.setText(per_history);
+			tv_eat_name.setText(eating_habit);
+			et_first.setText(menarche_age);
+			tv_last_time_name.setText(menarche_etime);
+			et_stop_yuejins.setText(amenorrhoea_age);
+			et_childs_num.setText(childs);
+			et_family_historys.setText(family_history);
+			if(smoke.equals("0")){
+				tv_smoke_name.setText("不抽烟");
+				isSmoke(false);
+			} else{
+				tv_smoke_name.setText("抽烟");
+				smoke_age = history.getSmoke_age();
+				smoke_time = history.getSmoke_time();
+				stop_smoke = history.getStop_smoke();
+				isSmoke(true);
+				et_smoke_year.setText(smoke_age);
+				et_smoke_gen.setText(smoke_time);
+				if(stop_smoke.equals("0")){
+					tv_stop_smoke_name.setText("未戒烟");
+					isStopSmoke(false);
+				} else{
+					tv_stop_smoke_name.setText("已戒烟");
+					isStopSmoke(true);
+					stop_smoke_time = history.getStop_smoke_time();
+					tv_stop_smoke_time_name.setText(stop_smoke_time);
+				}
+			}
+			if(drink.equals("0")){
+				tv_drink_name.setText("不饮酒");
+				isDrink(false);
+			} else{
+				tv_drink_name.setText("饮酒");
+				isDrink(true);
+				drink_age = history.getDrink_age();
+				drink_consumption = history.getDrink_consumption();
+				stop_drink = history.getStop_drink();
+				et_drink_year.setText(drink_age);
+				et_drink_much.setText(drink_consumption);
+				if(stop_drink.equals("0")){
+					tv_stop_drink_name.setText("未戒酒");
+					isStopDrink(false);
+				} else{
+					tv_stop_drink_name.setText("已戒酒");
+					isStopDrink(false);
+					stop_drink_time = history.getStop_drink_time();
+					tv_stop_drink_name_time.setText(stop_drink_time);
+				}
+			}
 		}
 	}
 
@@ -544,11 +590,13 @@ public class PatientHistoryActivity extends BaseActivity {
 	 */
 	private void isSmoke(boolean flag) {
 		if (flag) {
+			smoke = "1";
 			rl_smoke_year.setVisibility(View.VISIBLE);
 			rl_smoke_gen.setVisibility(View.VISIBLE);
 			rl_stop_smoke.setVisibility(View.VISIBLE);
 			rl_stop_smoke_time.setVisibility(View.VISIBLE);
 		} else {
+			smoke = "0";
 			rl_smoke_year.setVisibility(View.GONE);
 			rl_smoke_gen.setVisibility(View.GONE);
 			rl_stop_smoke.setVisibility(View.GONE);
@@ -563,8 +611,10 @@ public class PatientHistoryActivity extends BaseActivity {
 	 */
 	private void isStopSmoke(boolean flag) {
 		if (flag) {
+			stop_smoke = "1";
 			rl_stop_smoke_time.setVisibility(View.VISIBLE);
 		} else {
+			stop_smoke = "0";
 			rl_stop_smoke_time.setVisibility(View.GONE);
 		}
 	}
@@ -576,11 +626,13 @@ public class PatientHistoryActivity extends BaseActivity {
 	 */
 	private void isDrink(boolean flag) {
 		if (flag) {
+			drink = "1";
 			rl_drink_year.setVisibility(View.VISIBLE);
 			rl_drink_much.setVisibility(View.VISIBLE);
 			rl_stop_drink.setVisibility(View.VISIBLE);
 			rl_stop_drink_time.setVisibility(View.VISIBLE);
 		} else {
+			drink = "0";
 			rl_drink_year.setVisibility(View.GONE);
 			rl_drink_much.setVisibility(View.GONE);
 			rl_stop_drink.setVisibility(View.GONE);
@@ -595,8 +647,10 @@ public class PatientHistoryActivity extends BaseActivity {
 	 */
 	private void isStopDrink(boolean flag) {
 		if (flag) {
+			stop_drink = "1";
 			rl_stop_drink_time.setVisibility(View.VISIBLE);
 		} else {
+			stop_drink = "0";
 			rl_stop_drink_time.setVisibility(View.GONE);
 		}
 	}
