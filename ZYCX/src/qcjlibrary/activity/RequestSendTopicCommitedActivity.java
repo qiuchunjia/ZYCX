@@ -88,6 +88,6 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 	private void skipToHome() {
 		// 完成后跳转到问答首页，传递问答首页的位置到首页
 		mApp.startActivity(RequestSendTopicCommitedActivity.this, 
-				HomeActivity.class, sendDataToBundle(2, null));
+				RequestAnwerCommonActivity.class, sendDataToBundle(2, null));
 	}
 }

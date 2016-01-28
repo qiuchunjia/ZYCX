@@ -5,7 +5,7 @@
     android:background="@drawable/weibolist"
     android:orientation="vertical" >
 
-    <com.zhiyicx.zycx.widget.CircularImage
+	<com.zhiyicx.zycx.widget.CircularImage
         android:id="@+id/user_comment_header"
         android:layout_width="@dimen/header_width_hight"
         android:layout_height="@dimen/header_width_hight"
@@ -39,9 +39,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fontSize"
-                android:textStyle="bold" />
+                android:textColor="@color/text_user"
+                android:textSize="@dimen/text_common"/>
 
             <TextView
                 android:id="@+id/comment_ctime"
@@ -50,8 +49,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="TextView"
-                android:textColor="@color/timeColor"
-                android:textSize="@dimen/timeSize" />
+                android:textColor="@color/text_more_gray"
+                android:textSize="@dimen/text_small" />
         </RelativeLayout>
 
         <TextView
@@ -73,8 +72,8 @@
             android:paddingRight="12dp"
             android:paddingTop="12dp"
             android:text="TextView"
-            android:textColor="@color/tranFontColor"
-            android:textSize="@dimen/commentSize" />
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_common" />
 
     </LinearLayout>
 

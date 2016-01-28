@@ -402,7 +402,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 	/** 缺省视图**/
 	private View view;
 	private View getDefaultView(){
-		view = LayoutInflater.from(getActivity()).inflate(R.layout.common_default_layout, null);
+		view = mInflater.inflate(R.layout.common_default_layout, null);
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
 				LayoutParams.MATCH_PARENT, Gravity.CENTER);
 		view.setLayoutParams(params);

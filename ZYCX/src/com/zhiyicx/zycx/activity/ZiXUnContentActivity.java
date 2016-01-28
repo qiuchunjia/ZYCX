@@ -69,7 +69,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "咨询详情";
+		return "资讯详情";
 	}
 
 	@Override
@@ -80,11 +80,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 			mId = Integer.valueOf(mDetail.getId());
 			mUid = Integer.valueOf(mDetail.getUid());
 			mTitle = mDetail.getTitle();
+			Log.d("Cathy", "mTitle = "+mTitle);
 		} else {
 			Intent intent = getIntent();
 			mId = intent.getIntExtra("id", 0);
 			mUid = intent.getIntExtra("uid", 0);
 			mTitle = intent.getStringExtra("title");
+			Log.d("Cathy", "mTitle : "+mTitle);
 			mDetail = new ModelZiXunDetail();
 			mDetail.setId(mId + "");
 		}
@@ -393,7 +395,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			public void onClick(View v) {
 				if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
-					mFace.setImageResource(R.drawable.keyboard);
+					mFace.setImageResource(R.drawable.smile_face);
 					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}

@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_min"
         android:text="放射治疗黑呵呵呵呵呵呵会飞的发顺丰的法定假发的康师傅骄傲的叫法埃德加的疯狂的撒发生的开发商"
-        android:textColor="@color/text_more_gray"
+        android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:textSize="@dimen/text_common" />
 

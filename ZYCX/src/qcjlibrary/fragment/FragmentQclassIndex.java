@@ -103,6 +103,19 @@ public class FragmentQclassIndex extends BaseFragment {
 
 	@Override
 	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_right_arrow:
+			if (vPager != null) {
+				int currentId = vPager.getCurrentItem();
+				if (currentId + 1 < mCategoryList.size()) {
+					vPager.setCurrentItem(currentId + 1);
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override

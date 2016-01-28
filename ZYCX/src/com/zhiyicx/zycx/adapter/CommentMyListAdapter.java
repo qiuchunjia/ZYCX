@@ -1,5 +1,6 @@
 package com.zhiyicx.zycx.adapter;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.fragment.BaseListFragment;
 import com.zhiyicx.zycx.net.NetComTools;
@@ -82,6 +83,7 @@ public class CommentMyListAdapter extends SociaxListAdapter {
 		// commentMyListItem.userheader);
 		layout.setTag(comment.getStatus());
 		commentMyListItem.username.setText(comment.getUname());
+		Log.d("Cathy", "comment.getUname() = "+comment.getUname());
 		try {
 			commentMyListItem.time.setText(TimeHelper.friendlyTimeFromeStringTime(comment.getcTime()));
 			System.out.println(" ctime" + comment.getcTime());

@@ -127,7 +127,8 @@ public class ZhiXunAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		requstMessage(mDetail, REFRESH_NEW);
+		//requstMessage(mDetail, REFRESH_NEW);
+		refreshNew();
 	}
 
 	@Override

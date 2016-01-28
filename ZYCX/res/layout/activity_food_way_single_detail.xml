@@ -234,10 +234,11 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/yijibox"
                     android:paddingBottom="@dimen/margin_bottom"
                     android:paddingLeft="@dimen/margin_left"
+                    android:layout_marginBottom="2dp"
                     android:paddingRight="@dimen/margin_left_small"
                     android:paddingTop="@dimen/margin_top" >
 

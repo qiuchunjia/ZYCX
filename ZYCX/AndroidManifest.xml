@@ -130,8 +130,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ZiXUnContentActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+            <!-- android:launchMode="singleTask" -->
         <activity
             android:name=".activity.QClassDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -66,11 +66,13 @@ public abstract class BAdapter extends BaseAdapter {
 	public BAdapter(BaseFragment fragment, List<Model> list) {
 		this.mBaseFragment = fragment;
 		mBaseActivity = (BaseActivity) mBaseFragment.getActivity();
-		mInflater = LayoutInflater.from(mBaseActivity);
-		mApp = (Thinksns) mBaseFragment.getActivity().getApplication();
-		if (list != null)
-			mList = list;
-		mBaseFragment.setAdapter(this);
+		if(mBaseActivity != null){
+			mInflater = LayoutInflater.from(mBaseActivity);
+			mApp = (Thinksns) mBaseFragment.getActivity().getApplication();
+			if (list != null)
+				mList = list;
+			mBaseFragment.setAdapter(this);
+		}
 	}
 
 	/** 子类实现，用来第一次打开的时候获取新数据，当刷新到时候是调用refreshNew() */

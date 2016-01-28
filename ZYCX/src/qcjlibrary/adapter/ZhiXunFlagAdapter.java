@@ -60,9 +60,8 @@ public class ZhiXunFlagAdapter extends BAdapter {
 				mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_photo);
 				holder.tv_content.setText(modelZiXunDetail.getTitle());
 				holder.tv_date.setText(modelZiXunDetail.getcTime());
-				// holder.tv_from = (TextView) convertView
-				// .findViewById(R.id.tv_from);
 				holder.tv_num.setText(modelZiXunDetail.getReadCount());
+				holder.tv_from.setText(modelZiXunDetail.getUname());
 			}
 		}
 	}
@@ -80,6 +79,7 @@ public class ZhiXunFlagAdapter extends BAdapter {
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
 			holder.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
+			holder.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
 		}
 	}
 

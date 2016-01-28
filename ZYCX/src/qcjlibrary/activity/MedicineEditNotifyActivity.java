@@ -7,6 +7,7 @@ import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.SharedPreferencesUtil;
 import qcjlibrary.util.ToastUtils;
@@ -190,6 +191,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
             	tv_start_time.setText(startTime);
             }
         });
+		//输入超出提醒
+		et_medicine_name.addTextChangedListener(new EditTextUtils().getMyWatcher(20, et_medicine_name, this));
+		et_user.addTextChangedListener(new EditTextUtils().getMyWatcher(20, et_user, this));
 	}
 
 	@Override

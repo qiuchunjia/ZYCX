@@ -2,70 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_white_pure_color"
+    android:background="@color/main_white_bg_color"
     android:orientation="vertical"
     android:paddingLeft="@dimen/margin_left_small"
     android:paddingRight="@dimen/margin_right_small" >
 
-    <ImageView
-        android:id="@+id/iv_perio_icon"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_image_small" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height_50"
+        android:layout_height="match_parent"
         android:background="@color/main_white_pure_color"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/margin_left_small"
-        android:paddingTop="@dimen/margin_left_small" >
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_small"
-            android:layout_weight="1.5"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="癌友日记"
-            android:gravity="left"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+        android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/iv_flag"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/tag" />
-
-        <TextView
-            android:id="@+id/tv_title_flag"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_perio_icon"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/iv_flag"
-            android:layout_weight="1"
-            android:text="第九期"
-            android:textColor="@color/text_yellow"
-            android:textSize="@dimen/text_small" />
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_image_small" />
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_right_small"
-            android:layout_weight="2"
-            android:text="2014-12-27"
-            android:gravity="right"
-            android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_small" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height_50"
+            android:background="@color/main_white_pure_color"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_left_small"
+            android:paddingTop="@dimen/margin_left_small" >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_small"
+                android:layout_weight="1.5"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="1"
+                android:text="癌友日记"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_big" />
+
+            <ImageView
+                android:id="@+id/iv_flag"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/tag" />
+
+            <TextView
+                android:id="@+id/tv_title_flag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_flag"
+                android:layout_weight="1"
+                android:text="第九期"
+                android:textColor="@color/text_yellow"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_right_small"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="2014-12-27"
+                android:textColor="@color/text_more_gray"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
