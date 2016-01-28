@@ -92,15 +92,14 @@ public class FragmentZhixun extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mList != null) {
-			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
-		}
 	}
 
 	@Override
 	public void initData() {
 		// TODO Auto-generated method stub
-
+		if (mList != null) {
+			sendRequest(new api.ZhiXunImpl().index(), ModelZiXun.class, 0);
+		}
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.zhiyicx.zycx;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.umeng.analytics.MobclickAgent;
@@ -53,6 +54,7 @@ import android.widget.Toast;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.L;
 
 /**
@@ -449,6 +451,32 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					preferenceUtil.saveString("oauth_token_secret", authorizeResult.getSecretToken());
 					preferenceUtil.saveString("oauth_token", authorizeResult.getToken());
 					preferenceUtil.saveInt("uid", authorizeResult.getUid());
+					//获取用户信息
+//					final Thinksns mApp = new Thinksns();
+//					NetComTools netComTools_1 = NetComTools.getInstance(mApp.getActivity());
+//					String userUrl = MyConfig.HOST+"/index.php?app=api&mod=Personage&act=index&oauth_token="
+//							+authorizeResult.getToken()+"&oauth_token_secret="+authorizeResult.getSecretToken();
+//					netComTools_1.getNetJson(userUrl, new JsonDataListener() {
+//						
+//						@Override
+//						public void OnReceive(JSONObject jsonObject) {
+//							try {
+//								JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+//								Log.d("Cathy", "jsonObject1: "+jsonObject1.toString());
+//								ModelUser user = (ModelUser) DataAnalyze.parseDataByGson
+//										(jsonObject1.toString(), ModelUser.class);
+//								mApp.saveUser(user);
+//							} catch (JSONException e) {
+//								// TODO 自动生成的 catch 块
+//								e.printStackTrace();
+//							}
+//						}
+//						
+//						@Override
+//						public void OnError(String error) {
+//							
+//						}
+//					});
 					break;
 				case 2:
 					authorizeResult = oauth.authorize(data.getString("username"), data.getString("password"),

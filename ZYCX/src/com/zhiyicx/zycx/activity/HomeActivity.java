@@ -221,7 +221,8 @@ public class HomeActivity extends BaseActivity {
 				ModelUser user = mApp.getUser();
 				String iconUrl = user.getAvatar();
 				if (!TextUtils.isEmpty(iconUrl)) {
-					mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+					//mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+					sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 				} else {
 					sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 				}
@@ -236,7 +237,7 @@ public class HomeActivity extends BaseActivity {
 			ModelUser obUser = (ModelUser) object;
 			mApp.displayImage(obUser.getAvatar(), mTitle.iv_title_left2);
 			mApp.saveUser(obUser);
-		} else {
+		} else{
 			judgeTheMsg(object);
 		}
 		return object;
@@ -605,6 +606,7 @@ public class HomeActivity extends BaseActivity {
 		super.onResume();
 		MobclickAgent.onResume(this);
 		initIcon(mTitle);
+		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 		if (!isLogin() && mCurrentIndex == index_qikan) {
 			setTabSelection(index_Default);
 		}
@@ -614,7 +616,6 @@ public class HomeActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
-		initIcon(mTitle);
 	}
 
 	// 展示排序下拉列表

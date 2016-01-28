@@ -43,49 +43,56 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/main_white_pure_color"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="@dimen/margin_right_small" >
+        android:layout_height="46dp"
+        android:background="@color/main_white_pure_color" >
 
-        <ImageView
-            android:id="@+id/face"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_right_small"
-            android:src="@drawable/smile_face" />
+        <include layout="@layout/view_line_vertical"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="@dimen/margin_right_small" >
 
-        <EditText
-            android:id="@+id/edit_cmt"
-            style="@style/cmtedit"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/text_green"
-            android:hint="说点什么吧" />
+            <ImageView
+                android:id="@+id/face"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_right_small"
+                android:src="@drawable/smile_face" />
 
-        <ImageView
-            android:id="@+id/btn_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_small"
-            android:src="@drawable/pinglunicon" />
+            <EditText
+                android:id="@+id/edit_cmt"
+                style="@style/cmtedit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:cursorVisible="true"
+                android:hint="说点什么吧"
+                android:textCursorDrawable="@color/text_green" />
 
-        <TextView
-            android:id="@+id/btn_praise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_small"
-            android:drawableLeft="@drawable/zanicon"
-            android:drawablePadding="5dp"
-            android:text="1"
-            android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_small" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/btn_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_small"
+                android:src="@drawable/pinglunicon" />
+
+            <TextView
+                android:id="@+id/btn_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_small"
+                android:drawableLeft="@drawable/zanicon"
+                android:drawablePadding="5dp"
+                android:text="1"
+                android:textColor="@color/text_more_gray"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <com.zhiyicx.zycx.sociax.component.TSFaceView
         android:id="@+id/face_view"

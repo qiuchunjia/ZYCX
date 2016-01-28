@@ -221,11 +221,11 @@ public class FragmentMenu extends BaseFragment {
 			return;
 		}
 		btn_quit.setText("退出登录");
-//		if (TextUtils.isEmpty(mUser.getAvatar())) {
-//			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
-//		} else {
-//			addDataToIcon(mUser);
-//		}
-		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		if (TextUtils.isEmpty(mUser.getAvatar())) {
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		} else {
+			addDataToIcon(mUser);
+		}
+		//sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 }

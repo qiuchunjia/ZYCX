@@ -49,12 +49,14 @@
 
         <TextView
             android:id="@+id/tv_from"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_photo"
             android:layout_marginLeft="@dimen/margin_left_small"
             android:layout_toRightOf="@id/tv_date"
             android:text="来自:鱼儿们"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
 

@@ -63,9 +63,7 @@ public class ExperienceCycleAdapter extends BAdapter {
 			}
 			ModelExperiencePostDetailItem detailItem = (ModelExperiencePostDetailItem) mList.get(position);
 			String mon = DateUtil.StampToMonth(detailItem.getCtime());
-			if(mon.equals("0")){
-				mon = "1";
-			}
+			mon = String.valueOf(Integer.parseInt(mon)+1);
 			holder.tv_date_month.setText(mon + "月");
 			holder.tv_date_day.setText(DateUtil.StampToDay(detailItem.getCtime()));
 			holder.tv_date_week.setText(DateUtil.StampToWeek(detailItem.getCtime()));

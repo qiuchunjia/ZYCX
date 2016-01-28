@@ -13,8 +13,10 @@ import com.zhiyicx.zycx.util.Utils;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -63,6 +65,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	private int mCurrentPraise;
 	private boolean isBig = false;
+	private String contnet;
 
 	@Override
 	public String setCenterTitle() {
@@ -195,6 +198,29 @@ public class ZiXUnContentActivity extends BaseActivity {
 					SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), mCmtEdit);
 				}
 				return false;
+			}
+		});
+		
+		//限制输入字数
+		mCmtEdit.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				contnet = s.toString();
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(contnet.length() > 400){
+					contnet = contnet.substring(0, 400);
+					ToastUtils.showLongToast(ZiXUnContentActivity.this, "评论不可超过400字");
+					mCmtEdit.setText(contnet);
+				}
 			}
 		});
 		// 点击后隐藏标签和输入框 如果有的话

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -64,7 +65,7 @@ public class ZhiXunAdapter extends BAdapter {
 	 */
 	private int judgeTheType(int pos) {
 		// 表示热点
-		if (pos == 0 && mDetail.getFenlei_id() == 106) {
+		if (pos == 0 && mDetail.getFenlei_id() == 7) {
 			return TYPE_2;
 		}
 		return TYPE_1;

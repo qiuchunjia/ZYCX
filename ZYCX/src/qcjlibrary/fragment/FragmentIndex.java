@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import qcjlibrary.activity.FoodWayActivity;
 import qcjlibrary.activity.PatientMeActivity;
+import qcjlibrary.activity.RequestAnwerCommonActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.fragment.base.BaseFragment;
@@ -108,8 +109,8 @@ public class FragmentIndex extends BaseFragment {
 		switch (v.getId()) {
 		case R.id.rl_1:
 
-			setTabFragement(HomeActivity.index_qustion);
-
+			//setTabFragement(HomeActivity.index_qustion);
+			mApp.startActivity_qcj(mActivity, RequestAnwerCommonActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		case R.id.rl_2:

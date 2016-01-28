@@ -73,6 +73,28 @@ public class QclassCmtSendActivity extends BaseActivity {
 
 	@Override
 	public void initListener() {
+		
+		edt_qclass_send.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				content = s.toString();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(content.length() > 400){
+					ToastUtils.showLongToast(QclassCmtSendActivity.this, "评论不可超过400字");
+					content = content.substring(0, 400);
+					edt_qclass_send.setText(content);
+				}
+			}
+		});
 		//发表评论
 		tv_title_right.setOnClickListener(new OnClickListener() {
 			
