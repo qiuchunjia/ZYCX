@@ -25,6 +25,12 @@ public class ViewHolder {
 	public TextView tv_noagree;
 
 	/******************* 专家提问item end ************************/
+	/** 普通问答tab**/
+	public TextView tv_1;
+	public TextView tv_2;
+	public TextView tv_3;
+	public TextView tv_4;
+	/** 普通问答tab end**/
 	/******************* 消息中的回复item ************************/
 	public RoundImageView riv_msg_icon;
 	public TextView tv_user;

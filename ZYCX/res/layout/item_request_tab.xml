@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="治疗"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_green"
             android:textSize="@dimen/text_common" />
 
         <TextView

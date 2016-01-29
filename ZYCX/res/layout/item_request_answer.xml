@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_white_pure_color"
-    android:orientation="vertical" >
+    android:background="@color/main_white_pure_color" >
 
     <RelativeLayout
         android:id="@+id/rl_head"
@@ -16,13 +15,13 @@
             android:id="@+id/tv_advice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_title"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_right_small"
             android:layout_marginTop="@dimen/margin_top"
             android:background="@drawable/view_border_blue_solid_3"
             android:text="推荐"
             android:textColor="@color/text_white"
-            android:layout_alignBaseline="@id/tv_title"
             android:textSize="@dimen/text_small"
             android:visibility="visible" />
 
@@ -60,6 +59,7 @@
         android:id="@+id/tv_expert_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/rl_head"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_marginRight="@dimen/margin_right_small"
         android:layout_marginTop="@dimen/margin_top"
@@ -79,7 +79,8 @@
     <RelativeLayout
         android:id="@+id/rl_footer"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_expert_answer" >
 
         <TextView
             android:id="@+id/tv_date"
@@ -96,7 +97,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true" >
-
             <!-- 选择同意框 -->
 
             <RelativeLayout
@@ -150,4 +150,10 @@
         </FrameLayout>
     </RelativeLayout>
 
-</LinearLayout>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        layout="@layout/view_line_vertical" />
+
+</RelativeLayout>

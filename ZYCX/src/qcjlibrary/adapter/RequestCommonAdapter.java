@@ -4,10 +4,12 @@ import java.util.List;
 import com.zhiyicx.zycx.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,30 +24,24 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.SpanUtil;
 
-public class RequestCommonAdapter extends SectionedBaseAdapter{
+public class RequestCommonAdapter extends SectionedBaseAdapter {
 
 	private ModelRequestItem mRequestData;
 	private int page = 0;
 	private LayoutInflater inflator;
-	private String type;
-	private List<ModelCancerCategory> mCancerList; // 癌症种类
-	
+
 	public RequestCommonAdapter(BaseActivity activity, List<Model> list) {
 		super(activity, list);
 		// TODO 自动生成的构造函数存根
 	}
-	
-	
 
 	public RequestCommonAdapter(BaseActivity activity, ModelRequestItem mRequestData) {
 		super(activity, null);
 		this.mRequestData = mRequestData;
-		if(activity != null){
+		if (activity != null) {
 			this.inflator = LayoutInflater.from(activity);
 		}
 	}
-
-
 
 	@Override
 	public Object getItem(int section, int position) {
@@ -73,26 +69,27 @@ public class RequestCommonAdapter extends SectionedBaseAdapter{
 
 	@Override
 	public View getItemView(int section, int position, View convertView, ViewGroup parent) {
-//		ViewHolder holder;
-//		if (convertView == null) {
-//			holder = new ViewHolder();
-//			convertView = inflator.inflate(R.layout.item_request_answer, null);
-//			initView(convertView, holder);
-//			convertView.setTag(holder);
-//		} else {
-//			holder = (ViewHolder) convertView.getTag();
-//		}
-//		bindDataToView(holder, position);
-//		return convertView;
-		LinearLayout layout = null;
+		ViewHolder holder;
 		if (convertView == null) {
-			LayoutInflater inflator = (LayoutInflater) parent.getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			layout = (LinearLayout) inflator.inflate(R.layout.item_request_answer, null);
+			holder = new ViewHolder();
+			convertView = inflator.inflate(R.layout.item_request_answer, null);
+			initView(convertView, holder);
+			convertView.setTag(holder);
 		} else {
-			layout = (LinearLayout) convertView;
+			holder = (ViewHolder) convertView.getTag();
 		}
-		return layout;
+		bindDataToView(holder, position);
+		return convertView;
+//		 LinearLayout layout = null;
+//		 if (convertView == null) {
+//		 LayoutInflater inflator = (LayoutInflater) parent.getContext()
+//		 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		 layout = (LinearLayout)
+//		 inflator.inflate(R.layout.item_me_choose_province, null);
+//		 } else {
+//		 layout = (LinearLayout) convertView;
+//		 }
+//		 return layout;
 	}
 
 	private void bindDataToView(ViewHolder holder, int position) {
@@ -147,36 +144,85 @@ public class RequestCommonAdapter extends SectionedBaseAdapter{
 		}
 	}
 
-
-
 	@Override
 	public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
 		RelativeLayout tab;
 		if (convertView == null && inflator != null) {
 			tab = (RelativeLayout) inflator.inflate(R.layout.item_request_tab, null);
+			tv_1 = (TextView) tab.findViewById(R.id.tv_1);
+			tv_2 = (TextView) tab.findViewById(R.id.tv_2);
+			tv_3 = (TextView) tab.findViewById(R.id.tv_3);
+			tv_4 = (TextView) tab.findViewById(R.id.tv_4);
 		} else {
 			tab = (RelativeLayout) convertView;
 		}
-		TextView tv_1 = (TextView) tab.findViewById(R.id.tv_1);
-		TextView tv_2 = (TextView) tab.findViewById(R.id.tv_2);
-		TextView tv_3 = (TextView) tab.findViewById(R.id.tv_3);
-		TextView tv_4 = (TextView) tab.findViewById(R.id.tv_4);
-		int green = mApp.getActivity().getResources().getColor(R.color.text_green);
-		int gray = mApp.getActivity().getResources().getColor(R.color.text_gray);
-//		LinearLayout layout = null;
-//		if (convertView == null) {
-//			LayoutInflater inflator = (LayoutInflater) parent.getContext()
-//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//			layout = (LinearLayout) inflator.inflate(R.layout.header_item, null);
-//		} else {
-//			layout = (LinearLayout) convertView;
-//		}
-//		((TextView) layout.findViewById(R.id.textItem)).setText("Header for section " + section);
-//		return layout;
-		
+		tv_1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				resetTextView();
+				tv_1.setTextColor(green);
+				mRequestData.setType("0");
+				refreshNew();
+				if (l != null) {
+					l.onTabSelectde(0);
+				}
+			}
+
+		});
+		tv_2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				resetTextView();
+				tv_2.setTextColor(green);
+				mRequestData.setType("1");
+				refreshNew();
+				if (l != null) {
+					l.onTabSelectde(1);
+				}
+			}
+		});
+		tv_3.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				resetTextView();
+				tv_3.setTextColor(green);
+				mRequestData.setType("2");
+				refreshNew();
+				if (l != null) {
+					l.onTabSelectde(2);
+				}
+			}
+		});
+		tv_4.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				resetTextView();
+				tv_4.setTextColor(green);
+				if (l != null) {
+					l.onTabSelectde(3);
+				}
+			}
+		});
+
 		return tab;
 	}
 
+	private TextView tv_1;
+	private TextView tv_2;
+	private TextView tv_3;
+	private TextView tv_4;
+	private int green = mApp.getActivity().getResources().getColor(R.color.text_green);
+	private int gray = mApp.getActivity().getResources().getColor(R.color.text_gray);
+	private void resetTextView() {
+		tv_1.setTextColor(gray);
+		tv_2.setTextColor(gray);
+		tv_3.setTextColor(gray);
+		tv_4.setTextColor(gray);
+	}
 
 	@Override
 	public void refreshNew() {
@@ -193,13 +239,13 @@ public class RequestCommonAdapter extends SectionedBaseAdapter{
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-		if(item instanceof ModelRequestItem){
+		if (item instanceof ModelRequestItem) {
 			ModelRequestItem data = (ModelRequestItem) item;
 			page++;
 			data.setPage(page);
 			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_FOOTER);
 		}
-		
+
 	}
 
 	@Override
@@ -216,9 +262,11 @@ public class RequestCommonAdapter extends SectionedBaseAdapter{
 		}
 		return null;
 	}
+
 	private OnTabselectedListener l;
-	public void setOnTabselectedListener(OnTabselectedListener l){
+
+	public void setOnTabselectedListener(OnTabselectedListener l) {
 		this.l = l;
 	}
-	
+
 }
