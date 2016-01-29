@@ -9,6 +9,7 @@ import org.apache.http.Header;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.text.TextUtils;
@@ -99,9 +100,7 @@ public class FragmentCaseIndex extends BaseFragment {
 			rl_nodata.setVisibility(View.GONE);
 			rl_my.setVisibility(View.VISIBLE);
 			addUserDataToView(mCaseIndex);
-		} else if(object instanceof ModelNotiyState){
-			ModelNotiyState state = (ModelNotiyState) object;
-			status = state.getStatus();
+			status = mCaseIndex.getStatus();
 			if(status != null && status.equals("1")){
 				iv_msg.setVisibility(View.VISIBLE);
 			} else{
