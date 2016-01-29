@@ -5,8 +5,10 @@ import java.util.List;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,9 +26,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.RequestAnswerAdapter;
+import qcjlibrary.adapter.RequestCommonAdapter;
+import qcjlibrary.adapter.TestSectionedAdapter;
 import qcjlibrary.adapter.base.BAdapter;
 import qcjlibrary.adapter.base.OnRequestLinstner;
+import qcjlibrary.adapter.base.OnTabselectedListener;
 import qcjlibrary.listview.base.CommonListView;
+import qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView;
 import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestAsk;
@@ -45,11 +51,8 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	private ImageView iv_zoom;
 	private TextView tv_find;
 	private EditText et_find;
-	private LinearLayout ll_1;
 	private ImageView iv_1;
-	private LinearLayout ll_2;
 	private ImageView iv_2;
-	private LinearLayout ll_3;
 	private ImageView iv_3;
 	private LinearLayout ll_4;
 	private ImageView iv_4;
@@ -57,23 +60,18 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	private TextView tv_2;
 	private TextView tv_3;
 	private TextView tv_4;
-	private CommonListView mCommonListView;
-	private BAdapter mAdapter;
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
 
 	private ModelRequestItem mRequestItem; // 请求数据
-	private LinearLayout ll_request_head;
-	private LinearLayout ll_commonlist_parent;
-	private MyScrollView sc_request_common;
 
-	private float mLastY;
-	private float offset;
-	private int llTop;
-	private int tvTop;
 	private Title mTitle;
 	
 	private ModelRequestAsk mAsk;
-	private int visibleItemIndex;
+	
+	private PinnedHeaderListView pinnedListView;
+	private LayoutInflater inflater;
+	private LinearLayout header;
+	private TestSectionedAdapter commonAdapter;
 	
 	@Override
 	public void onClick(View v) {
@@ -83,31 +81,27 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 			mApp.startActivity_qcj(this, RequestSearchActivity.class,
 					sendDataToBundle(new Model(), null));
 			break;
-		case R.id.ll_1:
+		case R.id.iv_1:
 			iv_1.setImageResource(R.drawable.medica_green);
-			tv_1.setTextColor(getResources().getColor(R.color.text_green));
 			setTypeAdapter("0");
-			mAdapter.doRefreshNew();
+			commonAdapter.doRefreshNew();
 			break;
 
-		case R.id.ll_2:
+		case R.id.iv_2:
 			setTypeAdapter("1");
-			mAdapter.doRefreshNew();
+			commonAdapter.doRefreshNew();
 			iv_2.setImageResource(R.drawable.umbrella_green);
-			tv_2.setTextColor(getResources().getColor(R.color.text_green));
 			break;
-		case R.id.ll_3:
+		case R.id.iv_3:
 			setTypeAdapter("2");
-			mAdapter.doRefreshNew();
+			commonAdapter.doRefreshNew();
 			iv_3.setImageResource(R.drawable.heart_green);
-			tv_3.setTextColor(getResources().getColor(R.color.text_green));
 			break;
-		case R.id.ll_4:
+		case R.id.iv_4:
 			iv_4.setImageResource(R.drawable.more_green);
-			tv_4.setTextColor(getResources().getColor(R.color.text_green));
 			if (mCancerList != null && mCancerList.size() > 0) {
 				PopCancerCategory category = new PopCancerCategory(this, mCancerList, this);
-				category.showPop(ll_4, Gravity.RIGHT, 0, 0);
+				category.showPop(iv_4, Gravity.RIGHT, 0, 0);
 
 			} else {
 				sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
@@ -132,40 +126,31 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	@Override
 	public int getLayoutId() {
 		// TODO 自动生成的方法存根
-		return R.layout.fragment_request_anwer;
+		return R.layout.header_activity_main;
 	}
 
 	@Override
 	public void initView() {
 		// TODO 自动生成的方法存根
 		titleSetRightImage(R.drawable.chuangjianjingli);
-		ll_top = (LinearLayout) findViewById(R.id.ll_top);
-		rl_space = (RelativeLayout) findViewById(R.id.rl_space);
-		iv_zoom = (ImageView) findViewById(R.id.iv_zoom);
-		tv_find = (TextView) findViewById(R.id.tv_find);
-		et_find = (EditText) findViewById(R.id.et_find);
-		ll_1 = (LinearLayout) findViewById(R.id.ll_1);
-		iv_1 = (ImageView) findViewById(R.id.iv_1);
-		ll_2 = (LinearLayout) findViewById(R.id.ll_2);
-		iv_2 = (ImageView) findViewById(R.id.iv_2);
-		ll_3 = (LinearLayout) findViewById(R.id.ll_3);
-		iv_3 = (ImageView) findViewById(R.id.iv_3);
-		ll_4 = (LinearLayout) findViewById(R.id.ll_4);
-		iv_4 = (ImageView) findViewById(R.id.iv_4);
-
-		tv_1 = (TextView) findViewById(R.id.tv_1);
-		tv_2 = (TextView) findViewById(R.id.tv_2);
-		tv_3 = (TextView) findViewById(R.id.tv_3);
-		tv_4 = (TextView) findViewById(R.id.tv_4);
-
-		ll_request_head = (LinearLayout) findViewById(R.id.ll_request_head);
-		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
-		sc_request_common = (MyScrollView) findViewById(R.id.sc_request_common);
-
-		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
-		
 		mTitle = getTitleClass();
+		
+		pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
+		//pinnedListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
+		//添加头部视图
+		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		RelativeLayout header1 = (RelativeLayout) inflater.inflate(R.layout.item_msg_notify, null);
+		//header = (LinearLayout) inflater.inflate(R.layout.item_request_header, null);
+		pinnedListView.addHeaderView(header1);
+		//头部图片
+//		iv_1 = (ImageView) header.findViewById(R.id.iv_1);
+//		iv_2 = (ImageView) header.findViewById(R.id.iv_2);
+//		iv_3 = (ImageView) header.findViewById(R.id.iv_3);
+//		iv_4 = (ImageView) header.findViewById(R.id.iv_4);
+//		rl_space = (RelativeLayout) header.findViewById(R.id.rl_space);
+//		iv_zoom = (ImageView) header.findViewById(R.id.iv_zoom);
+//		tv_find = (TextView) header.findViewById(R.id.tv_find);
+//		et_find = (EditText) header.findViewById(R.id.et_find);
 	}
 
 	@Override
@@ -173,8 +158,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		// TODO 自动生成的方法存根
 		mRequestItem = new ModelRequestItem();
 		setTypeAdapter("0");
-		iv_1.setImageResource(R.drawable.medica_green);
-		tv_1.setTextColor(getResources().getColor(R.color.text_green));
+		//iv_1.setImageResource(R.drawable.medica_green);
 		mAsk = new ModelRequestAsk();
 		mAsk.setIs_expert("0");
 	}
@@ -187,81 +171,75 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	 */
 	private void setTypeAdapter(String type) {
 		mRequestItem.setType(type);
-		mAdapter = new RequestAnswerAdapter(this, mRequestItem);
-		mCommonListView.setAdapter(mAdapter);
+		commonAdapter = new TestSectionedAdapter(this, null);
+		pinnedListView.setAdapter(commonAdapter);
 	}
 
 	@Override
 	public void initListener() {
 		// TODO 自动生成的方法存根
-		rl_space.setOnClickListener(this);
-		ll_1.setOnClickListener(this);
-		ll_2.setOnClickListener(this);
-		ll_3.setOnClickListener(this);
-		ll_4.setOnClickListener(this);
+//		rl_space.setOnClickListener(this);
+//		iv_1.setOnClickListener(this);
+//		iv_2.setOnClickListener(this);
+//		iv_3.setOnClickListener(this);
+//		iv_4.setOnClickListener(this);
 		
-		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
+		pinnedListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
 				if (item != null) {
 					if (item.getIs_expert().equals("0")) {
-						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailCommonActivity.class);
+						pinnedListView.stepToNextActivity(parent, view, position, RequestDetailCommonActivity.class);
 					} else if (item.getIs_expert().equals("1")) {
-						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailExpertActivity.class);
+						pinnedListView.stepToNextActivity(parent, view, position, RequestDetailExpertActivity.class);
 					}
 				}
-
+				
 			}
 		});
 		
-		mCommonListView.setOnScrollListener(new OnScrollListener() {
-
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-			}
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				visibleItemIndex = firstVisibleItem;
-				sc_request_common.setVisibleItem(visibleItemIndex);
-			}
-		});
-		
-		
-		sc_request_common.setScrollViewListener(new ScrollViewListener() {
-			
-			@Override
-			public void onScrollChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
-				Log.d("Cathy", "ll_top.getTop() = "+ll_top.getTop());
-			}
-		});
-		
-		/**
-		 * 监听是否成功请求数据
-		 */
-		mAdapter.setOnRequestLinstner(new OnRequestLinstner() {
-
-			@Override
-			public void onSuccess(View view) {
-				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, view);
-			}
-
-			@Override
-			public void onFailed(View view) {
-				DefaultLayoutUtil.showDefault(ll_commonlist_parent, view);
-				TextView tv_reload = (TextView) view.findViewById(R.id.tv_reload);
-				tv_reload.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Log.d("Cathy", "onClick");
-						mAdapter.doRefreshNew();
-					}
-				});
-			}
-		});
+		//监听tab选择
+//		commonAdapter.setOnTabselectedListener(new OnTabselectedListener() {
+//			
+//			@Override
+//			public void onTabSelectde(int index) {
+//				resetImage();
+//				switch (index) {
+//				case 0:
+//					iv_1.setImageResource(R.drawable.medica_green);
+//					setTypeAdapter("0");
+//					commonAdapter.doRefreshNew();
+//					break;
+//				case 1:
+//					iv_2.setImageResource(R.drawable.medica_green);
+//					setTypeAdapter("1");
+//					commonAdapter.doRefreshNew();
+//					break;
+//				case 2:
+//					iv_3.setImageResource(R.drawable.medica_green);
+//					setTypeAdapter("2");
+//					commonAdapter.doRefreshNew();
+//					break;
+//				case 3:
+//					iv_4.setImageResource(R.drawable.more_green);
+//					if (mCancerList != null && mCancerList.size() > 0) {
+//						PopCancerCategory category = new PopCancerCategory(RequestAnwerCommonActivity.this, 
+//								mCancerList, RequestAnwerCommonActivity.this);
+//						category.showPop(iv_4, Gravity.RIGHT, 0, 0);
+//
+//					} else {
+//						sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
+//					}
+//					break;
+//
+//				default:
+//					break;
+//				}
+//				
+//			}
+//		});
 		
 		//发表普通问答
 		mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
@@ -286,7 +264,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 			ModelRequest request = (ModelRequest) object;
 			mCancerList = request.getFenlei();
 			PopCancerCategory category = new PopCancerCategory(this, mCancerList, this);
-			category.showPop(ll_4, Gravity.RIGHT, 0, 0);
+			category.showPop(iv_4, Gravity.RIGHT, 0, 0);
 		}
 		return object;
 	}
@@ -299,10 +277,6 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		iv_2.setImageResource(R.drawable.umbrella);
 		iv_3.setImageResource(R.drawable.heart);
 		iv_4.setImageResource(R.drawable.more);
-		tv_1.setTextColor(getResources().getColor(R.color.text_more_gray));
-		tv_2.setTextColor(getResources().getColor(R.color.text_more_gray));
-		tv_3.setTextColor(getResources().getColor(R.color.text_more_gray));
-		tv_4.setTextColor(getResources().getColor(R.color.text_more_gray));
 	}
 	
 	/**
@@ -321,12 +295,4 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		ObjectAnimator.ofFloat(target, "translationY", offset).setDuration(time).start();
 	}
 	
-	//获取控件距离父布局距离
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO 自动生成的方法存根
-		super.onWindowFocusChanged(hasFocus);
-		Log.d("Cathy", "ll_top.getTop() = "+ll_top.getTop());
-	}
-
 }
