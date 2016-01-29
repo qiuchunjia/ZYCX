@@ -64,6 +64,7 @@ public class ViewHolder {
 
 	/******************* 病例历史item ************************/
 	public TextView tv_content;
+	public ImageView iv_msg_history;
 	// public TextView tv_date;
 	/******************* 病例历史item end ************************/
 

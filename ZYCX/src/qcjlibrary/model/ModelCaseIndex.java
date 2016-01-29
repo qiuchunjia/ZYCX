@@ -23,6 +23,7 @@ public class ModelCaseIndex extends Model {
 	private String ctime;
 	private String utime;
 	private String url;
+	private String status;
 
 	public String getRealname() {
 		return realname;
@@ -75,6 +76,14 @@ public class ModelCaseIndex extends Model {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 }

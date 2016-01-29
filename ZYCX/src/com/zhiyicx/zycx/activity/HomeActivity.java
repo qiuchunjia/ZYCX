@@ -606,7 +606,9 @@ public class HomeActivity extends BaseActivity {
 		super.onResume();
 		MobclickAgent.onResume(this);
 		initIcon(mTitle);
-		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		if(isLogin()){
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		}
 		if (!isLogin() && mCurrentIndex == index_qikan) {
 			setTabSelection(index_Default);
 		}

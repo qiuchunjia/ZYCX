@@ -1,5 +1,6 @@
 package qcjlibrary.fragment;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.GuideActivity;
@@ -26,6 +27,7 @@ import qcjlibrary.activity.MePerioActivity;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestMyAskActivity;
 import qcjlibrary.fragment.base.BaseFragment;
+import qcjlibrary.model.ModelNotiyState;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.UIUtils;
@@ -41,6 +43,7 @@ public class FragmentMenu extends BaseFragment {
 	private RoundImageView riv_user_icon;
 	private TextView tv_username;
 	private ImageView menu_iv_edit;
+	private ImageView iv_menu_msg;
 	private RelativeLayout rl_home;
 	private RelativeLayout rl_question;
 	private RelativeLayout rl_app;
@@ -50,6 +53,7 @@ public class FragmentMenu extends BaseFragment {
 	private Button btn_quit;
 
 	private ModelUser mUser;
+	private String status;
 
 	@Override
 	public void initIntentData() {
@@ -67,6 +71,7 @@ public class FragmentMenu extends BaseFragment {
 		riv_user_icon = (RoundImageView) findViewById(R.id.riv_user_icon);
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		menu_iv_edit = (ImageView) findViewById(R.id.menu_iv_edit);
+		iv_menu_msg = (ImageView) findViewById(R.id.iv_menu_msg);
 		rl_home = (RelativeLayout) findViewById(R.id.rl_home);
 		rl_question = (RelativeLayout) findViewById(R.id.rl_question);
 		rl_app = (RelativeLayout) findViewById(R.id.rl_app);
@@ -100,6 +105,15 @@ public class FragmentMenu extends BaseFragment {
 			mUser = (ModelUser) object;
 			addDataToIcon(mUser);
 			mApp.saveUser(mUser);
+		}
+		if(object instanceof ModelNotiyState){
+			ModelNotiyState state = (ModelNotiyState) object;
+			status = state.getStatus();
+			if(status != null && status.equals("1")){
+				iv_menu_msg.setVisibility(View.VISIBLE);
+			} else{
+				iv_menu_msg.setVisibility(View.GONE);
+			}
 		}
 		return object;
 	}
@@ -226,6 +240,9 @@ public class FragmentMenu extends BaseFragment {
 //		} else {
 //			addDataToIcon(mUser);
 //		}
-		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+		if(isLogin()){
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+			sendRequest(mApp.getNotifyImpl().isRead(), ModelNotiyState.class, REQUEST_GET);
+		}
 	}
 }

@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelCaseIndex;
 import qcjlibrary.model.ModelExperience;
+import qcjlibrary.model.ModelNotiyState;
 import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopImportFile;
@@ -49,7 +51,10 @@ public class FragmentCaseIndex extends BaseFragment {
 	private TextView tv_edit;
 	private LinearLayout ll_notify;
 	private LinearLayout ll_food;
+	private ImageView iv_msg;
+	
 	private ModelCaseIndex mCaseIndex; // 病例首页的数据
+	private String status; //是否已读
 	
 	@Override
 	public void initIntentData() {
@@ -77,13 +82,13 @@ public class FragmentCaseIndex extends BaseFragment {
 		tv_edit = (TextView) findViewById(R.id.tv_edit);
 		ll_notify = (LinearLayout) findViewById(R.id.ll_notify);
 		ll_food = (LinearLayout) findViewById(R.id.ll_food);
-
+		iv_msg = (ImageView) findViewById(R.id.iv_msg);
 	}
 
 	@Override
 	public void initData() {
 //		mActivity.loadingView();
-		sendRequest(mApp.getMedRecordImpl().index(), ModelCaseIndex.class, REQUEST_GET);
+//		sendRequest(mApp.getMedRecordImpl().index(), ModelCaseIndex.class, REQUEST_GET);
 	}
 
 	@Override
@@ -94,6 +99,14 @@ public class FragmentCaseIndex extends BaseFragment {
 			rl_nodata.setVisibility(View.GONE);
 			rl_my.setVisibility(View.VISIBLE);
 			addUserDataToView(mCaseIndex);
+		} else if(object instanceof ModelNotiyState){
+			ModelNotiyState state = (ModelNotiyState) object;
+			status = state.getStatus();
+			if(status != null && status.equals("1")){
+				iv_msg.setVisibility(View.VISIBLE);
+			} else{
+				iv_msg.setVisibility(View.GONE);
+			}
 		} else {
 			judgeTheMsg(object);
 		}
@@ -209,6 +222,13 @@ public class FragmentCaseIndex extends BaseFragment {
 			}
 		});
 
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		sendRequest(mApp.getMedRecordImpl().index(), ModelCaseIndex.class, REQUEST_GET);
 	}
 	
 }

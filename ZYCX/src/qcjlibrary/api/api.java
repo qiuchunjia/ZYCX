@@ -844,6 +844,15 @@ public class api {
 			return params;
 		}
 
+		@Override
+		public RequestParams isRead() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, PERSONAGE);
+			params.add(ACT, NOTICE_STATE);
+			return getTestToken(params);
+		}
+
 	}
 
 	public static final class MedRecordImpl implements MedRecordIm {

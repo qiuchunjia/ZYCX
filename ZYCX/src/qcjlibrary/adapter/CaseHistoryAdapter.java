@@ -12,8 +12,10 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -60,6 +62,7 @@ public class CaseHistoryAdapter extends BAdapter {
 			holder.tv_content = (TextView) convertView
 					.findViewById(R.id.tv_content);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+			holder.iv_msg_history = (ImageView) convertView.findViewById(R.id.iv_msg_history);
 		}
 	}
 
@@ -68,6 +71,12 @@ public class CaseHistoryAdapter extends BAdapter {
 			ModelCaseRecord caseRecord = (ModelCaseRecord) mList.get(position);
 			holder.tv_content.setText(caseRecord.getContent());
 			holder.tv_date.setText(caseRecord.getCtime());
+			String is_read = caseRecord.getIs_read();
+			if(is_read != null && is_read.equals("0")){
+				holder.iv_msg_history.setVisibility(View.VISIBLE);
+			} else{
+				holder.iv_msg_history.setVisibility(View.GONE);
+			}
 		}
 	}
 

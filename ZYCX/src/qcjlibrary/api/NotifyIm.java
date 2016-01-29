@@ -21,6 +21,8 @@ public interface NotifyIm {
 	public static final String READNOTICE = "readnotice"; // 消息-点击消息标记为已读
 	public static final String DELONE = "delOne"; // 消息-删除一条系统通知
 	public static final String DELALL = "delAll"; // 消息-清空一个用户的系统通知
+	public static final String PERSONAGE = "Personage"; // 消息-未读
+	public static final String NOTICE_STATE = "notice_state"; // 消息-未读
 
 	// 接口需要传的值的键
 	public static final String ID = "id";
@@ -71,5 +73,11 @@ public interface NotifyIm {
 	 * @return
 	 */
 	public RequestParams delAll();
+	
+	/**
+	 * 消息 是否已读 新加
+	 * 
+	 * */
+	public RequestParams isRead();
 
 }
