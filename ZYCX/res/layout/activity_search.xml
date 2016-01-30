@@ -40,12 +40,21 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/zoom" />
-
-            <EditText
-                android:id="@+id/et_search"
+                android:src="@drawable/shiliaosearch" />
+			
+            <LinearLayout 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_search"
+                >
+                <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/iv_search"
@@ -61,13 +70,17 @@
 
             <ImageView
                 android:id="@+id/iv_quxiao"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:layout_gravity="right|center_vertical"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
-                android:visibility="gone"
-                android:background="@drawable/quxiao02" />
+                android:visibility="visible"
+                android:src="@drawable/quxiao02" />
+            </LinearLayout>
+            
 
         </RelativeLayout>
     </RelativeLayout>

@@ -286,7 +286,7 @@ public class PatientHistoryActivity extends BaseActivity {
 			break;
 		case R.id.rl_stop_smoke_time:
 			hideKeyBoard();
-			timeType = Config.TYPE_STOP_DRINK_TIME;
+			timeType = Config.TYPE_STOP_SMOKE_TIME;
 			pvTime.show();
 			/*PopDatePicker datePicker = new PopDatePicker(this, null, this);
 			datePicker.setType(Config.TYPE_STOP_SMOKE_TIME);

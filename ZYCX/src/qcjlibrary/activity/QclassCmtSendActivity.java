@@ -107,10 +107,12 @@ public class QclassCmtSendActivity extends BaseActivity {
 						ToastUtils.showLongToast(QclassCmtSendActivity.this, "评论不可超过400字");
 						return;
 					}
+					if(EditTextUtils.containsEmoji(content)){
+						ToastUtils.showLongToast(QclassCmtSendActivity.this , "不可输入表情");
+						return;
+					}
 					sendCmt(content);
-				} else if(EditTextUtils.isContainEmoji(content)){
-					ToastUtils.showLongToast(QclassCmtSendActivity.this , "不可输入表情");
-				}else{
+				} else{
 					ToastUtils.showLongToast(QclassCmtSendActivity.this, "请正确输入评论");
 				}
 			}

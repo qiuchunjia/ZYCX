@@ -310,7 +310,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			ToastUtils.showToast("评论内容不能为空！");
 			return;
 		}
-		if(EditTextUtils.isContainEmoji(txt)){
+		if(EditTextUtils.containsEmoji(txt)){
 			ToastUtils.showLongToast(this, "不可输入表情！");
 			return;
 		}

@@ -444,7 +444,7 @@ public class PatientMeActivity extends BaseActivity {
 			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(sendHistory, "history"));
 			break;
 		case R.id.tv_now_edit2:
-			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(sendPresent, "present"));
+			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(new Model(), null));
 			break;
 
 		}
