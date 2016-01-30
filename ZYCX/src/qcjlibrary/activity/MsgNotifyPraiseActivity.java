@@ -135,7 +135,7 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 			replaceFragment(R.id.rl_content, mPraiseFg);
 
 			break;
-		case R.id.rl_msg_praise:
+		case R.id.tv_notify:
 			resetTextBg();
 			rl_msg_praise.setBackgroundResource(R.drawable.view_border_green_right_solid_3);
 			tv_notify.setTextColor(getResources().getColor(R.color.text_white));

@@ -4,6 +4,9 @@ package qcjlibrary.listview.base.pinnedheaderlistview;
 
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
+import com.zhiyicx.zycx.sociax.modle.ListData.Position;
+
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +96,7 @@ public abstract class SectionedBaseAdapter extends BAdapter implements PinnedSec
         return getItemId(getSectionForPosition(position), getPositionInSectionForPosition(position));
     }
 
+    
     @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
         if (isSectionHeader(position)) {

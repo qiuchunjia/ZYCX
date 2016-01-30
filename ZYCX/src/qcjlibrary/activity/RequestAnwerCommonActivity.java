@@ -2,46 +2,33 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemClickListener;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
-import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.RequestCommonAdapter;
 import qcjlibrary.adapter.TestSectionedAdapter;
-import qcjlibrary.adapter.base.BAdapter;
-import qcjlibrary.adapter.base.OnRequestLinstner;
 import qcjlibrary.adapter.base.OnTabselectedListener;
-import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView;
+import qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView.OnMyItemClickListener;
 import qcjlibrary.model.ModelCancerCategory;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
-import qcjlibrary.util.DefaultLayoutUtil;
-import qcjlibrary.util.DisplayUtils;
-import qcjlibrary.widget.MyScrollView;
-import qcjlibrary.widget.ScrollViewListener;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 
 public class RequestAnwerCommonActivity extends BaseActivity{
@@ -140,7 +127,6 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		//pinnedListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
 		//添加头部视图
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		RelativeLayout header1 = (RelativeLayout) inflater.inflate(R.layout.item_msg_notify, null);
 		header = (LinearLayout) inflater.inflate(R.layout.item_request_header, null);
 		pinnedListView.addHeaderView(header);
 		//头部图片
@@ -226,22 +212,28 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		iv_3.setOnClickListener(this);
 		iv_4.setOnClickListener(this);
 		
-		pinnedListView.setOnItemClickListener(new OnItemClickListener() {
+		pinnedListView.setOnItemClickListener(new OnMyItemClickListener(){
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
+			public void onMyItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+				ModelRequestItem item = (ModelRequestItem) adapterView.getItemAtPosition(position);
+				Log.d("Cathy", "position = "+position);
 				if (item != null) {
 					if (item.getIs_expert().equals("0")) {
-						pinnedListView.stepToNextActivity(parent, view, position, RequestDetailCommonActivity.class);
+						pinnedListView.stepToNextActivity(adapterView, view, position, RequestDetailCommonActivity.class);
 					} else if (item.getIs_expert().equals("1")) {
-						pinnedListView.stepToNextActivity(parent, view, position, RequestDetailExpertActivity.class);
+						pinnedListView.stepToNextActivity(adapterView, view, position, RequestDetailExpertActivity.class);
 					}
 				}
+			}
+
+			@Override
+			public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
+				
 				
 			}
+			
 		});
-		
 		
 		//发表普通问答
 		mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {

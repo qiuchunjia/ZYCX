@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -170,6 +171,7 @@ public class PinnedHeaderListView extends BaseListView {
 			} else {
 				heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 			}
+			header.setLayoutParams(new LayoutParams(getLayoutParams().MATCH_PARENT, getLayoutParams().MATCH_PARENT));
 			header.measure(widthSpec, heightSpec);
 			header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
 		}
@@ -203,11 +205,12 @@ public class PinnedHeaderListView extends BaseListView {
 		mHeightMode = MeasureSpec.getMode(heightMeasureSpec);
 	}
 
-	public void setOnItemClickListener(PinnedHeaderListView.OnItemClickListener listener) {
+	public void setOnItemClickListener(OnMyItemClickListener listener) {
 		super.setOnItemClickListener(listener);
 	}
+	
 
-	public static abstract class OnItemClickListener implements AdapterView.OnItemClickListener {
+	public static abstract class OnMyItemClickListener implements AdapterView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int rawPosition, long id) {
 			SectionedBaseAdapter adapter;
@@ -223,11 +226,11 @@ public class PinnedHeaderListView extends BaseListView {
 			if (position == -1) {
 				onSectionClick(adapterView, view, section, id);
 			} else {
-				onItemClick(adapterView, view, section, position, id);
+				onMyItemClick(adapterView, view, section, position, id);
 			}
 		}
 
-		public abstract void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id);
+		public abstract void onMyItemClick(AdapterView<?> adapterView, View view, int section, int position, long id);
 
 		public abstract void onSectionClick(AdapterView<?> adapterView, View view, int section, long id);
 

@@ -14,7 +14,9 @@ public class LoadingDialogUtl {
 		}
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(true);
-		dialog.show();
+		if(!dialog.isShowing()){
+			dialog.show();
+		}
 	}
 
 	public static void hideLoadingView() {

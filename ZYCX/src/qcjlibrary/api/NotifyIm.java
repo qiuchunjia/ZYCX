@@ -79,5 +79,5 @@ public interface NotifyIm {
 	 * 
 	 * */
 	public RequestParams isRead();
-
+	
 }

@@ -46,13 +46,14 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 	@Override
 	public Object getItem(int section, int position) {
 		// TODO 自动生成的方法存根
+		Log.d("Cathy", "mLlist size"+mList.size()+ " "+position);
 		return null;
 	}
 
 	@Override
 	public long getItemId(int section, int position) {
 		// TODO 自动生成的方法存根
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -164,6 +165,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 				tv_1.setTextColor(green);
 				mRequestData.setType("0");
 				refreshNew();
+				Log.d("Cathy", "tv_1");
 				if (l != null) {
 					l.onTabSelectde(0);
 				}
@@ -178,6 +180,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 				tv_2.setTextColor(green);
 				mRequestData.setType("1");
 				refreshNew();
+				Log.d("Cathy", "tv_2");
 				if (l != null) {
 					l.onTabSelectde(1);
 				}
@@ -190,6 +193,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 				resetTextView();
 				tv_3.setTextColor(green);
 				mRequestData.setType("2");
+				Log.d("Cathy", "tv_3");
 				refreshNew();
 				if (l != null) {
 					l.onTabSelectde(2);
@@ -202,6 +206,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 			public void onClick(View v) {
 				resetTextView();
 				tv_4.setTextColor(green);
+				Log.d("Cathy", "tv_4");
 				if (l != null) {
 					l.onTabSelectde(3);
 				}

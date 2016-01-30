@@ -774,4 +774,12 @@ public abstract class BaseActivity extends FragmentActivity
 		return object;
 	}
 	/************** popWindow返回的数据 end *******************************/
+	
+	@Override
+	protected void onDestroy() {
+		// TODO 自动生成的方法存根
+		super.onDestroy();
+		LoadingDialogUtl.hideLoadingView();
+	}
+	
 }

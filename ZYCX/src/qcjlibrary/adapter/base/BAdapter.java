@@ -66,7 +66,7 @@ public abstract class BAdapter extends BaseAdapter {
 	public BAdapter(BaseFragment fragment, List<Model> list) {
 		this.mBaseFragment = fragment;
 		mBaseActivity = (BaseActivity) mBaseFragment.getActivity();
-		if(mBaseActivity != null){
+		if (mBaseActivity != null) {
 			mInflater = LayoutInflater.from(mBaseActivity);
 			mApp = (Thinksns) mBaseFragment.getActivity().getApplication();
 			if (list != null)
@@ -406,35 +406,38 @@ public abstract class BAdapter extends BaseAdapter {
 	public Object onResponceSuccess(String str, Class class1) {
 		return DataAnalyze.parseDataByGson(str, class1);
 	}
-	
-	/** 缺省视图**/
+
+	/** 缺省视图 **/
 	private View view;
-	private View getDefaultView(){
+
+	private View getDefaultView() {
 		view = mInflater.inflate(R.layout.common_default_layout, null);
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
-				LayoutParams.MATCH_PARENT, Gravity.CENTER);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, Gravity.CENTER);
 		view.setLayoutParams(params);
 		return view;
 	}
-	public View onRequestFailed(){
-		if(mRequestLinstener != null){
+
+	public View onRequestFailed() {
+		if (mRequestLinstener != null) {
 			mRequestLinstener.onFailed(getDefaultView());
 		}
 		return getDefaultView();
 	}
-	
-	public View onRequestSuccess(){
+
+	public View onRequestSuccess() {
 		View view = getDefaultView();
 		view.setVisibility(View.GONE);
-		if(mRequestLinstener != null){
+		if (mRequestLinstener != null) {
 			mRequestLinstener.onSuccess(getDefaultView());
 		}
 		return view;
 	}
-	
+
 	private OnRequestLinstner mRequestLinstener;
-	public void setOnRequestLinstner(OnRequestLinstner mRequestLinstener){
+
+	public void setOnRequestLinstner(OnRequestLinstner mRequestLinstener) {
 		this.mRequestLinstener = mRequestLinstener;
 	}
+
 	public abstract Object getReallyList(Object object, Class type2);
 }

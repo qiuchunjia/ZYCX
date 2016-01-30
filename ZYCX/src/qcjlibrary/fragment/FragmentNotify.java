@@ -53,7 +53,7 @@ public class FragmentNotify extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				mCommonListView.stepToNextActivity(parent, view, position, MsgNotifyDetailActivity.class);
-
+				
 			}
 		});
 		mCommonListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {

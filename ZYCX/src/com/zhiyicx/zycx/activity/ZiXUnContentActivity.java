@@ -320,6 +320,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						Utils.showToast(ZiXUnContentActivity.this, "评论成功！");
 						// mContent.loadUrl("javascript:getComment()");
+						loadData();
 						mContent.reload();
 						mCmtEdit.setText("");
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
