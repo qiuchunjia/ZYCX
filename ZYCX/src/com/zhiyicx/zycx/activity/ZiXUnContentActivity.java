@@ -36,6 +36,7 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.ModelZiXunDetail;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopShareContent;
 import qcjlibrary.widget.popupview.PopSizeChoose;
@@ -307,6 +308,10 @@ public class ZiXUnContentActivity extends BaseActivity {
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt)) {
 			ToastUtils.showToast("评论内容不能为空！");
+			return;
+		}
+		if(EditTextUtils.isContainEmoji(txt)){
+			ToastUtils.showLongToast(this, "不可输入表情！");
 			return;
 		}
 		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)
