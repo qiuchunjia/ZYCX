@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopQclassCmt;
@@ -107,7 +108,9 @@ public class QclassCmtSendActivity extends BaseActivity {
 						return;
 					}
 					sendCmt(content);
-				} else{
+				} else if(EditTextUtils.isContainEmoji(content)){
+					ToastUtils.showLongToast(QclassCmtSendActivity.this , "不可输入表情");
+				}else{
 					ToastUtils.showLongToast(QclassCmtSendActivity.this, "请正确输入评论");
 				}
 			}
