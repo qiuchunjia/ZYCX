@@ -280,7 +280,6 @@ public class SearchNewActivity extends BaseActivity {
 	private void searchData() {
 		String key = et_search.getText().toString();
 		if (key != null || !key.equals(" ")) {
-			ToastUtils.showToast("搜索中...");
 			if (mSearchListener != null) {
 				switch (mViewpager.getCurrentItem()) {
 				case 0:

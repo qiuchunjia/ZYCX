@@ -137,8 +137,8 @@ public class PopShareContent extends PopView {
 		public void onComplete(SHARE_MEDIA platform, int stCode, SocializeEntity entity) {
 			if (stCode == 200) {
 				ToastUtils.showToast("分享成功");
-			} else {
-				ToastUtils.showToast("分享成功" + stCode);
+			} else if(stCode == 0000) {
+				ToastUtils.showToast("分享失败" + stCode);
 			}
 			mPopWindow.dismiss();
 		}

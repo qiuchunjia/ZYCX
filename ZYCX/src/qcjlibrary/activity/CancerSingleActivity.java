@@ -84,6 +84,7 @@ public class CancerSingleActivity extends BaseActivity {
 		ll_cancersingle_parent = (LinearLayout) findViewById(R.id.ll_cancersingle_parent);
 		rl_cancersing_head = (RelativeLayout) findViewById(R.id.rl_cancersing_head);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(getApplicationContext(), 1));
+		mCommonListView.setSelector(R.drawable.listview_item_selector);
 		mAdapter = new CancerTopicAdapter(this, mExperienceData);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {

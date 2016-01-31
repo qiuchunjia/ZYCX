@@ -151,8 +151,10 @@
     </RelativeLayout>
 
     <include
+        android:id="@+id/ll_request_line"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         layout="@layout/view_line_vertical" />
 

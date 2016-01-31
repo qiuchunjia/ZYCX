@@ -355,8 +355,8 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	 * 
 	 * @return
 	 */
-
-	private boolean checkTheContent() {
+	
+	private boolean checkFirst(){
 		if (TextUtils.isEmpty(diagnosis_stime)) {
 			ToastUtils.showToast("请选择诊断起始时间");
 			return false;
@@ -373,6 +373,10 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请选择诊断方式");
 			return false;
 		}
+		return true;
+	}
+	
+	private boolean checkSecond(){
 		if (TextUtils.isEmpty(lab_exam_program)) {
 			ToastUtils.showToast("请选择实验室检查项目");
 			return false;
@@ -385,6 +389,10 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请输入实验室检查医院");
 			return false;
 		}
+		return true;
+	}
+	
+	private boolean checkThired(){
 		if (TextUtils.isEmpty(image_exam_program)) {
 			ToastUtils.showToast("请选择影像学检查项目");
 			return false;
@@ -397,8 +405,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请输入影像学检查医院");
 			return false;
 		}
-
 		return true;
+	}
+
+	private boolean checkTheContent() {
+		
+		if(checkFirst() || checkSecond() || checkThired()){
+			return true;
+		}
+		return false;
 	}
 
 	/**

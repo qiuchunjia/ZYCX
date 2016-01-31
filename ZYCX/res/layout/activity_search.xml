@@ -41,47 +41,36 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/shiliaosearch" />
-			
-            <LinearLayout 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/iv_search"
-                >
-                <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/iv_search"
-                android:background="@null"
-                android:imeOptions="actionSearch"
-                android:hint="搜索关键词"
-                android:textColorHint="#5EAB69"
-                android:cursorVisible="true"
-                android:textCursorDrawable="@null"
-                android:src="@drawable/search_icon"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/text_common" />
 
             <ImageView
                 android:id="@+id/iv_quxiao"
-                android:layout_width="0dp"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_weight="1"
-                android:layout_gravity="right|center_vertical"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:visibility="visible"
-                android:src="@drawable/quxiao02" />
-            </LinearLayout>
-            
+                android:src="@drawable/quxiao02"
+                android:visibility="gone" />
 
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_search"
+                android:layout_marginRight="30dp"
+                android:layout_weight="4"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:hint="搜索关键词"
+                android:imeOptions="actionSearch"
+                android:src="@drawable/search_icon"
+                android:textColor="@color/text_white"
+                android:textColorHint="#5EAB69"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/text_common" />
         </RelativeLayout>
     </RelativeLayout>
     <!-- 下面5个标题 -->

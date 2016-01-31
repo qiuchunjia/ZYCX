@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/view_border_green_left3"
+            android:background="@drawable/view_border_green_left3_white"
             android:gravity="center"
             android:text="回复/评论我的"
             android:textColor="@color/text_more_gray"
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/view_border_only_top_bottom_green"
+            android:background="@drawable/view_border_only_top_bottom_green_white"
             android:gravity="center"
             android:text="赞"
             android:textColor="@color/text_more_gray"
@@ -39,7 +39,7 @@
             android:id="@+id/rl_msg_praise"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/view_border_green_right_3"
+            android:background="@drawable/view_border_green_right_3_white"
             android:layout_weight="1" >
             <TextView
                 android:id="@+id/tv_notify"

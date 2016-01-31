@@ -156,9 +156,9 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		tv_msg.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_praise.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_notify.setTextColor(getResources().getColor(R.color.text_more_gray));
-		tv_msg.setBackgroundResource(R.drawable.view_border_green_left3);
-		tv_praise.setBackgroundResource(R.drawable.view_border_only_top_bottom_green);
-		rl_msg_praise.setBackgroundResource(R.drawable.view_border_green_right_3);
+		tv_msg.setBackgroundResource(R.drawable.view_border_green_left3_white);
+		tv_praise.setBackgroundResource(R.drawable.view_border_only_top_bottom_green_white);
+		rl_msg_praise.setBackgroundResource(R.drawable.view_border_green_right_3_white);
 	}
 	
 	@Override

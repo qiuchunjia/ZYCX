@@ -207,8 +207,15 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						mCalendar.set(Calendar.MONTH, set.getMonth());
 						mCalendar.set(Calendar.DAY_OF_MONTH, set.getDay());
 					}
-					int hour = Integer.parseInt(timeArr[i].split(":")[0]);
-					int min = Integer.parseInt(timeArr[i].split(":")[1]);
+					int hour = 8;
+					int min = 0;
+					try{
+						hour = Integer.parseInt(timeArr[i].split(":")[0]);
+						min = Integer.parseInt(timeArr[i].split(":")[1]);
+					} catch(Exception e){
+						hour = 8;
+						min = 0;
+					}
 					mCalendar.set(Calendar.HOUR_OF_DAY, hour);
 					mCalendar.set(Calendar.MINUTE, min);
 					mCalendar.set(Calendar.SECOND, 0);

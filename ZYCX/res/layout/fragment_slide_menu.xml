@@ -33,6 +33,7 @@
                 android:layout_marginLeft="@dimen/margin_left_small"
                 android:layout_weight="2"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLines="1"
                 android:text="青稞官方网站"
                 android:textColor="@color/text_white"
@@ -224,7 +225,7 @@
 
     <Button
         android:id="@+id/btn_quit"
-        android:layout_width="160dp"
+        android:layout_width="170dp"
         android:layout_height="@dimen/item_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
