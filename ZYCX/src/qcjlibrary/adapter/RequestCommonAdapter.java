@@ -45,9 +45,13 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 
 	@Override
 	public Object getItem(int section, int position) {
-		// TODO 自动生成的方法存根
-		Log.d("Cathy", "mLlist size"+mList.size()+ " "+position);
-		return null;
+		// TODO 赶时间，先将就粗暴的解决一哈…………
+		if(position == -1){
+			return mList.get(0);
+		} else{
+			position = index - 2;
+			return mList.get(position);
+		}
 	}
 
 	@Override
@@ -272,6 +276,11 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 
 	public void setOnTabselectedListener(OnTabselectedListener l) {
 		this.l = l;
+	}
+	
+	private int index;
+	public void setItemIndex(int index){
+		this.index = index;
 	}
 
 }

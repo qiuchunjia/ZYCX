@@ -31,7 +31,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 
-public class RequestAnwerCommonActivity extends BaseActivity{
+public class RequestAnwerCommonActivity extends BaseActivity {
 
 	private RelativeLayout rl_space;
 	private LinearLayout ll_top;
@@ -52,49 +52,50 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	private ModelRequestItem mRequestItem; // 请求数据
 
 	private Title mTitle;
-	
+
 	private ModelRequestAsk mAsk;
-	
+
 	private PinnedHeaderListView pinnedListView;
 	private LayoutInflater inflater;
 	private LinearLayout header;
 	private RequestCommonAdapter mAdapter;
 	private TestSectionedAdapter commonAdapter;
-	
+
 	@Override
 	public void onClick(View v) {
-		//resetImage();
+		// resetImage();
 		switch (v.getId()) {
 		case R.id.rl_space:
-			mApp.startActivity_qcj(this, RequestSearchActivity.class,
-					sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, RequestSearchActivity.class, sendDataToBundle(new Model(), null));
 			break;
-//		case R.id.iv_1:
-//			iv_1.setImageResource(R.drawable.medica_green);
-//			setTypeAdapter("0");
-//			mAdapter.doRefreshNew();
-//			break;
-//
-//		case R.id.iv_2:
-//			setTypeAdapter("1");
-//			mAdapter.doRefreshNew();
-//			iv_2.setImageResource(R.drawable.umbrella_green);
-//			break;
-//		case R.id.iv_3:
-//			setTypeAdapter("2");
-//			mAdapter.doRefreshNew();
-//			iv_3.setImageResource(R.drawable.heart_green);
-//			break;
-//		case R.id.iv_4:
-//			iv_4.setImageResource(R.drawable.more_green);
-//			if (mCancerList != null && mCancerList.size() > 0) {
-//				PopCancerCategory category = new PopCancerCategory(this, mCancerList, this);
-//				category.showPop(iv_4, Gravity.RIGHT, 0, 0);
-//
-//			} else {
-//				sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
-//			}
-//			break;
+		// case R.id.iv_1:
+		// iv_1.setImageResource(R.drawable.medica_green);
+		// setTypeAdapter("0");
+		// mAdapter.doRefreshNew();
+		// break;
+		//
+		// case R.id.iv_2:
+		// setTypeAdapter("1");
+		// mAdapter.doRefreshNew();
+		// iv_2.setImageResource(R.drawable.umbrella_green);
+		// break;
+		// case R.id.iv_3:
+		// setTypeAdapter("2");
+		// mAdapter.doRefreshNew();
+		// iv_3.setImageResource(R.drawable.heart_green);
+		// break;
+		// case R.id.iv_4:
+		// iv_4.setImageResource(R.drawable.more_green);
+		// if (mCancerList != null && mCancerList.size() > 0) {
+		// PopCancerCategory category = new PopCancerCategory(this, mCancerList,
+		// this);
+		// category.showPop(iv_4, Gravity.RIGHT, 0, 0);
+		//
+		// } else {
+		// sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class,
+		// 0);
+		// }
+		// break;
 		}
 
 	}
@@ -108,7 +109,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	@Override
 	public void initIntent() {
 		// TODO 自动生成的方法存根
-		
+
 	}
 
 	@Override
@@ -122,14 +123,14 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		// TODO 自动生成的方法存根
 		titleSetRightImage(R.drawable.chuangjianjingli);
 		mTitle = getTitleClass();
-		
+
 		pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
-		//pinnedListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
-		//添加头部视图
+		// pinnedListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
+		// 添加头部视图
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		header = (LinearLayout) inflater.inflate(R.layout.item_request_header, null);
 		pinnedListView.addHeaderView(header);
-		//头部图片
+		// 头部图片
 		iv_1 = (ImageView) header.findViewById(R.id.iv_1);
 		iv_2 = (ImageView) header.findViewById(R.id.iv_2);
 		iv_3 = (ImageView) header.findViewById(R.id.iv_3);
@@ -149,56 +150,55 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		mAsk = new ModelRequestAsk();
 		mAsk.setIs_expert("0");
 	}
-	
+
 	/**
 	 * 设置type的类型
 	 * 
-	 * 注释：就这么任性的直接new一个adapter，简单粗暴，反正是外包，管我毛事 
-	 * ↑ from qcj :)
+	 * 注释：就这么任性的直接new一个adapter，简单粗暴，反正是外包，管我毛事 ↑ from qcj :)
 	 */
 	private void setTypeAdapter(String type) {
 		mRequestItem.setType(type);
 		mAdapter = new RequestCommonAdapter(this, mRequestItem);
-		//监听tab选择
-				mAdapter.setOnTabselectedListener(new OnTabselectedListener() {
-					
-					@Override
-					public void onTabSelectde(int index) {
-						resetImage();
-						switch (index) {
-						case 0:
-							iv_1.setImageResource(R.drawable.medica_green);
-							setTypeAdapter("0");
-							commonAdapter.doRefreshNew();
-							break;
-						case 1:
-							iv_2.setImageResource(R.drawable.umbrella_green);
-							setTypeAdapter("1");
-							commonAdapter.doRefreshNew();
-							break;
-						case 2:
-							iv_3.setImageResource(R.drawable.heart_green);
-							setTypeAdapter("2");
-							commonAdapter.doRefreshNew();
-							break;
-						case 3:
-							iv_4.setImageResource(R.drawable.more_green);
-							if (mCancerList != null && mCancerList.size() > 0) {
-								PopCancerCategory category = new PopCancerCategory(RequestAnwerCommonActivity.this, 
-										mCancerList, RequestAnwerCommonActivity.this);
-								category.showPop(iv_4, Gravity.RIGHT, 0, 0);
+		// 监听tab选择
+		mAdapter.setOnTabselectedListener(new OnTabselectedListener() {
 
-							} else {
-								sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
-							}
-							break;
+			@Override
+			public void onTabSelectde(int index) {
+				resetImage();
+				switch (index) {
+				case 0:
+					iv_1.setImageResource(R.drawable.medica_green);
+					setTypeAdapter("0");
+					commonAdapter.doRefreshNew();
+					break;
+				case 1:
+					iv_2.setImageResource(R.drawable.umbrella_green);
+					setTypeAdapter("1");
+					commonAdapter.doRefreshNew();
+					break;
+				case 2:
+					iv_3.setImageResource(R.drawable.heart_green);
+					setTypeAdapter("2");
+					commonAdapter.doRefreshNew();
+					break;
+				case 3:
+					iv_4.setImageResource(R.drawable.more_green);
+					if (mCancerList != null && mCancerList.size() > 0) {
+						PopCancerCategory category = new PopCancerCategory(RequestAnwerCommonActivity.this, mCancerList,
+								RequestAnwerCommonActivity.this);
+						category.showPop(iv_4, Gravity.RIGHT, 0, 0);
 
-						default:
-							break;
-						}
-						
+					} else {
+						sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
 					}
-				});
+					break;
+
+				default:
+					break;
+				}
+
+			}
+		});
 		commonAdapter = new TestSectionedAdapter(this, null);
 		pinnedListView.setAdapter(mAdapter);
 	}
@@ -211,45 +211,46 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		iv_2.setOnClickListener(this);
 		iv_3.setOnClickListener(this);
 		iv_4.setOnClickListener(this);
-		
-		pinnedListView.setOnItemClickListener(new OnMyItemClickListener(){
+
+		pinnedListView.setOnItemClickListener(new OnMyItemClickListener() {
 
 			@Override
 			public void onMyItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+				mAdapter.setItemIndex(position);
 				ModelRequestItem item = (ModelRequestItem) adapterView.getItemAtPosition(position);
-				Log.d("Cathy", "position = "+position);
 				if (item != null) {
 					if (item.getIs_expert().equals("0")) {
-						pinnedListView.stepToNextActivity(adapterView, view, position, RequestDetailCommonActivity.class);
+						pinnedListView.stepToNextActivity(adapterView, view, position,
+								RequestDetailCommonActivity.class);
 					} else if (item.getIs_expert().equals("1")) {
-						pinnedListView.stepToNextActivity(adapterView, view, position, RequestDetailExpertActivity.class);
+						pinnedListView.stepToNextActivity(adapterView, view, position,
+								RequestDetailExpertActivity.class);
 					}
 				}
 			}
 
 			@Override
 			public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
-				
-				
+
 			}
-			
+
 		});
-		
-		//发表普通问答
+
+		// 发表普通问答
 		mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if (isLogin()) {
-					mApp.startActivity_qcj(RequestAnwerCommonActivity.this, 
-							RequestSendTopicActivity.class, sendDataToBundle(mAsk, null));
+					mApp.startActivity_qcj(RequestAnwerCommonActivity.this, RequestSendTopicActivity.class,
+							sendDataToBundle(mAsk, null));
 				} else {
 					mApp.startActivity_qcj(RequestAnwerCommonActivity.this, LoginActivity.class, null);
 				}
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
@@ -262,7 +263,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		}
 		return object;
 	}
-	
+
 	/**
 	 * 重置图片
 	 */
@@ -272,7 +273,7 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 		iv_3.setImageResource(R.drawable.heart);
 		iv_4.setImageResource(R.drawable.more);
 	}
-	
+
 	/**
 	 * 设置动画
 	 * 
@@ -288,5 +289,5 @@ public class RequestAnwerCommonActivity extends BaseActivity{
 	private void setAnimator(Object target, float offset, long time) {
 		ObjectAnimator.ofFloat(target, "translationY", offset).setDuration(time).start();
 	}
-	
+
 }
