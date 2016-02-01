@@ -53,7 +53,8 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <LinearLayout 
+    <LinearLayout
+        android:id="@+id/ll_request_icon" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:src="@drawable/medica" />
+        android:src="@drawable/medica_green" />
 
     <ImageView
         android:id="@+id/iv_2"
@@ -91,5 +92,9 @@
         android:layout_weight="1"
         android:src="@drawable/more" />
     </LinearLayout>
+    
+    <include 
+        layout="@layout/item_request_tab"
+        />
 
 </LinearLayout>

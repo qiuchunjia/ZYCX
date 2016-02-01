@@ -151,73 +151,79 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 
 	@Override
 	public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
-		RelativeLayout tab;
-		if (convertView == null && inflator != null) {
-			tab = (RelativeLayout) inflator.inflate(R.layout.item_request_tab, null);
-			tv_1 = (TextView) tab.findViewById(R.id.tv_1);
-			tv_2 = (TextView) tab.findViewById(R.id.tv_2);
-			tv_3 = (TextView) tab.findViewById(R.id.tv_3);
-			tv_4 = (TextView) tab.findViewById(R.id.tv_4);
-		} else {
-			tab = (RelativeLayout) convertView;
+		LinearLayout layout;
+		if(convertView == null && inflator != null){
+			layout = (LinearLayout) inflator.inflate(R.layout.item_null, null);
+		} else{
+			layout = (LinearLayout) convertView;
 		}
-		tv_1.setOnClickListener(new OnClickListener() {
+//		RelativeLayout tab;
+//		if (convertView == null && inflator != null) {
+//			tab = (RelativeLayout) inflator.inflate(R.layout.item_request_tab, null);
+//			tv_1 = (TextView) tab.findViewById(R.id.tv_1);
+//			tv_2 = (TextView) tab.findViewById(R.id.tv_2);
+//			tv_3 = (TextView) tab.findViewById(R.id.tv_3);
+//			tv_4 = (TextView) tab.findViewById(R.id.tv_4);
+//		} else {
+//			tab = (RelativeLayout) convertView;
+//		}
+//		tv_1.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				resetTextView();
+//				tv_1.setTextColor(green);
+//				mRequestData.setType("0");
+//				refreshNew();
+//				Log.d("Cathy", "tv_1");
+//				if (l != null) {
+//					l.onTabSelectde(0);
+//				}
+//			}
+//
+//		});
+//		tv_2.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				resetTextView();
+//				tv_2.setTextColor(green);
+//				mRequestData.setType("1");
+//				refreshNew();
+//				Log.d("Cathy", "tv_2");
+//				if (l != null) {
+//					l.onTabSelectde(1);
+//				}
+//			}
+//		});
+//		tv_3.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				resetTextView();
+//				tv_3.setTextColor(green);
+//				mRequestData.setType("2");
+//				Log.d("Cathy", "tv_3");
+//				refreshNew();
+//				if (l != null) {
+//					l.onTabSelectde(2);
+//				}
+//			}
+//		});
+//		tv_4.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				resetTextView();
+//				tv_4.setTextColor(green);
+//				Log.d("Cathy", "tv_4");
+//				if (l != null) {
+//					l.onTabSelectde(3);
+//				}
+//			}
+//		});
 
-			@Override
-			public void onClick(View v) {
-				resetTextView();
-				tv_1.setTextColor(green);
-				mRequestData.setType("0");
-				refreshNew();
-				Log.d("Cathy", "tv_1");
-				if (l != null) {
-					l.onTabSelectde(0);
-				}
-			}
-
-		});
-		tv_2.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				resetTextView();
-				tv_2.setTextColor(green);
-				mRequestData.setType("1");
-				refreshNew();
-				Log.d("Cathy", "tv_2");
-				if (l != null) {
-					l.onTabSelectde(1);
-				}
-			}
-		});
-		tv_3.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				resetTextView();
-				tv_3.setTextColor(green);
-				mRequestData.setType("2");
-				Log.d("Cathy", "tv_3");
-				refreshNew();
-				if (l != null) {
-					l.onTabSelectde(2);
-				}
-			}
-		});
-		tv_4.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				resetTextView();
-				tv_4.setTextColor(green);
-				Log.d("Cathy", "tv_4");
-				if (l != null) {
-					l.onTabSelectde(3);
-				}
-			}
-		});
-
-		return tab;
+		return layout;
 	}
 
 	private TextView tv_1;
