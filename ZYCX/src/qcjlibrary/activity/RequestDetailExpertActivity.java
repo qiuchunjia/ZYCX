@@ -30,8 +30,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.config.MyConfig;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
@@ -191,7 +193,9 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private void addDataToExpertAnswer(ModelRequestAnswerComom data, List<ModelRequestAnswerComom> answers) {
 		if (data != null) {
 			tv_expert_date.setText(data.getTime());
-			tv_expertcontent.setText(data.getAnswer_content());
+			if(data.getAnswer_content() != null && !data.getAnswer_content().equals(" ")){
+				tv_expertcontent.setText(data.getAnswer_content());
+			}
 			find_more.setVisibility(View.VISIBLE);
 			find_more.setOnClickListener(new OnClickListener() {
 
@@ -323,7 +327,12 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
-			shareContent.setUrl(mRequestItem.getUrl());
+			String url = mRequestItem.getUrl();
+			if(mRequestItem.getUrl() == null || mRequestItem.getUrl().equals(" ")){
+				url = MyConfig.HOST + "index.php?app=ask&mod=Question&act=view&id="+mRequestItem.getQuestion_id();
+			}
+			shareContent.setUrl(url);
+			Log.d("Cathy", "url = "+url);
 			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
 			popShareContent.showPop(tv_send, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,

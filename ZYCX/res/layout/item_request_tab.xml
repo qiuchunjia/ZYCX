@@ -49,6 +49,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="癌种"
+            android:drawableRight="@drawable/shaixuan"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_common" />
     </LinearLayout>

@@ -58,7 +58,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:visibility="gone"
-                android:background="@drawable/ic_dot_focused"
+                android:background="@drawable/remind"
                 />
         </RelativeLayout>
     </LinearLayout>

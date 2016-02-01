@@ -182,7 +182,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_expert_user"
                         android:layout_marginTop="@dimen/margin_top"
-                        android:text="黑呵呵呵呵呵呵"
+                        android:text="专家正在后台为您解答"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/text_common" />
 

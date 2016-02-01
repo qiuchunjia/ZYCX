@@ -37,7 +37,7 @@
             android:layout_toRightOf="@id/riv_user_icon"
             android:text="个人资料"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_x"
@@ -83,7 +83,7 @@
             android:layout_toRightOf="@id/iv_mycase"
             android:text="我的病例"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_home_next"
@@ -94,7 +94,7 @@
             android:layout_toRightOf="@id/tv_mycase"
             android:src="@drawable/arrows_right_write"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <View
             android:layout_width="match_parent"
@@ -139,7 +139,7 @@
             android:layout_toRightOf="@id/iv_question"
             android:text="我的专家提问"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_question_next"
@@ -150,7 +150,7 @@
             android:layout_toRightOf="@id/tv_question"
             android:src="@drawable/arrows_right_write"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <View
             android:layout_width="match_parent"
@@ -195,7 +195,7 @@
             android:layout_toRightOf="@id/iv_app"
             android:text="我的应用"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_app_next"
@@ -206,7 +206,7 @@
             android:layout_toRightOf="@id/tv_app"
             android:src="@drawable/arrows_right_write"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -216,7 +216,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <View
             android:layout_width="match_parent"
@@ -251,7 +251,7 @@
             android:layout_toRightOf="@id/iv_cycle"
             android:text="我的圈子"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_cycle_next"
@@ -262,7 +262,7 @@
             android:layout_toRightOf="@id/tv_cycle"
             android:src="@drawable/arrows_right_write"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -272,7 +272,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <View
             android:layout_width="match_parent"
@@ -307,7 +307,7 @@
             android:layout_toRightOf="@id/iv_periodical"
             android:text="我的期刊"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_periodical_next"
@@ -318,7 +318,7 @@
             android:layout_toRightOf="@id/tv_periodical"
             android:src="@drawable/arrows_right_write"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -328,7 +328,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
     </RelativeLayout>
 
     <include layout="@layout/view_line_vertical" />
@@ -346,6 +346,6 @@
         android:background="@color/main_white_pure_color"
         android:text="退出登录"
         android:textColor="@color/text_black"
-        android:textSize="@dimen/text_big" />
+        android:textSize="@dimen/text_add" />
 
 </LinearLayout>

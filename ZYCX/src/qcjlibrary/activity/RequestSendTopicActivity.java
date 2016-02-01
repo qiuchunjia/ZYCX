@@ -3,6 +3,7 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.ToastUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -72,6 +73,7 @@ public class RequestSendTopicActivity extends BaseActivity {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 		et_content.addTextChangedListener(mTextWatcher);
+		et_title.addTextChangedListener(new EditTextUtils().getMyWatcher(30, et_title, this));
 		/** 设置默认选项 **/
 		setTextColorAndBg(tv_cure);
 		mType = "0";
@@ -183,12 +185,20 @@ public class RequestSendTopicActivity extends BaseActivity {
 			ToastUtils.showToast("标题不能为空");
 			return false;
 		}
+		if(EditTextUtils.containsEmoji(mTitle)){
+			ToastUtils.showToast(this, "不可输入表情");
+			return false;
+		}
 		if (mTitle.length() > 30) {
 			ToastUtils.showToast("标题长度不能大于30");
 			return false;
 		}
 		if (mContent == null || mContent.equals("") || mContent.equals(" ")) {
 			ToastUtils.showToast("内容不能为空");
+			return false;
+		}
+		if(EditTextUtils.containsEmoji(mContent)){
+			ToastUtils.showToast(this, "不可输入表情");
 			return false;
 		}
 		if (mType == null || mType.equals("") || mType.equals(" ")) {

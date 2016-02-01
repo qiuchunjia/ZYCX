@@ -2,6 +2,7 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
