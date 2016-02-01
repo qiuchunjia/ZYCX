@@ -11,7 +11,7 @@
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2015/08/07"
+        android:text=" "
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_very_big" />
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_min"
-        android:text="放射治疗"
+        android:text=" "
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_very_big" />
 
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_min"
-        android:text="放射治疗黑呵呵呵呵呵呵会飞的发顺丰的法定假发的康师傅骄傲的叫法埃德加的疯狂的撒发生的开发商"
+        android:text=" "
         android:textColor="@color/text_gray"
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:textSize="@dimen/text_common" />

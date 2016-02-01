@@ -15,6 +15,7 @@ import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopSingleCancer;
 import android.app.ActionBar.LayoutParams;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.R.color;
 
 /**
  * author：qiuchunjia time：下午4:35:07 类描述：这个类是实现
@@ -84,7 +86,10 @@ public class CancerSingleActivity extends BaseActivity {
 		ll_cancersingle_parent = (LinearLayout) findViewById(R.id.ll_cancersingle_parent);
 		rl_cancersing_head = (RelativeLayout) findViewById(R.id.rl_cancersing_head);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(getApplicationContext(), 1));
-		mCommonListView.setSelector(R.drawable.listview_item_selector);
+		mCommonListView.setDrawSelectorOnTop(true);
+		//mCommonListView.setBackgroundDrawable(getResources().getDrawable(R.drawable.listview_item_selector));
+		mCommonListView.setSelector(getResources().getDrawable(R.drawable.listview_item_selector));
+//		mCommonListView.setSelector(Color.GRAY);
 		mAdapter = new CancerTopicAdapter(this, mExperienceData);
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {

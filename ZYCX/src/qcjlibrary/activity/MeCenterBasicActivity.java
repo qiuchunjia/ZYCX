@@ -96,7 +96,6 @@ public class MeCenterBasicActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 
 	@Override
@@ -153,7 +152,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initData();
+		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 
 	@Override

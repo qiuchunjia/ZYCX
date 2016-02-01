@@ -43,6 +43,7 @@ import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
 import qcjlibrary.fragment.FragmentRequestAnwerIndex;
 import qcjlibrary.fragment.FragmentZhixun;
+import qcjlibrary.model.ModelNotiyState;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
@@ -230,6 +231,8 @@ public class HomeActivity extends BaseActivity {
 		}
 	}
 
+	private String status;
+	private ImageView iv_home_msg;
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
@@ -237,7 +240,19 @@ public class HomeActivity extends BaseActivity {
 			ModelUser obUser = (ModelUser) object;
 			mApp.displayImage(obUser.getAvatar(), mTitle.iv_title_left2);
 			mApp.saveUser(obUser);
-		} else{
+		} else if(object instanceof ModelNotiyState){
+				ModelNotiyState state = (ModelNotiyState) object;
+				status = state.getStatus();
+				if(mCurrentIndex == index_Default){
+					if(status != null && status.equals("1")){
+						mTitle.iv_home_msg.setVisibility(View.VISIBLE);
+					} else{
+						mTitle.iv_home_msg.setVisibility(View.GONE);
+					}
+				} else{
+					mTitle.iv_home_msg.setVisibility(View.GONE);
+				}
+		}else{
 			judgeTheMsg(object);
 		}
 		return object;
@@ -385,6 +400,7 @@ public class HomeActivity extends BaseActivity {
 				// 如果MessageFragment不为空，则直接将它显示出来
 				//transaction.show(mZiXunFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
 			transaction.replace(R.id.content, mZiXunFgmt);
 			// mZixunLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
@@ -396,6 +412,7 @@ public class HomeActivity extends BaseActivity {
 				mQClassFgmt = new FragmentQclassIndex();
 				//transaction.show(mQClassFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
 			transaction.replace(R.id.content, mQClassFgmt);
 			/*
 			 * if (mQClassFgmt == null) { mQClassFgmt = new QClassFragment();
@@ -411,6 +428,7 @@ public class HomeActivity extends BaseActivity {
 			} else {
 				//transaction.show(mAnwergmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
 			transaction.replace(R.id.content, mAnwergmt);
 			// if (mQustionFgmt == null) {
 			// mQustionFgmt = new QuestionFragment();
@@ -427,6 +445,7 @@ public class HomeActivity extends BaseActivity {
 			} else {
 				//transaction.show(mExpegmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
 			transaction.replace(R.id.content, mExpegmt);
 			// if (mQiKanFgmt == null) {
 			// mQiKanFgmt = new QiKanFragment();
@@ -443,6 +462,7 @@ public class HomeActivity extends BaseActivity {
 			} else {
 				//transaction.show(mCaseFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
 			transaction.replace(R.id.content, mCaseFgmt);
 			// if (mWebFgmt == null) {
 			// mWebFgmt = new WebFragment();
@@ -608,6 +628,10 @@ public class HomeActivity extends BaseActivity {
 		initIcon(mTitle);
 		if(isLogin()){
 			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+			if(mCurrentIndex == index_Default){
+				//首页时获取消息提醒
+				sendRequest(mApp.getNotifyImpl().isRead(), ModelNotiyState.class, REQUEST_GET);
+			}
 		}
 		if (!isLogin() && mCurrentIndex == index_qikan) {
 			setTabSelection(index_Default);

@@ -123,6 +123,7 @@ public class ZhiXunAdapter extends BAdapter {
 	@Override
 	public void refreshNew() {
 		mDetail.setLastid(null);
+		mDetail.setMaxid(null);
 		requstMessage(mDetail, REFRESH_NEW);
 	}
 

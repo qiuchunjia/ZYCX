@@ -90,6 +90,10 @@ public class FoodSingleDetailActivity extends BaseActivity {
 		tv_relate3 = (TextView) findViewById(R.id.tv_relate3);
 		iv_relate4 = (ImageView) findViewById(R.id.iv_relate4);
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
+		rl_relate1 = (RelativeLayout) findViewById(R.id.rl_relate1);
+		rl_relate2 = (RelativeLayout) findViewById(R.id.rl_relate2);
+		rl_relate3 = (RelativeLayout) findViewById(R.id.rl_relate3);
+		rl_relate4 = (RelativeLayout) findViewById(R.id.rl_relate4);
 		gv_function = (MyGridView) findViewById(R.id.gv_function);
 		ll_foodcategory_parent = (LinearLayout) findViewById(R.id.ll_foodcategory_parent);
 
@@ -116,7 +120,11 @@ public class FoodSingleDetailActivity extends BaseActivity {
 		}
 		return object;
 	}
-
+	
+	private RelativeLayout rl_relate1;
+	private RelativeLayout rl_relate2;
+	private RelativeLayout rl_relate3;
+	private RelativeLayout rl_relate4;
 	/**
 	 * 添加相关的图片
 	 * 
@@ -127,15 +135,19 @@ public class FoodSingleDetailActivity extends BaseActivity {
 			for (int i = 0; i < foodRel.size(); i++) {
 				ModelFoodIdDetailInfo detailInfo = foodRel.get(i);
 				if (i == 0) {
+					rl_relate1.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate1);
 					tv_relate1.setText(detailInfo.getFood_name());
 				} else if (i == 1) {
+					rl_relate2.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate2);
 					tv_relate2.setText(detailInfo.getFood_name());
 				} else if (i == 2) {
+					rl_relate3.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate3);
 					tv_relate3.setText(detailInfo.getFood_name());
 				} else if (i == 3) {
+					rl_relate4.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate4);
 					tv_relate4.setText(detailInfo.getFood_name());
 				}
@@ -155,6 +167,7 @@ public class FoodSingleDetailActivity extends BaseActivity {
 			mApp.displayImage(info.getImgSrc(), iv_food_icon);
 			tv_food_main_value.setText(info.getFood_anticancer());
 			tv_function_value.setText(info.getFood_tumor());
+			tv_food_way_value.setText(info.getFood_usage());
 			String suitable = info.getFood_suitable();
 			if(!TextUtils.isEmpty(suitable)){
 				tv_flag.setText(suitable);

@@ -48,6 +48,7 @@ public class Title implements TitleInterface {
 	// 右边部分控件
 	public TextView tv_title_right; // 距离右10dp
 	public ImageView iv_title_right1;// 距离右10dp
+	public ImageView iv_home_msg; //消息提示圆点
 	public ImageView iv_title_right2;// 距离右20dp
 	public ImageView iv_title_right3;// 距离右40dp
 
@@ -90,6 +91,8 @@ public class Title implements TitleInterface {
 					.findViewById(R.id.tv_title_right);
 			iv_title_right1 = (ImageView) mTitleView
 					.findViewById(R.id.iv_title_right1);
+			iv_home_msg = (ImageView) mTitleView
+					.findViewById(R.id.iv_home_msg);
 			iv_title_right2 = (ImageView) mTitleView
 					.findViewById(R.id.iv_title_right2);
 			iv_title_right3 = (ImageView) mTitleView
