@@ -340,6 +340,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 						loadData();
 						mContent.reload();
 						mCmtEdit.setText("");
+						mContent.setScrollY(500);
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
 						// mCmtEdit);
 					} else

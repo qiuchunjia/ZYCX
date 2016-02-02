@@ -122,5 +122,14 @@ public class FragmentNotify extends BaseFragment {
 	public void onClick(View v) {
 
 	}
+	
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		if(mAdapter != null){
+			mAdapter.refreshNew();
+		}
+	}
 
 }

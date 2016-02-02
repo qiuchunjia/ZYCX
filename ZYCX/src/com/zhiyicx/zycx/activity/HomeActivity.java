@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestWayActivity;
 import qcjlibrary.activity.SearchNewActivity;
@@ -47,6 +48,7 @@ import qcjlibrary.model.ModelNotiyState;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.Anim;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Tools_FontManager;
 
@@ -330,6 +332,7 @@ public class HomeActivity extends BaseActivity {
 		super.onOptionsItemSelected(item);
 		return true;
 	}
+	
 
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -368,6 +371,20 @@ public class HomeActivity extends BaseActivity {
 			// Intent intent = new Intent(this, WeiboAppActivity.class);
 			// startActivity(intent);
 			// Anim.in(activity);
+			break;
+		}
+	}
+	
+	public void setTabImg(int index){
+		switch (index) {
+		case index_qikan:
+			IB_home_bottom_qikan.setImageResource(R.drawable.jingli_press);
+			break;
+		case index_qclass:
+			IB_home_bottom_class.setImageResource(R.drawable.qingketang_press);
+			break;
+
+		default:
 			break;
 		}
 	}
@@ -732,4 +749,36 @@ public class HomeActivity extends BaseActivity {
 		Tools_FontManager.changeFonts(mTitle.ll_center, this, index);
 		mTitle.tv_title.setTextColor(Color.WHITE);
 	}
+	
+	private long preTabTime;
+	public static int qcl = 1;
+	public static int exp = 2;
+	public int isExit = 0;
+	
+
+	@Override
+	public void onBackPressed() {
+		// TODO 自动生成的方法存根
+		//判断是否首页切换
+		if(isExit == qcl){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else if(isExit == exp){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else{
+			//连续点击两次退出
+			if (System.currentTimeMillis() - preTabTime > 2000) {
+				// 提示再次点击退出
+				Toast.makeText(this, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show();
+				// 标记这次点击的事件
+				preTabTime = System.currentTimeMillis();
+			} else {
+				// 2s内点击两次，关闭app
+				Anim.exit(this);
+			}
+		}
+	}
+	
+	
 }

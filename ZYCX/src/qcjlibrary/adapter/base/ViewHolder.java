@@ -54,6 +54,7 @@ public class ViewHolder {
 	public TextView tv_notify;
 	public TextView tv_notify_content;
 	public TextView tv_notify_date;
+	public ImageView iv_praise_item;
 	/******************* 消息中的 praise item end ************************/
 	/******************* 我的期刊 item ************************/
 	public ImageView iv_perio_icon;

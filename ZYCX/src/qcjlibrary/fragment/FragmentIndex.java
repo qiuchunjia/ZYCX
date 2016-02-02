@@ -114,6 +114,9 @@ public class FragmentIndex extends BaseFragment {
 			break;
 
 		case R.id.rl_2:
+			if(mHomeActivity != null){
+				mHomeActivity.isExit = HomeActivity.qcl;
+			}
 			setTabFragement(HomeActivity.index_qclass);
 			break;
 		case R.id.rl_3:
@@ -121,6 +124,9 @@ public class FragmentIndex extends BaseFragment {
 			mApp.startActivity_qcj(mActivity, FoodWayActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_4:
+			if(mHomeActivity != null){
+				mHomeActivity.isExit = HomeActivity.exp;
+			}
 			setTabFragement(HomeActivity.index_qikan);
 			break;
 		case R.id.rl_5:
@@ -146,6 +152,7 @@ public class FragmentIndex extends BaseFragment {
 	private void setTabFragement(int index) {
 		if (mHomeActivity != null) {
 			mHomeActivity.setTabSelection(index);
+			mHomeActivity.setTabImg(index);
 		}
 	}
 }

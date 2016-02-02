@@ -146,4 +146,5 @@ public class FragmentQclassIndex extends BaseFragment {
 		//DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);
 		return defaultView;
 	}
+	
 }

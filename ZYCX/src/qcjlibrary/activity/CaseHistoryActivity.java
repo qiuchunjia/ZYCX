@@ -79,7 +79,7 @@ public class CaseHistoryActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		super.onResume();
 		if(mAdapter != null){
-			mAdapter.doRefreshNew();
+			mAdapter.refreshNew();
 		}
 	}
 

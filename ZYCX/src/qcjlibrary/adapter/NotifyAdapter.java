@@ -66,6 +66,12 @@ public class NotifyAdapter extends BAdapter {
 					holder.tv_notify_content.setText(notice.getContent());
 				}
 				holder.tv_notify_date.setText(notice.getTime());
+				String is_read = notice.getIs_read();
+				if(is_read != null && is_read.equals("0")){
+					holder.iv_praise_item.setVisibility(View.VISIBLE);
+				} else{
+					holder.iv_praise_item.setVisibility(View.GONE);
+				}
 			}
 
 		}
@@ -83,7 +89,7 @@ public class NotifyAdapter extends BAdapter {
 			holder.tv_notify = (TextView) convertView.findViewById(R.id.tv_notify);
 			holder.tv_notify_content = (TextView) convertView.findViewById(R.id.tv_notify_content);
 			holder.tv_notify_date = (TextView) convertView.findViewById(R.id.tv_notify_date);
-
+			holder.iv_praise_item = (ImageView) convertView.findViewById(R.id.iv_praise_item);
 		}
 	}
 
