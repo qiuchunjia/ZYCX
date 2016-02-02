@@ -256,7 +256,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			break;
 		case R.id.iv_title_right3:
 			if (!TextUtils.isEmpty(mChangeSizeUrl)) {
-				PopView popView = new PopSizeChoose(this, mWebUrl, this);
+				PopView popView = new PopSizeChoose(this, mChangeSizeUrl, this);
 				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
 			} else {
 				ToastUtils.showToast("请稍后。。。");
@@ -267,7 +267,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("青稞网资讯分享:" + mTitle);
-			shareContent.setUrl(mUrl);
+			shareContent.setUrl(mWebUrl);
 			PopShareContent PopshareContent = new PopShareContent(this, shareContent, this);
 			PopshareContent.showPop(mContent, Gravity.BOTTOM, 0, 0);
 			// Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
@@ -340,7 +340,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 						loadData();
 						mContent.reload();
 						mCmtEdit.setText("");
-						mContent.setScrollY(500);
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
 						// mCmtEdit);
 					} else
