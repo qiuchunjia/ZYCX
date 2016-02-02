@@ -193,7 +193,7 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private void addDataToExpertAnswer(ModelRequestAnswerComom data, List<ModelRequestAnswerComom> answers) {
 		if (data != null) {
 			tv_expert_date.setText(data.getTime());
-			if(data.getAnswer_content() != null && !data.getAnswer_content().equals(" ")){
+			if(data.getAnswer_content() != null && !data.getAnswer_content().equals(" ") && !data.getAnswer_content().equals("")){
 				tv_expertcontent.setText(data.getAnswer_content());
 			}
 			find_more.setVisibility(View.VISIBLE);

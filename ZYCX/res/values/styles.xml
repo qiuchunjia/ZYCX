@@ -184,4 +184,11 @@
         <item name="android:textColor">@color/text_gray</item>
         <item name="android:layout_marginTop">@dimen/margin_top</item>
     </style>
+    <style name="food_relate" parent="qclass_cmd_send">
+        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_width">79dp</item>
+        <item name="android:layout_height">79dp</item>
+    </style>
 </resources>

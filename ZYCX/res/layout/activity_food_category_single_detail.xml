@@ -335,13 +335,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
+                    
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_relate1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/view_border_gray_gray_image_border"
-                        android:scaleType="fitXY"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -361,13 +364,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
-
+					
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
                     <ImageView
                         android:id="@+id/iv_relate2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/view_border_gray_gray_image_border"
-                        android:scaleType="fitXY"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -396,13 +401,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
-
+					
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
                     <ImageView
                         android:id="@+id/iv_relate3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/view_border_gray_gray_image_border"
-                        android:scaleType="fitXY"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -422,13 +429,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
-
+					
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
                     <ImageView
                         android:id="@+id/iv_relate4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/view_border_gray_gray_image_border"
-                        android:scaleType="fitXY"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView

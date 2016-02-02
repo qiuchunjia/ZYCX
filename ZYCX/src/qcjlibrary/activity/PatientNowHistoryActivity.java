@@ -170,7 +170,6 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			if (checkTheContent()) {
 				ModelAddNowCase addNowCase = addDataToModel();
 				sendRequest(mApp.getMedRecordImpl().savePresent(addNowCase), ModelMsg.class, REQUEST_POST);
-				ToastUtils.showToast("提交中...");
 			}
 
 			break;

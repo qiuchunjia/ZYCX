@@ -102,16 +102,13 @@
 
         <TextView
             android:id="@+id/tv_mycase_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="@dimen/margin_right_small"
             android:layout_marginTop="15dp"
             android:layout_toLeftOf="@id/iv_mycase_x"
             android:layout_toRightOf="@id/tv_mycase_space"
-            android:ellipsize="end"
-            android:maxLines="2"
             android:gravity="right|center_vertical"
             android:text="开开心心"
             android:textColor="@color/text_more_gray"

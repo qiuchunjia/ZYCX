@@ -3,6 +3,7 @@ package qcjlibrary.adapter.base;
 import qcjlibrary.widget.RoundImageView;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class ViewHolder {
 	public ImageView iv_no;
 	public TextView tv_agree;
 	public TextView tv_noagree;
+	public ImageView iv_request_line;
 
 	/******************* 专家提问item end ************************/
 	/** 普通问答tab**/

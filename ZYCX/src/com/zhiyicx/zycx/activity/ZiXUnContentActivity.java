@@ -67,7 +67,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private int mCurrentPraise;
 	private boolean isBig = false;
 	private String contnet;
-
+	private String mWebUrl;
 	@Override
 	public String setCenterTitle() {
 		return "资讯详情";
@@ -148,8 +148,20 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (mFaceView.getVisibility() == View.VISIBLE) {
 						mFace.setImageResource(R.drawable.smile_face);
 						mFaceView.setVisibility(View.GONE);
-					}
+					} 
 				}
+			}
+		});
+		
+		mCmtEdit.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (mFaceView.getVisibility() == View.VISIBLE) {
+					mFace.setImageResource(R.drawable.smile_face);
+					mFaceView.setVisibility(View.GONE);
+				} 
+				return false;
 			}
 		});
 
@@ -244,7 +256,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			break;
 		case R.id.iv_title_right3:
 			if (!TextUtils.isEmpty(mChangeSizeUrl)) {
-				PopView popView = new PopSizeChoose(this, mChangeSizeUrl, this);
+				PopView popView = new PopSizeChoose(this, mWebUrl, this);
 				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
 			} else {
 				ToastUtils.showToast("请稍后。。。");
@@ -453,6 +465,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 						Log.i("loadData", jsonObject.toString());
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
+						mWebUrl = data.getString("weburl");
 						mChangeSizeUrl = mUrl + Utils.getTokenString(ZiXUnContentActivity.this);
 						mContent.loadUrl(mChangeSizeUrl);
 						mIsColl = data.getInt("isColl");

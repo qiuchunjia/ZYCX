@@ -150,12 +150,12 @@
         </FrameLayout>
     </RelativeLayout>
 
-    <include
-        android:id="@+id/ll_request_line"
+    <ImageView
+        android:id="@+id/iv_request_line"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:background="@color/main_gray_bg_color"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        layout="@layout/view_line_vertical" />
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

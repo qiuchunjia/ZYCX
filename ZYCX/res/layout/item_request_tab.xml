@@ -53,18 +53,16 @@
             android:gravity="center"
             android:text="癌种"
             android:clickable="true"
-            android:drawableRight="@drawable/shaixuan"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_common" />
     </LinearLayout>
     
-    <include
+    <ImageView
+        android:id="@+id/iv_tab_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_request_tab"
-        layout="@layout/view_line_vertical"
-        />
+        android:layout_height="@dimen/line_height"
+        android:background="@color/main_gray_bg_color"
+        android:visibility="visible"
+        android:layout_below="@id/ll_request_tab"/>
 
 </RelativeLayout>

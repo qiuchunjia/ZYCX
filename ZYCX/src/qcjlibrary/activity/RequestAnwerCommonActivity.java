@@ -19,12 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.adapter.RequestCommonAdapter;
 import qcjlibrary.adapter.TestSectionedAdapter;
-import qcjlibrary.adapter.base.OnTabselectedListener;
 import qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView;
 import qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView.OnMyItemClickListener;
 import qcjlibrary.model.ModelCancerCategory;
@@ -57,6 +57,8 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 	private ImageView iv_4;
 	private LinearLayout ll_request_icon;
 	private RelativeLayout rl_request_tab;
+	private ImageView iv_tab_line;
+	
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
 
 	private ModelRequestItem mRequestItem; // 请求数据
@@ -83,23 +85,18 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 		case R.id.tv_01:
 			resetImage();
 			setSelected(0);
-			Log.d("Cathy", "tv_1");
 			iv_1.setImageResource(R.drawable.medica_green);
 			setTypeAdapter("0");
-			mAdapter.doRefreshNew();
 			break;
 
 		case R.id.tv_02:
 			setTypeAdapter("1");
 			resetImage();
 			setSelected(1);
-			Log.d("Cathy", "tv_2");
 			iv_2.setImageResource(R.drawable.umbrella_green);
-			mAdapter.doRefreshNew();
 			break;
 		case R.id.tv_03:
 			setTypeAdapter("2");
-			mAdapter.doRefreshNew();
 			resetImage();
 			setSelected(2);
 			iv_3.setImageResource(R.drawable.heart_green);
@@ -150,7 +147,7 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 		tv_2 = (TextView) findViewById(R.id.tv_02);
 		tv_3 = (TextView) findViewById(R.id.tv_03);
 		tv_4 = (TextView) findViewById(R.id.tv_04);
-		// pinnedListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
+		//pinnedListView.setDividerHeight(10);
 		// 添加头部视图
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		header = (LinearLayout) inflater.inflate(R.layout.item_request_header, null);
@@ -169,7 +166,7 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 		iv_zoom = (ImageView) header.findViewById(R.id.iv_zoom);
 		tv_find = (TextView) header.findViewById(R.id.tv_find);
 		et_find = (EditText) header.findViewById(R.id.et_find);
-		
+		iv_tab_line = (ImageView) header.findViewById(R.id.iv_tab_line);
 	}
 
 	@Override
@@ -212,6 +209,7 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 		mAdapter = new RequestCommonAdapter(this, mRequestItem);
 		commonAdapter = new TestSectionedAdapter(this, null);
 		pinnedListView.setAdapter(mAdapter);
+		mAdapter.doRefreshNew();
 	}
 
 	@Override
@@ -293,7 +291,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(0);
 				iv_1.setImageResource(R.drawable.medica_green);
 				setTypeAdapter("0");
-				mAdapter.doRefreshNew();
 			}
 		});
 
@@ -305,7 +302,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(0);
 				iv_1.setImageResource(R.drawable.medica_green);
 				setTypeAdapter("0");
-				mAdapter.doRefreshNew();
 			}
 		});
 
@@ -317,7 +313,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(1);
 				iv_2.setImageResource(R.drawable.umbrella_green);
 				setTypeAdapter("1");
-				mAdapter.doRefreshNew();
 			}
 		});
 
@@ -329,7 +324,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(1);
 				iv_2.setImageResource(R.drawable.umbrella_green);
 				setTypeAdapter("1");
-				mAdapter.doRefreshNew();
 			}
 		});
 		iv_3.setOnClickListener(new OnClickListener() {
@@ -340,7 +334,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(2);
 				iv_3.setImageResource(R.drawable.heart_green);
 				setTypeAdapter("2");
-				mAdapter.doRefreshNew();
 			}
 		});
 
@@ -352,7 +345,6 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 				setSelected(2);
 				iv_3.setImageResource(R.drawable.heart_green);
 				setTypeAdapter("2");
-				mAdapter.doRefreshNew();
 			}
 		});
 		iv_4.setOnClickListener(new OnClickListener() {

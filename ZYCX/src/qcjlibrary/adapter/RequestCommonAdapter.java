@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -133,6 +134,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 				}
 				holder.tv_date.setText(modelRequestItem.getTime());
 				holder.tv_num.setText(modelRequestItem.getAnswer_count());
+				holder.iv_request_line.setVisibility(View.VISIBLE);
 			}
 		}
 	}
@@ -145,7 +147,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 			holder.tv_expert_answer = (TextView) convertView.findViewById(R.id.tv_expert_answer);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
-
+			holder.iv_request_line = (ImageView) convertView.findViewById(R.id.iv_request_line);
 		}
 	}
 

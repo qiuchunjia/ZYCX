@@ -183,7 +183,7 @@
                         android:layout_below="@id/tv_expert_user"
                         android:layout_marginTop="@dimen/margin_top"
                         android:text="专家正在后台为您解答"
-                        android:textColor="@color/text_gray"
+                        android:textColor="@color/text_more_gray"
                         android:textSize="@dimen/text_common" />
 
                     <TextView
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/tv_expertcontent"
-                        android:text="【查看更多】"
+                        android:text="【查看全部】"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/text_small" />
                 </RelativeLayout>

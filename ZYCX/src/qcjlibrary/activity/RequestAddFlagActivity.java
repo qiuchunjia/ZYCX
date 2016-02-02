@@ -11,6 +11,7 @@ import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
@@ -74,7 +75,6 @@ public class RequestAddFlagActivity extends BaseActivity {
 				getFlag();
 				mAsk.setTopics(mAddFlags);
 				SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), et_content);
-				ToastUtils.showToast("正在提交");
 				sendRequest(mApp.getRequestImpl().addQuestion(mAsk),
 						ModelRequestAsk.class, REQUEST_GET);
 				isCommit = true;
@@ -121,6 +121,10 @@ public class RequestAddFlagActivity extends BaseActivity {
 			if (!TextUtils.isEmpty(content)) {
 				if(!content.startsWith(" ")){
 					//限制标签长度
+					if(EditTextUtils.containsEmoji(content)){
+						ToastUtils.showToast(this, "不可输入表情！");
+						return;
+					}
 					if(content.length() > 10){
 						ToastUtils.showLongToast(this, "不可超过10个字符");
 						return;
