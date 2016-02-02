@@ -76,6 +76,10 @@ public class SettingOneLineEditActivity extends BaseActivity {
 		case R.id.tv_title_right:
 			String content = et_oneline.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
+				if(EditTextUtils.containsEmoji(content)){
+					ToastUtils.showToast(this, "不可输入表情!");
+					return;
+				}
 				sendContent(mCurrentPosition, content);
 			}
 			break;
@@ -126,7 +130,7 @@ public class SettingOneLineEditActivity extends BaseActivity {
 	private void sendContent(int position, String content) {
 		switch (position) {
 		case DECLARATION:
-			if(content.length() < 28){
+			if(content.length() < 29){
 				mUserData.setIntro(content);
 				sendRequest(mApp.getUserImpl().edituserdata(mUserData),
 						ModelMsg.class, REQUEST_GET);
