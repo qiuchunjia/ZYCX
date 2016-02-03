@@ -308,10 +308,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	//根据isOpen的值设置是否开启提示图标
 	private void setNotify() {
 		if(isOpen == 0){
-			iv_notify_open.setImageResource(R.drawable.off);
+			iv_notify_open.setImageResource(R.drawable.off_green);
 			isOpen = 1;
 		} else{
-			iv_notify_open.setImageResource(R.drawable.on);
+			iv_notify_open.setImageResource(R.drawable.on_green);
 			isOpen = 0;
 		}
 	}

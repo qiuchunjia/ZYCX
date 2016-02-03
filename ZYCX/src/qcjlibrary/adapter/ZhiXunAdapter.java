@@ -49,7 +49,7 @@ public class ZhiXunAdapter extends BAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = initView(holder, type);
-			convertView.setTag(holder);
+//			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -110,11 +110,13 @@ public class ZhiXunAdapter extends BAdapter {
 				holder.tv_date = (TextView) view.findViewById(R.id.tv_date);
 				holder.tv_from = (TextView) view.findViewById(R.id.tv_from);
 				holder.tv_num = (TextView) view.findViewById(R.id.tv_num);
+				view.setTag(holder);
 			} else {
 				view = mInflater.inflate(R.layout.item_zhixun_big, null);
 				holder.iv_zixun = (ImageView) view.findViewById(R.id.iv_zixun);
 				holder.tv_zixun_title = (TextView) view.findViewById(R.id.tv_zixun_title);
 				holder.tv_zixun_num = (TextView) view.findViewById(R.id.tv_zixun_num);
+				view.setTag(holder);
 			}
 		}
 		return view;

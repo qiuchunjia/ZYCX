@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/iv_share_message"
                 style="@style/qclass_cmd_send"
-                android:src="@drawable/qqzone" />
+                android:src="@drawable/sample_flat_302" />
 
             <TextView
                 style="@style/share_textview"

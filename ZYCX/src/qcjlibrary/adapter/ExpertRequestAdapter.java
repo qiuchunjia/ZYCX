@@ -139,13 +139,13 @@ public class ExpertRequestAdapter extends BAdapter {
 
     @Override
     public void refreshFooter(Model item, int count) {
-    	if(item instanceof ModelRequestMyAsk){
-    		ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
-    		data = new ModelRequestMyAsk();
-    		data.setLastid(myAsk.getQuestion_id());
-//    		myAsk.setLastid(myAsk.getQuestion_id());
-    		sendRequest(mApp.getUserImpl().myQuestion(data), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
-    	}
+//    	if(item instanceof ModelRequestMyAsk){
+//    		ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
+//    		data = new ModelRequestMyAsk();
+//    		data.setLastid(myAsk.getQuestion_id());
+////    		myAsk.setLastid(myAsk.getQuestion_id());
+//    		sendRequest(mApp.getUserImpl().myQuestion(data), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+//    	}
     }
     
     private ModelRequestMyAsk data;
