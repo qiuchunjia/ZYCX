@@ -126,7 +126,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 		});
 		// mContent.loadUrl(mUrl);
 		// mContent.loadUrl("javascript:getComment()");
-		loadData();
+		loadData(false);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_share).setOnClickListener(this);
 		findViewById(R.id.btn_comment).setOnClickListener(this);
@@ -260,7 +260,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
 			} else {
 				ToastUtils.showToast("请稍后。。。");
-				loadData();
+				loadData(false);
 			}
 			break;
 		case R.id.iv_title_right1:
@@ -319,10 +319,12 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private void comment() {
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt)) {
+			loadData(true);
 			ToastUtils.showToast("评论内容不能为空！");
 			return;
 		}
 		if(EditTextUtils.containsEmoji(txt)){
+			loadData(true);
 			ToastUtils.showLongToast(this, "不可输入表情！");
 			return;
 		}
@@ -337,7 +339,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						Utils.showToast(ZiXUnContentActivity.this, "评论成功！");
 						// mContent.loadUrl("javascript:getComment()");
-						loadData();
+						loadData(true);
 						mContent.reload();
 						mCmtEdit.setText("");
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
@@ -451,8 +453,10 @@ public class ZiXUnContentActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-	private void loadData() {
+	
+	private boolean isComment;
+	private void loadData(boolean b) {
+		isComment = b;
 		final String url = MyConfig.ZIXUN_GET_URL + Utils.getTokenString(this) + "&id=" + mId + "&uid=" + mUid;
 		NetComTools netComTools = NetComTools.getInstance(this);
 		netComTools.getNetJson(url, new JsonDataListener() {
@@ -465,9 +469,13 @@ public class ZiXUnContentActivity extends BaseActivity {
 						Log.i("loadData", jsonObject.toString());
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
+						if(isComment){
+							mUrl += "#comment";
+						}
+						Log.d("Cathy", "mUrl = "+mUrl);
 						mWebUrl = data.getString("weburl");
 						mChangeSizeUrl = mUrl + Utils.getTokenString(ZiXUnContentActivity.this);
-						mContent.loadUrl(mChangeSizeUrl);
+						mContent.loadUrl(mUrl);
 						mIsColl = data.getInt("isColl");
 						int is_praise = data.getInt("isPraise");
 						mCurrentPraise = Integer.valueOf(data.getString("praiseCount"));

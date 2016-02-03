@@ -8,8 +8,8 @@
 
     <qcjlibrary.widget.RoundImageView
         android:id="@+id/riv_msg_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/default_image_small" />
 
     <LinearLayout
@@ -31,8 +31,8 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="left"
-        android:textColor="@color/text_green"
-        android:textSize="@dimen/text_very_big" />
+        android:textColor="@color/text_user"
+        android:textSize="@dimen/text_big" />
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"

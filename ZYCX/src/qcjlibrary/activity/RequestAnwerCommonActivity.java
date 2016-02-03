@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Scroller;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
@@ -251,18 +252,27 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
+//				if(scrollState == SCROLL_STATE_FLING){
+//					Log.d("Cathy", " top "+Math.abs(header.getTop()));
+//				}
+				
 			}
 
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 				int headerTop = Math.abs(header.getTop());
 				int iconTop = ll_request_icon.getHeight() + rl_space.getHeight() + 20;
+				
 				if (headerTop >= iconTop) {
-					header.setVisibility(View.GONE);
+					//header.setVisibility(View.GONE);
 					rl_request_tab.setVisibility(View.VISIBLE);
 				} else {
-					header.setVisibility(View.VISIBLE);
-					rl_request_tab.setVisibility(View.GONE);
+					//header.setVisibility(View.VISIBLE);
+					if(firstVisibleItem >= 2){
+						rl_request_tab.setVisibility(View.VISIBLE);
+					} else{
+						rl_request_tab.setVisibility(View.GONE);
+					}
 				}
 			}
 		});

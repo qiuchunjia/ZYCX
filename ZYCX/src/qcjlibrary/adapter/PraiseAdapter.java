@@ -61,7 +61,7 @@ public class PraiseAdapter extends BAdapter {
 				holder.tv_date.setText(dig.getTime());
 				holder.tv_other_replay.setText("");
 				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(dig.getMyname() + "", 0, 0,
-						mBaseActivity.getResources().getColor(R.color.text_green)));
+						mBaseActivity.getResources().getColor(R.color.text_user)));
 				holder.tv_other_replay.append(": "
 						+ dig.getFeed_data());
 			}

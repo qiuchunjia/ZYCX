@@ -21,8 +21,8 @@
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_toRightOf="@id/riv_msg_icon"
         android:text="呵呵哒"
-        android:textColor="@color/text_green"
-        android:textSize="@dimen/text_add" />
+        android:textColor="@color/text_user"
+        android:textSize="@dimen/text_big" />
 
     <TextView
         android:id="@+id/tv_title"

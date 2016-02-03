@@ -411,7 +411,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		
 		if(checkFirst() || checkSecond() || checkThired()){
 			return true;
-		}
+		} 
 		return false;
 	}
 
@@ -427,6 +427,8 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		ModelImage image = new ModelImage();
 		diagnosis.setDiagnosis_stime(diagnosis_stime);
 		diagnosis.setDiagnosis_etime(diagnosis_etime);
+//		Log.d("Cathy", "diagnosis_stime = "+diagnosis_stime);
+//		Log.d("Cathy", "diagnosis_etime = "+diagnosis_etime);
 		diagnosis.setDiagnosis_hospital(diagnosis_hospital);
 		diagnosis.setDiagnosis_way(diagnosis_way);
 		lab.setLab_exam_program(lab_exam_program);

@@ -346,7 +346,7 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
-
+	private boolean isFirst = true;
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
 		private Class type;
 		private int RefreshType;
@@ -358,7 +358,6 @@ public abstract class BAdapter extends BaseAdapter {
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			ToastUtils.showToast("请求异常");
 			onRequestFailed();
 		}
 
@@ -378,7 +377,10 @@ public abstract class BAdapter extends BaseAdapter {
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							if (!TextUtils.isEmpty(((ModelMsg) object).getMessage())) {
-								ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+								if(isFirst){
+									ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+									isFirst = false;
+								}
 							} else {
 								ToastUtils.showToast("没有更多数据了！");
 							}

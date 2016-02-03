@@ -66,7 +66,7 @@ public class ReplayAdapter extends BAdapter {
 				holder.tv_title.setText(commment.getContent());
 				holder.tv_other_replay.setText("");
 				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(commment.getMyname() + "", 0, 0,
-						mBaseActivity.getResources().getColor(R.color.text_green)));
+						mBaseActivity.getResources().getColor(R.color.text_user)));
 				holder.tv_other_replay.append(": "
 						+ commment.getOriginal_content());
 				holder.tv_date.setText(commment.getTime());

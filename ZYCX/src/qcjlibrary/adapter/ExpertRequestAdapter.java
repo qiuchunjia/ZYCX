@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -140,16 +141,20 @@ public class ExpertRequestAdapter extends BAdapter {
     public void refreshFooter(Model item, int count) {
     	if(item instanceof ModelRequestMyAsk){
     		ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
-    		myAsk.setLastid(myAsk.getQuestion_id());
-    		sendRequest(mApp.getUserImpl().myQuestion(myAsk), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+    		data = new ModelRequestMyAsk();
+    		data.setLastid(myAsk.getQuestion_id());
+//    		myAsk.setLastid(myAsk.getQuestion_id());
+    		sendRequest(mApp.getUserImpl().myQuestion(data), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
     	}
     }
+    
+    private ModelRequestMyAsk data;
 
     @Override
     public int getTheCacheType() {
         return 0;
     }
-
+    
     @Override
     public Object onResponceSuccess(String str, Class class1) {
         return DataAnalyze.parseData(str, class1);

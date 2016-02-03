@@ -921,6 +921,7 @@ public class api {
 				params.add(APP, API);
 				params.add(MOD, MEDRECORD);
 				params.add(ACT, SAVE_PRESENT);
+				params.add(DIAGNOSIS_STIME, nowCase.getDiagnosis().getDiagnosis_stime());
 				params.add(DIAGNOSIS_ETIME, nowCase.getDiagnosis().getDiagnosis_etime());
 				params.add(DIAGNOSIS_HOSPITAL, nowCase.getDiagnosis().getDiagnosis_hospital());
 				params.add(DIAGNOSIS_WAY, nowCase.getDiagnosis().getDiagnosis_way());

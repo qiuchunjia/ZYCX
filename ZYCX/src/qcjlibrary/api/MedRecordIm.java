@@ -58,6 +58,7 @@ public interface MedRecordIm {
 	public static final String AMENORRHOEA_AGE = "amenorrhoea_age";
 	public static final String CHILDS = "childs";
 	public static final String FAMILY_HISTORY = "family_history";
+	public static final String DIAGNOSIS_STIME = "diagnosis_stime";
 	public static final String DIAGNOSIS_ETIME = "diagnosis_etime";
 	public static final String DIAGNOSIS_HOSPITAL = "diagnosis_hospital";
 	public static final String DIAGNOSIS_WAY = "diagnosis_way";
