@@ -775,7 +775,7 @@ public class HomeActivity extends BaseActivity {
 				preTabTime = System.currentTimeMillis();
 			} else {
 				// 2s内点击两次，关闭app
-				Anim.exit(this);
+				finish();
 			}
 		}
 	}
