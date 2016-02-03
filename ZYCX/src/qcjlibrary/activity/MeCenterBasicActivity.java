@@ -13,6 +13,7 @@ import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.L;
+import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
@@ -142,9 +143,14 @@ public class MeCenterBasicActivity extends BaseActivity {
 
 			@Override
 			public void onTimeSelect(Date date) {
-				ModelUser user = new ModelUser();
-				user.setBirthday(DateUtil.DateToStamp(date));
-				sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
+				Date cur = new Date();
+				if(cur.compareTo(date) > 0){
+					ModelUser user = new ModelUser();
+					user.setBirthday(DateUtil.DateToStamp(date));
+					sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
+				} else{
+					ToastUtils.showToast(MeCenterBasicActivity.this, "不可大于当前日期");
+				}
 			}
 		});
 	}

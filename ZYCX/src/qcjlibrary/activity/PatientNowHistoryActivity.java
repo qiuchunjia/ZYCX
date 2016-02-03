@@ -115,6 +115,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		ll_ScrollView1 = (LinearLayout) findViewById(R.id.ll_ScrollView1);
 		ll_ScrollView2 = (LinearLayout) findViewById(R.id.ll_ScrollView2);
 		ll_ScrollView3 = (LinearLayout) findViewById(R.id.ll_ScrollView3);
+		
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
 		pvTime.setTime(new Date());
 		pvTime.setCyclic(true);

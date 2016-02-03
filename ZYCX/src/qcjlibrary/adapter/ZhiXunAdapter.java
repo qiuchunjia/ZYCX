@@ -88,7 +88,11 @@ public class ZhiXunAdapter extends BAdapter {
 				} else {
 					mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_zixun);
 					holder.tv_zixun_title.setText(modelZiXunDetail.getTitle());
-					holder.tv_zixun_num.setText(modelZiXunDetail.getReadCount());
+					String count = modelZiXunDetail.getReadCount();
+					if (count.length() > 3) {
+						count = "999+";
+					}
+					holder.tv_zixun_num.setText(count);
 				}
 			}
 		}
@@ -175,8 +179,8 @@ public class ZhiXunAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelZiXun) {
 			ModelZiXun modelZiXun = (ModelZiXun) object;
-			modelZiXun.getList();
-			return modelZiXun.getList();
+			List<ModelZiXunDetail> list = modelZiXun.getList();
+			return list;
 		}
 		return null;
 	}
