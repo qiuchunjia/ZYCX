@@ -782,4 +782,16 @@ public abstract class BaseActivity extends FragmentActivity
 		LoadingDialogUtl.hideLoadingView();
 	}
 	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO 自动生成的方法存根
+		super.onPause();
+	}
+	
 }
