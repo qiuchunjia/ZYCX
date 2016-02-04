@@ -374,7 +374,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 			LoadingDialogUtl.hideLoadingView();
 			onRequestFailed();
-			ToastUtils.showToast("请求异常");
+			ToastUtils.showToast("网络异常");
 		}
 
 		@Override

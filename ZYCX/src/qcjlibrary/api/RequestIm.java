@@ -4,6 +4,7 @@ import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestSearch;
 
 import com.loopj.android.http.RequestParams;
@@ -148,7 +149,7 @@ public interface RequestIm {
 	 * @param item
 	 * @return
 	 */
-	public RequestParams myAsk();
+	public RequestParams myAsk(ModelRequestMyAsk myAsk);
 	
 	public RequestParams myAskDetail();
 	

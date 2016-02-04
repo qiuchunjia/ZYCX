@@ -13,6 +13,7 @@ import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopCommonProgress;
@@ -231,6 +232,8 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (judgeTheMsg(object)) {
 			onBackPressed();
+			ToastUtils.showToast("上传成功，等待后台审核");
+		} else{
 		}
 		return object;
 	}
@@ -261,6 +264,13 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	@Override
 	public void onResponseProgress(long bytesWritten, long totalSize) {
 		super.onResponseProgress(bytesWritten, totalSize);
+		LoadingDialogUtl.loadingView(this);
+		if(bytesWritten < 99){
+			Log.d("Cathy", "bytesWritten = "+bytesWritten);
+			LoadingDialogUtl.hideLoadingView();
+		} else{
+			LoadingDialogUtl.loadingView(this);
+		}
 		if (isFirst) {
 			isFirst = false;
 			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
@@ -357,6 +367,12 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	 */
 	
 	private boolean checkFirst(){
+		if(TextUtils.isEmpty(diagnosis_stime) 
+				&& TextUtils.isEmpty(diagnosis_etime) 
+				&& TextUtils.isEmpty(diagnosis_hospital) 
+				&& TextUtils.isEmpty(diagnosis_way)){
+			return false;
+		}
 		if (TextUtils.isEmpty(diagnosis_stime)) {
 			ToastUtils.showToast("请选择诊断起始时间");
 			return false;
@@ -377,6 +393,11 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	}
 	
 	private boolean checkSecond(){
+		if(TextUtils.isEmpty(lab_exam_program) 
+				&& TextUtils.isEmpty(lab_exam_time) 
+				&& TextUtils.isEmpty(lab_exam_hospital)){
+			return false;
+		}
 		if (TextUtils.isEmpty(lab_exam_program)) {
 			ToastUtils.showToast("请选择实验室检查项目");
 			return false;
@@ -393,6 +414,11 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	}
 	
 	private boolean checkThired(){
+		if(TextUtils.isEmpty(image_exam_program) 
+				&& TextUtils.isEmpty(image_exam_time) 
+				&& TextUtils.isEmpty(image_exam_hospital)){
+			return false;
+		}
 		if (TextUtils.isEmpty(image_exam_program)) {
 			ToastUtils.showToast("请选择影像学检查项目");
 			return false;

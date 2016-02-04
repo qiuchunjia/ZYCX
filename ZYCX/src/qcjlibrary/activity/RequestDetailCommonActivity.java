@@ -60,7 +60,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 
 	// 数据model赛
 	private ModelRequestItem mRequestItem;
-
+	private String user_name;
+	
 	@Override
 	public String setCenterTitle() {
 		return "问题详情";
@@ -212,6 +213,10 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			request_tv_title.append(" " + question.getQuestion_content());
 			tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
+			user_name = question.getUser_name();
+			if(user_name.equals(mApp.getUser().getUname())){
+				ll_answer.setVisibility(View.GONE);
+			}
 			tv_username.setText(question.getUser_name());
 			tv_date.setText(question.getTime());
 		}

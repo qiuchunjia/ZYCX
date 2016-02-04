@@ -383,6 +383,8 @@ public class HomeActivity extends BaseActivity {
 		case index_qclass:
 			IB_home_bottom_class.setImageResource(R.drawable.qingketang_press);
 			break;
+		case index_web:
+			IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
 
 		default:
 			break;
@@ -753,6 +755,7 @@ public class HomeActivity extends BaseActivity {
 	private long preTabTime;
 	public static int qcl = 1;
 	public static int exp = 2;
+	public static int cas = 3;
 	public int isExit = 0;
 	
 
@@ -764,6 +767,9 @@ public class HomeActivity extends BaseActivity {
 			setTabSelection(index_Default);
 			isExit= 0;
 		} else if(isExit == exp){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else if(isExit == cas){
 			setTabSelection(index_Default);
 			isExit= 0;
 		} else{

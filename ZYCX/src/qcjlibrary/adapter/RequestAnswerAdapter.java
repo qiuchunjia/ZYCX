@@ -147,7 +147,7 @@ public class RequestAnswerAdapter extends BAdapter {
 			flag.setLastid(null);
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			sendRequest(mApp.getRequestImpl().myAsk(), ModelRequest.class, 0, REFRESH_NEW);
+			sendRequest(mApp.getRequestImpl().myAsk(null), ModelRequest.class, 0, REFRESH_NEW);
 		}
 	}
 
@@ -195,7 +195,10 @@ public class RequestAnswerAdapter extends BAdapter {
 			flag.setLastid(requestItem.getQuestion_id());
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_FOOTER);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			dismissTheProgress();
+			ModelRequestMyAsk myAsk = (ModelRequestMyAsk) mRequestData;
+			myAsk.setLastid(requestItem.getQuestion_id());
+			sendRequest(mApp.getRequestImpl().myAsk(myAsk), ModelRequest.class, 0, REFRESH_FOOTER);
+			//dismissTheProgress();
 		}
 	}
 

@@ -131,8 +131,12 @@ public class FragmentIndex extends BaseFragment {
 			break;
 		case R.id.rl_5:
 			if (isLogin()) {
-				mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
-						mActivity.sendDataToBundle(new Model(), null));
+				if(mHomeActivity != null){
+					mHomeActivity.isExit = HomeActivity.cas;
+				}
+				setTabFragement(HomeActivity.index_web);
+//				mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
+//						mActivity.sendDataToBundle(new Model(), null));
 			} else {
 				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
 			}

@@ -64,14 +64,14 @@
         android:layout_marginRight="@dimen/margin_right_small"
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/main_white_bg_color"
-        android:ellipsize="end"
+        android:scrollHorizontally="true"
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:maxLines="2"
         android:paddingBottom="@dimen/margin_bottom"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:paddingTop="@dimen/margin_top"
-        android:text="专家建议：胸部的磁共振结果如何?如果结果都没有出现转移"
+        android:text="专家建议：胸部的磁共振结果如何?如果结果都没有出现转移结果都没有出现转移结果都没有出现转移结果都没有出现转移"
         android:textColor="@color/text_more_gray"
         android:textSize="@dimen/text_common" />
     <!-- 尾部 -->

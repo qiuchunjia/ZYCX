@@ -449,11 +449,12 @@ public class api {
 		}
 
 		@Override
-		public RequestParams myAsk() {
+		public RequestParams myAsk(ModelRequestMyAsk myAsk) {
 			RequestParams params = new RequestParams();
 			params.add(APP, API);
 			params.add(MOD, ASK);
 			params.add(ACT, MYASK);
+			getChangePage(params, myAsk);
 			return getTestToken(params);
 		}
 

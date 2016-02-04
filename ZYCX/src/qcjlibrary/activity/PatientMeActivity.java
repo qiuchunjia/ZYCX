@@ -335,6 +335,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
 		if (present != null) {
+			ll_now.removeAllViews();
 			sendPresent = present;
 			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
 			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
