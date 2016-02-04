@@ -164,7 +164,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			tv_start_time.setText(startTime);
 			tv_eat_time.setText(timeList);
 			if(isOpen == 0){
-				iv_notify_open.setImageResource(R.drawable.on);
+				iv_notify_open.setImageResource(R.drawable.on_green);
 			}
 		} else{
 			//如果是一个新的闹钟，设置初始信息
@@ -308,7 +308,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	//根据isOpen的值设置是否开启提示图标
 	private void setNotify() {
 		if(isOpen == 0){
-			iv_notify_open.setImageResource(R.drawable.off_green);
+			iv_notify_open.setImageResource(R.drawable.off);
 			isOpen = 1;
 		} else{
 			iv_notify_open.setImageResource(R.drawable.on_green);

@@ -65,6 +65,8 @@
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/main_white_bg_color"
         android:scrollHorizontally="true"
+        android:singleLine="false"
+        android:ellipsize="end"
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:maxLines="2"
         android:paddingBottom="@dimen/margin_bottom"

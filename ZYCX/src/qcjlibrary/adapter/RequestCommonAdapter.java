@@ -127,6 +127,9 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 						holder.tv_answer.setVisibility(View.GONE);
 						holder.tv_expert_answer.setVisibility(View.VISIBLE);
 						holder.tv_expert_answer.setText("");
+						String expert_answer = SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
+								mBaseActivity.getResources().getColor(R.color.text_yellow))
+								+ modelRequestItem.getAnswercontent();
 						holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
 								mBaseActivity.getResources().getColor(R.color.text_yellow)));
 						holder.tv_expert_answer.append(modelRequestItem.getAnswercontent());
@@ -260,6 +263,7 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 			ModelRequestItem data = (ModelRequestItem) item;
 			page++;
 			data.setPage(page);
+			data.setType(mRequestData.getType());
 			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_FOOTER);
 		}
 

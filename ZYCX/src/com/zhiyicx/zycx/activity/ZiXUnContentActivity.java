@@ -12,6 +12,7 @@ import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 import com.zhiyicx.zycx.util.Utils;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
@@ -37,6 +38,7 @@ import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.ModelZiXunDetail;
 import qcjlibrary.util.EditTextUtils;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopShareContent;
 import qcjlibrary.widget.popupview.PopSizeChoose;
@@ -123,6 +125,29 @@ public class ZiXUnContentActivity extends BaseActivity {
 				}
 				return true;
 			}
+
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				// TODO 自动生成的方法存根
+				super.onPageStarted(view, url, favicon);
+				LoadingDialogUtl.loadingView(ZiXUnContentActivity.this);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO 自动生成的方法存根
+				super.onPageFinished(view, url);
+				LoadingDialogUtl.hideLoadingView();
+			}
+			
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				// TODO 自动生成的方法存根
+				super.onReceivedError(view, errorCode, description, failingUrl);
+				ToastUtils.showToast("网页加载失败");
+			}
+			
+			
 		});
 		// mContent.loadUrl(mUrl);
 		// mContent.loadUrl("javascript:getComment()");
@@ -215,7 +240,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 				return false;
 			}
 		});
-		
 		//限制输入字数
 		mCmtEdit.addTextChangedListener(new TextWatcher() {
 			

@@ -157,7 +157,6 @@ public class ExperienceSendActivity extends BaseActivity {
 			String content = et_content.getText().toString();
 			String date = tv_choosedate.getText().toString();
 			String chooseTags = getTagsFromList(tagsList);
-			Log.d("Cathy", "chooseTags "+chooseTags);
 			if (judgeTheSend(title, date, content, chooseTags)) {
 				mSendData.setTitle(title);
 				mSendData.setBody(content);
@@ -181,7 +180,7 @@ public class ExperienceSendActivity extends BaseActivity {
 			for (int i = 0; i < tagsList2.size(); i++) {
 				tags = tags + tagsList2.get(i) + ",";
 			}
-			tags = tags.substring(0, tags.length() - 2);
+			tags = tags.substring(0, tags.length() - 1);
 			return tags;
 		}
 		return null;

@@ -688,7 +688,11 @@ public class api {
 				 * tags 标签 多个以逗号隔开 至少一个 必填
 				 */
 				params.add(WEIBA_ID, send.getWeiba_id());
-				params.add(PARENT_ID, send.getParent_id());
+				if(send.getParent_id() != null && !send.getParent_id().equals(" ")
+						&& !send.getParent_id().equals("")){
+					params.add(PARENT_ID, send.getParent_id());
+					Log.d("Cathy", "发布轨迹");
+				}
 				params.add(TITLE, send.getTitle());
 				params.add(POST_TIME, send.getPost_time());
 				params.add(BODY, send.getBody());

@@ -5,6 +5,7 @@ import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.sso.UMSsoHandler;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.util.Utils;
 

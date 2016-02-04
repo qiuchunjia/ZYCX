@@ -70,11 +70,7 @@ public class ExperienceCycleAdapter extends BAdapter {
 			mon = String.valueOf(Integer.parseInt(mon)+1);
 			holder.tv_date_month.setText(mon + "月");
 			String time =  detailItem.getCtime();
-			Calendar mCalendar = Calendar.getInstance();
 			Date date = DateUtil.stampToDate(time);
-			mCalendar.setTime(date);
-			Log.d("Cathy", "date.getDate() = "+date.getDate());
-			Log.d("Cathy", "date.getDate() = "+date.toString());
 			holder.tv_date_day.setText(date.getDate()+"");
 //			holder.tv_date_day.setText(DateUtil.StampToDay(detailItem.getCtime()));
 			holder.tv_date_week.setText(DateUtil.StampToWeek(detailItem.getCtime()));

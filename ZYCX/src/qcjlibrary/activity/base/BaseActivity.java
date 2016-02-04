@@ -731,6 +731,11 @@ public abstract class BaseActivity extends FragmentActivity
 		@Override
 		public void onProgress(long bytesWritten, long totalSize) {
 			super.onProgress(bytesWritten, totalSize);
+			if(bytesWritten == totalSize){
+				LoadingDialogUtl.loadingView(mApp.getActivity());
+			} else{
+				LoadingDialogUtl.hideLoadingView();
+			}
 			onResponseProgress(bytesWritten, totalSize);
 		}
 

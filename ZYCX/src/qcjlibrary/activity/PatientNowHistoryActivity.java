@@ -232,7 +232,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (judgeTheMsg(object)) {
 			onBackPressed();
-			ToastUtils.showToast("上传成功，等待后台审核");
+			ToastUtils.showToast("上传成功，等待审核");
 		} else{
 		}
 		return object;
@@ -265,12 +265,6 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	public void onResponseProgress(long bytesWritten, long totalSize) {
 		super.onResponseProgress(bytesWritten, totalSize);
 		LoadingDialogUtl.loadingView(this);
-		if(bytesWritten < 99){
-			Log.d("Cathy", "bytesWritten = "+bytesWritten);
-			LoadingDialogUtl.hideLoadingView();
-		} else{
-			LoadingDialogUtl.loadingView(this);
-		}
 		if (isFirst) {
 			isFirst = false;
 			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
