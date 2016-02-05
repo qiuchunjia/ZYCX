@@ -168,7 +168,8 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			}
 		} else{
 			//如果是一个新的闹钟，设置初始信息
-			startTime = DateUtil.strTodate2(String.valueOf(System.currentTimeMillis()));
+			Date cur = new Date();
+			startTime = DateUtil.strTodate2(DateUtil.DateToStamp(cur));
         	tv_start_time.setText(startTime);
         	period = "1";
         	med_num = 1;

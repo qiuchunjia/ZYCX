@@ -76,7 +76,7 @@ public class DateUtil {
 		try {
 			Long timestamp = Long.valueOf(time) * 1000;
 			Timestamp unixTime = new Timestamp(timestamp);
-			SimpleDateFormat format = new SimpleDateFormat("yyyy年M月d号");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String d = format.format(unixTime);
 			return d;
 		} catch (NumberFormatException e) {
@@ -101,6 +101,20 @@ public class DateUtil {
 	}
 	@SuppressLint("SimpleDateFormat")
 	public static String strTodate3(String time) {
+		try {
+			Long timestamp = Long.valueOf(time) * 1000;
+			Timestamp unixTime = new Timestamp(timestamp);
+			SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+			String d = format.format(unixTime);
+			return d;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@SuppressLint("SimpleDateFormat")
+	public static String strTodate4(String time) {
 		try {
 			Long timestamp = Long.valueOf(time) * 1000;
 			Timestamp unixTime = new Timestamp(timestamp);

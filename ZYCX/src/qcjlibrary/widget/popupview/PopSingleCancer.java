@@ -59,7 +59,7 @@ public class PopSingleCancer extends PopView {
 				activity.mApp.displayImage(infor.getLogo(), iv_cancer_icon);
 			}
 			tv_cancer_name.setText(infor.getWeiba_name());
-			// tv_cancer_bangzhuvalue.setText(infor.getWeiba_name());
+			tv_cancer_bangzhuvalue.setText(infor.getUser_name());
 			tv_cancer_membervalue.setText(infor.getFollower_count());
 			tv_cancer_experiencevalue.setText(infor.getThread_count());
 			tv_cancer_content.setText(infor.getIntro());

@@ -74,7 +74,7 @@ public class CancerTopicAdapter extends BAdapter {
 				holder.tv_topic_update.append(SpanUtil.setForegroundColorSpan(detailItem1.getChildCount() + "", 0, 0,
 						mBaseActivity.getResources().getColor(R.color.text_yellow)));
 				holder.tv_topic_update.append("篇");
-				holder.tv_topic_date.setText(DateUtil.strTodate(detailItem1.getLasted_time()));
+				holder.tv_topic_date.setText(DateUtil.strTodate3(detailItem1.getLasted_time()));
 
 			}
 		}
