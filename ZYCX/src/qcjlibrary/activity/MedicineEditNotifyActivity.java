@@ -125,6 +125,7 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		} else{
 			isExit = true;
 			titleSetRightTitle("修改");
+			titleSetCenterTitle("修改提醒");
 		}
 		
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);

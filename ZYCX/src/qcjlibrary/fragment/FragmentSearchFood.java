@@ -77,6 +77,10 @@ public class FragmentSearchFood extends BaseFragment {
 	@Override
 	public void initData() {
 		mList = new ArrayList<Model>();
+		mFoodSearchAll = new ModelFoodSearchAll();
+		mFoodSearchAll.setKey("");
+		sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
+				ModelFoodSearchIndex.class, 0);
 	}
 
 	@Override
@@ -104,7 +108,7 @@ public class FragmentSearchFood extends BaseFragment {
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		// initData();
+		getData();
 	}
 
 	// 仅当可见时才加载内容
@@ -117,7 +121,7 @@ public class FragmentSearchFood extends BaseFragment {
 			return;
 		}
 		if (isVisibleToUser) {
-			getData();
+//			getData();
 		}
 	}
 
@@ -151,7 +155,6 @@ public class FragmentSearchFood extends BaseFragment {
 			@Override
 			public void onSearchTouch_Food(String key) {
 				// TODO 自动生成的方法存根
-				mFoodSearchAll = new ModelFoodSearchAll();
 				mFoodSearchAll.setKey(key);
 				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
 						ModelFoodSearchIndex.class, 0);

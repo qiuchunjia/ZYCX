@@ -107,6 +107,7 @@ public class NotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
+		dismissTheProgress();
 	}
 
 	@Override

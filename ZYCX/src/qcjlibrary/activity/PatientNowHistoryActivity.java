@@ -264,14 +264,13 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	@Override
 	public void onResponseProgress(long bytesWritten, long totalSize) {
 		super.onResponseProgress(bytesWritten, totalSize);
-		LoadingDialogUtl.loadingView(this);
-		if (isFirst) {
-			isFirst = false;
-			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
-			mProgress.setProgress(bytesWritten, totalSize);
-		} else {
-			mProgress.setProgress(bytesWritten, totalSize);
-		}
+//		if (isFirst) {
+//			isFirst = false;
+//			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
+//			mProgress.setProgress(bytesWritten, totalSize);
+//		} else {
+//			mProgress.setProgress(bytesWritten, totalSize);
+//		}
 	}
 
 	@Override

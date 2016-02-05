@@ -98,13 +98,13 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
-
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
 		// TODO Auto-generated method stub
+		dismissTheProgress();
 	}
 
 	@Override

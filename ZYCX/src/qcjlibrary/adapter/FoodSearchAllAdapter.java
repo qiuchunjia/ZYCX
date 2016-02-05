@@ -42,7 +42,6 @@ public class FoodSearchAllAdapter extends BAdapter {
 
 	public FoodSearchAllAdapter(BaseFragment fragment, List<Model> mList) {
 		super(fragment, mList);
-		L.d("Cathy", "mList:"+mList.size());
 	}
 	
 	@Override
@@ -111,7 +110,7 @@ public class FoodSearchAllAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 
@@ -119,7 +118,7 @@ public class FoodSearchAllAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 

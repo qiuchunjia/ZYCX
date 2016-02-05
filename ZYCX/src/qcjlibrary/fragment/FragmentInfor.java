@@ -52,6 +52,7 @@ public class FragmentInfor extends BaseListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mCustView = inflater.inflate(R.layout.zixun_list, container, false);
         mListView = (LoadListView)mCustView.findViewById(R.id.zixun_list);
+        loadData(false);
         mListView.setDividerHeight(0);
         mListView.setOnItemListener(new LoadListView.OnItemListener() {
             @Override
@@ -91,15 +92,15 @@ public class FragmentInfor extends BaseListFragment {
         mAdapter = new ZiXunListAdapter(this, data, -2);
         mListView.setAdapter(mAdapter, System.currentTimeMillis(), mContext);
         mListView.setVisibility(View.INVISIBLE);
+        mAdapter.loadSearchData(Utils.getUTF8String(""));
         return mCustView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        /*if(!isLoad){
-        	loadData(false);
-        }*/
+//       if(!isLoad){
+//        }
     }
 
     public void doSearch(String key)
@@ -131,10 +132,9 @@ public class FragmentInfor extends BaseListFragment {
 			@Override
 			public void onSearchTouch_Info(String key) {
 				setKey(key);
-				Log.d("Cathy", "info:"+key);
 				mAdapter.loadSearchData(Utils.getUTF8String(key));
 		        mListView.setSelectionFromTop(0, 20);
-		        isLoad = true;
+//		        isLoad = true;
 			}
 			
 			@Override
@@ -157,9 +157,8 @@ public class FragmentInfor extends BaseListFragment {
     	if(!isCreate){
     		return;
     	}
-    	L.d("Cathy", "info isVisibleToUser = "+isVisibleToUser);
     	if(isVisibleToUser){
-    		loadData(true);
+//    		loadData(true);
     	}
     }
     

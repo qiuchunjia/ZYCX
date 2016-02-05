@@ -119,8 +119,7 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
-
+		refreshNew();
 	}
 
 	@Override

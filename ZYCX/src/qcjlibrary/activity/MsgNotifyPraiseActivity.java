@@ -1,8 +1,6 @@
 package qcjlibrary.activity;
 
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -14,7 +12,6 @@ import qcjlibrary.fragment.FragmentNotify;
 import qcjlibrary.fragment.FragmentPraise;
 import qcjlibrary.fragment.FragmentReplay;
 import qcjlibrary.model.ModelMsg;
-import qcjlibrary.model.ModelNotifyNotice;
 import qcjlibrary.model.ModelNotiyState;
 
 /**

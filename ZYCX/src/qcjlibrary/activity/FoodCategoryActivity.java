@@ -52,7 +52,11 @@ public class FoodCategoryActivity extends BaseActivity {
 			titleSetCenterTitle(categoryood.getClass_name());
 		} else if (model instanceof ModelFoodSearch) {
 			mSearch = (ModelFoodSearch) model;
-			titleSetCenterTitle(mSearch.getKey());
+			String key = mSearch.getKey();
+			if(key.length() > 5){
+				key = key.substring(0, 4)+"...";
+			}
+			titleSetCenterTitle(key);
 		} else if (model instanceof ModelFoodSymptom) {
 			ModelFoodSymptom foodSymptom = (ModelFoodSymptom) model;
 			mSearch.setState(2);

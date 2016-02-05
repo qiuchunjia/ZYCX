@@ -114,6 +114,8 @@ public class QclassAdapter extends BAdapter {
 		// requstMessage(detail, REFRESH_HEADER);
 		// }
 	}
+	
+	private int lastid;
 
 	@Override
 	public void refreshFooter(Model item, int count) {
@@ -121,6 +123,7 @@ public class QclassAdapter extends BAdapter {
 			ModelQclassDetail detailitem = (ModelQclassDetail) item;
 			detail.setStatus(status);
 			detail.setLastid(detailitem.getCourse_id() + "");
+			lastid = detailitem.getCourse_id();
 			requstMessage(detail, REFRESH_FOOTER);
 		}
 	}
@@ -138,7 +141,8 @@ public class QclassAdapter extends BAdapter {
 			if (status == 2 && mList != null) {
 				mList.clear();
 			}
-			return mQclass.getList();
+			List<ModelQclassDetail> list = mQclass.getList();
+			return list;
 		}
 		return null;
 	}

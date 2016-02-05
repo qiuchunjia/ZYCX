@@ -110,7 +110,7 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 
@@ -118,7 +118,7 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 

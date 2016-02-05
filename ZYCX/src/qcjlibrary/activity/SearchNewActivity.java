@@ -65,7 +65,7 @@ public class SearchNewActivity extends BaseActivity {
 	private float fromX;
 	/** 导航栏指示位移结束X **/
 	private float toX;
-	/** 导航栏下标，不同的页面跳转到搜索页面导航栏指示不同**/
+	/** 导航栏下标，不同的页面跳转到搜索页面导航栏指示不同 **/
 	private int index;
 	private boolean isChanged = true;
 
@@ -77,8 +77,7 @@ public class SearchNewActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		ModelSearchIndex mData = (ModelSearchIndex)
-				getDataFromIntent(getIntent(), "index");
+		ModelSearchIndex mData = (ModelSearchIndex) getDataFromIntent(getIntent(), "index");
 		index = mData.getIndex();
 	}
 
@@ -119,8 +118,7 @@ public class SearchNewActivity extends BaseActivity {
 		mFragList.add(mInfoFrag);
 		mFragList.add(mQclassFrag);
 		mFragList.add(mFoodFrag);
-		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(
-				getSupportFragmentManager()) {
+		FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
 			@Override
 			public int getCount() {
@@ -135,7 +133,7 @@ public class SearchNewActivity extends BaseActivity {
 		mViewpager.setAdapter(mAdapter);
 		/**
 		 * 根据传入的index，修改导航栏以及ViewPager的默认选项
-		 * */
+		 */
 		mViewpager.setCurrentItem(index);
 		toX = offset * index;
 		setLineAnimator(fromX, toX);
@@ -156,8 +154,7 @@ public class SearchNewActivity extends BaseActivity {
 		et_search.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH
 						|| (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
 					searchData();
@@ -170,8 +167,7 @@ public class SearchNewActivity extends BaseActivity {
 		et_search.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				String key = et_search.getText().toString();
 				if (key == null || key.equals("")) {
 					iv_quxiao.setVisibility(View.GONE);
@@ -183,8 +179,7 @@ public class SearchNewActivity extends BaseActivity {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
 
 			@Override
@@ -201,20 +196,18 @@ public class SearchNewActivity extends BaseActivity {
 				setLineAnimator(fromX, toX);
 				setTabColor(arg0);
 				fromX = toX;
+				searchData();
 			}
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO 自动生成的方法存根
-
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				// TODO 自动生成的方法存根
-
 			}
 		});
+
 	}
 
 	@Override
@@ -222,14 +215,14 @@ public class SearchNewActivity extends BaseActivity {
 		SociaxUIUtils.hideSoftKeyboard(this, et_search);
 		switch (v.getId()) {
 		case R.id.tv_sure:
+			isChanged = false;
 			String key = et_search.getText().toString();
 			if (key == null || key.equals("")) {
 				// 退出搜索界面
 				finish();
 			} else {
-				isChanged = false;
 				// 搜索，并清空搜索框
-				//et_search.setText("");
+				// et_search.setText("");
 				searchData();
 			}
 			break;
@@ -265,7 +258,7 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
-		if(isChanged){
+		if (isChanged) {
 			// 设置导航栏选项
 			mViewpager.setCurrentItem(index);
 			// 传入起止位置，开启动画
@@ -274,42 +267,43 @@ public class SearchNewActivity extends BaseActivity {
 			setTabColor(index);
 			// 将前一个结束位置重置为开始位置
 			fromX = toX;
+			searchData();
 		}
 	}
 
 	private void searchData() {
 		String key = et_search.getText().toString();
-		if (key != null || !key.equals(" ")) {
-			if (mSearchListener != null) {
-				switch (mViewpager.getCurrentItem()) {
-				case 0:
-					mSearchListener.onSearchTouch_Weibo(key);
-					break;
-				case 1:
-					mSearchListener.onSearchTouch_Request(key);
-					break;
-				case 2:
-					mSearchListener.onSearchTouch_Info(key);
-					break;
-				case 3:
-					mSearchListener.onSearchTouch_Qclass(key);
-					break;
-				case 4:
-					mSearchListener.onSearchTouch_Food(key);
-					break;
+		/* if (key != null || !key.equals(" ")) { */
+		if (mSearchListener != null) {
+			switch (mViewpager.getCurrentItem()) {
+			case 0:
+				mSearchListener.onSearchTouch_Weibo(key);
+				break;
+			case 1:
+				mSearchListener.onSearchTouch_Request(key);
+				break;
+			case 2:
+				mSearchListener.onSearchTouch_Info(key);
+				break;
+			case 3:
+				mSearchListener.onSearchTouch_Qclass(key);
+				break;
+			case 4:
+				mSearchListener.onSearchTouch_Food(key);
+				break;
 
-				default:
-					break;
-				}
+			default:
+				break;
 			}
-		} else {
-			ToastUtils.showLongToast(this, "请输入关键字");
 		}
+		/*
+		 * } else { ToastUtils.showLongToast(this, "请输入关键字"); }
+		 */
 	}
 
 	/**
 	 * 点击搜索接口，将关键字传给实现方法的地方
-	 * */
+	 */
 	public interface OnSearchTouchListerer {
 		// 微博搜索
 		void onSearchTouch_Weibo(String key);
@@ -334,15 +328,16 @@ public class SearchNewActivity extends BaseActivity {
 	/**
 	 * 导航栏指示线动画
 	 * 
-	 * @param float fromX 起始X位置
-	 * @param float toX 目标X位置
-	 * */
+	 * @param float
+	 *            fromX 起始X位置
+	 * @param float
+	 *            toX 目标X位置
+	 */
 	private void setLineAnimator(float fromX, float toX) {
-		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX)
-				.setDuration(500).start();
+		ObjectAnimator.ofFloat(tv_line, "translationX", fromX, toX).setDuration(500).start();
 	}
-	
-	private void setTabColor(int index){
+
+	private void setTabColor(int index) {
 		int black = getResources().getColor(R.color.text_more_gray);
 		int green = getResources().getColor(R.color.text_green);
 		tv_webo.setTextColor(black);
@@ -370,5 +365,13 @@ public class SearchNewActivity extends BaseActivity {
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		Log.d("Cathy", "search onResume");
+		searchData();
 	}
 }
