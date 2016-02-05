@@ -149,6 +149,7 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 		tv_3 = (TextView) findViewById(R.id.tv_03);
 		tv_4 = (TextView) findViewById(R.id.tv_04);
 		//pinnedListView.setDividerHeight(10);
+		pinnedListView.setDividerHeight(0);
 		// 添加头部视图
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		header = (LinearLayout) inflater.inflate(R.layout.item_request_header, null);
@@ -208,7 +209,7 @@ public class RequestAnwerCommonActivity extends BaseActivity {
 	private void setTypeAdapter(String type) {
 		mRequestItem.setType(type);
 		mAdapter = new RequestCommonAdapter(this, mRequestItem);
-		commonAdapter = new TestSectionedAdapter(this, null);
+//		commonAdapter = new TestSectionedAdapter(this, null);
 		pinnedListView.setAdapter(mAdapter);
 		mAdapter.doRefreshNew();
 	}

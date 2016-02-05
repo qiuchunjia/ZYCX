@@ -198,6 +198,7 @@ public class PatientHistoryActivity extends BaseActivity {
 					isStopSmoke(true);
 					stop_smoke_time = history.getStop_smoke_time();
 					tv_stop_smoke_time_name.setText(stop_smoke_time);
+					stop_smoke_time = DateUtil.dateToStr2(stop_smoke_time);
 				}
 			}
 			if(drink.equals("0")){
@@ -216,9 +217,10 @@ public class PatientHistoryActivity extends BaseActivity {
 					isStopDrink(false);
 				} else{
 					tv_stop_drink_name.setText("已戒酒");
-					isStopDrink(false);
+					isStopDrink(true);
 					stop_drink_time = history.getStop_drink_time();
 					tv_stop_drink_name_time.setText(stop_drink_time);
+					stop_drink_time = DateUtil.dateToStr2(stop_drink_time);
 				}
 			}
 		}
@@ -240,14 +242,14 @@ public class PatientHistoryActivity extends BaseActivity {
 			@Override
 			public void onTimeSelect(Date date) {
 				if(timeType.equals(Config.TYPE_LAST_TIME)){
-					menarche_etime = DateUtil.strTodate(DateUtil.DateToStamp(date));
-					tv_last_time_name.setText(menarche_etime);
+					menarche_etime = DateUtil.DateToStamp(date);
+					tv_last_time_name.setText(DateUtil.strTodate(menarche_etime));
 				} else if(timeType.equals(Config.TYPE_STOP_SMOKE_TIME)){
-					stop_smoke_time = DateUtil.strTodate(DateUtil.DateToStamp(date));
-					tv_stop_smoke_time_name.setText(stop_smoke_time);
+					stop_smoke_time = DateUtil.DateToStamp(date);
+					tv_stop_smoke_time_name.setText(DateUtil.strTodate(stop_smoke_time));
 				} else if(timeType.equals(Config.TYPE_STOP_DRINK_TIME)){
-					stop_drink_time = DateUtil.strTodate(DateUtil.DateToStamp(date));
-					tv_stop_drink_name_time.setText(stop_drink_time);
+					stop_drink_time = DateUtil.DateToStamp(date);
+					tv_stop_drink_name_time.setText(DateUtil.strTodate(stop_drink_time));
 				}
 			}
 		});

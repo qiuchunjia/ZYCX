@@ -273,12 +273,12 @@ public class PatientMeActivity extends BaseActivity {
 			tv_food_habit.setText("饮食习惯：" + history.getEating_habit());
 			tv_smoke.setText("抽烟：");
 			if (history.getSmoke().equals("1")) {
-				tv_smoke.append("抽烟,");
-				tv_smoke.append(history.getSmoke_age() + "开始,");
-				tv_smoke.append(history.getSmoke_time() + "根/日,");
-				if (history.getStop_smoke().equals("0")) {
-					tv_smoke.append("已戒烟,");
-					tv_smoke.append("戒烟时间" + history.getStop_smoke_time());
+				tv_smoke.append("抽烟，");
+				tv_smoke.append(history.getSmoke_age() + "岁开始，");
+				tv_smoke.append(history.getSmoke_time() + "根/日，");
+				if (history.getStop_smoke().equals("1")) {
+					tv_smoke.append("已戒烟，");
+					tv_smoke.append("戒烟时间：" + history.getStop_smoke_time());
 				}
 			} else{
 				tv_smoke.append("不抽烟");
@@ -302,10 +302,10 @@ public class PatientMeActivity extends BaseActivity {
 			if (history.getDrink().equals("1")) {
 				tv_drink.append("饮酒，");
 				tv_drink.append(history.getDrink_age() + "岁开始，");
-				tv_drink.append(history.getDrink_consumption() + "ml,");
+				tv_drink.append(history.getDrink_consumption() + "ml/日，");
 				if (history.getStop_drink().equals("1")) {
 					tv_drink.append("已戒酒，");
-					tv_drink.append("戒酒时间" + history.getStop_drink_time());
+					tv_drink.append("戒酒时间：" + history.getStop_drink_time());
 				}
 			} else{
 				tv_drink.append("不饮酒");

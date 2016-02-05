@@ -6,6 +6,7 @@ import com.zhiyicx.zycx.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,12 +128,12 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 						holder.tv_answer.setVisibility(View.GONE);
 						holder.tv_expert_answer.setVisibility(View.VISIBLE);
 						holder.tv_expert_answer.setText("");
-						String expert_answer = SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
-								mBaseActivity.getResources().getColor(R.color.text_yellow))
-								+ modelRequestItem.getAnswercontent();
-						holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
+						String expert = "专家建议："+modelRequestItem.getAnswercontent();
+						holder.tv_expert_answer.setText(SpanUtil.setForegroundColorSpan(expert, 0, 5,
 								mBaseActivity.getResources().getColor(R.color.text_yellow)));
-						holder.tv_expert_answer.append(modelRequestItem.getAnswercontent());
+//						holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
+//								mBaseActivity.getResources().getColor(R.color.text_yellow)));
+//						holder.tv_expert_answer.append(modelRequestItem.getAnswercontent());
 					}
 				}
 				holder.tv_date.setText(modelRequestItem.getTime());
