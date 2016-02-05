@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zhiyicx.zycx.R;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -98,6 +99,8 @@ public class QclassAdapter extends BAdapter {
 	@Override
 	public void refreshNew() {
 		detail.setStatus(status);
+		detail.setLastid(null);
+		detail.setMaxid(null);
 		requstMessage(detail, REFRESH_NEW);
 	}
 
