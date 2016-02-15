@@ -81,7 +81,6 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO 自动生成的方法存根
-		super.onBackPressed();
 		skipToHome();
 	}
 

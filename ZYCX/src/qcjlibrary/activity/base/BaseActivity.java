@@ -722,7 +722,8 @@ public abstract class BaseActivity extends FragmentActivity
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			ToastUtils.showToast("网络异常");
+			ToastUtils.showToast("网络异常 ");
+			Log.i("test", "网络异常："+arg3);
 			LoadingDialogUtl.hideLoadingView();
 			//请求异常，展示提示图
 			onRequestFailed();

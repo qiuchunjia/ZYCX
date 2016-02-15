@@ -79,6 +79,7 @@ public class MeCenterActivity extends BaseActivity {
 		if (object instanceof ModelUser) {
 			mUser = (ModelUser) object;
 			mApp.displayImage(mUser.getAvatar(), riv_user_icon);
+			mApp.saveUser(mUser);
 		}
 		return object;
 	}
