@@ -180,6 +180,9 @@ public class ZhiXunAdapter extends BAdapter {
 		if (object instanceof ModelZiXun) {
 			ModelZiXun modelZiXun = (ModelZiXun) object;
 			List<ModelZiXunDetail> list = modelZiXun.getList();
+			if(isLoading()){
+				setLoading(false);
+			}
 			return list;
 		}
 		return null;

@@ -454,6 +454,9 @@ public class api {
 			params.add(APP, API);
 			params.add(MOD, ASK);
 			params.add(ACT, MYASK);
+			if(myAsk != null){
+				params.add(PAGE, String.valueOf(myAsk.getPage()));
+			}
 			getChangePage(params, myAsk);
 			return getTestToken(params);
 		}
@@ -691,7 +694,6 @@ public class api {
 				if(send.getParent_id() != null && !send.getParent_id().equals(" ")
 						&& !send.getParent_id().equals("")){
 					params.add(PARENT_ID, send.getParent_id());
-					Log.d("Cathy", "发布轨迹");
 				}
 				params.add(TITLE, send.getTitle());
 				params.add(POST_TIME, send.getPost_time());

@@ -165,6 +165,9 @@ public class ExperienceCycleAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelExperiencePostDetail) {
 			ModelExperiencePostDetail detail = (ModelExperiencePostDetail) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return detail.getList();
 		}
 		return null;

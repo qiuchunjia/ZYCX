@@ -81,7 +81,6 @@ public class FoodCategoryActivity extends BaseActivity {
 		mCommonListView.setDividerHeight(0);
 
 		mAdapter = new FoodCategoryAdapter(this, mSearch);
-
 		mCommonListView.setAdapter(mAdapter);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 

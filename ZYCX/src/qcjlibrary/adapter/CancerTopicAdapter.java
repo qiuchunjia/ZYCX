@@ -15,6 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -74,7 +79,16 @@ public class CancerTopicAdapter extends BAdapter {
 				holder.tv_topic_update.append(SpanUtil.setForegroundColorSpan(detailItem1.getChildCount() + "", 0, 0,
 						mBaseActivity.getResources().getColor(R.color.text_yellow)));
 				holder.tv_topic_update.append("篇");
-				holder.tv_topic_date.setText(DateUtil.strTodate3(detailItem1.getLasted_time()));
+				Calendar mCalendar = Calendar.getInstance();
+				mCalendar.setTime(new Date());
+				int curYear = mCalendar.get(Calendar.YEAR);
+				mCalendar.setTime(DateUtil.stampToDate(detailItem1.getLasted_time()));
+				int year = mCalendar.get(Calendar.YEAR);
+				String time = DateUtil.strTodate3(detailItem1.getLasted_time());
+				if(year < curYear){
+					time = year + "-" + time;
+				}
+				holder.tv_topic_date.setText(time);
 
 			}
 		}
@@ -129,6 +143,9 @@ public class CancerTopicAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelExperienceDetail) {
 			ModelExperienceDetail detail = (ModelExperienceDetail) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return detail.getPosts();
 		}
 		return null;

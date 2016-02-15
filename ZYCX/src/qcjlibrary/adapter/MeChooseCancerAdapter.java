@@ -104,6 +104,9 @@ public class MeChooseCancerAdapter extends BAdapter {
 	@Override
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof List<?>) {
+			if(isLoading()){
+				setLoading(false);
+			}
 			return object;
 		}
 		return null;

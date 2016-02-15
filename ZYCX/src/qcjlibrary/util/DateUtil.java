@@ -127,6 +127,20 @@ public class DateUtil {
 		}
 		return null;
 	}
+	@SuppressLint("SimpleDateFormat")
+	public static String strTodate5(String time) {
+		try {
+			Long timestamp = Long.valueOf(time) * 1000;
+			Timestamp unixTime = new Timestamp(timestamp);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy");
+			String d = format.format(unixTime);
+			return d;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static String stamp2humanDate(String time) {
 		try {

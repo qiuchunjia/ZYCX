@@ -53,6 +53,7 @@ public class ExperienceSendActivity extends BaseActivity {
 	private List<String> tagsList = new ArrayList<String>(); // 选中的标签
 	/**时分时间选择框**/
 	private TimePickerView pvTime;
+	private String time;
 
 	@Override
 	public String setCenterTitle() {
@@ -142,6 +143,7 @@ public class ExperienceSendActivity extends BaseActivity {
 			
 			@Override
 			public void onTimeSelect(Date date) {
+				time = DateUtil.DateToStamp(date);
 				tv_choosedate.setText(DateUtil.strTodate(DateUtil.DateToStamp(date)));
 			}
 		});
@@ -160,10 +162,10 @@ public class ExperienceSendActivity extends BaseActivity {
 			if (judgeTheSend(title, date, content, chooseTags)) {
 				mSendData.setTitle(title);
 				mSendData.setBody(content);
-				mSendData.setPost_time(DateUtil.dateToStr(date));
+				mSendData.setPost_time(time);
 				mSendData.setPhotoUrls(mPhotoList);
 				mSendData.setTags(chooseTags);
-				sendRequest(mApp.getExperienceImpl().addPost(mSendData), ModelMsg.class, REQUEST_GET);
+				sendRequest(mApp.getExperienceImpl().addPost(mSendData), ModelMsg.class, REQUEST_POST);
 			}
 			break;
 		case R.id.tv_choosedate:

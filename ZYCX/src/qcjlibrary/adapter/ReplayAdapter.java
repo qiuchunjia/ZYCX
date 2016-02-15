@@ -111,7 +111,6 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-
 		sendRequest(mApp.getNotifyImpl().commentlist(null),
 				ModelNotifyCommment.class, REQUEST_GET, REFRESH_NEW);
 
@@ -124,6 +123,16 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
+		if(isLoading()){
+			setLoading(false);
+		}
+		dismissTheProgress();
+//		if(item instanceof ModelNotifyCommment){
+//			ModelNotifyCommment data = (ModelNotifyCommment)item;
+//			data.setLastid(data.getComment_id());
+//			sendRequest(mApp.getNotifyImpl().commentlist(data),
+//					ModelNotifyCommment.class, REQUEST_GET, REFRESH_FOOTER);
+//		}
 		// TODO Auto-generated method stub
 	}
 
@@ -141,6 +150,9 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return object;
 	}
 

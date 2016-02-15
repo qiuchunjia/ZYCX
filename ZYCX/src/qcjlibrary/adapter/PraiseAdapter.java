@@ -104,7 +104,16 @@ public class PraiseAdapter extends BAdapter {
 	@Override
 	public void refreshFooter(Model item, int count) {
 		// TODO Auto-generated method stub
+		if(isLoading()){
+			setLoading(false);
+		}
 		dismissTheProgress();
+//		if(item instanceof ModelNotifyDig){
+//			ModelNotifyDig data = (ModelNotifyDig)item;
+//			data.setLastid(data.getDiggid());
+//			sendRequest(mApp.getNotifyImpl().digglist(data), ModelNotifyDig.class,
+//					REQUEST_GET, REFRESH_FOOTER);
+//		}
 	}
 
 	@Override
@@ -120,6 +129,9 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return object;
 	}
 

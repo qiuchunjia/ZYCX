@@ -280,6 +280,9 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelRequest) {
 			ModelRequest request = (ModelRequest) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return request.getList();
 		}
 		return null;

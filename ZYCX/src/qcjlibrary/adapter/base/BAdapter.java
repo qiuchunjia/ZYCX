@@ -121,6 +121,18 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
+	
+	private boolean isLoading = false;
+	
+	
+
+	public boolean isLoading() {
+		return isLoading;
+	}
+
+	public void setLoading(boolean isLoading) {
+		this.isLoading = isLoading;
+	}
 
 	/** 真正的獲取數據，即調用RefreshFooter() 獲取的數據加載到adapter里面 */
 	public void doRefreshFooter() {
@@ -130,9 +142,14 @@ public abstract class BAdapter extends BaseAdapter {
 		this.notifyDataSetChanged();
 		if (!mList.isEmpty()) {
 			// TODO
+			if(!isLoading){
+				isLoading = true;
+			} else{
+				return;
+			}
 			refreshFooter(mList.get(mList.size() - 1), REQUEST_ITEM_COUNT);
 		}
-
+		
 	}
 
 	/**

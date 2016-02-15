@@ -142,6 +142,9 @@ public class QclassAdapter extends BAdapter {
 				mList.clear();
 			}
 			List<ModelQclassDetail> list = mQclass.getList();
+			if(isLoading()){
+				setLoading(false);
+			}
 			return list;
 		}
 		return null;

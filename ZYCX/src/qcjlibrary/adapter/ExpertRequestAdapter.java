@@ -162,6 +162,9 @@ public class ExpertRequestAdapter extends BAdapter {
 
     @Override
     public Object getReallyList(Object object, Class type2) {
+    	if(isLoading()){
+			setLoading(false);
+		}
         return object;
     }
 

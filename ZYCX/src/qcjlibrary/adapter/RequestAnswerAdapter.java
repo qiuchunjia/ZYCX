@@ -33,6 +33,7 @@ import qcjlibrary.util.SpanUtil;
 public class RequestAnswerAdapter extends BAdapter {
 	private Model mRequestData;
 	private int page = 0;
+	private int myAskPage = 0;
 
 	public RequestAnswerAdapter(BaseActivity activity, Model data) {
 		super(activity, null);
@@ -196,7 +197,9 @@ public class RequestAnswerAdapter extends BAdapter {
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_FOOTER);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
 			ModelRequestMyAsk myAsk = (ModelRequestMyAsk) mRequestData;
-			myAsk.setLastid(requestItem.getQuestion_id());
+//			myAsk.setLastid(requestItem.getQuestion_id());
+			++myAskPage;
+			myAsk.setPage(myAskPage+"");
 			sendRequest(mApp.getRequestImpl().myAsk(myAsk), ModelRequest.class, 0, REFRESH_FOOTER);
 			//dismissTheProgress();
 		}
@@ -212,6 +215,9 @@ public class RequestAnswerAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelRequest) {
 			ModelRequest request = (ModelRequest) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return request.getList();
 		}
 		return null;

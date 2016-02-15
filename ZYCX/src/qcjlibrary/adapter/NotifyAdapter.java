@@ -107,7 +107,15 @@ public class NotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		dismissTheProgress();
+//		if(item instanceof ModelNotifyNotice){
+//			ModelNotifyNotice data = (ModelNotifyNotice)item;
+//			data.setLastid(data.getId());
+//			sendRequest(mApp.getNotifyImpl().noticelist(data), ModelNotifyNotice.class, REQUEST_GET, REFRESH_FOOTER);
+//		}
 	}
 
 	@Override
@@ -123,6 +131,9 @@ public class NotifyAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return object;
 	}
 
