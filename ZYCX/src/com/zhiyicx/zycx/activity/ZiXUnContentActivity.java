@@ -339,8 +339,16 @@ public class ZiXUnContentActivity extends BaseActivity {
 		}
 		return object;
 	}
+	/** 是否已经提交成功标记**/
+	private boolean isCommit = true; 
 
 	private void comment() {
+		if(isCommit){
+			isCommit = false;
+		} else{
+			ToastUtils.showToast("提交中...");
+			return;
+		}
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt)) {
 			loadData(true);
@@ -363,6 +371,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						Utils.showToast(ZiXUnContentActivity.this, "评论成功！");
 						// mContent.loadUrl("javascript:getComment()");
+						isCommit = true;
 						loadData(true);
 						mContent.reload();
 						mCmtEdit.setText("");
@@ -493,6 +502,9 @@ public class ZiXUnContentActivity extends BaseActivity {
 						Log.i("loadData", jsonObject.toString());
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
+						/**
+						 * 是否点击评论而刷新页面，如果是则添加标签"#comment"，可直接定位到评论处
+						 * */
 						if(isComment){
 							mUrl += "#comment";
 						}

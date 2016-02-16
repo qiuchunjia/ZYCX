@@ -149,7 +149,11 @@ public class FragmentIndex extends BaseFragment {
 
 		}
 	}
-
+	
+	/**
+	 * @param 跳转页的index
+	 * 		首页点击跳转后切换标题与底部图片
+	 * */
 	private void setTabFragement(int index) {
 		if (mHomeActivity != null) {
 			mHomeActivity.setTabSelection(index);

@@ -122,14 +122,17 @@ public abstract class BAdapter extends BaseAdapter {
 
 	}
 	
+	/**
+	 * 判断是否正在加载中，数据是否已经获取。
+	 * */
 	private boolean isLoading = false;
-	
-	
 
 	public boolean isLoading() {
 		return isLoading;
 	}
-
+	/**
+	 * 设置为未加载，用于子类加载完数据时调用
+	 * */
 	public void setLoading(boolean isLoading) {
 		this.isLoading = isLoading;
 	}
@@ -141,7 +144,7 @@ public abstract class BAdapter extends BaseAdapter {
 			mList = new ArrayList<Model>();
 		this.notifyDataSetChanged();
 		if (!mList.isEmpty()) {
-			// TODO
+			// TODO 当前没有加载，则加载数据
 			if(!isLoading){
 				isLoading = true;
 			} else{

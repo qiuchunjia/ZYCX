@@ -752,6 +752,7 @@ public class HomeActivity extends BaseActivity {
 		mTitle.tv_title.setTextColor(Color.WHITE);
 	}
 	
+	/** 标记点击BACK键的时间**/
 	private long preTabTime;
 	public static int qcl = 1;
 	public static int exp = 2;
@@ -762,7 +763,7 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO 自动生成的方法存根
-		//判断是否首页切换
+		//判断是否首页切换,首页推荐跳转则BACK返回首页
 		if(isExit == qcl){
 			setTabSelection(index_Default);
 			isExit= 0;

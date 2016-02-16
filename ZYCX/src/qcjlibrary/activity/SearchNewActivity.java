@@ -187,7 +187,7 @@ public class SearchNewActivity extends BaseActivity {
 			}
 		});
 
-		// 根据ViewPager改变导航栏指示
+		// 根据ViewPager改变导航栏指示,同时切换页面时加载新的搜索内容
 		mViewpager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -371,7 +371,6 @@ public class SearchNewActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		Log.d("Cathy", "search onResume");
 		searchData();
 	}
 }
