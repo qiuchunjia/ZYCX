@@ -43,9 +43,9 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	private SwipeMenuListView mSwipeMenuListView;
 	private UseMedicineNotifyAdapter mAdapter;
 	private List<Model> mList;
+	/** 用于区分返回的Msg数据的类型，true为删除返回，false为其他**/
 	boolean isDel = false;
 	private AlarmImpl impl;
-	/** 闹钟管理类 **/
 
 	@Override
 	public void onClick(View v) {
@@ -227,16 +227,16 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					if(mCalendar.getTimeInMillis() < currentMillis){
 						 mCalendar.add(Calendar.DAY_OF_MONTH, period);
 					}
-					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
+//					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**
 					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
 					 * 发送一个广播 getService(Context, int, Intent, int) 开启一个服务
 					 */
 					Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+					/** 闹钟管理类 **/
 					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					mIntent.setAction("alarm.alert.short");
-					Log.d("Cathy", "id:"+id);
 					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 							PendingIntent.FLAG_CANCEL_CURRENT);
 					mManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),

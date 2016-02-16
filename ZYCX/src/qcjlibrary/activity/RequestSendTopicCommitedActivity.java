@@ -80,7 +80,7 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		// TODO 自动生成的方法存根
+		// TODO 虚拟BACK键返回问答首页
 		skipToHome();
 	}
 
