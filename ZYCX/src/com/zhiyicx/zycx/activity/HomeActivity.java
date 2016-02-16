@@ -108,6 +108,7 @@ public class HomeActivity extends BaseActivity {
 	}
 	
 	private View mView;
+	private boolean isFirstSlide = true;
 
 	private void initEvents() {
 		mTitle = getTitleClass();
@@ -144,19 +145,23 @@ public class HomeActivity extends BaseActivity {
 					mContent.invalidate();
 					ViewHelper.setScaleX(mContent, rightScale);
 					ViewHelper.setScaleY(mContent, rightScale);
+					if(isFirstSlide){
+						isFirstSlide = false;
+						//打开菜单栏时，添加边框。
+						mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back));
+					}
 				}
 
 			}
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				//打开菜单栏时，添加边框。
-				mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back));
 			}
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
 				//关闭菜单栏时，取消边框。
+				isFirstSlide = true;
 				mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back_close));
 			}
 		});
