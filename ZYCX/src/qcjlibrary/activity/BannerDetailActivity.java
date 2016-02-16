@@ -13,7 +13,7 @@ public class BannerDetailActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "banner详情";
+		return "癌友帮";
 	}
 
 	@Override

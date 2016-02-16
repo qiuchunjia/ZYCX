@@ -2,16 +2,13 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import qcjlibrary.activity.FoodWayActivity;
-import qcjlibrary.activity.PatientMeActivity;
 import qcjlibrary.activity.RequestAnwerCommonActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.activity.base.BaseActivity;

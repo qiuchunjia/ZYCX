@@ -206,7 +206,7 @@ public class MyADView extends LinearLayout {
 				image.setImageResource(R.drawable.ic_dot_normal);
 			}
 			// 设置选中的圆圈
-			iv_points[index % mRealCount].setImageResource(R.drawable.point_focus);
+			iv_points[index % mRealCount].setImageResource(R.drawable.point);
 //			iv_points[index % mRealCount].setBackgroundDrawable(d);
 		}
 

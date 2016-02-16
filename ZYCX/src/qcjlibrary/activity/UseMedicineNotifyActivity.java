@@ -250,7 +250,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				mIntent.setAction("alarm.alert.short");
 				L.d("Cathy", "cancel alert");
 				/** 区分不同闹钟的ID **/
-				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
+//				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 						PendingIntent.FLAG_CANCEL_CURRENT);
 				mManager.cancel(mPendingIntent);
@@ -264,9 +264,8 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
 			mIntent.setAction("alarm.alert.short");
-			int id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
-					mData.getId() + ":" + i, 0);
-			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
+			int id = Integer.parseInt(mData.getId()+""+i);
+			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 			mManager.cancel(mPendingIntent);
 		}
 	}
