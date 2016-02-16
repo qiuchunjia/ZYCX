@@ -102,7 +102,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		});
 
 		/**
-		 * 监听滑动删除,调用适配器中delete方法，删除服务器中数据
+		 * 监听滑动删除,调用适配器中delete方法，删除服务器中数据，同时取消闹钟事件。
 		 */
 		mSwipeMenuListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
@@ -188,7 +188,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		}
 		String[] timeArr = timeList.split(",");
 		for (int i = 0; i < timeArr.length; i++) {
-			/** 区分不同闹钟的ID **/
+			/** 区分不同闹钟的ID 如231：第23号闹钟的第一个提醒时间 **/
 			int id = Integer.parseInt(mData.getId()+""+i);
 			//提醒
 			if (mData.getIs_remind() == 0) {

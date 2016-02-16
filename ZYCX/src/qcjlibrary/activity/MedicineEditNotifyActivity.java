@@ -118,6 +118,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		rl_alert_starttime = (RelativeLayout) findViewById(R.id.rl_alert_starttime);
 		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
 		
+		/**
+		 * 判断是创建闹钟还是修改闹钟，再修改UI
+		 * */
 		bundle = intent.getExtras();
 		if(bundle == null){
 			isExit = false;
@@ -128,9 +131,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			titleSetCenterTitle("修改提醒");
 		}
 		
+		//设置时间选择框属性
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
 		pvTime.setTime(new Date());
-		pvTime.setCyclic(false);
+		pvTime.setCyclic(true);
         pvTime.setCancelable(true);
 	}
 
