@@ -106,6 +106,8 @@ public class HomeActivity extends BaseActivity {
 		initData();
 		initListener();
 	}
+	
+	private View mView;
 
 	private void initEvents() {
 		mTitle = getTitleClass();
@@ -123,6 +125,7 @@ public class HomeActivity extends BaseActivity {
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
 				View mContent = mDrawer.getChildAt(0);
+				mView = mContent;
 				View mMenu = drawerView;
 				Log.i("slideOffset", "slideOffset=" + slideOffset);
 				float scale = 1 - slideOffset;
@@ -147,10 +150,14 @@ public class HomeActivity extends BaseActivity {
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
+				//打开菜单栏时，添加边框。
+				mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back));
 			}
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
+				//关闭菜单栏时，取消边框。
+				mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back_close));
 			}
 		});
 	}
