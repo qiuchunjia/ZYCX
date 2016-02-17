@@ -103,12 +103,15 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailCommon.class, REQUEST_GET);
 	}
+	
+	private String shareUrl;
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestDetailCommon) {
 			ModelRequestDetailCommon detailCommon = (ModelRequestDetailCommon) object;
+			shareUrl = detailCommon.getQuestion().getUrl();
 			addDataToHeadAndFlag(detailCommon.getQuestion(), detailCommon.getTopic_list());
 			addDataToAnswer(detailCommon.getAnswer());
 			addDataToRelate(detailCommon.getOther_question());
@@ -302,6 +305,9 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
 			shareContent.setUrl(mRequestItem.getUrl());
+			if(mRequestItem.getUrl() == null){
+				shareContent.setUrl(shareUrl);
+			}
 			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
 			popShareContent.showPop(ll_answer, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,

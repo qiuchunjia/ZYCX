@@ -151,6 +151,10 @@ public class RequestChooseCancerActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
+				if(mAsk.getCid() == null){
+					ToastUtils.showToast("请选择癌肿！");
+					return;
+				}
 				mApp.startActivity_qcj(
 						RequestChooseCancerActivity.this,
 						RequestAddFlagActivity.class,

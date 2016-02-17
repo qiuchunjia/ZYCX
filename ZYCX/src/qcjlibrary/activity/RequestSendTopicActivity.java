@@ -121,18 +121,20 @@ public class RequestSendTopicActivity extends BaseActivity {
 
 	@Override
 	public void onClick(View v) {
-		resetTextColorAndBg();
 		switch (v.getId()) {
 
 		case R.id.tv_cure:
+			resetTextColorAndBg();
 			mType = "0";
 			setTextColorAndBg(tv_cure);
 			break;
 		case R.id.tv_protect:
+			resetTextColorAndBg();
 			mType = "1";
 			setTextColorAndBg(tv_protect);
 			break;
 		case R.id.tv_good:
+			resetTextColorAndBg();
 			mType = "2";
 			setTextColorAndBg(tv_good);
 			break;

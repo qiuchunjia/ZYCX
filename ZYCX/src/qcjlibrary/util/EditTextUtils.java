@@ -44,6 +44,7 @@ public class EditTextUtils {
 				ToastUtils.showLongToast(context, "输入字符不可超过" + limit);
 				temp = temp.subSequence(0, limit);
 				edt.setText(temp);
+				edt.setSelection(temp.length());
 			}
 
 		}

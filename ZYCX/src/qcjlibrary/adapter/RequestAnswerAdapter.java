@@ -152,6 +152,7 @@ public class RequestAnswerAdapter extends BAdapter {
 			flag.setLastid(null);
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
+			myAskPage = 0;
 			sendRequest(mApp.getRequestImpl().myAsk(null), ModelRequest.class, 0, REFRESH_NEW);
 		}
 	}
