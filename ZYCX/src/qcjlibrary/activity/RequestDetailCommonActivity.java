@@ -42,6 +42,7 @@ import qcjlibrary.widget.popupview.PopShareContent;
 public class RequestDetailCommonActivity extends BaseActivity {
 	private TextView request_tv_title;
 	private TextView tv_content;
+	private TextView tv_flag;
 	private TextView tv_flag_value;
 	private TextView tv_flag_value2;
 	private TextView tv_flag_value3;
@@ -82,6 +83,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		titleSetRightImage(R.drawable.fenxiang);
 		request_tv_title = (TextView) findViewById(R.id.request_tv_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
+		tv_flag = (TextView) findViewById(R.id.tv_flag);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
 		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
@@ -220,7 +222,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			tv_username.setText(question.getUser_name());
 			tv_date.setText(question.getTime());
 		}
-		if (topic_list != null) {
+		if (topic_list != null && topic_list.size() > 0) {
 			for (int i = 0; i < topic_list.size(); i++) {
 				final ModelRequestFlag flag = topic_list.get(i);
 				if (i == 0) {
@@ -260,6 +262,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 					});
 				}
 			}
+		} else{
+			tv_flag.setVisibility(View.GONE);
 		}
 	}
 

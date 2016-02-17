@@ -43,6 +43,13 @@ public class QclassAdapter extends BAdapter {
 		update_head = "已更新";
 		update_tail = "课";
 	}
+	
+	public QclassAdapter(BaseFragment fragment,ModelQclassDetail detail){
+		super(fragment,null);
+		this.detail = detail;
+		update_head = "已更新";
+		update_tail = "课";
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -126,6 +133,12 @@ public class QclassAdapter extends BAdapter {
 			detail.setLastid(detailitem.getCourse_id() + "");
 			lastid = detailitem.getCourse_id();
 			requstMessage(detail, REFRESH_FOOTER);
+			/**
+			 * 数据已经加载完成，则手动设置为未加载
+			 * */
+			if(isLoading()){
+				setLoading(false);
+			}
 		}
 	}
 

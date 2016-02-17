@@ -105,8 +105,8 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 			if (modelRequestItem != null) {
 				holder.tv_title.setText("");
 				Drawable drawable = mBaseActivity.getResources().getDrawable(R.drawable.q);
-				holder.tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
-				holder.tv_title.append("  " + modelRequestItem.getQuestion_content());
+				holder.tv_title.setText(SpanUtil.setImageSpan("xx  "+" "+modelRequestItem.getQuestion_content(), 0, 2, drawable));
+//				holder.tv_title.append("	" + modelRequestItem.getQuestion_content());
 				holder.tv_answer.setVisibility(View.GONE);
 				holder.tv_advice.setVisibility(View.GONE);
 				holder.tv_expert_answer.setVisibility(View.GONE);
@@ -114,9 +114,9 @@ public class RequestCommonAdapter extends SectionedBaseAdapter {
 					holder.tv_answer.setVisibility(View.VISIBLE);
 					Drawable anwerDrable = mBaseActivity.getResources().getDrawable(R.drawable.a);
 					holder.tv_answer.setText("");
-					holder.tv_answer.append(SpanUtil.setImageSpan("xx", 0, 0, anwerDrable));
-					holder.tv_answer.append(
-							"  " + modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
+					holder.tv_answer.setText(SpanUtil.setImageSpan("xx  "+" "+modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent(), 0, 2, anwerDrable));
+//					holder.tv_answer.append(
+//							"	" + modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
 				}
 				if (modelRequestItem.getIs_recommend() != null) {
 					if (modelRequestItem.getIs_recommend().equals("1")) {

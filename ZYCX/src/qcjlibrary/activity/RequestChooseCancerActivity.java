@@ -1,5 +1,6 @@
 package qcjlibrary.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import qcjlibrary.activity.base.BaseActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -28,6 +30,7 @@ public class RequestChooseCancerActivity extends BaseActivity {
 	private List<ModelCancerCategory> mList;
 	private ModelRequestAsk mAsk;
 	private String mCancerId = ""; // 癌症种类 用逗号隔开
+	private Title title;
 
 	@Override
 	public String setCenterTitle() {
@@ -47,12 +50,13 @@ public class RequestChooseCancerActivity extends BaseActivity {
 	@Override
 	public void initView() {
 		ll_choose_cancer = (LinearLayout) findViewById(R.id.ll_choose_cancer);
-
+		titleSetRightTitle("下一步");
 	}
 
 	@Override
 	public void initData() {
-		Title title = getTitleClass();
+		title = getTitleClass();
+		ivList = new ArrayList<ImageView>();
 		sendRequest(mApp.getRequestImpl().index(null), ModelRequest.class, 0);
 	}
 
@@ -66,6 +70,8 @@ public class RequestChooseCancerActivity extends BaseActivity {
 		}
 		return object;
 	}
+	
+	private List<ImageView> ivList;
 
 	/**
 	 * 添加数据到界面
@@ -80,8 +86,11 @@ public class RequestChooseCancerActivity extends BaseActivity {
 						.inflate(R.layout.item_choose_cancer, null);
 				TextView tv_cancer = (TextView) view
 						.findViewById(R.id.tv_cancer);
-				ImageView iv_choose = (ImageView) view
+				RelativeLayout rl_choose_cancer = (RelativeLayout) view
+						.findViewById(R.id.rl_choose_cancer);
+				final ImageView iv_choose = (ImageView) view
 						.findViewById(R.id.iv_choose);
+				ivList.add(iv_choose);
 				tv_cancer.setText(category.getTitle());
 				iv_choose.setTag(category);
 				iv_choose.setOnClickListener(new OnClickListener() {
@@ -89,13 +98,17 @@ public class RequestChooseCancerActivity extends BaseActivity {
 					@Override
 					public void onClick(View v) {
 						if (v.getTag() instanceof ModelCancerCategory) {
+							for (int j = 0; j < ivList.size(); j++) {
+								ivList.get(j).setImageResource(R.drawable.weixuanzhong02);
+							}
 							ModelCancerCategory cancerCategory = (ModelCancerCategory) v
 									.getTag();
+							iv_choose.setImageResource(R.drawable.xuanzhong02);
 							mAsk.setCid(cancerCategory.getId());
-							mApp.startActivity_qcj(
-									RequestChooseCancerActivity.this,
-									RequestAddFlagActivity.class,
-									sendDataToBundle(mAsk, null));
+//							mApp.startActivity_qcj(
+//									RequestChooseCancerActivity.this,
+//									RequestAddFlagActivity.class,
+//									sendDataToBundle(mAsk, null));
 						}
 					}
 				});
@@ -134,7 +147,16 @@ public class RequestChooseCancerActivity extends BaseActivity {
 
 	@Override
 	public void initListener() {
-
+		title.tv_title_right.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mApp.startActivity_qcj(
+						RequestChooseCancerActivity.this,
+						RequestAddFlagActivity.class,
+						sendDataToBundle(mAsk, null));
+			}
+		});
 	}
 
 	@Override

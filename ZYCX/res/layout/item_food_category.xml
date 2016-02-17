@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/iv_food_icon"
-            android:layout_width="96dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:scaleType="centerCrop"

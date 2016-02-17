@@ -800,4 +800,10 @@ public abstract class BaseActivity extends FragmentActivity
 		super.onPause();
 	}
 	
+	@Override
+	protected void onStop() {
+		// TODO 自动生成的方法存根
+		super.onStop();
+	}
+	
 }

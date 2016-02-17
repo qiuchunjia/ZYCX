@@ -343,12 +343,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 	private boolean isCommit = true; 
 
 	private void comment() {
-		if(isCommit){
-			isCommit = false;
-		} else{
-			ToastUtils.showToast("提交中...");
-			return;
-		}
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt)) {
 			loadData(true);
@@ -358,6 +352,12 @@ public class ZiXUnContentActivity extends BaseActivity {
 		if(EditTextUtils.containsEmoji(txt)){
 			loadData(true);
 			ToastUtils.showLongToast(this, "不可输入表情！");
+			return;
+		}
+		if(isCommit){
+			isCommit = false;
+		} else{
+			ToastUtils.showToast("提交中...");
 			return;
 		}
 		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)

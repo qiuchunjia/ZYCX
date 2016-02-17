@@ -16,7 +16,7 @@
             android:id="@+id/iv_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/shiliaodaquanbanner" />
+            android:background="@drawable/shiliaodaquanbanner" />
         <!-- 搜索框 -->
 
         <FrameLayout

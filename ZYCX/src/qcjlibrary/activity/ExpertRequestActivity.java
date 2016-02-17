@@ -42,7 +42,7 @@ public class ExpertRequestActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "专家提问";
+		return "专家问答";
 	}
 
 	@Override

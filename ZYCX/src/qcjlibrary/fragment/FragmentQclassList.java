@@ -81,7 +81,9 @@ public class FragmentQclassList extends BaseFragment{
 		detail = new ModelQclassDetail();
 		qclassImpl = new QclassImpl();
 		detail.setClass_id(mType);
-		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+		mAdapter = new QclassAdapter(this, detail);
+		mCommonListView.setAdapter(mAdapter);
+//		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -102,10 +104,10 @@ public class FragmentQclassList extends BaseFragment{
 				mList.clear();
 				if(mQclass.getList() != null){
 					mList.addAll(mQclass.getList());
-					L.d("Cathy", "mList:"+mList.size()+" mQclass:"+mQclass.getList().size()
-							+" "+mQclass.getList().get(0).getCourse_name()+" mType:"+mType);
+//					L.d("Cathy", "mList:"+mList.size()+" mQclass:"+mQclass.getList().size()
+//							+" "+mQclass.getList().get(0).getCourse_name()+" mType:"+mType);
 					if(mAdapter == null){
-						mAdapter = new QclassAdapter(this, mList, detail);
+						mAdapter = new QclassAdapter(this, detail);
 						mCommonListView.setAdapter(mAdapter);
 					} else{
 						mList.clear();
@@ -127,20 +129,20 @@ public class FragmentQclassList extends BaseFragment{
 		if(!isCreate){
 			return;
 		}
-		if(isVisibleToUser){
-			Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
-				
-				@Override
-				public void onStatusChange(int status) {
-					if(mAdapter != null){
-						mAdapter.setStatus(status);
-					}
-					detail.setStatus(status);
-					L.d("Cathy", "status: "+status);
-					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
-				}
-			});
-		}
+//		if(isVisibleToUser){
+//			Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
+//				
+//				@Override
+//				public void onStatusChange(int status) {
+//					if(mAdapter != null){
+//						mAdapter.setStatus(status);
+//					}
+//					detail.setStatus(status);
+//					L.d("Cathy", "status: "+status);
+//					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+//				}
+//			});
+//		}
 	}
 	
 	@Override

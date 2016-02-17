@@ -185,6 +185,10 @@ public class RequestSendTopicActivity extends BaseActivity {
 			ToastUtils.showToast("标题不能为空");
 			return false;
 		}
+		if(mTitle.length() < 2){
+			ToastUtils.showToast("问题标题不能少于2个字");
+			return false;
+		}
 		if(EditTextUtils.containsEmoji(mTitle)){
 			ToastUtils.showToast(this, "不可输入表情");
 			return false;
