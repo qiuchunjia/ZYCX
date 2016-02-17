@@ -146,7 +146,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 				}
 
 			}
-			tv_date.setText(DateUtil.strTodate2(post_detail.getCtime()) + " "+DateUtil.strTodate3(post_detail.getCtime()));
+			tv_date.setText(DateUtil.strTodate2(post_detail.getCtime()) + " "+DateUtil.strTodate4(post_detail.getCtime()));
 		}
 	}
 
