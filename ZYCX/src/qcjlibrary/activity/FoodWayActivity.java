@@ -73,7 +73,7 @@ public class FoodWayActivity extends BaseActivity {
 		rl_content = (RelativeLayout) findViewById(R.id.rl_content);
 		mTitle = getTitleClass();
 		int width = UIUtils.getWindowHeight(this);
-		int height = (int) DisplayUtils.px2dp(this, width/4);
+		int height = (int) DisplayUtils.px2dp(this, width)/4;
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, height);
 		iv_bg.setLayoutParams(params);
 	}
