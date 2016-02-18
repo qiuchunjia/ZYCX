@@ -10,6 +10,7 @@ import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.UIUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -72,9 +73,9 @@ public class FoodWayActivity extends BaseActivity {
 
 		rl_content = (RelativeLayout) findViewById(R.id.rl_content);
 		mTitle = getTitleClass();
-		int width = UIUtils.getWindowHeight(this);
-		int height = (int) DisplayUtils.px2dp(this, width)/4;
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, height);
+		int width = UIUtils.getWindowWidth(this);
+		int height = (int) UIUtils.px2dip(this, width)/4;
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, width/4);
 		iv_bg.setLayoutParams(params);
 	}
 
