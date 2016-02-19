@@ -34,6 +34,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 	private LinearLayout ll_add_flag;
 	private EditText et_content;
 	private TextView tv_add;
+	private TextView tv_prompt;
 	private List<ModelRequestFlag> mFlags = new ArrayList<ModelRequestFlag>();
 	private String mAddFlags = "";
 	private ModelRequestAsk mAsk;
@@ -58,6 +59,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 		ll_add_flag = (LinearLayout) findViewById(R.id.ll_add_flag);
 		et_content = (EditText) findViewById(R.id.et_content);
 		tv_add = (TextView) findViewById(R.id.tv_add);
+		tv_prompt = (TextView) findViewById(R.id.tv_prompt);
 		titleSetRightTitle("提交");
 	}
 
@@ -106,7 +108,8 @@ public class RequestAddFlagActivity extends BaseActivity {
 			addDataToView(mFlags);
 		} else if(object instanceof ModelMsg){
 			ModelMsg msg = (ModelMsg) object;
-			ToastUtils.showToast("暂时没有相关问题的标签，请自己添加");
+			tv_prompt.setText("暂时没有相关问题的标签，请自己添加,最多添加3个:");
+//			ToastUtils.showToast("暂时没有相关问题的标签，请自己添加");
 		}
 		return object;
 	}
