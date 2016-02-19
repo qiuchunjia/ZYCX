@@ -104,11 +104,13 @@ public abstract class BAdapter extends BaseAdapter {
 		// TODO
 		if (mList != null && mList.size() == 0) { // 当为空的时候才请求，其它的都用doRefreshHeader()
 			refreshNew();
+			hasMore = true;
 		}
 	}
 
 	/** 真正的刷新数据數據，即調用RefreshHeader() 獲取的數據加載到adapter里面 */
 	public void doRefreshHeader() {
+		hasMore = true;
 		// TODO 这里要先检查网络是否有，如果没有的话 就return；
 		if (mList == null)
 			mList = new ArrayList<Model>();
@@ -140,6 +142,10 @@ public abstract class BAdapter extends BaseAdapter {
 	/** 真正的獲取數據，即調用RefreshFooter() 獲取的數據加載到adapter里面 */
 	public void doRefreshFooter() {
 		// TODO 这里要先检查网络是否有，如果没有的话 就return；
+		if(!hasMore){
+			dismissTheProgress();
+			return;
+		}
 		if (mList == null)
 			mList = new ArrayList<Model>();
 		this.notifyDataSetChanged();
@@ -368,6 +374,7 @@ public abstract class BAdapter extends BaseAdapter {
 
 	}
 	private boolean isFirst = true;
+	private boolean hasMore = true;
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
 		private Class type;
 		private int RefreshType;
@@ -405,7 +412,7 @@ public abstract class BAdapter extends BaseAdapter {
 							} else {
 								ToastUtils.showToast("没有更多数据了！");
 							}
-							isLoading = true;
+							hasMore = false;
 							dismissTheProgress();
 						} else {
 							Object objectResult = getReallyList(object, type);

@@ -75,7 +75,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 //				startActivity(mIntent);
 //			}
 //		});
-        mAdapter.loadSearchData(Utils.getUTF8String(""));
+        mAdapter.loadSearchData(Utils.getUTF8String(" "));
         return mCustView;
     }
 
@@ -124,7 +124,6 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 			@Override
 			public void onSearchTouch_Qclass(String key) {
 				setKey(key);
-				Log.d("Cathy", "key = "+key);
 				mAdapter.loadSearchData(Utils.getUTF8String(key));
 				mList.setSelectionFromTop(0, 20);
 //				isLoad = true;
