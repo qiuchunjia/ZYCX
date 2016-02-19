@@ -196,7 +196,7 @@ public class FragmentMenu extends BaseFragment {
 	private void quitLogin() {
 		final Activity obj = getActivity();
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
-		builder.setMessage("退出登陆?");
+		builder.setMessage("退出登录?");
 		builder.setTitle("提示");
 		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
 			@Override

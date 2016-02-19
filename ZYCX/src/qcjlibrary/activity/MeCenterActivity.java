@@ -133,7 +133,7 @@ public class MeCenterActivity extends BaseActivity {
 	public void quitLogin() {
 		final Activity obj = this;
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
-		builder.setMessage("退出登陆?");
+		builder.setMessage("退出登录?");
 		builder.setTitle("提示");
 		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
 			@Override
