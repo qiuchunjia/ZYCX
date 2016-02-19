@@ -104,6 +104,9 @@ public class RequestAddFlagActivity extends BaseActivity {
 				mFlags.get(i).setChoose(true); // 默认为选中
 			}
 			addDataToView(mFlags);
+		} else if(object instanceof ModelMsg){
+			ModelMsg msg = (ModelMsg) object;
+			ToastUtils.showToast("暂时没有相关问题的标签，请自己添加");
 		}
 		return object;
 	}
