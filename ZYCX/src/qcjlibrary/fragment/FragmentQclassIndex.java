@@ -62,7 +62,6 @@ public class FragmentQclassIndex extends BaseFragment {
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelQclass) {
-			Log.d("Cathy", "onResponceSuccess");
 			ModelQclass result = (ModelQclass) object;
 			ModelQclassCategory recommend = new ModelQclassCategory();
 			recommend.setClass_id(0);
@@ -127,7 +126,6 @@ public class FragmentQclassIndex extends BaseFragment {
 			
 			@Override
 			public void onClick(View v) {
-				Log.d("Cathy", "onRequestFailed onClick");
 				sendRequest(new api.QclassImpl().index(), ModelQclass.class, 0);
 			}
 		});
@@ -140,7 +138,6 @@ public class FragmentQclassIndex extends BaseFragment {
 	public View onRequestSuccess() {
 		// TODO 自动生成的方法存根
 		defaultView = super.onRequestSuccess();
-		Log.d("Cathy", "onRequestSuccess");
 		ll_fragment_in.setVisibility(View.GONE);
 		//ll_fragment_list.removeView(defaultView);
 		//DefaultLayoutUtil.hideDefault(ll_fragment_list, defaultView);

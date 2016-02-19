@@ -147,6 +147,7 @@ public abstract class BAdapter extends BaseAdapter {
 			// TODO 当前没有加载，则加载数据
 			if(!isLoading){
 				isLoading = true;
+				dismissTheProgress();
 			} else{
 				return;
 			}
@@ -404,6 +405,7 @@ public abstract class BAdapter extends BaseAdapter {
 							} else {
 								ToastUtils.showToast("没有更多数据了！");
 							}
+							isLoading = true;
 							dismissTheProgress();
 						} else {
 							Object objectResult = getReallyList(object, type);

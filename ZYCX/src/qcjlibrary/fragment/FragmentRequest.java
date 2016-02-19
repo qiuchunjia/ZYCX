@@ -106,7 +106,7 @@ public class FragmentRequest extends BaseFragment{
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		getData();
+//		getData();
 	}
 	
 	 //仅当可见时才加载内容
@@ -119,7 +119,7 @@ public class FragmentRequest extends BaseFragment{
     		return;
     	}
     	if(isVisibleToUser){
-//    		getData();
+    		getData();
     	}
     }
     

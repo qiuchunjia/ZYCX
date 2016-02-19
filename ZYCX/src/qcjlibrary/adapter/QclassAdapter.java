@@ -133,12 +133,12 @@ public class QclassAdapter extends BAdapter {
 			detail.setLastid(detailitem.getCourse_id() + "");
 			lastid = detailitem.getCourse_id();
 			requstMessage(detail, REFRESH_FOOTER);
-			/**
-			 * 数据已经加载完成，则手动设置为未加载
-			 * */
-			if(isLoading()){
-				setLoading(false);
-			}
+//			/**
+//			 * 数据已经加载完成，则手动设置为未加载
+//			 * */
+//			if(isLoading()){
+//				setLoading(false);
+//			}
 		}
 	}
 
@@ -185,6 +185,10 @@ public class QclassAdapter extends BAdapter {
 	 * */
 	public void setStatus(int status) {
 		this.status = status;
+		if(isLoading()){
+			setLoading(false);
+		}
+		refreshNew();
 	}
 
 }

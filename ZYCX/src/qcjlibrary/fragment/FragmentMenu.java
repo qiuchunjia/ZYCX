@@ -174,7 +174,11 @@ public class FragmentMenu extends BaseFragment {
 			mApp.startActivity_qcj(getActivity(), MePerioActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_msgnotify:
-			mApp.startActivity_qcj(getActivity(), MsgNotifyPraiseActivity.class, mActivity.sendDataToBundle(new Model(), null));
+			if(isLogin()){
+				mApp.startActivity_qcj(getActivity(), MsgNotifyPraiseActivity.class, mActivity.sendDataToBundle(new Model(), null));
+			} else {
+				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
+			}
 			break;
 		case R.id.btn_quit:
 			if (isLogin()) {
@@ -192,7 +196,7 @@ public class FragmentMenu extends BaseFragment {
 	private void quitLogin() {
 		final Activity obj = getActivity();
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
-		builder.setMessage("确定要注销此帐户吗?");
+		builder.setMessage("退出登陆?");
 		builder.setTitle("提示");
 		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
 			@Override

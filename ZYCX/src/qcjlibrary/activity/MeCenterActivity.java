@@ -119,7 +119,9 @@ public class MeCenterActivity extends BaseActivity {
 			mApp.startActivity_qcj(this, MePerioActivity.class, sendDataToBundle(new Model(), null));
 			break;
 		case R.id.btn_quit:
-			quitLogin();
+			if(isLogin()){
+				quitLogin();
+			}
 			break;
 		}
 
@@ -131,7 +133,7 @@ public class MeCenterActivity extends BaseActivity {
 	public void quitLogin() {
 		final Activity obj = this;
 		AlertDialog.Builder builder = new AlertDialog.Builder(obj);
-		builder.setMessage("确定要注销此帐户吗?");
+		builder.setMessage("退出登陆?");
 		builder.setTitle("提示");
 		builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener() {
 			@Override

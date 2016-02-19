@@ -19,6 +19,7 @@ import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import qcjlibrary.widget.popupview.PopUploadIcon;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -126,7 +127,11 @@ public class MeCenterBasicActivity extends BaseActivity {
 			tv_gender_value.setText(user.getSex());
 			tv_birth_value.setText(user.getBirthday());
 			tv_address_value.setText(user.getLocation());
-			tv_category_value.setText(user.getCancer());
+			if(!TextUtils.isEmpty(user.getCancer().trim())){
+				tv_category_value.setText(user.getCancer());
+			} else {
+				tv_category_value.setText("暂无");
+			}
 		}
 	}
 

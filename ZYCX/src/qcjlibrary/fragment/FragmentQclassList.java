@@ -2,6 +2,8 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity.onStatusChangedListener;
 import com.zhiyicx.zycx.activity.QClassDetailsActivity;
@@ -112,6 +114,7 @@ public class FragmentQclassList extends BaseFragment{
 					} else{
 						mList.clear();
 						mList.addAll(mQclass.getList());
+						mAdapter.mList = mList;
 						mAdapter.notifyDataSetChanged();
 					}
 				} else{
@@ -129,20 +132,19 @@ public class FragmentQclassList extends BaseFragment{
 		if(!isCreate){
 			return;
 		}
-//		if(isVisibleToUser){
-//			Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
-//				
-//				@Override
-//				public void onStatusChange(int status) {
-//					if(mAdapter != null){
-//						mAdapter.setStatus(status);
-//					}
-//					detail.setStatus(status);
-//					L.d("Cathy", "status: "+status);
+		if(isVisibleToUser){
+			Thinksns.homeAct.setOnStatusChangedListener(new onStatusChangedListener() {
+				
+				@Override
+				public void onStatusChange(int status) {
+					if(mAdapter != null){
+						mAdapter.setStatus(status);
+					}
+					detail.setStatus(status);
 //					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
-//				}
-//			});
-//		}
+				}
+			});
+		}
 	}
 	
 	@Override

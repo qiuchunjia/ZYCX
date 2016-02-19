@@ -104,7 +104,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     public void onResume() {
         super.onResume();
 //        if(!isLoad){
-        	loadData(false);
+//        	loadData(false);
 //        }
     }
 
@@ -124,6 +124,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 			@Override
 			public void onSearchTouch_Qclass(String key) {
 				setKey(key);
+				Log.d("Cathy", "key = "+key);
 				mAdapter.loadSearchData(Utils.getUTF8String(key));
 				mList.setSelectionFromTop(0, 20);
 //				isLoad = true;
@@ -164,7 +165,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     		return;
     	}
     	if(isVisibleToUser){
-//    		loadData(true);
+    		loadData(true);
     	}
     }
     

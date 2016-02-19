@@ -3,6 +3,7 @@ package qcjlibrary.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import android.os.Bundle;
 import android.view.View;
@@ -108,7 +109,7 @@ public class FragmentSearchFood extends BaseFragment {
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		getData();
+//		getData();
 	}
 
 	// 仅当可见时才加载内容
@@ -121,7 +122,7 @@ public class FragmentSearchFood extends BaseFragment {
 			return;
 		}
 		if (isVisibleToUser) {
-//			getData();
+			getData();
 		}
 	}
 

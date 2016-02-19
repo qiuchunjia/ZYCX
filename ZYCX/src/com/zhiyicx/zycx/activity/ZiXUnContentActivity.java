@@ -83,7 +83,6 @@ public class ZiXUnContentActivity extends BaseActivity {
 			mId = Integer.valueOf(mDetail.getId());
 			mUid = Integer.valueOf(mDetail.getUid());
 			mTitle = mDetail.getTitle();
-			Log.d("Cathy", "mTitle = "+mTitle);
 		} else {
 			Intent intent = getIntent();
 			mId = intent.getIntExtra("id", 0);
@@ -182,10 +181,15 @@ public class ZiXUnContentActivity extends BaseActivity {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (mFaceView.getVisibility() == View.VISIBLE) {
-					mFace.setImageResource(R.drawable.smile_face);
-					mFaceView.setVisibility(View.GONE);
-				} 
+				if(isLogin()){
+					if (mFaceView.getVisibility() == View.VISIBLE) {
+						mFace.setImageResource(R.drawable.smile_face);
+						mFaceView.setVisibility(View.GONE);
+					} 
+				} else{
+					Intent intent = new Intent(ZiXUnContentActivity.this, LoginActivity.class);
+					startActivity(intent);
+				}
 				return false;
 			}
 		});

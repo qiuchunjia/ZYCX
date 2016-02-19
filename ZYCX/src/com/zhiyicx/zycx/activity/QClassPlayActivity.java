@@ -94,6 +94,7 @@ public class QClassPlayActivity extends Activity {
     	if(mPlayView != null){
     		try {
         		mPlayView.getClass().getMethod("onPause").invoke(mPlayView, (Object[]) null);
+        		mPlayView.stopLoading();
     		} catch (Exception e) {
     			L.d("停止播放" + e.toString());
     		}

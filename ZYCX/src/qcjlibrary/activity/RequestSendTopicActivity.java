@@ -74,9 +74,9 @@ public class RequestSendTopicActivity extends BaseActivity {
 		title.tv_title_right.setOnClickListener(this);
 		et_content.addTextChangedListener(mTextWatcher);
 		et_title.addTextChangedListener(new EditTextUtils().getMyWatcher(30, et_title, this));
-		/** 设置默认选项 **/
-		setTextColorAndBg(tv_cure);
-		mType = "0";
+//		/** 设置默认选项 **/
+//		setTextColorAndBg(tv_cure);
+//		mType = "0";
 	}
 
 	// 用于记录写了多少文字了

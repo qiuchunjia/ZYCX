@@ -52,7 +52,7 @@ public class FragmentInfor extends BaseListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mCustView = inflater.inflate(R.layout.zixun_list, container, false);
         mListView = (LoadListView)mCustView.findViewById(R.id.zixun_list);
-        loadData(false);
+//        loadData(false);
         mListView.setDividerHeight(0);
         mListView.setOnItemListener(new LoadListView.OnItemListener() {
             @Override
@@ -158,7 +158,7 @@ public class FragmentInfor extends BaseListFragment {
     		return;
     	}
     	if(isVisibleToUser){
-//    		loadData(true);
+    		loadData(true);
     	}
     }
     

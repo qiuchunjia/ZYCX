@@ -59,7 +59,7 @@ public class FragmentWeibo extends BaseListFragment {
 		super.onResume();
 		/*if (!isLoad)
 			loadData(false);*/
-		loadData(false);
+//		loadData(false);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class FragmentWeibo extends BaseListFragment {
     		return;
     	}
     	if(isVisibleToUser){
-//    		loadData(false);
+    		loadData(false);
     	}
     }
     

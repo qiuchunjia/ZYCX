@@ -15,10 +15,13 @@ import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +42,7 @@ public class RequestSearchActivity extends BaseActivity {
 	private ImageView iv_zoom;
 	private List<Model> mItemList;
 	private ModelRequestSearch mSearch;
-	/** 网络异常时的缺省图**/
+	/** 网络异常时的缺省图 **/
 	private View defaultView;
 	private LinearLayout ll_commonlist_parent;
 
@@ -65,21 +68,17 @@ public class RequestSearchActivity extends BaseActivity {
 		iv_zoom = (ImageView) findViewById(R.id.iv_zoom);
 		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
-		mCommonListView.setDividerHeight(DisplayUtils.dp2px(
-				getApplicationContext(), 20));
+		mCommonListView.setDividerHeight(DisplayUtils.dp2px(getApplicationContext(), 20));
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if (position > 0) {
 					ModelRequestItem item = (ModelRequestItem) parent.getItemAtPosition(position);
 					if (item.getIs_expert().equals("0")) {
-						mCommonListView.stepToNextActivity(parent, view,
-								position, RequestDetailCommonActivity.class);
+						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailCommonActivity.class);
 					} else if (item.getIs_expert().equals("1")) {
-						mCommonListView.stepToNextActivity(parent, view,
-								position, RequestDetailExpertActivity.class);
+						mCommonListView.stepToNextActivity(parent, view, position, RequestDetailExpertActivity.class);
 					}
 				}
 			}
@@ -108,48 +107,54 @@ public class RequestSearchActivity extends BaseActivity {
 	@Override
 	public void initListener() {
 		iv_zoom.setOnClickListener(this);
+
+		// 监听回车按钮,将回车按钮改为搜索按钮
+		et_find.setOnEditorActionListener(new OnEditorActionListener() {
+
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				search();
+				return true;
+			}
+		});
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_zoom:
-			String searchStr = et_find.getText().toString();
-			if (searchStr != null || !searchStr.equals("")) {
-				mSearch.setKey(searchStr);
-				sendRequest(mApp.getRequestImpl().search(mSearch),
-						ModelRequest.class, REQUEST_GET);
-			} else {
-				ToastUtils.showToast("内容不能为空");
-			}
+			search();
 			break;
 
 		}
 	}
-	
+
+	private void search() {
+		String searchStr = et_find.getText().toString();
+		if (searchStr != null || !searchStr.equals("")) {
+			mSearch.setKey(searchStr);
+			sendRequest(mApp.getRequestImpl().search(mSearch), ModelRequest.class, REQUEST_GET);
+		} else {
+			ToastUtils.showToast("内容不能为空");
+		}
+	}
+
 	@Override
 	public View onRequestFailed() {
 		// TODO 自动生成的方法存根
-		defaultView =  super.onRequestFailed();
+		defaultView = super.onRequestFailed();
 		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
 		tv_reload.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				String searchStr = et_find.getText().toString();
-				if (searchStr != null || !searchStr.equals("")) {
-					mSearch.setKey(searchStr);
-					sendRequest(mApp.getRequestImpl().search(mSearch),
-							ModelRequest.class, REQUEST_GET);
-				} else {
-					ToastUtils.showToast("内容不能为空");
-				}
+				search();
 			}
 		});
 		DefaultLayoutUtil.showDefault(ll_commonlist_parent, defaultView);
 		return defaultView;
 	}
-	
+
 	@Override
 	public View onRequestSuccess() {
 		// TODO 自动生成的方法存根

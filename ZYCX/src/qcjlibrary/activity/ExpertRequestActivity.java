@@ -50,8 +50,7 @@ public class ExpertRequestActivity extends BaseActivity {
 		Intent mIntent = getIntent();
 		if (mIntent != null) {
 			fromIndex = mIntent.getBooleanExtra("fromIndex", false);
-			Log.d("Cathy", "fromIndex"+fromIndex);
-		}
+		} 
 	}
 
 	@Override
@@ -61,6 +60,9 @@ public class ExpertRequestActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
+		if(!fromIndex){
+			titleSetCenterTitle("专家提问");
+		}
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
