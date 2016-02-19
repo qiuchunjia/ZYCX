@@ -101,6 +101,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 		}
 		Object object = DataAnalyze.parseData(str, class1);
 		if (object instanceof List<?>) {
+			tv_prompt.setText("根据你的问题，推荐以下标签，最多选择3个:");
 			mFlags = (List<ModelRequestFlag>) object;
 			for (int i = 0; i < mFlags.size(); i++) {
 				mFlags.get(i).setChoose(true); // 默认为选中
@@ -108,7 +109,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 			addDataToView(mFlags);
 		} else if(object instanceof ModelMsg){
 			ModelMsg msg = (ModelMsg) object;
-			tv_prompt.setText("暂时没有相关问题的标签，请自己添加,最多添加3个:");
+			tv_prompt.setText("暂时没有相关问题的标签，请自己添加，最多添加3个:");
 //			ToastUtils.showToast("暂时没有相关问题的标签，请自己添加");
 		}
 		return object;
