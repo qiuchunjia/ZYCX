@@ -119,16 +119,16 @@ public class ExperienceCycleActivity extends BaseActivity {
 		if (post_detail != null) {
 			tv_date = (TextView) findViewById(R.id.tv_date);
 			mApp.displayImage(post_detail.getUserface(), iv_cycle_icon);
-			tv_username.setText(post_detail.getTitle());
+			tv_username.setText(post_detail.getUsername());
 			tv_has_update.setText("");
 			tv_has_update.append("已更新");
 			tv_has_update.append(SpanUtil.setForegroundColorSpan(post_detail.getChildCount() + "", 0, 0,
 					getResources().getColor(R.color.text_yellow)));
 			tv_has_update.append("篇");
-			List<String> tags = post_detail.getTags();
-			if (tags != null && tags.size() >= 0) {
-				String result = tags.get(0);
-				String[] array = result.split("，");
+			//接口修改为字符串
+			String tag = post_detail.getTags();
+			if (tag != null && tag.length() > 0) {
+				String[] array = tag.split("，");
 				for (int i = 0; i < array.length; i++) {
 					if (i == 0) {
 						tv_flag_value1.setText(array[i]);
@@ -146,7 +146,7 @@ public class ExperienceCycleActivity extends BaseActivity {
 				}
 
 			}
-			tv_date.setText(DateUtil.stamp2humanDate(post_detail.getCtime()));
+			tv_date.setText(DateUtil.strTodate2(post_detail.getCtime()) + " "+DateUtil.strTodate4(post_detail.getCtime()));
 		}
 	}
 

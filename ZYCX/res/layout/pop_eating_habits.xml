@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/margin_left"
-        android:text="荤"
+        android:text="荤素均衡"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_big" />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/margin_left"
-        android:text="素"
+        android:text="荤食习惯"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_big" />
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/margin_left"
-        android:text="荤素搭配"
+        android:text="素食习惯"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text_big" />
 

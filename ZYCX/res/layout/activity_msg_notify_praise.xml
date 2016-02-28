@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_white_bg_color"
+    android:background="@color/main_white_pure_color"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -18,39 +18,56 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/view_border_green_left3"
+            android:background="@drawable/view_border_green_left3_white"
             android:gravity="center"
             android:text="回复/评论我的"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_praise"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/view_border_only_top_bottom_green"
+            android:background="@drawable/view_border_only_top_bottom_green_white"
             android:gravity="center"
             android:text="赞"
             android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/tv_notify"
+        <RelativeLayout
+            android:id="@+id/rl_msg_praise"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/view_border_green_right_3"
-            android:gravity="center"
-            android:text="通知"
-            android:textColor="@color/text_more_gray"
-            android:textSize="@dimen/text_common" />
+            android:background="@drawable/view_border_green_right_3_white"
+            android:layout_weight="1" >
+            <TextView
+                android:id="@+id/tv_notify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="通知"
+                android:gravity="center"
+                android:textColor="@color/text_more_gray"
+                android:textSize="14sp" />
+            <ImageView 
+                android:id="@+id/iv_msg_praise"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                android:background="@drawable/remind"
+                />
+        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/main_white_bg_color"
         android:layout_weight="1" >
     </RelativeLayout>
 

@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import qcjlibrary.activity.MsgNotifyPraiseActivity;
 import qcjlibrary.activity.RequestWayActivity;
 import qcjlibrary.activity.SearchNewActivity;
@@ -41,10 +42,13 @@ import qcjlibrary.fragment.FragmentIndex;
 import qcjlibrary.fragment.FragmentMenu;
 import qcjlibrary.fragment.FragmentQclassIndex;
 import qcjlibrary.fragment.FragmentRequestAnwer;
+import qcjlibrary.fragment.FragmentRequestAnwerIndex;
 import qcjlibrary.fragment.FragmentZhixun;
+import qcjlibrary.model.ModelNotiyState;
 import qcjlibrary.model.ModelSearchIndex;
 import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.Anim;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.Tools_FontManager;
 
@@ -58,7 +62,7 @@ public class HomeActivity extends BaseActivity {
 	// private WebFragment mWebFgmt;// 微博fragment 这里主要是用的ts3.0来实现的 qcj
 	private FragmentCaseIndex mCaseFgmt;
 	private FragmentExperience mExpegmt;
-	private FragmentRequestAnwer mAnwergmt;
+	private FragmentRequestAnwerIndex mAnwergmt;
 	private FragmentIndex mDefaultFragment; // 新增加的页面
 	public static final int index_Default = -1;
 	public static final int index_zhixun = 0;
@@ -102,6 +106,9 @@ public class HomeActivity extends BaseActivity {
 		initData();
 		initListener();
 	}
+	
+	private View mView;
+	private boolean isFirstSlide = true;
 
 	private void initEvents() {
 		mTitle = getTitleClass();
@@ -119,6 +126,7 @@ public class HomeActivity extends BaseActivity {
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
 				View mContent = mDrawer.getChildAt(0);
+				mView = mContent;
 				View mMenu = drawerView;
 				Log.i("slideOffset", "slideOffset=" + slideOffset);
 				float scale = 1 - slideOffset;
@@ -137,6 +145,11 @@ public class HomeActivity extends BaseActivity {
 					mContent.invalidate();
 					ViewHelper.setScaleX(mContent, rightScale);
 					ViewHelper.setScaleY(mContent, rightScale);
+					if(isFirstSlide){
+						isFirstSlide = false;
+						//打开菜单栏时，添加边框。
+						mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back));
+					}
 				}
 
 			}
@@ -147,6 +160,9 @@ public class HomeActivity extends BaseActivity {
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
+				//关闭菜单栏时，取消边框。
+				isFirstSlide = true;
+				mView.setBackground(getResources().getDrawable(R.drawable.view_border_green_back_close));
 			}
 		});
 	}
@@ -220,7 +236,8 @@ public class HomeActivity extends BaseActivity {
 				ModelUser user = mApp.getUser();
 				String iconUrl = user.getAvatar();
 				if (!TextUtils.isEmpty(iconUrl)) {
-					mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+					//mApp.displayImage(iconUrl, mTitle2.iv_title_left2);
+					sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 				} else {
 					sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 				}
@@ -228,6 +245,8 @@ public class HomeActivity extends BaseActivity {
 		}
 	}
 
+	private String status;
+	private ImageView iv_home_msg;
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
@@ -235,7 +254,19 @@ public class HomeActivity extends BaseActivity {
 			ModelUser obUser = (ModelUser) object;
 			mApp.displayImage(obUser.getAvatar(), mTitle.iv_title_left2);
 			mApp.saveUser(obUser);
-		} else {
+		} else if(object instanceof ModelNotiyState){
+				ModelNotiyState state = (ModelNotiyState) object;
+				status = state.getStatus();
+				if(mCurrentIndex == index_Default){
+					if(status != null && status.equals("1")){
+						mTitle.iv_home_msg.setVisibility(View.VISIBLE);
+					} else{
+						mTitle.iv_home_msg.setVisibility(View.GONE);
+					}
+				} else{
+					mTitle.iv_home_msg.setVisibility(View.GONE);
+				}
+		}else{
 			judgeTheMsg(object);
 		}
 		return object;
@@ -313,6 +344,7 @@ public class HomeActivity extends BaseActivity {
 		super.onOptionsItemSelected(item);
 		return true;
 	}
+	
 
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -354,42 +386,65 @@ public class HomeActivity extends BaseActivity {
 			break;
 		}
 	}
+	
+	public void setTabImg(int index){
+		switch (index) {
+		case index_qikan:
+			IB_home_bottom_qikan.setImageResource(R.drawable.jingli_press);
+			break;
+		case index_qclass:
+			IB_home_bottom_class.setImageResource(R.drawable.qingketang_press);
+			break;
+		case index_web:
+			IB_home_bottom_web.setImageResource(R.drawable.bingli_press);
+
+		default:
+			break;
+		}
+	}
 
 	public void setTabSelection(int index) {
 
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = mFManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
-		hideFragments(transaction);
+		//hideFragments(transaction);
 		setChangeTitle(index);
 		resetBottomImage();
 		switch (index) {
 		case index_Default:
 			if (mDefaultFragment == null) {
 				mDefaultFragment = new FragmentIndex();
-				transaction.add(R.id.content, mDefaultFragment);
+				//transaction.add(R.id.content, mDefaultFragment);
 			} else {
-				transaction.show(mDefaultFragment);
+				//transaction.show(mDefaultFragment);
 			}
+			transaction.replace(R.id.content, mDefaultFragment);
 			break;
 		case index_zhixun:
 			if (mZiXunFgmt == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mZiXunFgmt = new FragmentZhixun();
-				transaction.add(R.id.content, mZiXunFgmt);
+				//transaction.add(R.id.content, mZiXunFgmt);
 			} else {
+				mZiXunFgmt = new FragmentZhixun();
 				// 如果MessageFragment不为空，则直接将它显示出来
-				transaction.show(mZiXunFgmt);
+				//transaction.show(mZiXunFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
+			transaction.replace(R.id.content, mZiXunFgmt);
 			// mZixunLayout.setBackgroundResource(R.drawable.foot_pressed);
 			break;
 		case index_qclass:
 			if (mQClassFgmt == null) {
 				mQClassFgmt = new FragmentQclassIndex();
-				transaction.add(R.id.content, mQClassFgmt);
+				//transaction.add(R.id.content, mQClassFgmt);
 			} else {
-				transaction.show(mQClassFgmt);
+				mQClassFgmt = new FragmentQclassIndex();
+				//transaction.show(mQClassFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
+			transaction.replace(R.id.content, mQClassFgmt);
 			/*
 			 * if (mQClassFgmt == null) { mQClassFgmt = new QClassFragment();
 			 * transaction.add(R.id.content, mQClassFgmt); } else {
@@ -399,11 +454,13 @@ public class HomeActivity extends BaseActivity {
 			break;
 		case index_qustion:
 			if (mAnwergmt == null) {
-				mAnwergmt = new FragmentRequestAnwer();
-				transaction.add(R.id.content, mAnwergmt);
+				mAnwergmt = new FragmentRequestAnwerIndex();
+				//transaction.add(R.id.content, mAnwergmt);
 			} else {
-				transaction.show(mAnwergmt);
+				//transaction.show(mAnwergmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
+			transaction.replace(R.id.content, mAnwergmt);
 			// if (mQustionFgmt == null) {
 			// mQustionFgmt = new QuestionFragment();
 			// transaction.add(R.id.content, mQustionFgmt);
@@ -415,10 +472,12 @@ public class HomeActivity extends BaseActivity {
 		case index_qikan:
 			if (mExpegmt == null) {
 				mExpegmt = new FragmentExperience();
-				transaction.add(R.id.content, mExpegmt);
+				//transaction.add(R.id.content, mExpegmt);
 			} else {
-				transaction.show(mExpegmt);
+				//transaction.show(mExpegmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
+			transaction.replace(R.id.content, mExpegmt);
 			// if (mQiKanFgmt == null) {
 			// mQiKanFgmt = new QiKanFragment();
 			// transaction.add(R.id.content, mQiKanFgmt);
@@ -430,10 +489,12 @@ public class HomeActivity extends BaseActivity {
 		case index_web:
 			if (mCaseFgmt == null) {
 				mCaseFgmt = new FragmentCaseIndex();
-				transaction.add(R.id.content, mCaseFgmt);
+				//transaction.add(R.id.content, mCaseFgmt);
 			} else {
-				transaction.show(mCaseFgmt);
+				//transaction.show(mCaseFgmt);
 			}
+			mTitle.iv_home_msg.setVisibility(View.GONE);
+			transaction.replace(R.id.content, mCaseFgmt);
 			// if (mWebFgmt == null) {
 			// mWebFgmt = new WebFragment();
 			// transaction.add(R.id.content, mWebFgmt);
@@ -521,13 +582,15 @@ public class HomeActivity extends BaseActivity {
 			titleSetCenterTitle("问答");
 			mTitle.rl_textandpic.setVisibility(View.GONE);
 			mTitle.iv_title_right1.setVisibility(View.VISIBLE);
-			mTitle.iv_title_right1.setImageResource(R.drawable.chuangjianjingli);
+			mTitle.iv_title_right1.setImageResource(R.drawable.searchwhite);
 			mTitle.iv_title_right1.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					mApp.startActivity_qcj(HomeActivity.this, RequestWayActivity.class,
-							sendDataToBundle(new Model(), null));
+					ModelSearchIndex mData = new ModelSearchIndex();
+					mData.setIndex(1);
+					mApp.startActivity_qcj(HomeActivity.this, SearchNewActivity.class,
+							sendDataToBundle(mData, "index"));
 				}
 			});
 			break;
@@ -594,6 +657,13 @@ public class HomeActivity extends BaseActivity {
 		super.onResume();
 		MobclickAgent.onResume(this);
 		initIcon(mTitle);
+		if(isLogin()){
+			sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
+			if(mCurrentIndex == index_Default){
+				//首页时获取消息提醒
+				sendRequest(mApp.getNotifyImpl().isRead(), ModelNotiyState.class, REQUEST_GET);
+			}
+		}
 		if (!isLogin() && mCurrentIndex == index_qikan) {
 			setTabSelection(index_Default);
 		}
@@ -693,4 +763,41 @@ public class HomeActivity extends BaseActivity {
 		Tools_FontManager.changeFonts(mTitle.ll_center, this, index);
 		mTitle.tv_title.setTextColor(Color.WHITE);
 	}
+	
+	/** 标记点击BACK键的时间**/
+	private long preTabTime;
+	public static int qcl = 1;
+	public static int exp = 2;
+	public static int cas = 3;
+	public int isExit = 0;
+	
+
+	@Override
+	public void onBackPressed() {
+		// TODO 自动生成的方法存根
+		//判断是否首页切换,首页推荐跳转则BACK返回首页
+		if(isExit == qcl){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else if(isExit == exp){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else if(isExit == cas){
+			setTabSelection(index_Default);
+			isExit= 0;
+		} else{
+			//连续点击两次退出
+			if (System.currentTimeMillis() - preTabTime > 2000) {
+				// 提示再次点击退出
+				Toast.makeText(this, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show();
+				// 标记这次点击的事件
+				preTabTime = System.currentTimeMillis();
+			} else {
+				// 2s内点击两次，关闭app
+				finish();
+			}
+		}
+	}
+	
+	
 }

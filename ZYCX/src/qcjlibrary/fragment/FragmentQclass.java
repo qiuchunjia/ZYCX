@@ -75,6 +75,7 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 //				startActivity(mIntent);
 //			}
 //		});
+        mAdapter.loadSearchData(Utils.getUTF8String(" "));
         return mCustView;
     }
 
@@ -102,14 +103,13 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     @Override
     public void onResume() {
         super.onResume();
-        L.d("Cathy", "Qclass:onResume");
-        /*if(!isLoad){
-        	loadData(false);
-        }*/
+//        if(!isLoad){
+//        	loadData(false);
+//        }
     }
 
     @Override
-    public void loadData(boolean isLoadNew) {
+	public void loadData(boolean isLoadNew) {
     	
     	Thinksns.searchAct.setOnSearchListener(new OnSearchTouchListerer() {
 			
@@ -124,11 +124,9 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
 			@Override
 			public void onSearchTouch_Qclass(String key) {
 				setKey(key);
-				L.d("Cathy", "Qclass"+key);
 				mAdapter.loadSearchData(Utils.getUTF8String(key));
 				mList.setSelectionFromTop(0, 20);
-				isLoad = true;
-				
+//				isLoad = true;
 			}
 			
 			@Override
@@ -165,7 +163,6 @@ public class FragmentQclass extends BaseListFragment implements LoadListView.OnI
     	if(!isCreate){
     		return;
     	}
-    	L.d("Cathy", "Qclass isVisibleToUser = "+isVisibleToUser);
     	if(isVisibleToUser){
     		loadData(true);
     	}

@@ -46,7 +46,8 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-
+		title.tv_title_left.setVisibility(View.GONE);
+		title.iv_title_left.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -79,8 +80,7 @@ public class RequestSendTopicCommitedActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		// TODO 自动生成的方法存根
-		super.onBackPressed();
+		// TODO 虚拟BACK键返回问答首页
 		skipToHome();
 	}
 

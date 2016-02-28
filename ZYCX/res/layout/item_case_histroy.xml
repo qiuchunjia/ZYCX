@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
@@ -57,7 +56,16 @@
             android:text="6月24日  10：22"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_small" />
+
+        <ImageView
+            android:id="@+id/iv_msg_history"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/remind"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>
-

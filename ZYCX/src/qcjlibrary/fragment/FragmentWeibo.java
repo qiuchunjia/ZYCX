@@ -44,6 +44,7 @@ public class FragmentWeibo extends BaseListFragment {
 		mWeiboAdapter = new SearchWeiboListAdapter(this, data, key);
 		mWeibolist.setAdapter(mWeiboAdapter, System.currentTimeMillis(), mContext);
 		mWeibolist.setVisibility(View.INVISIBLE);
+		mWeiboAdapter.loadSearchData("");
 		return mCustView;
 	}
 
@@ -58,6 +59,7 @@ public class FragmentWeibo extends BaseListFragment {
 		super.onResume();
 		/*if (!isLoad)
 			loadData(false);*/
+//		loadData(false);
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class FragmentWeibo extends BaseListFragment {
     		return;
     	}
     	if(isVisibleToUser){
-    		loadData(true);
+    		loadData(false);
     	}
     }
     

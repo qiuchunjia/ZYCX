@@ -13,11 +13,13 @@ import qcjlibrary.model.ModelUser;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.util.DateUtil;
 import qcjlibrary.util.L;
+import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopDatePicker;
 import qcjlibrary.widget.popupview.PopUploadIcon;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -96,7 +98,6 @@ public class MeCenterBasicActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 
 	@Override
@@ -126,7 +127,11 @@ public class MeCenterBasicActivity extends BaseActivity {
 			tv_gender_value.setText(user.getSex());
 			tv_birth_value.setText(user.getBirthday());
 			tv_address_value.setText(user.getLocation());
-			tv_category_value.setText(user.getCancer());
+			if(!TextUtils.isEmpty(user.getCancer().trim())){
+				tv_category_value.setText(user.getCancer());
+			} else {
+				tv_category_value.setText("暂无");
+			}
 		}
 	}
 
@@ -143,9 +148,14 @@ public class MeCenterBasicActivity extends BaseActivity {
 
 			@Override
 			public void onTimeSelect(Date date) {
-				ModelUser user = new ModelUser();
-				user.setBirthday(DateUtil.DateToStamp(date));
-				sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
+				Date cur = new Date();
+				if(cur.compareTo(date) > 0){
+					ModelUser user = new ModelUser();
+					user.setBirthday(DateUtil.DateToStamp(date));
+					sendRequest(mApp.getUserImpl().edituserdata(user), ModelMsg.class, REQUEST_GET);
+				} else{
+					ToastUtils.showToast(MeCenterBasicActivity.this, "不可大于当前日期");
+				}
 			}
 		});
 	}
@@ -153,7 +163,7 @@ public class MeCenterBasicActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initData();
+		sendRequest(mApp.getUserImpl().index(), ModelUser.class, REQUEST_GET);
 	}
 
 	@Override

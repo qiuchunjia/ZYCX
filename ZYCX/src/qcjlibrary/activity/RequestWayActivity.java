@@ -2,8 +2,10 @@ package qcjlibrary.activity;
 
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
+import qcjlibrary.api.api;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.ToastUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class RequestWayActivity extends BaseActivity {
 	private TextView tv_common;
 	private TextView tv_zhuanye;
 	private ModelRequestAsk mAsk;
+	private String medrecord_state;
 
 	@Override
 	public String setCenterTitle() {
@@ -47,7 +50,6 @@ public class RequestWayActivity extends BaseActivity {
 	public void initData() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-
 	}
 
 	@Override
@@ -74,12 +76,40 @@ public class RequestWayActivity extends BaseActivity {
 		case R.id.tv_zhuanye:
 			if (isLogin()) {
 				mAsk.setIs_expert("1");
-				mApp.startActivity_qcj(this, RequestSendTopicActivity.class, sendDataToBundle(mAsk, null));
+				//获取病历信息，完善后才能提专家问答
+				sendRequest(mApp.getRequestImpl().getMedrecordState(), ModelRequestAsk.class, REQUEST_GET);
 			} else {
 				mApp.startActivity_qcj(this, LoginActivity.class, null);
 			}
 			break;
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		return super.onRequestFailed();
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		return super.onRequestSuccess();
+	}
+	
+	@Override
+	public Object onResponceSuccess(String str, Class class1) {
+		// TODO 自动生成的方法存根
+		Object object =  super.onResponceSuccess(str, class1);
+		if(object instanceof ModelRequestAsk){
+			medrecord_state = ((ModelRequestAsk)object).getStatus();
+			if(medrecord_state.equals("1")){
+				mApp.startActivity_qcj(this, RequestSendTopicActivity.class, sendDataToBundle(mAsk, null));
+			} else{
+				ToastUtils.showLongToast(this, "请先完善病历信息！");
+			}
+		}
+		return object;
 	}
 }

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/main_white_pure_color"
+     >
+
+    <RelativeLayout
+        android:id="@+id/rl_space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_small"
+        android:layout_margin="@dimen/margin_left_small"
+        android:background="@drawable/view_border_gray_request"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/tv_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/iv_zoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_space"
+            android:src="@drawable/shiliaosearch" />
+
+        <TextView
+            android:id="@+id/tv_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/tv_space"
+            android:text="搜索问答"
+            android:textColor="#9a9f9b"
+            android:textSize="@dimen/text_common" />
+
+        <EditText
+            android:id="@+id/et_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_common"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_request_icon" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_top"
+        >
+        <ImageView
+        android:id="@+id/iv_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/medica_green" />
+
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/umbrella" />
+
+    <ImageView
+        android:id="@+id/iv_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/iv_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/more" />
+    </LinearLayout>
+    
+    <include
+        layout="@layout/item_request_tab"
+        />
+    
+    <ImageView
+        android:id="@+id/iv_tab_line"
+        android:layout_width="match_parent"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/main_gray_bg_color"/>
+
+</LinearLayout>

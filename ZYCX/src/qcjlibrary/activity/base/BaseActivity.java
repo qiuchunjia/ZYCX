@@ -722,7 +722,8 @@ public abstract class BaseActivity extends FragmentActivity
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			//ToastUtils.showToast("请求异常");
+			ToastUtils.showToast("网络异常 ");
+			Log.i("test", "网络异常："+arg3);
 			LoadingDialogUtl.hideLoadingView();
 			//请求异常，展示提示图
 			onRequestFailed();
@@ -731,6 +732,11 @@ public abstract class BaseActivity extends FragmentActivity
 		@Override
 		public void onProgress(long bytesWritten, long totalSize) {
 			super.onProgress(bytesWritten, totalSize);
+//			if(bytesWritten < totalSize){
+//				LoadingDialogUtl.hideLoadingView();
+//			} else{
+//				LoadingDialogUtl.loadingView(mApp.getActivity());
+//			}
 			onResponseProgress(bytesWritten, totalSize);
 		}
 
@@ -774,4 +780,30 @@ public abstract class BaseActivity extends FragmentActivity
 		return object;
 	}
 	/************** popWindow返回的数据 end *******************************/
+	
+	@Override
+	protected void onDestroy() {
+		// TODO 自动生成的方法存根
+		super.onDestroy();
+		LoadingDialogUtl.hideLoadingView();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO 自动生成的方法存根
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		// TODO 自动生成的方法存根
+		super.onStop();
+	}
+	
 }

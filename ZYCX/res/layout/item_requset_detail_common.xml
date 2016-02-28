@@ -45,7 +45,7 @@
             android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
             android:maxLines="2"
             android:text="前段时间发现呵呵哒，法打飞机来得及发垃圾的客服进阿凡达了房间萨洛克大家付"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
 
         <TextView

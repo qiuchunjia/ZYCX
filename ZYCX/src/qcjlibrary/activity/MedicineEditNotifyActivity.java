@@ -7,6 +7,7 @@ import qcjlibrary.model.ModelAlertData;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.SharedPreferencesUtil;
 import qcjlibrary.util.ToastUtils;
@@ -117,6 +118,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		rl_alert_starttime = (RelativeLayout) findViewById(R.id.rl_alert_starttime);
 		tv_title_right = (TextView) findViewById(R.id.tv_title_right);
 		
+		/**
+		 * 判断是创建闹钟还是修改闹钟，再修改UI
+		 * */
 		bundle = intent.getExtras();
 		if(bundle == null){
 			isExit = false;
@@ -124,11 +128,13 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 		} else{
 			isExit = true;
 			titleSetRightTitle("修改");
+			titleSetCenterTitle("修改提醒");
 		}
 		
+		//设置时间选择框属性
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
 		pvTime.setTime(new Date());
-		pvTime.setCyclic(false);
+		pvTime.setCyclic(true);
         pvTime.setCancelable(true);
 	}
 
@@ -163,8 +169,16 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 			tv_start_time.setText(startTime);
 			tv_eat_time.setText(timeList);
 			if(isOpen == 0){
-				iv_notify_open.setImageResource(R.drawable.switch_on);
+				iv_notify_open.setImageResource(R.drawable.on_green);
 			}
+		} else{
+			//如果是一个新的闹钟，设置初始信息
+			Date cur = new Date();
+			startTime = DateUtil.strTodate2(DateUtil.DateToStamp(cur));
+        	tv_start_time.setText(startTime);
+        	period = "1";
+        	med_num = 1;
+        	timeList = "8:00";
 		}
 	}
 
@@ -183,6 +197,9 @@ public class MedicineEditNotifyActivity extends BaseActivity {
             	tv_start_time.setText(startTime);
             }
         });
+		//输入超出提醒
+		et_medicine_name.addTextChangedListener(new EditTextUtils().getMyWatcher(20, et_medicine_name, this));
+		et_user.addTextChangedListener(new EditTextUtils().getMyWatcher(20, et_user, this));
 	}
 
 	@Override
@@ -297,10 +314,10 @@ public class MedicineEditNotifyActivity extends BaseActivity {
 	//根据isOpen的值设置是否开启提示图标
 	private void setNotify() {
 		if(isOpen == 0){
-			iv_notify_open.setImageResource(R.drawable.switch_off);
+			iv_notify_open.setImageResource(R.drawable.off);
 			isOpen = 1;
 		} else{
-			iv_notify_open.setImageResource(R.drawable.switch_on);
+			iv_notify_open.setImageResource(R.drawable.on_green);
 			isOpen = 0;
 		}
 	}

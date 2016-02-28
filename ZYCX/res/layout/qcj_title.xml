@@ -53,14 +53,27 @@
                 android:layout_marginLeft="@dimen/margin_left_small"
                 android:src="@drawable/dot" />
 
-            <qcjlibrary.widget.RoundImageView
-                android:id="@+id/iv_title_left2"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/iv_title_left2_dot"
-                android:src="@drawable/morentouxiang02" />
+                android:layout_toRightOf="@id/iv_title_left2_dot" >
+
+                <qcjlibrary.widget.RoundImageView
+                    android:id="@+id/iv_title_left3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/view_border_white_1" />
+
+                <qcjlibrary.widget.RoundImageView
+                    android:id="@+id/iv_title_left2"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/morentouxiang02" />
+            </FrameLayout>
         </RelativeLayout>
     </FrameLayout>
 
@@ -72,23 +85,23 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
 
-        <LinearLayout 
+        <LinearLayout
             android:id="@+id/ll_center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal" >
+
             <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="癌友帮"
-            android:textColor="@color/text_white"
-            android:textSize="@dimen/text_very_big"
-            android:visibility="visible" />
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="癌友帮"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_very_big"
+                android:visibility="visible" />
         </LinearLayout>
-        
+
         <!-- 中间两个控件的情况 -->
 
         <RelativeLayout
@@ -181,14 +194,30 @@
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_very_big" />
 
-        <ImageView
-            android:id="@+id/iv_title_right1"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="@dimen/margin_right_small"
-            android:src="@drawable/index"
-            android:visibility="gone" />
+            android:layout_marginRight="@dimen/margin_right_small" >
+
+            <ImageView
+                android:id="@+id/iv_title_right1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/index"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_home_msg"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="right|top"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/remind"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/iv_title_right2"

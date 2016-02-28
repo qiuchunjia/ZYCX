@@ -44,6 +44,10 @@ public class FoodWaySingleDetail extends BaseActivity {
 	private TextView tv_relate3;
 	private ImageView iv_relate4;
 	private TextView tv_relate4;
+	private RelativeLayout rl_way_relate1;
+	private RelativeLayout rl_way_relate2;
+	private RelativeLayout rl_way_relate3;
+	private RelativeLayout rl_way_relate4;
 	// gridview
 	private MyGridView gv_contain;
 	private MyGridView gv_function;
@@ -95,6 +99,11 @@ public class FoodWaySingleDetail extends BaseActivity {
 		tv_relate4 = (TextView) findViewById(R.id.tv_relate4);
 		gv_contain = (MyGridView) findViewById(R.id.gv_contain);
 		gv_function = (MyGridView) findViewById(R.id.gv_function);
+		ll_foodway_parent = (LinearLayout) findViewById(R.id.ll_foodway_parent);
+		rl_way_relate1 = (RelativeLayout) findViewById(R.id.rl_way_relate1);
+		rl_way_relate2 = (RelativeLayout) findViewById(R.id.rl_way_relate2);
+		rl_way_relate3 = (RelativeLayout) findViewById(R.id.rl_way_relate3);
+		rl_way_relate4 = (RelativeLayout) findViewById(R.id.rl_way_relate4);
 
 	}
 
@@ -122,6 +131,7 @@ public class FoodWaySingleDetail extends BaseActivity {
 	 */
 	private void addInfoToView(ModelFoodWayDetailInfo info) {
 		if (info != null) {
+			titleSetCenterTitle(info.getSide_name());
 			tv_food_name.setText(info.getSide_name());
 			mApp.displayImage(info.getImgSrc(), iv_food_icon);
 			// TODO 添加圆形的控件
@@ -134,6 +144,10 @@ public class FoodWaySingleDetail extends BaseActivity {
 			}
 			tv_food_way_value.setText(info.getZuofa());
 			tv_category_value.setText(info.getFangzhi_cancer());
+			String suitable = info.getShiyi();
+			if(!TextUtils.isEmpty(suitable)){
+				tv_flag.setText(suitable);
+			}
 			String foodeffect = info.getGongxiao();
 			if (!TextUtils.isEmpty(foodeffect)) {
 				String[] dataArray = foodeffect.split("，");
@@ -154,15 +168,19 @@ public class FoodWaySingleDetail extends BaseActivity {
 			for (int i = 0; i < foodRel.size(); i++) {
 				ModelFoodWayDetailInfo detailInfo = foodRel.get(i);
 				if (i == 0) {
+					rl_way_relate1.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate1);
 					tv_relate1.setText(detailInfo.getSide_name());
 				} else if (i == 1) {
+					rl_way_relate2.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate2);
 					tv_relate2.setText(detailInfo.getSide_name());
 				} else if (i == 2) {
+					rl_way_relate3.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate3);
 					tv_relate3.setText(detailInfo.getSide_name());
 				} else if (i == 3) {
+					rl_way_relate4.setVisibility(View.VISIBLE);
 					mApp.displayImage(detailInfo.getImgSrc(), iv_relate4);
 					tv_relate4.setText(detailInfo.getSide_name());
 				}

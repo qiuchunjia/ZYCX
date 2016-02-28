@@ -9,7 +9,7 @@ package com.zhiyicx.zycx.config;
 public class MyConfig {
 
 	public static String HOST = "http://demo-qingko.zhiyicx.com";
-	// public static String HOST = "http://www.qingko.com";
+//	 public static String HOST = "http://www.qingko.com";
 	// HTTP请求URL
 	public static String LOGIN_URL = HOST
 			+ "/index.php?app=api&mod=Oauth&act=authorize&";

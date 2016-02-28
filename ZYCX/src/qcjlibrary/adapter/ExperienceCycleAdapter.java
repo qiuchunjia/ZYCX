@@ -1,7 +1,11 @@
 package qcjlibrary.adapter;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.zhiyicx.zycx.R;
 
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -63,11 +67,12 @@ public class ExperienceCycleAdapter extends BAdapter {
 			}
 			ModelExperiencePostDetailItem detailItem = (ModelExperiencePostDetailItem) mList.get(position);
 			String mon = DateUtil.StampToMonth(detailItem.getCtime());
-			if(mon.equals("0")){
-				mon = "1";
-			}
+			mon = String.valueOf(Integer.parseInt(mon)+1);
 			holder.tv_date_month.setText(mon + "月");
-			holder.tv_date_day.setText(DateUtil.StampToDay(detailItem.getCtime()));
+			String time =  detailItem.getCtime();
+			Date date = DateUtil.stampToDate(time);
+			holder.tv_date_day.setText(date.getDate()+"");
+//			holder.tv_date_day.setText(DateUtil.StampToDay(detailItem.getCtime()));
 			holder.tv_date_week.setText(DateUtil.StampToWeek(detailItem.getCtime()));
 			holder.tv_date_year.setText(DateUtil.StampToYear(detailItem.getCtime()));
 			holder.tv_date_content.setText(detailItem.getContent());
@@ -77,10 +82,10 @@ public class ExperienceCycleAdapter extends BAdapter {
 					mBaseActivity.getResources().getColor(R.color.text_yellow)));
 			holder.tv_howmany.append("篇");
 			if (detailItem.getIs_praise().equals("1")) {
-				holder.iv_hand.setImageResource(R.drawable.zanicon02_red);
+				holder.iv_hand.setBackgroundResource(R.drawable.zanicon02_red);
 				holder.tv_zhengnengliang.setTextColor(mBaseActivity.getResources().getColor(R.color.text_red));
 			} else {
-				holder.iv_hand.setImageResource(R.drawable.zanicon);
+				holder.iv_hand.setBackgroundResource(R.drawable.zanicon);
 				holder.tv_zhengnengliang.setTextColor(mBaseActivity.getResources().getColor(R.color.text_more_gray));
 			}
 			holder.tv_zhengnengliang.setText("正能量(" + detailItem.getPraiseCount() + ")");
@@ -160,6 +165,9 @@ public class ExperienceCycleAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelExperiencePostDetail) {
 			ModelExperiencePostDetail detail = (ModelExperiencePostDetail) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return detail.getList();
 		}
 		return null;

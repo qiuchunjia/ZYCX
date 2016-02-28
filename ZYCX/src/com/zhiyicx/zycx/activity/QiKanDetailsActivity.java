@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebSettings.PluginState;
 import android.widget.ProgressBar;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.config.Config;
@@ -52,6 +54,7 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 		Bundle bundle = getIntent().getExtras();
 		ModelPeriodical mData = (ModelPeriodical) bundle.get(Config.ACTIVITY_TRANSFER_BUNDLE);
 		try {
+			mTitle = mData.getPeriodical_name();
 			pid = Integer.parseInt(mData.getPid());
 		} catch (Exception e) {
 			L.d("Cathy", "pid 转换："+e.toString());
@@ -70,12 +73,15 @@ public class QiKanDetailsActivity extends BaseActivity implements View.OnClickLi
 		mWebView = (WebView) findViewById(R.id.view_qikan);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mProgBar = (ProgressBar) findViewById(R.id.progressBar);
-
+		WebSettings settings = mWebView.getSettings();
+		settings.setPluginState(PluginState.ON);//支持插件
+		settings.setLoadWithOverviewMode(true); //自适应屏幕
+		settings.getUseWideViewPort();//可任意比例缩放
+		settings.setJavaScriptEnabled(true);
 	}
 
 	@Override
 	public void initData() {
-		L.d("Cathy", "pid:"+pid);
 		loadData(pid);
 	}
 

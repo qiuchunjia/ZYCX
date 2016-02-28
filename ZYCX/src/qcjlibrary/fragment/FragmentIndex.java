@@ -2,16 +2,14 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import qcjlibrary.activity.FoodWayActivity;
-import qcjlibrary.activity.PatientMeActivity;
+import qcjlibrary.activity.RequestAnwerCommonActivity;
 import qcjlibrary.activity.UseMedicineNotifyActivity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.fragment.base.BaseFragment;
@@ -108,11 +106,14 @@ public class FragmentIndex extends BaseFragment {
 		switch (v.getId()) {
 		case R.id.rl_1:
 
-			setTabFragement(HomeActivity.index_qustion);
-
+			//setTabFragement(HomeActivity.index_qustion);
+			mApp.startActivity_qcj(mActivity, RequestAnwerCommonActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 
 		case R.id.rl_2:
+			if(mHomeActivity != null){
+				mHomeActivity.isExit = HomeActivity.qcl;
+			}
 			setTabFragement(HomeActivity.index_qclass);
 			break;
 		case R.id.rl_3:
@@ -120,12 +121,19 @@ public class FragmentIndex extends BaseFragment {
 			mApp.startActivity_qcj(mActivity, FoodWayActivity.class, mActivity.sendDataToBundle(new Model(), null));
 			break;
 		case R.id.rl_4:
+			if(mHomeActivity != null){
+				mHomeActivity.isExit = HomeActivity.exp;
+			}
 			setTabFragement(HomeActivity.index_qikan);
 			break;
 		case R.id.rl_5:
 			if (isLogin()) {
-				mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
-						mActivity.sendDataToBundle(new Model(), null));
+				if(mHomeActivity != null){
+					mHomeActivity.isExit = HomeActivity.cas;
+				}
+				setTabFragement(HomeActivity.index_web);
+//				mApp.startActivity_qcj(mActivity, PatientMeActivity.class,
+//						mActivity.sendDataToBundle(new Model(), null));
 			} else {
 				mApp.startActivity_qcj(mActivity, LoginActivity.class, null);
 			}
@@ -141,10 +149,15 @@ public class FragmentIndex extends BaseFragment {
 
 		}
 	}
-
+	
+	/**
+	 * @param 跳转页的index
+	 * 		首页点击跳转后切换标题与底部图片
+	 * */
 	private void setTabFragement(int index) {
 		if (mHomeActivity != null) {
 			mHomeActivity.setTabSelection(index);
+			mHomeActivity.setTabImg(index);
 		}
 	}
 }

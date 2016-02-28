@@ -3,6 +3,7 @@ package qcjlibrary.adapter;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.UIUtils;
 import android.content.Context;
+import android.text.TextUtils.TruncateAt;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,11 +47,15 @@ public class FoodFuctionGvAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView textView = new TextView(mContext);
-		GridView.LayoutParams params = new GridView.LayoutParams(mSingleWidth,
+		GridView.LayoutParams params = new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT,
 				GridView.LayoutParams.WRAP_CONTENT);
+//		GridView.LayoutParams params = new GridView.LayoutParams(mSingleWidth,
+//				GridView.LayoutParams.WRAP_CONTENT);
 		textView.setLayoutParams(params);
 		textView.setGravity(Gravity.CENTER);
-		textView.setBackgroundResource(R.drawable.view_border_gray_50);
+		textView.setMaxLines(1);
+		textView.setEllipsize(TruncateAt.END);
+		textView.setBackgroundResource(R.drawable.view_border_gray_16);
 		textView.setTextColor(mContext.getResources().getColor(
 				R.color.text_gray));
 		textView.setTextSize(17);

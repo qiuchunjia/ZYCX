@@ -6,9 +6,11 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -204,7 +206,8 @@ public class MyADView extends LinearLayout {
 				image.setImageResource(R.drawable.ic_dot_normal);
 			}
 			// 设置选中的圆圈
-			iv_points[index % mRealCount].setImageResource(R.drawable.ic_dot_focused);
+			iv_points[index % mRealCount].setImageResource(R.drawable.point);
+//			iv_points[index % mRealCount].setBackgroundDrawable(d);
 		}
 
 	}

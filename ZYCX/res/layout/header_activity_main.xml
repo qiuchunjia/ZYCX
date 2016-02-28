@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:background="@color/main_gray_bg_color"
+              android:layout_height="fill_parent">
+	
+    <qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView
+            android:id="@+id/pinnedListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+    </qcjlibrary.listview.base.pinnedheaderlistview.PinnedHeaderListView>
+    
+    <include
+        android:id="@+id/rl_request_tab"
+        android:visibility="gone"
+        layout="@layout/item_request_tab"
+        />
+
+</RelativeLayout>

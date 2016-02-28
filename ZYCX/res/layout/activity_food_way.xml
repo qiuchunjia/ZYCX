@@ -16,7 +16,7 @@
             android:id="@+id/iv_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/shiliaodaquanbanner" />
+            android:background="@drawable/shiliaodaquanbanner" />
         <!-- 搜索框 -->
 
         <FrameLayout
@@ -55,6 +55,7 @@
                     android:cursorVisible="true"
                     android:textCursorDrawable="@null"
                     android:hint="搜索关键词"
+                    android:textColorHint="@color/text_more_gray"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
             </RelativeLayout>
@@ -82,6 +83,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:hint="搜索关键词"
+                    android:textColorHint="@color/text_more_gray"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_common" />
             </LinearLayout>

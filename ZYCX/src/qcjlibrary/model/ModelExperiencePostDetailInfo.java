@@ -31,10 +31,11 @@ public class ModelExperiencePostDetailInfo extends Model {
 	private String status;
 	private String title;
 	private String post_uid;
-	private List<String> tags;
+	private String tags;
 	private String ctime;
 	private String userface;
 	private String childCount;
+	private String username;
 
 	public String getPost_id() {
 		return post_id;
@@ -68,11 +69,12 @@ public class ModelExperiencePostDetailInfo extends Model {
 		this.post_uid = post_uid;
 	}
 
-	public List<String> getTags() {
+	
+	public String getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(String tags) {
 		this.tags = tags;
 	}
 
@@ -103,5 +105,15 @@ public class ModelExperiencePostDetailInfo extends Model {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
 
 }

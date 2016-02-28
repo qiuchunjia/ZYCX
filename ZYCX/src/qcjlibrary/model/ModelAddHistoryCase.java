@@ -31,6 +31,7 @@ public class ModelAddHistoryCase extends Model {
 	// amenorrhoea_age 闭经年龄
 	// childs 子女
 	// family_history 家族史
+	// sex 性别
 	private String med_history;
 	private String allergy_history;
 	private String per_history;
@@ -50,6 +51,7 @@ public class ModelAddHistoryCase extends Model {
 	private String amenorrhoea_age;
 	private String childs;
 	private String family_history;
+	private String sex;
 
 	public String getMed_history() {
 		return med_history;
@@ -201,6 +203,14 @@ public class ModelAddHistoryCase extends Model {
 
 	public void setFamily_history(String family_history) {
 		this.family_history = family_history;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	@Override

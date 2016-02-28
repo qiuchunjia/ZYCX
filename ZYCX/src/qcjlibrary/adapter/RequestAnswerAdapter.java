@@ -32,6 +32,8 @@ import qcjlibrary.util.SpanUtil;
 
 public class RequestAnswerAdapter extends BAdapter {
 	private Model mRequestData;
+	private int page = 0;
+	private int myAskPage = 0;
 
 	public RequestAnswerAdapter(BaseActivity activity, Model data) {
 		super(activity, null);
@@ -74,8 +76,8 @@ public class RequestAnswerAdapter extends BAdapter {
 			if (modelRequestItem != null) {
 				holder.tv_title.setText("");
 				Drawable drawable = mBaseActivity.getResources().getDrawable(R.drawable.q);
-				holder.tv_title.append(SpanUtil.setImageSpan("xx", 0, 0, drawable));
-				holder.tv_title.append("  " + modelRequestItem.getQuestion_content());
+				holder.tv_title.setText(SpanUtil.setImageSpan("xx "+" "+modelRequestItem.getQuestion_content(), 0, 2, drawable));
+//				holder.tv_title.append("  " + modelRequestItem.getQuestion_content());
 				holder.tv_answer.setVisibility(View.GONE);
 				holder.tv_advice.setVisibility(View.GONE);
 				holder.tv_expert_answer.setVisibility(View.GONE);
@@ -83,9 +85,9 @@ public class RequestAnswerAdapter extends BAdapter {
 					holder.tv_answer.setVisibility(View.VISIBLE);
 					Drawable anwerDrable = mBaseActivity.getResources().getDrawable(R.drawable.a);
 					holder.tv_answer.setText("");
-					holder.tv_answer.append(SpanUtil.setImageSpan("xx", 0, 0, anwerDrable));
-					holder.tv_answer.append(
-							"  " + modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
+					holder.tv_answer.setText(SpanUtil.setImageSpan("xx "+" "+modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent(), 0, 2, anwerDrable));
+//					holder.tv_answer.append(
+//							"  " + modelRequestItem.getAnswername() + ":" + modelRequestItem.getAnswercontent());
 				}
 				if (modelRequestItem.getIs_recommend() != null) {
 					if (modelRequestItem.getIs_recommend().equals("1")) {
@@ -94,12 +96,16 @@ public class RequestAnswerAdapter extends BAdapter {
 				}
 				if (modelRequestItem.getIs_expert() != null) {
 					if (modelRequestItem.getIs_expert().equals("1")) {
-						holder.tv_answer.setVisibility(View.GONE);
-						holder.tv_expert_answer.setVisibility(View.VISIBLE);
-						holder.tv_expert_answer.setText("");
-						holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
-								mBaseActivity.getResources().getColor(R.color.text_yellow)));
-						holder.tv_expert_answer.append(modelRequestItem.getAnswercontent());
+						if(modelRequestItem.getAnswercontent() != null &&
+								!modelRequestItem.getAnswercontent().equals(" ") &&
+								!modelRequestItem.getAnswercontent().equals("")){
+							holder.tv_answer.setVisibility(View.GONE);
+							holder.tv_expert_answer.setVisibility(View.VISIBLE);
+							holder.tv_expert_answer.setText("");
+							holder.tv_expert_answer.setText(SpanUtil.setForegroundColorSpan("专家建议："+modelRequestItem.getAnswercontent(), 0, 5,
+									mBaseActivity.getResources().getColor(R.color.text_yellow)));
+//							holder.tv_expert_answer.append(modelRequestItem.getAnswercontent());
+						}
 					}
 				}
 				holder.tv_date.setText(modelRequestItem.getTime());
@@ -135,7 +141,8 @@ public class RequestAnswerAdapter extends BAdapter {
 			sendRequest(mApp.getRequestImpl().search(search), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem item = (ModelRequestItem) mRequestData;
-			item.setLastid(null);
+			page = 0;
+			item.setPage(page);
 			// 这个接口用于首页
 			Log.i("anwer", item.toString() + "");
 			sendRequest(mApp.getRequestImpl().index(item), ModelRequest.class, 0, REFRESH_NEW);
@@ -145,7 +152,8 @@ public class RequestAnswerAdapter extends BAdapter {
 			flag.setLastid(null);
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_NEW);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			sendRequest(mApp.getRequestImpl().myAsk(), ModelRequest.class, 0, REFRESH_NEW);
+			myAskPage = 0;
+			sendRequest(mApp.getRequestImpl().myAsk(null), ModelRequest.class, 0, REFRESH_NEW);
 		}
 	}
 
@@ -183,7 +191,9 @@ public class RequestAnswerAdapter extends BAdapter {
 		} else if (mRequestData instanceof ModelRequestItem) {
 			ModelRequestItem data = (ModelRequestItem) mRequestData;
 			// 这个接口用于首页
-			data.setLastid(requestItem.getQuestion_id());
+			//data.setLastid(requestItem.getQuestion_id());
+			page++;
+			data.setPage(page);
 			sendRequest(mApp.getRequestImpl().index(data), ModelRequest.class, 0, REFRESH_FOOTER);
 		} else if (mRequestData instanceof ModelRequestFlag) {
 			// 这个接口用于标签
@@ -191,7 +201,12 @@ public class RequestAnswerAdapter extends BAdapter {
 			flag.setLastid(requestItem.getQuestion_id());
 			sendRequest(mApp.getRequestImpl().topicQuestion(flag), ModelRequest.class, 0, REFRESH_FOOTER);
 		} else if (mRequestData instanceof ModelRequestMyAsk) {
-			dismissTheProgress();
+			ModelRequestMyAsk myAsk = (ModelRequestMyAsk) mRequestData;
+//			myAsk.setLastid(requestItem.getQuestion_id());
+			++myAskPage;
+			myAsk.setPage(myAskPage+"");
+			sendRequest(mApp.getRequestImpl().myAsk(myAsk), ModelRequest.class, 0, REFRESH_FOOTER);
+			//dismissTheProgress();
 		}
 	}
 
@@ -205,9 +220,13 @@ public class RequestAnswerAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelRequest) {
 			ModelRequest request = (ModelRequest) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return request.getList();
 		}
 		return null;
 	}
+	
 
 }

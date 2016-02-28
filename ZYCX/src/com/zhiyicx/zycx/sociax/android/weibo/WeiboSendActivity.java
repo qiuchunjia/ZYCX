@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import qcjlibrary.util.EditTextUtils;
 
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.config.MyConfig;
@@ -69,11 +70,9 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 				&& getIntentData().getInt("send_type") != CREATE_MESSAGE) {
 			try {
 				if (getIntentData().get("commenttype") != null) {
-					weibo = new Weibo(new JSONObject(getIntentData().getString(
-							"data")), 1);
+					weibo = new Weibo(new JSONObject(getIntentData().getString("data")), 1);
 				} else {
-					weibo = new Weibo(new JSONObject(getIntentData().getString(
-							"data")));
+					weibo = new Weibo(new JSONObject(getIntentData().getString("data")));
 				}
 			} catch (WeiboDataInvalidException e) {
 				Log.d(TAG, "ThinksnsSend ---> wm " + e.toString());
@@ -116,8 +115,7 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 			if (type == TRANSPOND) {
 				String tran = "";
 				if (weibo.getTranspond() != null) {
-					tran = "//@" + weibo.getUsername() + ":"
-							+ weibo.getContent();
+					tran = "//@" + weibo.getUsername() + ":" + weibo.getContent();
 				}
 				WordCount wordCount = new WordCount(edit, overWordCount, tran);
 				edit.addTextChangedListener(wordCount);
@@ -170,17 +168,27 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 			try {
 				switch (msg.what) {
 				case ThinksnsAbscractActivity.COMMENT:
-					if (edit.getText().length() == 0) {
+					if (edit.getText().toString().trim().length() == 0) {
 						loadingView.error("评论不能为空", edit);
 						loadingView.hide(edit);
 					} else {
 						String editContent = edit.getText().toString();
-
+						/** 2.16 添加 限制输入字符数**/
+						if(editContent.length() > 200){
+							loadingView.error("字符数不可超过200", edit);
+							loadingView.hide(edit);
+							return;
+						}
+						/** 2.16 添加 限制自带表情输入**/
+						if (EditTextUtils.containsEmoji(editContent)) {
+							loadingView.error("不可输入表情", edit);
+							loadingView.hide(edit);
+							return;
+						}
 						Comment comment = new Comment();
 						comment.setContent(editContent);
 						comment.setStatus(weibo);
-						comment.setType(checkBox.isChecked() ? Comment.Type.WEIBO
-								: Comment.Type.COMMENT);
+						comment.setType(checkBox.isChecked() ? Comment.Type.WEIBO : Comment.Type.COMMENT);
 
 						if (replyCommentId != -1) {
 							Comment recomment = new Comment();
@@ -208,16 +216,19 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 					break;
 				// 微博转发
 				case ThinksnsAbscractActivity.TRANSPOND:
-					String editContent = edit.getText().toString().trim()
-							.length() > 0 ? edit.getText().toString().trim()
-							: "转发微博";
+					String editContent = edit.getText().toString().trim().length() > 0
+							? edit.getText().toString().trim() : "转发微博";
 
+					if (EditTextUtils.containsEmoji(editContent)) {
+						loadingView.error("不可输入表情", edit);
+						loadingView.hide(edit);
+						return;
+					}
 					Weibo newWeibo = new Weibo();
 					newWeibo.setContent(editContent);
 					newWeibo.setTranspond(weibo);
 					if (getIntentData().containsKey("app")) {
-						if (groupStatuses.repostStatuses(newWeibo,
-								checkBox.isChecked())) {
+						if (groupStatuses.repostStatuses(newWeibo, checkBox.isChecked())) {
 							loadingView.error("分享成功", edit);
 							Log.d(TAG, "weibo transpond success...");
 							WeiboSendActivity.this.finish();
@@ -264,10 +275,14 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 						loadingView.hide(edit);
 						return;
 					}
+					if (EditTextUtils.containsEmoji(content)) {
+						loadingView.error("不可输入表情", edit);
+						loadingView.hide(edit);
+						return;
+					}
 					createMessage.setContent(content);
 					createMessage.setTitle("new message");
-					Log.e("uid",
-							"getIntentData" + getIntentData().getInt("to_uid"));
+					Log.e("uid", "getIntentData" + getIntentData().getInt("to_uid"));
 					Log.e("content", "content" + edit.getText().toString());
 					if (message.createNew(createMessage)) {
 						loadingView.error("发送成功", edit);
@@ -307,13 +322,10 @@ public class WeiboSendActivity extends ThinksnsAbscractActivity {
 			@Override
 			public void onClick(View v) {
 				// sendingButtonAnim(v);
-				Thinksns app = (Thinksns) WeiboSendActivity.this
-						.getApplicationContext();
+				Thinksns app = (Thinksns) WeiboSendActivity.this.getApplicationContext();
 				thread = new Worker(app, "Publish data");
-				handler = new ActivityHandler(thread.getLooper(),
-						WeiboSendActivity.this);
-				Message msg = handler.obtainMessage(getIntentData().getInt(
-						"send_type"));
+				handler = new ActivityHandler(thread.getLooper(), WeiboSendActivity.this);
+				Message msg = handler.obtainMessage(getIntentData().getInt("send_type"));
 				handler.sendMessage(msg);
 			}
 		};

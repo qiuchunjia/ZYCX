@@ -24,6 +24,7 @@ public class ModelCaseRecord extends Model {
 	private String content;
 	private String type;
 	private String ctime;
+	private String is_read;
 
 	public ModelCaseRecord() {
 	}
@@ -44,6 +45,9 @@ public class ModelCaseRecord extends Model {
 			if (data.has("ctime")) {
 
 				setCtime(data.getString("ctime"));
+			}
+			if(data.has("is_read")){
+				setIs_read(data.getString("is_read"));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -85,5 +89,14 @@ public class ModelCaseRecord extends Model {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getIs_read() {
+		return is_read;
+	}
+
+	public void setIs_read(String is_read) {
+		this.is_read = is_read;
+	}
+	
 
 }

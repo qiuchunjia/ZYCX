@@ -30,7 +30,6 @@ public class FragmentExperience extends BaseFragment {
 	
 	/** 网络异常时的缺省图**/
 	private View defaultView;
-	private boolean isFirst = true;
 	private LinearLayout ll_fragexp_parent;
 
 	@Override
@@ -99,7 +98,7 @@ public class FragmentExperience extends BaseFragment {
 			}
 		});
 		
-		isFirst = DefaultLayoutUtil.showDefault(ll_fragexp_parent, defaultView, isFirst);
+		DefaultLayoutUtil.showDefault(ll_fragexp_parent, defaultView);
 		return defaultView;
 	}
 	

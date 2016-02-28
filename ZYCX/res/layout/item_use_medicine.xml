@@ -22,18 +22,20 @@
 
         <TextView
             android:id="@+id/tv_medicine_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/item_height_small"
             android:layout_toRightOf="@id/iv_medicine_notify"
             android:text="新康泰克"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_very_big" />
 
         <TextView
             android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_medicine_name"
             android:layout_centerVertical="true"
@@ -41,6 +43,8 @@
             android:layout_marginLeft="@dimen/item_height_small"
             android:layout_toRightOf="@id/iv_medicine_notify"
             android:text="张三"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_common" />
 

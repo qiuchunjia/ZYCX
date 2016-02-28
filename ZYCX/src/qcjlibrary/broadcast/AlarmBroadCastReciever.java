@@ -1,6 +1,5 @@
 package qcjlibrary.broadcast;
 
-import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,7 +21,6 @@ public class AlarmBroadCastReciever extends BaseBroadCast{
 		if(mAction.equals(Intent.ACTION_BOOT_COMPLETED)){
 		}
 		if(mAction.equals("alarm.alert.short")){
-			Log.d("Cathy", "short alert: 吃药");
 			//发送通知
 			sendNotification(context);
 			//播放短提示音,由于service只能开启一次，所有需要先stop
@@ -49,7 +47,7 @@ public class AlarmBroadCastReciever extends BaseBroadCast{
         		Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         PendingIntent mPi = PendingIntent.getActivity(
         		context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
-        mNotification.setLatestEventInfo(context, "该吃药了", "点击查看详情",mPi); 
+        mNotification.setLatestEventInfo(context, "用药时间到了！", "点击查看详情",mPi); 
         mManager.notify(1, mNotification);
 	}
 	

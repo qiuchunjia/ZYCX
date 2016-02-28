@@ -2,20 +2,26 @@ package qcjlibrary.activity;
 
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
+import qcjlibrary.model.ModelExperience;
+import qcjlibrary.model.ModelFoodWayDetail;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestFlag;
@@ -23,6 +29,7 @@ import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
@@ -35,6 +42,7 @@ import qcjlibrary.widget.popupview.PopShareContent;
 public class RequestDetailCommonActivity extends BaseActivity {
 	private TextView request_tv_title;
 	private TextView tv_content;
+	private TextView tv_flag;
 	private TextView tv_flag_value;
 	private TextView tv_flag_value2;
 	private TextView tv_flag_value3;
@@ -46,10 +54,15 @@ public class RequestDetailCommonActivity extends BaseActivity {
 	private LinearLayout ll_relate;
 	private LinearLayout ll_answer;
 	private TextView tv_other;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private FrameLayout frame_request_common;
 
 	// 数据model赛
 	private ModelRequestItem mRequestItem;
-
+	private String user_name;
+	
 	@Override
 	public String setCenterTitle() {
 		return "问题详情";
@@ -70,6 +83,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		titleSetRightImage(R.drawable.fenxiang);
 		request_tv_title = (TextView) findViewById(R.id.request_tv_title);
 		tv_content = (TextView) findViewById(R.id.tv_content);
+		tv_flag = (TextView) findViewById(R.id.tv_flag);
 		tv_flag_value = (TextView) findViewById(R.id.tv_flag_value);
 		tv_flag_value2 = (TextView) findViewById(R.id.tv_flag_value2);
 		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
@@ -80,6 +94,7 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		ll_answer = (LinearLayout) findViewById(R.id.ll_answer);
 		ll_add_answer = (LinearLayout) findViewById(R.id.ll_add_answer);
 		tv_other = (TextView) findViewById(R.id.tv_other);
+		frame_request_common = (FrameLayout) findViewById(R.id.frame_request_common);
 	}
 
 	@Override
@@ -88,12 +103,15 @@ public class RequestDetailCommonActivity extends BaseActivity {
 		title.iv_title_right1.setOnClickListener(this);
 		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailCommon.class, REQUEST_GET);
 	}
+	
+	private String shareUrl;
 
 	@Override
 	public Object onResponceSuccess(String str, Class class1) {
 		Object object = super.onResponceSuccess(str, class1);
 		if (object instanceof ModelRequestDetailCommon) {
 			ModelRequestDetailCommon detailCommon = (ModelRequestDetailCommon) object;
+			shareUrl = detailCommon.getQuestion().getUrl();
 			addDataToHeadAndFlag(detailCommon.getQuestion(), detailCommon.getTopic_list());
 			addDataToAnswer(detailCommon.getAnswer());
 			addDataToRelate(detailCommon.getOther_question());
@@ -200,10 +218,14 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			request_tv_title.append(" " + question.getQuestion_content());
 			tv_content.setText(question.getQuestion_detail());
 			mApp.displayImage(question.getUser_face(), riv_icon);
+			user_name = question.getUser_name();
+			if(user_name.equals(mApp.getUser().getUname())){
+				ll_answer.setVisibility(View.GONE);
+			}
 			tv_username.setText(question.getUser_name());
 			tv_date.setText(question.getTime());
 		}
-		if (topic_list != null) {
+		if (topic_list != null && topic_list.size() > 0) {
 			for (int i = 0; i < topic_list.size(); i++) {
 				final ModelRequestFlag flag = topic_list.get(i);
 				if (i == 0) {
@@ -243,6 +265,8 @@ public class RequestDetailCommonActivity extends BaseActivity {
 					});
 				}
 			}
+		} else{
+			tv_flag.setVisibility(View.GONE);
 		}
 	}
 
@@ -281,6 +305,9 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
 			shareContent.setUrl(mRequestItem.getUrl());
+			if(mRequestItem.getUrl() == null){
+				shareContent.setUrl(shareUrl);
+			}
 			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
 			popShareContent.showPop(ll_answer, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
@@ -288,5 +315,30 @@ public class RequestDetailCommonActivity extends BaseActivity {
 			break;
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getRequestImpl().answer(mRequestItem), 
+						ModelRequestDetailCommon.class, REQUEST_GET);
+			}
+		});
+		DefaultLayoutUtil.showDefault(frame_request_common, defaultView);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(frame_request_common, defaultView);
+		return defaultView;
 	}
 }

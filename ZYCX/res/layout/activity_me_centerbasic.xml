@@ -37,7 +37,7 @@
             android:layout_toRightOf="@id/riv_user_icon"
             android:text="头像设置"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_x"
@@ -48,7 +48,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
     </RelativeLayout>
 
     <include layout="@layout/view_line_vertical" />
@@ -75,19 +75,18 @@
             android:layout_toRightOf="@id/iv_mycase"
             android:text="抗癌宣言"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_mycase_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginLeft="90dp"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/iv_mycase"
             android:text=""
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_mycase_x"
@@ -98,20 +97,19 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_mycase_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:layout_marginRight="@dimen/margin_right_small"
             android:layout_marginTop="15dp"
             android:layout_toLeftOf="@id/iv_mycase_x"
             android:layout_toRightOf="@id/tv_mycase_space"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="开开心心过后每一天，为了身边的人"
+            android:gravity="right|center_vertical"
+            android:text="开开心心开开心心开开心心开开心心开开心心开开心心开开心心"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
@@ -138,7 +136,7 @@
             android:layout_toRightOf="@id/iv_question"
             android:text="昵称"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_nick_x"
@@ -149,7 +147,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_nick_value"
@@ -158,7 +156,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_toLeftOf="@id/iv_nick_x"
-            android:text="呵呵哒"
+            android:text="请输入昵称"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
@@ -184,7 +182,7 @@
             android:layout_marginLeft="@dimen/margin_left_small"
             android:text="性别"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_gender_x"
@@ -195,7 +193,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_gender_value"
@@ -204,7 +202,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_toLeftOf="@id/iv_gender_x"
-            android:text="男"
+            android:text="请选择性别"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
@@ -231,7 +229,7 @@
             android:layout_toRightOf="@id/iv_cycle"
             android:text="生日"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_birth_x"
@@ -242,7 +240,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_birth_value"
@@ -251,7 +249,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_toLeftOf="@id/iv_birth_x"
-            android:text="1993-12-27"
+            android:text="请选择生日"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
@@ -278,7 +276,7 @@
             android:layout_toRightOf="@id/iv_periodical"
             android:text="地区"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_address_x"
@@ -289,7 +287,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_address_value"
@@ -298,7 +296,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_toLeftOf="@id/iv_address_x"
-            android:text="四川成都"
+            android:text="请选择地区"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>
@@ -324,7 +322,7 @@
             android:layout_toRightOf="@id/iv_periodical"
             android:text="癌种"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <ImageView
             android:id="@+id/iv_category_x"
@@ -335,7 +333,7 @@
             android:layout_marginRight="@dimen/margin_left_small"
             android:src="@drawable/arrows_right"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_add" />
 
         <TextView
             android:id="@+id/tv_category_value"
@@ -344,7 +342,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_small"
             android:layout_toLeftOf="@id/iv_category_x"
-            android:text="乳腺癌"
+            android:text="暂无"
             android:textColor="@color/text_more_gray"
             android:textSize="@dimen/text_common" />
     </RelativeLayout>

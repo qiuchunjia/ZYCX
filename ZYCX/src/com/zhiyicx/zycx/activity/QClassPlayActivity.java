@@ -50,11 +50,11 @@ public class QClassPlayActivity extends Activity {
         mPlayView.setPadding(0,0,0,0);
         mPlayView.setWebChromeClient(new WebChromeClient());
         WebSettings setting = mPlayView.getSettings();
-        setting.setPluginState(PluginState.ON);
-        setting.setLoadWithOverviewMode(true);
-        setting.getUseWideViewPort();
+        setting.setPluginState(PluginState.ON);//支持插件
+        setting.setLoadWithOverviewMode(true); //自适应屏幕
+        setting.getUseWideViewPort();//可任意比例缩放
         setting.setJavaScriptEnabled(true);
-        setting.setJavaScriptCanOpenWindowsAutomatically(true);
+        setting.setJavaScriptCanOpenWindowsAutomatically(true);//自动打开窗口 
         /*String vid = getIntent().getStringExtra("vid");
         String stamp = String.valueOf(System.currentTimeMillis() / 1000);
         String secert = "d34ce7d56040bc1b0cfc2cc153901cb0";
@@ -76,13 +76,29 @@ public class QClassPlayActivity extends Activity {
 
     @Override
     protected void onResume() {
-    	// TODO 自动生成的方法存根
+    	// TODO 
     	super.onResume();
+    	if(mPlayView != null){
+			try {
+				mPlayView.getClass().getMethod("onResume").invoke(mPlayView,(Object[])null);
+			} catch (Exception e) {
+				L.d("继续播放" + e.toString());
+			} 
+		}
     }
     
     @Override
     protected void onPause() {
-    	// TODO 自动生成的方法存根
+    	// TODO 当退出页面时停止播放
     	super.onPause();
+    	if(mPlayView != null){
+    		try {
+        		mPlayView.getClass().getMethod("onPause").invoke(mPlayView, (Object[]) null);
+        		mPlayView.stopLoading();
+    		} catch (Exception e) {
+    			L.d("停止播放" + e.toString());
+    		}
+		}
+    	
     }
 }

@@ -33,8 +33,7 @@ public class PopCommonProgress extends PopView {
 		int value=(int) (bytesWritten*100/(float)totalSize);
 		Log.i("value","value="+value);
 		if (value >= 99) {
-			
-//			mPopWindow.dismiss();
+			mPopWindow.dismiss();
 		} else {
 			tv_progress.setText(value + "%");
 		}

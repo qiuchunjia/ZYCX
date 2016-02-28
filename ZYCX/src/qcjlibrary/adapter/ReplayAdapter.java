@@ -13,6 +13,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelNotifyCommment;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,10 @@ public class ReplayAdapter extends BAdapter {
 				mApp.displayImage(commment.getUserface(), holder.riv_msg_icon);
 				holder.tv_user.setText(commment.getUsername());
 				holder.tv_title.setText(commment.getContent());
-				holder.tv_other_replay.setText(commment.getMyname()
+				holder.tv_other_replay.setText("");
+				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(commment.getMyname() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_user)));
+				holder.tv_other_replay.append(": "
 						+ commment.getOriginal_content());
 				holder.tv_date.setText(commment.getTime());
 				holder.tv_replay.setTag(commment);
@@ -107,7 +111,6 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
-
 		sendRequest(mApp.getNotifyImpl().commentlist(null),
 				ModelNotifyCommment.class, REQUEST_GET, REFRESH_NEW);
 
@@ -115,12 +118,21 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
-
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
+		if(isLoading()){
+			setLoading(false);
+		}
+		dismissTheProgress();
+//		if(item instanceof ModelNotifyCommment){
+//			ModelNotifyCommment data = (ModelNotifyCommment)item;
+//			data.setLastid(data.getComment_id());
+//			sendRequest(mApp.getNotifyImpl().commentlist(data),
+//					ModelNotifyCommment.class, REQUEST_GET, REFRESH_FOOTER);
+//		}
 		// TODO Auto-generated method stub
 	}
 
@@ -138,6 +150,9 @@ public class ReplayAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return object;
 	}
 

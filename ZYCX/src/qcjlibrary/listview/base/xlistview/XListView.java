@@ -214,6 +214,7 @@ public class XListView extends ListView implements OnScrollListener {
 		if (mPullLoading) {
 			mPullLoading = false;
 			mFooterView.setState(XFooterView.STATE_NORMAL);
+			resetFooterHeight();
 		}
 	}
 
@@ -432,9 +433,9 @@ public class XListView extends ListView implements OnScrollListener {
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		if (mScrollListener != null) {
-			mScrollListener.onScrollStateChanged(view, scrollState);
-		}
+//		if (mScrollListener != null) {
+//			mScrollListener.onScrollStateChanged(view, scrollState);
+//		}
 
 		if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
 			if (mEnableAutoLoad && getLastVisiblePosition() == getCount() - 1) {

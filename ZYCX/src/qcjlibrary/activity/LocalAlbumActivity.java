@@ -134,7 +134,7 @@ public class LocalAlbumActivity extends BaseActivity {
 			public void onItemClick(ToggleButton view, int position,
 					String path, boolean isChecked) {
 				if (isChecked) {
-					if (selectedDataList.size() > PHOTO_COUNT) {
+					if (selectedDataList.size() > PHOTO_COUNT + 1) {
 						ToastUtils.showToast("最多只能选六张");
 						return;
 					}

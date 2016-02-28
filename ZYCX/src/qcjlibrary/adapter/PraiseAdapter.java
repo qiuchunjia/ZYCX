@@ -10,6 +10,7 @@ import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.model.ModelNotifyDig;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 
 import android.view.View;
@@ -58,7 +59,10 @@ public class PraiseAdapter extends BAdapter {
 				mApp.displayImage(dig.getUserface(), holder.riv_msg_icon);
 				holder.tv_user.setText(dig.getUsername());
 				holder.tv_date.setText(dig.getTime());
-				holder.tv_other_replay.setText(dig.getMyname() + ":"
+				holder.tv_other_replay.setText("");
+				holder.tv_other_replay.append(SpanUtil.setForegroundColorSpan(dig.getMyname() + "", 0, 0,
+						mBaseActivity.getResources().getColor(R.color.text_user)));
+				holder.tv_other_replay.append(": "
 						+ dig.getFeed_data());
 			}
 
@@ -94,13 +98,22 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
-
+		refreshNew();
 	}
 
 	@Override
 	public void refreshFooter(Model item, int count) {
 		// TODO Auto-generated method stub
+		if(isLoading()){
+			setLoading(false);
+		}
+		dismissTheProgress();
+//		if(item instanceof ModelNotifyDig){
+//			ModelNotifyDig data = (ModelNotifyDig)item;
+//			data.setLastid(data.getDiggid());
+//			sendRequest(mApp.getNotifyImpl().digglist(data), ModelNotifyDig.class,
+//					REQUEST_GET, REFRESH_FOOTER);
+//		}
 	}
 
 	@Override
@@ -116,6 +129,9 @@ public class PraiseAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return object;
 	}
 

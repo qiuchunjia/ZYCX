@@ -3,6 +3,7 @@ package qcjlibrary.activity;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelRequestAsk;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.ToastUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -72,9 +73,10 @@ public class RequestSendTopicActivity extends BaseActivity {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 		et_content.addTextChangedListener(mTextWatcher);
-		/** 设置默认选项**/
-		setTextColorAndBg(tv_cure);
-		mType = "0";
+		et_title.addTextChangedListener(new EditTextUtils().getMyWatcher(30, et_title, this));
+//		/** 设置默认选项 **/
+//		setTextColorAndBg(tv_cure);
+//		mType = "0";
 	}
 
 	// 用于记录写了多少文字了
@@ -84,8 +86,7 @@ public class RequestSendTopicActivity extends BaseActivity {
 		private int editEnd;
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int arg1, int arg2,
-				int arg3) {
+		public void beforeTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
 			temp = s;
 		}
 
@@ -96,16 +97,17 @@ public class RequestSendTopicActivity extends BaseActivity {
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			editStart = et_content.getSelectionStart();
-			editEnd = et_content.getSelectionEnd();
-			Log.i("select", "start=" + editStart + ",end=" + editEnd);
+			// editStart = et_content.getSelectionStart();
+			// editEnd = et_content.getSelectionEnd();
+			// Log.i("select", "start=" + editStart + ",end=" + editEnd);
 			if (temp.length() > 140) {
-				Toast.makeText(RequestSendTopicActivity.this, "你输入的字数已经超过了限制！",
-						Toast.LENGTH_SHORT).show();
-				s.delete(editStart - 1, editEnd);
-				int tempSelection = editStart;
-				et_content.setText(s);
-				et_content.setSelection(tempSelection);
+				Toast.makeText(RequestSendTopicActivity.this, "你输入的字数已经超过了限制！", Toast.LENGTH_SHORT).show();
+				temp = temp.subSequence(0, 140);
+				et_content.setText(temp);
+				// s.delete(editStart - 1, editEnd);
+				// int tempSelection = editStart;
+				// et_content.setText(s);
+				// et_content.setSelection(tempSelection);
 			}
 		}
 	};
@@ -119,18 +121,20 @@ public class RequestSendTopicActivity extends BaseActivity {
 
 	@Override
 	public void onClick(View v) {
-		resetTextColorAndBg();
 		switch (v.getId()) {
 
 		case R.id.tv_cure:
+			resetTextColorAndBg();
 			mType = "0";
 			setTextColorAndBg(tv_cure);
 			break;
 		case R.id.tv_protect:
+			resetTextColorAndBg();
 			mType = "1";
 			setTextColorAndBg(tv_protect);
 			break;
 		case R.id.tv_good:
+			resetTextColorAndBg();
 			mType = "2";
 			setTextColorAndBg(tv_good);
 			break;
@@ -138,10 +142,9 @@ public class RequestSendTopicActivity extends BaseActivity {
 			getDataFromView();
 			if (judgeTheData()) {
 				mAsk.setType(mType);
-				mAsk.setContent(mTitle);
-				mAsk.setQuestion_detail(mContent);
-				mApp.startActivity_qcj(this, RequestChooseCancerActivity.class,
-						sendDataToBundle(mAsk, null));
+				mAsk.setContent(mTitle.trim());
+				mAsk.setQuestion_detail(mContent.trim());
+				mApp.startActivity_qcj(this, RequestChooseCancerActivity.class, sendDataToBundle(mAsk, null));
 			}
 			break;
 
@@ -153,12 +156,9 @@ public class RequestSendTopicActivity extends BaseActivity {
 	 * 重置颜色和背景
 	 */
 	private void resetTextColorAndBg() {
-		tv_cure.setBackgroundColor(getResources().getColor(
-				R.color.main_white_pure_color));
-		tv_protect.setBackgroundColor(getResources().getColor(
-				R.color.main_white_pure_color));
-		tv_good.setBackgroundColor(getResources().getColor(
-				R.color.main_white_pure_color));
+		tv_cure.setBackgroundColor(getResources().getColor(R.color.main_white_pure_color));
+		tv_protect.setBackgroundColor(getResources().getColor(R.color.main_white_pure_color));
+		tv_good.setBackgroundColor(getResources().getColor(R.color.main_white_pure_color));
 		tv_cure.setTextColor(getResources().getColor(R.color.text_gray));
 		tv_protect.setTextColor(getResources().getColor(R.color.text_gray));
 		tv_good.setTextColor(getResources().getColor(R.color.text_gray));
@@ -183,19 +183,31 @@ public class RequestSendTopicActivity extends BaseActivity {
 	}
 
 	private boolean judgeTheData() {
-		if (mTitle == null || mTitle.equals("")) {
+		if (mTitle == null || mTitle.equals("") || mTitle.equals(" ")) {
 			ToastUtils.showToast("标题不能为空");
 			return false;
-		} 
-		if(mTitle.length() > 30){
+		}
+		if(mTitle.length() < 2){
+			ToastUtils.showToast("问题标题不能少于2个字");
+			return false;
+		}
+		if(EditTextUtils.containsEmoji(mTitle)){
+			ToastUtils.showToast(this, "不可输入表情");
+			return false;
+		}
+		if (mTitle.length() > 30) {
 			ToastUtils.showToast("标题长度不能大于30");
 			return false;
 		}
-		if (mContent == null || mContent.equals("")) {
+		if (mContent == null || mContent.equals("") || mContent.equals(" ")) {
 			ToastUtils.showToast("内容不能为空");
 			return false;
 		}
-		if (mType == null || mType.equals("")) {
+		if(EditTextUtils.containsEmoji(mContent)){
+			ToastUtils.showToast(this, "不可输入表情");
+			return false;
+		}
+		if (mType == null || mType.equals("") || mType.equals(" ")) {
 			ToastUtils.showToast("请选择类型");
 			return false;
 		}

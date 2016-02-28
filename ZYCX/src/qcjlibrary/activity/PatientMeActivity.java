@@ -11,6 +11,7 @@ import org.apache.http.Header;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
@@ -87,6 +89,11 @@ public class PatientMeActivity extends BaseActivity {
 	private boolean isFirst = false;
 	private int count;
 	private LinearLayout ll_patientme_parent;
+	private LinearLayout ll_common_default;
+	
+	private ModelAddCase sendInfo;
+	private ModelAddHistoryCase sendHistory;
+	private ModelAddNowCase sendPresent;
 
 	@Override
 	public String setCenterTitle() {
@@ -142,12 +149,12 @@ public class PatientMeActivity extends BaseActivity {
 		ll_time = (LinearLayout) findViewById(R.id.ll_time);
 		
 		ll_patientme_parent = (LinearLayout) findViewById(R.id.ll_patientme_parent);
+		ll_common_default = (LinearLayout) findViewById(R.id.ll_patientme_parent);
 	}
 
 	@Override
 	public void initData() {
 		count = ll_patientme_parent.getChildCount();
-		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(new OnClickListener() {
 
@@ -225,6 +232,7 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addInfroToView(ModelAddCase info) {
 		if (info != null) {
+			sendInfo = info;
 			ll_user.setVisibility(View.VISIBLE);
 			defautl_1.setVisibility(View.GONE);
 			tv_username.setText(info.getRealname());
@@ -264,13 +272,13 @@ public class PatientMeActivity extends BaseActivity {
 			tv_useraddress.setText("个人史：" + history.getPer_history());
 			tv_food_habit.setText("饮食习惯：" + history.getEating_habit());
 			tv_smoke.setText("抽烟：");
-			if (history.getSmoke().equals("0")) {
-				tv_smoke.append("抽烟,");
-				tv_smoke.append(history.getSmoke_age() + "开始,");
-				tv_smoke.append(history.getSmoke_time() + "根/日,");
-				if (history.getStop_smoke().equals("0")) {
-					tv_smoke.append("已戒烟,");
-					tv_smoke.append("戒烟时间" + history.getStop_smoke_time());
+			if (history.getSmoke().equals("1")) {
+				tv_smoke.append("抽烟，");
+				tv_smoke.append(history.getSmoke_age() + "岁开始，");
+				tv_smoke.append(history.getSmoke_time() + "根/日，");
+				if (history.getStop_smoke().equals("1")) {
+					tv_smoke.append("已戒烟，");
+					tv_smoke.append("戒烟时间：" + history.getStop_smoke_time());
 				}
 			} else{
 				tv_smoke.append("不抽烟");
@@ -294,21 +302,29 @@ public class PatientMeActivity extends BaseActivity {
 			if (history.getDrink().equals("1")) {
 				tv_drink.append("饮酒，");
 				tv_drink.append(history.getDrink_age() + "岁开始，");
-				tv_drink.append(history.getDrink_consumption() + "ml,");
+				tv_drink.append(history.getDrink_consumption() + "ml/日，");
 				if (history.getStop_drink().equals("1")) {
 					tv_drink.append("已戒酒，");
-					tv_drink.append("戒酒时间" + history.getStop_drink_time());
+					tv_drink.append("戒酒时间：" + history.getStop_drink_time());
 				}
 			} else{
 				tv_drink.append("不饮酒");
 			}
-			if (history.getMenarche_age() != null && history.getMenarche_age().equals(" ")) {
-				tv_first.setText("月经史：");
-				tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
-				tv_first.append("末次月经时间" + history.getMenarche_etime());
-			}
 			tv_child.setText("子女：" + history.getChilds());
 			tv_family.setText("家族史：" + history.getFamily_history());
+			if(sendInfo != null){
+				if (sendInfo.getSex().equals("1") && history.getMenarche_age() != null 
+						&& history.getMenarche_age().equals(" ")) {
+					history.setSex("1");
+					tv_first.setText("月经史：");
+					tv_first.append("月经年龄" + history.getMenarche_age() + "岁,");
+					tv_first.append("末次月经时间" + history.getMenarche_etime());
+				} else{
+					tv_first.setVisibility(View.GONE);
+					history.setSex("0");
+				}
+			}
+			sendHistory = history;
 		}
 	}
 
@@ -319,16 +335,16 @@ public class PatientMeActivity extends BaseActivity {
 	 */
 	private void addPresentToView(ModelAddNowCase present) {
 		if (present != null) {
-			ll_time.setVisibility(View.VISIBLE);
-			ll_now.setVisibility(View.VISIBLE);
-			defautl_3.setVisibility(View.GONE);
-			tv_commit_time.setText("提交时间：" + present.getCtime());
-			tv_deal_time.setText("处理时间：" + present.getUtime());
+			ll_now.removeAllViews();
+			sendPresent = present;
+			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
+			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
+			List<Result> img_result = present.getImage_exam().getImage_exam_result();
 			/**
 			 * 添加诊断过程
 			 */
-			List<Result> diagnosis_result = present.getDiagnosis().getDiagnosis_result();
 			if (diagnosis_result != null && diagnosis_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -346,8 +362,8 @@ public class PatientMeActivity extends BaseActivity {
 			/**
 			 * 添加实验室检查
 			 */
-			List<Result> lab_result = present.getLab_exam().getLab_exam_result();
 			if (lab_result != null && lab_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -364,8 +380,8 @@ public class PatientMeActivity extends BaseActivity {
 			/**
 			 * 添加影像检查
 			 */
-			List<Result> img_result = present.getImage_exam().getImage_exam_result();
 			if (img_result != null && img_result.size() > 0) {
+				setPresentToView(present);
 				View item = LayoutInflater.from(this).inflate(R.layout.case_present_item, null);
 				// 初始化控件
 				TextView tv_title = (TextView) item.findViewById(R.id.tv_title);
@@ -381,6 +397,14 @@ public class PatientMeActivity extends BaseActivity {
 			}
 
 		}
+	}
+
+	private void setPresentToView(ModelAddNowCase present) {
+		ll_time.setVisibility(View.VISIBLE);
+		ll_now.setVisibility(View.VISIBLE);
+		defautl_3.setVisibility(View.GONE);
+		tv_commit_time.setText("提交时间：" + present.getCtime());
+		tv_deal_time.setText("处理时间：" + present.getUtime());
 	}
 
 	/**
@@ -414,57 +438,59 @@ public class PatientMeActivity extends BaseActivity {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_edit:
-			mApp.startActivity_qcj(this, PatientInforActivity.class, sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientInforActivity.class, sendDataToBundle(sendInfo, "info"));
 			break;
 
 		case R.id.tv_edit2:
-			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(new Model(), null));
+			mApp.startActivity_qcj(this, PatientHistoryActivity.class, sendDataToBundle(sendHistory, "history"));
 			break;
 		case R.id.tv_now_edit2:
-			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(null, null));
+			mApp.startActivity_qcj(this, PatientNowHistoryActivity.class, sendDataToBundle(new Model(), null));
 			break;
 
 		}
 
 	}
 	
-	
 	@Override
-	public View onRequestFailed() {
+	protected void onResume() {
 		// TODO 自动生成的方法存根
-		defaultView = super.onRequestFailed();
-		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
-		tv_reload.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				sendRequest(mApp.getMedRecordImpl().myMedRecord(), 
-						ModelMyCaseIndex.class, REQUEST_GET);
-			}
-		});
-		for (int i = 0; i < count; i++) {
-			ll_patientme_parent.getChildAt(i).setVisibility(View.GONE);
-		}
-		if(!isFirst){
-			isFirst = true;
-			ll_patientme_parent.addView(defaultView); 
-		} else{
-			defaultView.setVisibility(View.VISIBLE);
-		}
-		return defaultView;
+		super.onResume();
+		sendRequest(mApp.getMedRecordImpl().myMedRecord(), ModelMyCaseIndex.class, REQUEST_GET);
 	}
 	
-	@Override
-	public View onRequestSuccess() {
-		// TODO 自动生成的方法存根
-		for (int i = 0; i < count; i++) {
-			ll_patientme_parent.getChildAt(i).setVisibility(View.VISIBLE);
-		}
-		if(defaultView != null){
-			defaultView.setVisibility(View.GONE);
-		}
-		return defaultView;
-	}
+	
+//	@Override
+//	public View onRequestFailed() {
+//		// TODO 自动生成的方法存根
+//		defaultView = super.onRequestFailed();
+//		TextView tv_reload = (TextView) findViewById(R.id.tv_reload);
+//		tv_reload.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				sendRequest(mApp.getMedRecordImpl().myMedRecord(), 
+//						ModelMyCaseIndex.class, REQUEST_GET);
+//			}
+//		});
+//		for (int i = 0; i < count; i++) {
+//			ll_patientme_parent.getChildAt(i).setVisibility(View.GONE);
+//		}
+//		ll_common_default.setVisibility(View.VISIBLE);
+//		return defaultView;
+//	}
+//	
+//	@Override
+//	public View onRequestSuccess() {
+//		// TODO 自动生成的方法存根
+//		for (int i = 0; i < count; i++) {
+//			ll_patientme_parent.getChildAt(i).setVisibility(View.VISIBLE);
+//		}
+//		if(ll_common_default != null){
+//			ll_common_default.setVisibility(View.GONE);
+//		}
+//		return defaultView;
+//	}
 	
 
 }

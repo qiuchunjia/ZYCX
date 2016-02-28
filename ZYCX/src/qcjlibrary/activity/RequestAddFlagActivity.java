@@ -11,6 +11,7 @@ import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
 import qcjlibrary.response.DataAnalyze;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 	private LinearLayout ll_add_flag;
 	private EditText et_content;
 	private TextView tv_add;
+	private TextView tv_prompt;
 	private List<ModelRequestFlag> mFlags = new ArrayList<ModelRequestFlag>();
 	private String mAddFlags = "";
 	private ModelRequestAsk mAsk;
@@ -57,6 +59,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 		ll_add_flag = (LinearLayout) findViewById(R.id.ll_add_flag);
 		et_content = (EditText) findViewById(R.id.et_content);
 		tv_add = (TextView) findViewById(R.id.tv_add);
+		tv_prompt = (TextView) findViewById(R.id.tv_prompt);
 		titleSetRightTitle("提交");
 	}
 
@@ -74,7 +77,6 @@ public class RequestAddFlagActivity extends BaseActivity {
 				getFlag();
 				mAsk.setTopics(mAddFlags);
 				SociaxUIUtils.hideSoftKeyboard(getApplicationContext(), et_content);
-				ToastUtils.showToast("正在提交");
 				sendRequest(mApp.getRequestImpl().addQuestion(mAsk),
 						ModelRequestAsk.class, REQUEST_GET);
 				isCommit = true;
@@ -99,11 +101,16 @@ public class RequestAddFlagActivity extends BaseActivity {
 		}
 		Object object = DataAnalyze.parseData(str, class1);
 		if (object instanceof List<?>) {
+			tv_prompt.setText("根据你的问题，推荐以下标签，最多选择3个:");
 			mFlags = (List<ModelRequestFlag>) object;
 			for (int i = 0; i < mFlags.size(); i++) {
 				mFlags.get(i).setChoose(true); // 默认为选中
 			}
 			addDataToView(mFlags);
+		} else if(object instanceof ModelMsg){
+			ModelMsg msg = (ModelMsg) object;
+			tv_prompt.setText("暂时没有相关问题的标签，请自己添加，最多添加3个:");
+//			ToastUtils.showToast("暂时没有相关问题的标签，请自己添加");
 		}
 		return object;
 	}
@@ -120,6 +127,15 @@ public class RequestAddFlagActivity extends BaseActivity {
 			String content = et_content.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
 				if(!content.startsWith(" ")){
+					//限制标签长度
+					if(EditTextUtils.containsEmoji(content)){
+						ToastUtils.showToast(this, "不可输入表情！");
+						return;
+					}
+					if(content.length() > 10){
+						ToastUtils.showLongToast(this, "不可超过10个字符");
+						return;
+					}
 					//判断输入的标签是否已经存在
 					boolean isExist = false;
 					for (int i = 0; i < mFlags.size(); i++) {
@@ -227,7 +243,7 @@ public class RequestAddFlagActivity extends BaseActivity {
 					mAddFlags = mAddFlags + mFlags.get(i).getTitle() + ",";
 				}
 			}
-			if (mAddFlags != null) {
+			if (!TextUtils.isEmpty(mAddFlags)) {
 				mAddFlags = mAddFlags.substring(0, mAddFlags.length() - 1);
 				return true;
 			}

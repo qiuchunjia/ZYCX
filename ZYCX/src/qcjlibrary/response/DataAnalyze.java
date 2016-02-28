@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.base.Model;
 import qcjlibrary.util.JsonUtils;
 
 import com.google.gson.Gson;
@@ -59,7 +60,13 @@ public class DataAnalyze {
 										.getJSONArray(DATA);
 								return JsonUtils.parseJsonArray(dataArray,
 										classType);
-							} else {
+							} else if(result.equals("false")){
+								if(jsonObject.has("message")){
+									ModelMsg msg = new ModelMsg(jsonObject);
+//									msg.setMessage(jsonObject.getString("message"));
+									return msg;
+								}
+							}else {
 								return JsonUtils.parseJsonObject(
 										jsonObject.getJSONObject(DATA),
 										classType);

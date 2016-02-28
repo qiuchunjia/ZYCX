@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="TextView"
-                android:textColor="@color/text_green"
+                android:textColor="@color/text_user"
                 android:textSize="@dimen/text_common" />
 
             <TextView

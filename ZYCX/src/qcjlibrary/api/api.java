@@ -286,7 +286,8 @@ public class api {
 			if (item != null) {
 				params.add(ID, item.getId());
 				params.add(TYPE, item.getType());
-				params = getChangePage(params, item);
+				params.add(PAGE, String.valueOf(item.getPage()));
+				//params = getChangePage(params, item);
 				Log.i("RequestParamsIndex", params.toString());
 				return params;
 			}
@@ -448,12 +449,32 @@ public class api {
 		}
 
 		@Override
-		public RequestParams myAsk() {
+		public RequestParams myAsk(ModelRequestMyAsk myAsk) {
 			RequestParams params = new RequestParams();
 			params.add(APP, API);
 			params.add(MOD, ASK);
 			params.add(ACT, MYASK);
+			if(myAsk != null){
+				params.add(PAGE, String.valueOf(myAsk.getPage()));
+			}
+			getChangePage(params, myAsk);
 			return getTestToken(params);
+		}
+
+		@Override
+		public RequestParams getMedrecordState() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, ASK);
+			params.add(ACT, MEDRECORD_STATE);
+			return getToken(params);
+		}
+
+		@Override
+		public RequestParams myAskDetail() {
+			RequestParams params = new RequestParams();
+			
+			return null;
 		}
 	}
 
@@ -670,7 +691,10 @@ public class api {
 				 * tags 标签 多个以逗号隔开 至少一个 必填
 				 */
 				params.add(WEIBA_ID, send.getWeiba_id());
-				params.add(PARENT_ID, send.getParent_id());
+				if(send.getParent_id() != null && !send.getParent_id().equals(" ")
+						&& !send.getParent_id().equals("")){
+					params.add(PARENT_ID, send.getParent_id());
+				}
 				params.add(TITLE, send.getTitle());
 				params.add(POST_TIME, send.getPost_time());
 				params.add(BODY, send.getBody());
@@ -827,6 +851,15 @@ public class api {
 			return params;
 		}
 
+		@Override
+		public RequestParams isRead() {
+			RequestParams params = new RequestParams();
+			params.add(APP, API);
+			params.add(MOD, PERSONAGE);
+			params.add(ACT, NOTICE_STATE);
+			return getTestToken(params);
+		}
+
 	}
 
 	public static final class MedRecordImpl implements MedRecordIm {
@@ -895,6 +928,7 @@ public class api {
 				params.add(APP, API);
 				params.add(MOD, MEDRECORD);
 				params.add(ACT, SAVE_PRESENT);
+				params.add(DIAGNOSIS_STIME, nowCase.getDiagnosis().getDiagnosis_stime());
 				params.add(DIAGNOSIS_ETIME, nowCase.getDiagnosis().getDiagnosis_etime());
 				params.add(DIAGNOSIS_HOSPITAL, nowCase.getDiagnosis().getDiagnosis_hospital());
 				params.add(DIAGNOSIS_WAY, nowCase.getDiagnosis().getDiagnosis_way());

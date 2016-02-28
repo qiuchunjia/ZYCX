@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/main_white_bg_color"
     android:orientation="vertical" >
 
     <ImageView
@@ -25,6 +26,7 @@
         android:layout_marginTop="@dimen/margin_top_30"
         android:background="@drawable/view_border_gray_white"
         android:text="点击刷新"
+        android:clickable="true"
         android:textColor="@color/text_more_gray"
         android:textSize="@dimen/text_small" />
 

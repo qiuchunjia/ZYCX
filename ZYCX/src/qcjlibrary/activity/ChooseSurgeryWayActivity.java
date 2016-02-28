@@ -24,7 +24,7 @@ public class ChooseSurgeryWayActivity extends BaseActivity {
 
 	@Override
 	public String setCenterTitle() {
-		return "方式";
+		return "诊断方式";
 	}
 
 	@Override

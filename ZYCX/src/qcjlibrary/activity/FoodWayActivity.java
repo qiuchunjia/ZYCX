@@ -6,14 +6,18 @@ import qcjlibrary.fragment.FragementFood;
 import qcjlibrary.fragment.FragementFoodWay;
 import qcjlibrary.model.ModelFoodSearch;
 import qcjlibrary.model.ModelFoodSearchIndex;
+import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.util.ToastUtils;
+import qcjlibrary.util.UIUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.zhiyicx.zycx.R;
@@ -30,6 +34,7 @@ public class FoodWayActivity extends BaseActivity {
 	private LinearLayout ll_find;
 	private RelativeLayout rl_find;
 	private ImageView iv_find_main;
+	private ImageView iv_bg;
 
 	private RelativeLayout rl_content;
 	Title mTitle;
@@ -64,9 +69,14 @@ public class FoodWayActivity extends BaseActivity {
 		ll_find = (LinearLayout) findViewById(R.id.ll_find);
 		rl_find = (RelativeLayout) findViewById(R.id.rl_find);
 		iv_find_main = (ImageView) findViewById(R.id.iv_find_main);
+		iv_bg = (ImageView) findViewById(R.id.iv_bg);
 
 		rl_content = (RelativeLayout) findViewById(R.id.rl_content);
 		mTitle = getTitleClass();
+		int width = UIUtils.getWindowWidth(this);
+		int height = (int) UIUtils.px2dip(this, width)/4;
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, width/4);
+		iv_bg.setLayoutParams(params);
 	}
 
 	@Override

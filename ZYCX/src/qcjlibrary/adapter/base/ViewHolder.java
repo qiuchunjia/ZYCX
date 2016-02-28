@@ -3,6 +3,7 @@ package qcjlibrary.adapter.base;
 import qcjlibrary.widget.RoundImageView;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,8 +24,15 @@ public class ViewHolder {
 	public ImageView iv_no;
 	public TextView tv_agree;
 	public TextView tv_noagree;
+	public ImageView iv_request_line;
 
 	/******************* 专家提问item end ************************/
+	/** 普通问答tab**/
+	public TextView tv_1;
+	public TextView tv_2;
+	public TextView tv_3;
+	public TextView tv_4;
+	/** 普通问答tab end**/
 	/******************* 消息中的回复item ************************/
 	public RoundImageView riv_msg_icon;
 	public TextView tv_user;
@@ -46,6 +54,7 @@ public class ViewHolder {
 	public TextView tv_notify;
 	public TextView tv_notify_content;
 	public TextView tv_notify_date;
+	public ImageView iv_praise_item;
 	/******************* 消息中的 praise item end ************************/
 	/******************* 我的期刊 item ************************/
 	public ImageView iv_perio_icon;
@@ -64,6 +73,7 @@ public class ViewHolder {
 
 	/******************* 病例历史item ************************/
 	public TextView tv_content;
+	public ImageView iv_msg_history;
 	// public TextView tv_date;
 	/******************* 病例历史item end ************************/
 

@@ -45,6 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:text="TextView"
+            android:textSize="@dimen/text_common"
             android:textAppearance="?android:attr/textAppearanceLarge" >
         </TextView>
 

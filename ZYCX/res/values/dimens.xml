@@ -18,6 +18,9 @@
     <dimen name="text_common">17sp</dimen>
     <!-- 小标释 -->
     <dimen name="text_small">16sp</dimen>
+    <dimen name="text_min">15sp</dimen>
+    <dimen name="text_add">18sp</dimen>
+    
     <!-- 文字行间距 -->
 
     <dimen name="text_lineSpacingExtra">5dp</dimen>

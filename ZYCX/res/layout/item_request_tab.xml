@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_white_pure_color" >
+
+    <LinearLayout
+        android:id="@+id/ll_request_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_white_pure_color"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_top" >
+
+        <TextView
+            android:id="@+id/tv_01"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="治疗"
+            android:clickable="true"
+            android:textColor="@color/text_green"
+            android:textSize="@dimen/text_common" />
+
+        <TextView
+            android:id="@+id/tv_02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="护理"
+            android:clickable="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_common" />
+
+        <TextView
+            android:id="@+id/tv_03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="康复"
+            android:clickable="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_common" />
+
+        <TextView
+            android:id="@+id/tv_04"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="癌种"
+            android:clickable="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_common" />
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/iv_tab_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/main_gray_bg_color"
+        android:visibility="visible"
+        android:layout_below="@id/ll_request_tab"/>
+
+</RelativeLayout>

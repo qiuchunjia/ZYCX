@@ -7,13 +7,17 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestCommmetCommon;
+import qcjlibrary.model.ModelRequestDetailCommon;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.L;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopDealAnwer;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +39,10 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 	private EditText et_content;
 	private TextView tv_send;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private FrameLayout frame_request_responce;
 
 	ModelRequestAnswerComom mAnswerCommon;
 
@@ -66,6 +74,7 @@ public class RequestDetailResponceActivity extends BaseActivity {
 
 		et_content = (EditText) findViewById(R.id.et_content);
 		tv_send = (TextView) findViewById(R.id.tv_send);
+		frame_request_responce = (FrameLayout) findViewById(R.id.frame_request_responce);
 
 	}
 
@@ -196,5 +205,32 @@ public class RequestDetailResponceActivity extends BaseActivity {
 		}
 
 		return data;
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (mAnswerCommon != null) {
+					sendRequest(mApp.getRequestImpl().commentList(mAnswerCommon), 
+							ModelRequestCommmetCommon.class, REQUEST_GET);
+				}
+			}
+		});
+		DefaultLayoutUtil.showDefault(frame_request_responce, defaultView);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(frame_request_responce, defaultView);
+		return defaultView;
 	}
 }

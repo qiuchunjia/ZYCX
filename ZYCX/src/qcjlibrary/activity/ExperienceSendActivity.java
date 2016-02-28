@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.TimePickerView.OnTimeSelectListener;
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
@@ -52,6 +53,7 @@ public class ExperienceSendActivity extends BaseActivity {
 	private List<String> tagsList = new ArrayList<String>(); // 选中的标签
 	/**时分时间选择框**/
 	private TimePickerView pvTime;
+	private String time;
 
 	@Override
 	public String setCenterTitle() {
@@ -123,10 +125,12 @@ public class ExperienceSendActivity extends BaseActivity {
 		for (int i = 0; i < tagsList.size(); i++) {
 			if (tagsList.get(i).equals(tag)) {
 				view.setBackgroundResource(R.color.text_white);
+				((TextView)view).setTextColor(getResources().getColor(R.color.text_black));
 				tagsList.remove(tag);
 				return;
 			}
 		}
+		((TextView)view).setTextColor(getResources().getColor(R.color.text_green));
 		view.setBackgroundResource(R.drawable.view_border_green_pure_0);
 		tagsList.add(tag);
 	}
@@ -139,6 +143,7 @@ public class ExperienceSendActivity extends BaseActivity {
 			
 			@Override
 			public void onTimeSelect(Date date) {
+				time = DateUtil.DateToStamp(date);
 				tv_choosedate.setText(DateUtil.strTodate(DateUtil.DateToStamp(date)));
 			}
 		});
@@ -157,10 +162,10 @@ public class ExperienceSendActivity extends BaseActivity {
 			if (judgeTheSend(title, date, content, chooseTags)) {
 				mSendData.setTitle(title);
 				mSendData.setBody(content);
-				mSendData.setPost_time(DateUtil.dateToStr(date));
+				mSendData.setPost_time(time);
 				mSendData.setPhotoUrls(mPhotoList);
 				mSendData.setTags(chooseTags);
-				sendRequest(mApp.getExperienceImpl().addPost(mSendData), ModelMsg.class, REQUEST_GET);
+				sendRequest(mApp.getExperienceImpl().addPost(mSendData), ModelMsg.class, REQUEST_POST);
 			}
 			break;
 		case R.id.tv_choosedate:
@@ -177,7 +182,7 @@ public class ExperienceSendActivity extends BaseActivity {
 			for (int i = 0; i < tagsList2.size(); i++) {
 				tags = tags + tagsList2.get(i) + ",";
 			}
-			tags = tags.substring(0, tags.length() - 2);
+			tags = tags.substring(0, tags.length() - 1);
 			return tags;
 		}
 		return null;

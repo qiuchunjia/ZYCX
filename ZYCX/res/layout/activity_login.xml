@@ -39,7 +39,7 @@
                 android:layout_toRightOf="@id/iv_user"
                 android:background="@null"
                 android:cursorVisible="true"
-                android:hint="手机号/邮箱"
+                android:hint="手机号/用户名/邮箱"
                 android:textColor="@color/text_black"
                 android:textColorHint="@color/text_more_gray"
                 android:textCursorDrawable="@null"

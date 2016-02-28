@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -48,7 +49,7 @@ public class ZhiXunAdapter extends BAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = initView(holder, type);
-			convertView.setTag(holder);
+//			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -64,7 +65,7 @@ public class ZhiXunAdapter extends BAdapter {
 	 */
 	private int judgeTheType(int pos) {
 		// 表示热点
-		if (pos == 0 && mDetail.getFenlei_id() == 106) {
+		if (pos == 0 && mDetail.getFenlei_id() == 7) {
 			return TYPE_2;
 		}
 		return TYPE_1;
@@ -87,7 +88,11 @@ public class ZhiXunAdapter extends BAdapter {
 				} else {
 					mApp.displayImage(modelZiXunDetail.getCover(), holder.iv_zixun);
 					holder.tv_zixun_title.setText(modelZiXunDetail.getTitle());
-					holder.tv_zixun_num.setText(modelZiXunDetail.getReadCount());
+					String count = modelZiXunDetail.getReadCount();
+					if (count.length() > 3) {
+						count = "999+";
+					}
+					holder.tv_zixun_num.setText(count);
 				}
 			}
 		}
@@ -109,11 +114,13 @@ public class ZhiXunAdapter extends BAdapter {
 				holder.tv_date = (TextView) view.findViewById(R.id.tv_date);
 				holder.tv_from = (TextView) view.findViewById(R.id.tv_from);
 				holder.tv_num = (TextView) view.findViewById(R.id.tv_num);
+				view.setTag(holder);
 			} else {
 				view = mInflater.inflate(R.layout.item_zhixun_big, null);
 				holder.iv_zixun = (ImageView) view.findViewById(R.id.iv_zixun);
 				holder.tv_zixun_title = (TextView) view.findViewById(R.id.tv_zixun_title);
 				holder.tv_zixun_num = (TextView) view.findViewById(R.id.tv_zixun_num);
+				view.setTag(holder);
 			}
 		}
 		return view;
@@ -121,12 +128,15 @@ public class ZhiXunAdapter extends BAdapter {
 
 	@Override
 	public void refreshNew() {
+		mDetail.setLastid(null);
+		mDetail.setMaxid(null);
 		requstMessage(mDetail, REFRESH_NEW);
 	}
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-		requstMessage(mDetail, REFRESH_NEW);
+		//requstMessage(mDetail, REFRESH_NEW);
+		refreshNew();
 	}
 
 	@Override
@@ -169,8 +179,11 @@ public class ZhiXunAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelZiXun) {
 			ModelZiXun modelZiXun = (ModelZiXun) object;
-			modelZiXun.getList();
-			return modelZiXun.getList();
+			List<ModelZiXunDetail> list = modelZiXun.getList();
+			if(isLoading()){
+				setLoading(false);
+			}
+			return list;
 		}
 		return null;
 	}

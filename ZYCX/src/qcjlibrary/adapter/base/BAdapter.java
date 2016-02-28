@@ -21,13 +21,17 @@ import qcjlibrary.request.base.Request;
 import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
+import android.app.ActionBar.LayoutParams;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.BaseAdapter;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
 
 /** adapter的基類，不要輕易修改這個類 */
@@ -62,11 +66,13 @@ public abstract class BAdapter extends BaseAdapter {
 	public BAdapter(BaseFragment fragment, List<Model> list) {
 		this.mBaseFragment = fragment;
 		mBaseActivity = (BaseActivity) mBaseFragment.getActivity();
-		mInflater = LayoutInflater.from(mBaseActivity);
-		mApp = (Thinksns) mBaseFragment.getActivity().getApplication();
-		if (list != null)
-			mList = list;
-		mBaseFragment.setAdapter(this);
+		if (mBaseActivity != null) {
+			mInflater = LayoutInflater.from(mBaseActivity);
+			mApp = (Thinksns) mBaseFragment.getActivity().getApplication();
+			if (list != null)
+				mList = list;
+			mBaseFragment.setAdapter(this);
+		}
 	}
 
 	/** 子类实现，用来第一次打开的时候获取新数据，当刷新到时候是调用refreshNew() */
@@ -98,11 +104,13 @@ public abstract class BAdapter extends BaseAdapter {
 		// TODO
 		if (mList != null && mList.size() == 0) { // 当为空的时候才请求，其它的都用doRefreshHeader()
 			refreshNew();
+			hasMore = true;
 		}
 	}
 
 	/** 真正的刷新数据數據，即調用RefreshHeader() 獲取的數據加載到adapter里面 */
 	public void doRefreshHeader() {
+		hasMore = true;
 		// TODO 这里要先检查网络是否有，如果没有的话 就return；
 		if (mList == null)
 			mList = new ArrayList<Model>();
@@ -115,18 +123,43 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
+	
+	/**
+	 * 判断是否正在加载中，数据是否已经获取。
+	 * */
+	private boolean isLoading = false;
+
+	public boolean isLoading() {
+		return isLoading;
+	}
+	/**
+	 * 设置为未加载，用于子类加载完数据时调用
+	 * */
+	public void setLoading(boolean isLoading) {
+		this.isLoading = isLoading;
+	}
 
 	/** 真正的獲取數據，即調用RefreshFooter() 獲取的數據加載到adapter里面 */
 	public void doRefreshFooter() {
 		// TODO 这里要先检查网络是否有，如果没有的话 就return；
+		if(!hasMore){
+			dismissTheProgress();
+			return;
+		}
 		if (mList == null)
 			mList = new ArrayList<Model>();
 		this.notifyDataSetChanged();
 		if (!mList.isEmpty()) {
-			// TODO
+			// TODO 当前没有加载，则加载数据
+			if(!isLoading){
+				isLoading = true;
+				dismissTheProgress();
+			} else{
+				return;
+			}
 			refreshFooter(mList.get(mList.size() - 1), REQUEST_ITEM_COUNT);
 		}
-
+		
 	}
 
 	/**
@@ -340,7 +373,8 @@ public abstract class BAdapter extends BaseAdapter {
 		}
 
 	}
-
+	private boolean isFirst = true;
+	private boolean hasMore = true;
 	private class MyAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
 		private Class type;
 		private int RefreshType;
@@ -352,8 +386,7 @@ public abstract class BAdapter extends BaseAdapter {
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			ToastUtils.showToast("请求异常");
-			
+			onRequestFailed();
 		}
 
 		@Override
@@ -365,16 +398,21 @@ public abstract class BAdapter extends BaseAdapter {
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 
 			if (arg2 != null) {
+				onRequestSuccess();
 				String result = new String(arg2);
 				if (result != null) {
 					Object object = onResponceSuccess(result, type);
 					if (object != null) {
 						if (object instanceof ModelMsg) {
 							if (!TextUtils.isEmpty(((ModelMsg) object).getMessage())) {
-								ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+								if(isFirst){
+									ToastUtils.showToast(((ModelMsg) object).getMessage() + "");
+									isFirst = false;
+								}
 							} else {
 								ToastUtils.showToast("没有更多数据了！");
 							}
+							hasMore = false;
 							dismissTheProgress();
 						} else {
 							Object objectResult = getReallyList(object, type);
@@ -398,6 +436,38 @@ public abstract class BAdapter extends BaseAdapter {
 
 	public Object onResponceSuccess(String str, Class class1) {
 		return DataAnalyze.parseDataByGson(str, class1);
+	}
+
+	/** 缺省视图 **/
+	private View view;
+
+	private View getDefaultView() {
+		view = mInflater.inflate(R.layout.common_default_layout, null);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, Gravity.CENTER);
+		view.setLayoutParams(params);
+		return view;
+	}
+
+	public View onRequestFailed() {
+		if (mRequestLinstener != null) {
+			mRequestLinstener.onFailed(getDefaultView());
+		}
+		return getDefaultView();
+	}
+
+	public View onRequestSuccess() {
+		View view = getDefaultView();
+		view.setVisibility(View.GONE);
+		if (mRequestLinstener != null) {
+			mRequestLinstener.onSuccess(getDefaultView());
+		}
+		return view;
+	}
+
+	private OnRequestLinstner mRequestLinstener;
+
+	public void setOnRequestLinstner(OnRequestLinstner mRequestLinstener) {
+		this.mRequestLinstener = mRequestLinstener;
 	}
 
 	public abstract Object getReallyList(Object object, Class type2);

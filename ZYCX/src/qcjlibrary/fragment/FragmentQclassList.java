@@ -2,6 +2,8 @@ package qcjlibrary.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.activity.HomeActivity.onStatusChangedListener;
 import com.zhiyicx.zycx.activity.QClassDetailsActivity;
@@ -81,7 +83,9 @@ public class FragmentQclassList extends BaseFragment{
 		detail = new ModelQclassDetail();
 		qclassImpl = new QclassImpl();
 		detail.setClass_id(mType);
-		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+		mAdapter = new QclassAdapter(this, detail);
+		mCommonListView.setAdapter(mAdapter);
+//		sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -102,14 +106,15 @@ public class FragmentQclassList extends BaseFragment{
 				mList.clear();
 				if(mQclass.getList() != null){
 					mList.addAll(mQclass.getList());
-					L.d("Cathy", "mList:"+mList.size()+" mQclass:"+mQclass.getList().size()
-							+" "+mQclass.getList().get(0).getCourse_name()+" mType:"+mType);
+//					L.d("Cathy", "mList:"+mList.size()+" mQclass:"+mQclass.getList().size()
+//							+" "+mQclass.getList().get(0).getCourse_name()+" mType:"+mType);
 					if(mAdapter == null){
-						mAdapter = new QclassAdapter(this, mList, detail);
+						mAdapter = new QclassAdapter(this, detail);
 						mCommonListView.setAdapter(mAdapter);
 					} else{
 						mList.clear();
 						mList.addAll(mQclass.getList());
+						mAdapter.mList = mList;
 						mAdapter.notifyDataSetChanged();
 					}
 				} else{
@@ -136,8 +141,7 @@ public class FragmentQclassList extends BaseFragment{
 						mAdapter.setStatus(status);
 					}
 					detail.setStatus(status);
-					L.d("Cathy", "status: "+status);
-					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
+//					sendRequest(qclassImpl.indexItem(detail), ModelQclass.class, 0);
 				}
 			});
 		}
@@ -149,4 +153,5 @@ public class FragmentQclassList extends BaseFragment{
 		super.onCreate(savedInstanceState);
 		isCreate = true;
 	}
+	
 }

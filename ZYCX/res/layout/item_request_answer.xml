@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_white_pure_color"
-    android:orientation="vertical" >
+    android:background="@color/main_white_pure_color" >
 
     <RelativeLayout
         android:id="@+id/rl_head"
@@ -16,13 +15,14 @@
             android:id="@+id/tv_advice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_title"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_right_small"
             android:layout_marginTop="@dimen/margin_top"
-            android:background="@drawable/view_border_blue_3"
+            android:background="@drawable/view_border_blue_solid_3"
             android:text="推荐"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_big"
+            android:textSize="@dimen/text_small"
             android:visibility="visible" />
 
         <TextView
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
             android:layout_marginLeft="@dimen/margin_left_small"
+            android:layout_marginRight="@dimen/margin_left_small"
             android:layout_marginTop="@dimen/margin_top"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
@@ -59,10 +60,13 @@
         android:id="@+id/tv_expert_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/rl_head"
         android:layout_marginLeft="@dimen/margin_left_small"
         android:layout_marginRight="@dimen/margin_right_small"
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/main_white_bg_color"
+        android:scrollHorizontally="true"
+        android:singleLine="false"
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
         android:maxLines="2"
@@ -70,7 +74,7 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:paddingTop="@dimen/margin_top"
-        android:text="专家建议：胸部的磁共振结果如何?如果结果都没有出现转移"
+        android:text="专家建议：胸部的磁共振结果如何?如果结果都没有出现转移结果都没有出现转移结果都没有出现转移结果都没有出现转移"
         android:textColor="@color/text_more_gray"
         android:textSize="@dimen/text_common" />
     <!-- 尾部 -->
@@ -78,7 +82,8 @@
     <RelativeLayout
         android:id="@+id/rl_footer"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_expert_answer" >
 
         <TextView
             android:id="@+id/tv_date"
@@ -95,7 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true" >
-
             <!-- 选择同意框 -->
 
             <RelativeLayout
@@ -149,4 +153,12 @@
         </FrameLayout>
     </RelativeLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_request_line"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_gray_bg_color"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

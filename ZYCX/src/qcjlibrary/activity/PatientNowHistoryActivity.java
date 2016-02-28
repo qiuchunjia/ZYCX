@@ -13,6 +13,7 @@ import qcjlibrary.model.ModelLab;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelPop;
 import qcjlibrary.util.DateUtil;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.util.localImageHelper.LocalImageManager;
 import qcjlibrary.widget.popupview.PopCommonProgress;
@@ -115,6 +116,7 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		ll_ScrollView1 = (LinearLayout) findViewById(R.id.ll_ScrollView1);
 		ll_ScrollView2 = (LinearLayout) findViewById(R.id.ll_ScrollView2);
 		ll_ScrollView3 = (LinearLayout) findViewById(R.id.ll_ScrollView3);
+		
 		pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
 		pvTime.setTime(new Date());
 		pvTime.setCyclic(true);
@@ -170,7 +172,6 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			if (checkTheContent()) {
 				ModelAddNowCase addNowCase = addDataToModel();
 				sendRequest(mApp.getMedRecordImpl().savePresent(addNowCase), ModelMsg.class, REQUEST_POST);
-				ToastUtils.showToast("提交中...");
 			}
 
 			break;
@@ -231,6 +232,8 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		Object object = super.onResponceSuccess(str, class1);
 		if (judgeTheMsg(object)) {
 			onBackPressed();
+			ToastUtils.showToast("上传成功，等待审核");
+		} else{
 		}
 		return object;
 	}
@@ -261,13 +264,13 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	@Override
 	public void onResponseProgress(long bytesWritten, long totalSize) {
 		super.onResponseProgress(bytesWritten, totalSize);
-		if (isFirst) {
-			isFirst = false;
-			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
-			mProgress.setProgress(bytesWritten, totalSize);
-		} else {
-			mProgress.setProgress(bytesWritten, totalSize);
-		}
+//		if (isFirst) {
+//			isFirst = false;
+//			mProgress.showPop(rl_check_time, Gravity.CENTER, 0, 0);
+//			mProgress.setProgress(bytesWritten, totalSize);
+//		} else {
+//			mProgress.setProgress(bytesWritten, totalSize);
+//		}
 	}
 
 	@Override
@@ -355,8 +358,14 @@ public class PatientNowHistoryActivity extends BaseActivity {
 	 * 
 	 * @return
 	 */
-
-	private boolean checkTheContent() {
+	
+	private boolean checkFirst(){
+		if(TextUtils.isEmpty(diagnosis_stime) 
+				&& TextUtils.isEmpty(diagnosis_etime) 
+				&& TextUtils.isEmpty(diagnosis_hospital) 
+				&& TextUtils.isEmpty(diagnosis_way)){
+			return false;
+		}
 		if (TextUtils.isEmpty(diagnosis_stime)) {
 			ToastUtils.showToast("请选择诊断起始时间");
 			return false;
@@ -373,6 +382,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请选择诊断方式");
 			return false;
 		}
+		return true;
+	}
+	
+	private boolean checkSecond(){
+		if(TextUtils.isEmpty(lab_exam_program) 
+				&& TextUtils.isEmpty(lab_exam_time) 
+				&& TextUtils.isEmpty(lab_exam_hospital)){
+			return false;
+		}
 		if (TextUtils.isEmpty(lab_exam_program)) {
 			ToastUtils.showToast("请选择实验室检查项目");
 			return false;
@@ -383,6 +401,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		}
 		if (TextUtils.isEmpty(lab_exam_hospital)) {
 			ToastUtils.showToast("请输入实验室检查医院");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkThired(){
+		if(TextUtils.isEmpty(image_exam_program) 
+				&& TextUtils.isEmpty(image_exam_time) 
+				&& TextUtils.isEmpty(image_exam_hospital)){
 			return false;
 		}
 		if (TextUtils.isEmpty(image_exam_program)) {
@@ -397,8 +424,15 @@ public class PatientNowHistoryActivity extends BaseActivity {
 			ToastUtils.showToast("请输入影像学检查医院");
 			return false;
 		}
-
 		return true;
+	}
+
+	private boolean checkTheContent() {
+		
+		if(checkFirst() || checkSecond() || checkThired()){
+			return true;
+		} 
+		return false;
 	}
 
 	/**
@@ -413,6 +447,8 @@ public class PatientNowHistoryActivity extends BaseActivity {
 		ModelImage image = new ModelImage();
 		diagnosis.setDiagnosis_stime(diagnosis_stime);
 		diagnosis.setDiagnosis_etime(diagnosis_etime);
+//		Log.d("Cathy", "diagnosis_stime = "+diagnosis_stime);
+//		Log.d("Cathy", "diagnosis_etime = "+diagnosis_etime);
 		diagnosis.setDiagnosis_hospital(diagnosis_hospital);
 		diagnosis.setDiagnosis_way(diagnosis_way);
 		lab.setLab_exam_program(lab_exam_program);

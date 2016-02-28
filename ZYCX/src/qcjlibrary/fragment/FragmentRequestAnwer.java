@@ -7,18 +7,29 @@ import qcjlibrary.activity.RequestDetailExpertActivity;
 import qcjlibrary.activity.RequestSearchActivity;
 import qcjlibrary.adapter.RequestAnswerAdapter;
 import qcjlibrary.adapter.base.BAdapter;
+import qcjlibrary.adapter.base.OnRequestLinstner;
 import qcjlibrary.fragment.base.BaseFragment;
 import qcjlibrary.listview.base.CommonListView;
 import qcjlibrary.model.ModelCancerCategory;
+import qcjlibrary.model.ModelFoodIdDetail;
 import qcjlibrary.model.ModelRequest;
 import qcjlibrary.model.ModelRequestItem;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.DisplayUtils;
 import qcjlibrary.widget.popupview.PopCancerCategory;
 import android.animation.ObjectAnimator;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnWindowFocusChangeListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -57,6 +68,13 @@ public class FragmentRequestAnwer extends BaseFragment {
 	private List<ModelCancerCategory> mCancerList; // 癌症种类
 
 	private ModelRequestItem mRequestItem; // 请求数据
+	private LinearLayout ll_request_head;
+	private LinearLayout ll_commonlist_parent;
+
+	private float mLastY;
+	private float offset;
+	private int llTop;
+	private int tvTop;
 
 	@Override
 	public void initIntentData() {
@@ -89,6 +107,9 @@ public class FragmentRequestAnwer extends BaseFragment {
 		tv_3 = (TextView) findViewById(R.id.tv_3);
 		tv_4 = (TextView) findViewById(R.id.tv_4);
 
+		ll_request_head = (LinearLayout) findViewById(R.id.ll_request_head);
+		ll_commonlist_parent = (LinearLayout) findViewById(R.id.ll_commonlist_parent);
+
 		mCommonListView = (CommonListView) findViewById(R.id.mCommonListView);
 		mCommonListView.setDividerHeight(DisplayUtils.dp2px(mApp, 10));
 		mCommonListView.setOnItemClickListener(new OnItemClickListener() {
@@ -119,7 +140,7 @@ public class FragmentRequestAnwer extends BaseFragment {
 	/**
 	 * 设置type的类型
 	 * 
-	 * 注释：就这么任性的直接new一个adapter，简单粗暴，反正是外包，管我毛事
+	 * 注释：就这么任性的直接new一个adapter，简单粗暴，反正是外包，管我毛事 ↑ from qcj :)
 	 */
 	private void setTypeAdapter(String type) {
 		mRequestItem.setType(type);
@@ -147,6 +168,82 @@ public class FragmentRequestAnwer extends BaseFragment {
 		ll_2.setOnClickListener(this);
 		ll_3.setOnClickListener(this);
 		ll_4.setOnClickListener(this);
+
+		mCommonListView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				long time = Math.abs((long) (offset / 10)) * 1000;
+				switch (scrollState) {
+				case OnScrollListener.SCROLL_STATE_IDLE:
+					break;
+				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+					setAnimator(ll_top, offset, 500);
+					setAnimator(mCommonListView, offset, 500);
+					break;
+				case OnScrollListener.SCROLL_STATE_FLING:
+					setAnimator(ll_top, offset, 500);
+					setAnimator(mCommonListView, offset, 500);
+					break;
+
+				default:
+					break;
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			}
+		});
+
+		mCommonListView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					mLastY = event.getY();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					offset = event.getY() - mLastY;
+					// setAnimator(ll_top, offset, 500);
+					// setAnimator(mCommonListView, offset, time);
+					// llTop = ll_request_head.getTop();
+					// tvTop = tv_1.getTop();
+					// mLastY = event.getY();
+					break;
+				default:
+					break;
+				}
+				return false;
+			}
+		});
+		
+		/**
+		 * 监听是否成功请求数据
+		 */
+		mAdapter.setOnRequestLinstner(new OnRequestLinstner() {
+
+			@Override
+			public void onSuccess(View view) {
+				DefaultLayoutUtil.hideDefault(ll_commonlist_parent, view);
+			}
+
+			@Override
+			public void onFailed(View view) {
+				DefaultLayoutUtil.showDefault(ll_commonlist_parent, view);
+				TextView tv_reload = (TextView) view.findViewById(R.id.tv_reload);
+				tv_reload.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Log.d("Cathy", "onClick");
+						mAdapter.doRefreshNew();
+					}
+				});
+			}
+		});
+
 	}
 
 	@Override
@@ -205,4 +302,25 @@ public class FragmentRequestAnwer extends BaseFragment {
 		tv_4.setTextColor(getResources().getColor(R.color.text_more_gray));
 	}
 
+	/**
+	 * 设置动画
+	 * 
+	 * @param Object
+	 *            target
+	 * @param float
+	 *            fromY
+	 * @param float
+	 *            end
+	 * @param long
+	 *            time
+	 */
+	private void setAnimator(Object target, float offset, long time) {
+		ObjectAnimator.ofFloat(target, "translationY", offset).setDuration(time).start();
+	}
+
+	@Override
+	public void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+	}
 }

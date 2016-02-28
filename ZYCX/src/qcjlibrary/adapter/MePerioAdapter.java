@@ -109,6 +109,9 @@ public class MePerioAdapter extends BAdapter {
 		if (object instanceof List<?>) {
 			@SuppressWarnings("unchecked")
 			List<ModelPeriodical> list = (List<ModelPeriodical>) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			return list;
 		}
 		return null;

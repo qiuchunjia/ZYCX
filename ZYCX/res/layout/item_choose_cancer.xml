@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/rl_choose_cancer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height_50"
         android:background="@color/main_white_pure_color"

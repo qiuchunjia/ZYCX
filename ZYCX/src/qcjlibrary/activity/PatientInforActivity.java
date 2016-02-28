@@ -12,6 +12,7 @@ import qcjlibrary.widget.popupview.PopChooseGender;
 import qcjlibrary.widget.popupview.PopChooseInsurance;
 import qcjlibrary.widget.popupview.PopChooseMarry;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +48,7 @@ public class PatientInforActivity extends BaseActivity {
 	private TextView tv_address_name;
 	private EditText et_heights;
 	private EditText et_weights;
+	private ModelAddCase info;
 
 	@Override
 	public String setCenterTitle() {
@@ -55,7 +57,7 @@ public class PatientInforActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-
+		info = (ModelAddCase) getDataFromIntent(getIntent(), "info");
 	}
 
 	@Override
@@ -86,6 +88,7 @@ public class PatientInforActivity extends BaseActivity {
 		tv_address_name = (TextView) findViewById(R.id.tv_address_name);
 		et_heights = (EditText) findViewById(R.id.et_heights);
 		et_weights = (EditText) findViewById(R.id.et_weights);
+		
 	}
 
 	@Override
@@ -93,6 +96,42 @@ public class PatientInforActivity extends BaseActivity {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
 
+		if(info != null){
+			//获取数据
+			realname = info.getRealname();
+			sex = info.getSex();
+			age = info.getAge();
+			marriage = info.getMarriage();
+			nation = info.getNation();
+			profession = info.getProfession();
+			education = info.getEducation();
+			insform = info.getInsform();
+			natives = info.getNatives();
+			domicile = info.getDomicile();
+			height = info.getHeight();
+			weight = info.getWeight();
+			//设置数据
+			et_name.setText(realname);
+			if(sex.equals("0")){
+				tv_gender_name.setText("男");
+			} else{
+				tv_gender_name.setText("女");
+			}
+			et_age.setText(age);
+			if(marriage.equals("0")){
+				tv_marry_name.setText("未婚");
+			} else{
+				tv_marry_name.setText("已婚");
+			}
+			tv_nation_name.setText(nation);
+			et_job.setText(profession);
+			tv_education_name.setText(education);
+			tv_insurance_name.setText(insform);
+			tv_hometown_name.setText(natives);
+			tv_address_name.setText(domicile);
+			et_heights.setText(height);
+			et_weights.setText(weight);
+		}
 	}
 
 	@Override

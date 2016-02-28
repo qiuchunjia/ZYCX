@@ -43,9 +43,9 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 	private SwipeMenuListView mSwipeMenuListView;
 	private UseMedicineNotifyAdapter mAdapter;
 	private List<Model> mList;
+	/** 用于区分返回的Msg数据的类型，true为删除返回，false为其他**/
 	boolean isDel = false;
 	private AlarmImpl impl;
-	/** 闹钟管理类 **/
 
 	@Override
 	public void onClick(View v) {
@@ -102,7 +102,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		});
 
 		/**
-		 * 监听滑动删除,调用适配器中delete方法，删除服务器中数据
+		 * 监听滑动删除,调用适配器中delete方法，删除服务器中数据，同时取消闹钟事件。
 		 */
 		mSwipeMenuListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
@@ -162,6 +162,7 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				} else{
 					ToastUtils.showLongToast(this, "删除失败");
 				}
+				isDel = false;
 			} else{
 				if(msg.getCode() == 0){
 					//缺省页
@@ -187,12 +188,10 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 		}
 		String[] timeArr = timeList.split(",");
 		for (int i = 0; i < timeArr.length; i++) {
-			int id = 0;
-			id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
-					mData.getId() + ":" + i, id);
+			/** 区分不同闹钟的ID 如231：第23号闹钟的第一个提醒时间 **/
+			int id = Integer.parseInt(mData.getId()+""+i);
 			//提醒
 			if (mData.getIs_remind() == 0) {
-				/** 区分不同闹钟的ID **/
 				if (timeArr[i] != null) {
 					long currentMillis = System.currentTimeMillis();
 					Calendar mCalendar = Calendar.getInstance();
@@ -208,8 +207,15 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 						mCalendar.set(Calendar.MONTH, set.getMonth());
 						mCalendar.set(Calendar.DAY_OF_MONTH, set.getDay());
 					}
-					int hour = Integer.parseInt(timeArr[i].split(":")[0]);
-					int min = Integer.parseInt(timeArr[i].split(":")[1]);
+					int hour = 8;
+					int min = 0;
+					try{
+						hour = Integer.parseInt(timeArr[i].split(":")[0]);
+						min = Integer.parseInt(timeArr[i].split(":")[1]);
+					} catch(Exception e){
+						hour = 8;
+						min = 0;
+					}
 					mCalendar.set(Calendar.HOUR_OF_DAY, hour);
 					mCalendar.set(Calendar.MINUTE, min);
 					mCalendar.set(Calendar.SECOND, 0);
@@ -221,20 +227,21 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 					if(mCalendar.getTimeInMillis() < currentMillis){
 						 mCalendar.add(Calendar.DAY_OF_MONTH, period);
 					}
-					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
+//					Log.d("Cathy", "开始时间：" + DateUtil.changeLong2Str(mCalendar.getTimeInMillis()));
 					/**
 					 * 三种获取PendingIntent对象的方法 getActivity(Context, int, Intent,
 					 * int) 启动一个activity getBroadcast(Context, int, Intent, int)
 					 * 发送一个广播 getService(Context, int, Intent, int) 开启一个服务
 					 */
-					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
+					/** 闹钟管理类 **/
+					AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 					mIntent.setAction("alarm.alert.short");
 					PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 							PendingIntent.FLAG_CANCEL_CURRENT);
 					mManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),
 							intervalMillis, mPendingIntent);
-					SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
+					//SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				}
 			} else{
 				//不提醒则取消
@@ -242,7 +249,8 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 				Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
 				mIntent.setAction("alarm.alert.short");
 				L.d("Cathy", "cancel alert");
-				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
+				/** 区分不同闹钟的ID **/
+//				SharedPreferencesUtil.saveData(this, mData.getId() + ":" + i, id);
 				PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 
 						PendingIntent.FLAG_CANCEL_CURRENT);
 				mManager.cancel(mPendingIntent);
@@ -256,9 +264,8 @@ public class UseMedicineNotifyActivity extends BaseActivity {
 			AlarmManager mManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent mIntent = new Intent(this, AlarmBroadCastReciever.class);
 			mIntent.setAction("alarm.alert.short");
-			int id = (Integer) SharedPreferencesUtil.getData(Thinksns.getContext(), 
-					mData.getId() + ":" + i, 0);
-			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, 0);
+			int id = Integer.parseInt(mData.getId()+""+i);
+			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, id, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 			mManager.cancel(mPendingIntent);
 		}
 	}

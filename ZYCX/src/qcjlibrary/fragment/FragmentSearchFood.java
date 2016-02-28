@@ -3,6 +3,7 @@ package qcjlibrary.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +78,10 @@ public class FragmentSearchFood extends BaseFragment {
 	@Override
 	public void initData() {
 		mList = new ArrayList<Model>();
+		mFoodSearchAll = new ModelFoodSearchAll();
+		mFoodSearchAll.setKey("");
+		sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
+				ModelFoodSearchIndex.class, 0);
 	}
 
 	@Override
@@ -104,7 +109,7 @@ public class FragmentSearchFood extends BaseFragment {
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		// initData();
+//		getData();
 	}
 
 	// 仅当可见时才加载内容
@@ -151,7 +156,6 @@ public class FragmentSearchFood extends BaseFragment {
 			@Override
 			public void onSearchTouch_Food(String key) {
 				// TODO 自动生成的方法存根
-				mFoodSearchAll = new ModelFoodSearchAll();
 				mFoodSearchAll.setKey(key);
 				sendRequest(mApp.getFoodImpl().food_search_all(mFoodSearchAll), 
 						ModelFoodSearchIndex.class, 0);

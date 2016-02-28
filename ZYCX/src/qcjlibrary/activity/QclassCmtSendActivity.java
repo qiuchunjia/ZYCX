@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.L;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopQclassCmt;
@@ -73,6 +74,28 @@ public class QclassCmtSendActivity extends BaseActivity {
 
 	@Override
 	public void initListener() {
+		
+		edt_qclass_send.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				content = s.toString();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(content.length() > 400){
+					ToastUtils.showLongToast(QclassCmtSendActivity.this, "评论不可超过400字");
+					content = content.substring(0, 400);
+					edt_qclass_send.setText(content);
+				}
+			}
+		});
 		//发表评论
 		tv_title_right.setOnClickListener(new OnClickListener() {
 			
@@ -82,6 +105,10 @@ public class QclassCmtSendActivity extends BaseActivity {
 				if(content != null && !content.startsWith(" ")){
 					if(content.length() > 400){
 						ToastUtils.showLongToast(QclassCmtSendActivity.this, "评论不可超过400字");
+						return;
+					}
+					if(EditTextUtils.containsEmoji(content)){
+						ToastUtils.showLongToast(QclassCmtSendActivity.this , "不可输入表情");
 						return;
 					}
 					sendCmt(content);

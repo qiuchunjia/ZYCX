@@ -1,9 +1,10 @@
 package qcjlibrary.activity;
 
 import com.zhiyicx.zycx.R;
-
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
@@ -11,6 +12,7 @@ import qcjlibrary.fragment.FragmentNotify;
 import qcjlibrary.fragment.FragmentPraise;
 import qcjlibrary.fragment.FragmentReplay;
 import qcjlibrary.model.ModelMsg;
+import qcjlibrary.model.ModelNotiyState;
 
 /**
  * author：qiuchunjia time：下午3:05:41 类描述：这个类是实现
@@ -26,6 +28,11 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 	private FragmentNotify mNotifyFg;
 	private FragmentPraise mPraiseFg;
 	private FragmentReplay mReplayFg;
+	private ImageView iv_msg_praise;
+	
+	private RelativeLayout rl_msg_praise;
+	
+	private String status;
 
 	private Title mTitle;
 
@@ -49,6 +56,8 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		tv_msg = (TextView) findViewById(R.id.tv_msg);
 		tv_praise = (TextView) findViewById(R.id.tv_praise);
 		tv_notify = (TextView) findViewById(R.id.tv_notify);
+		iv_msg_praise = (ImageView) findViewById(R.id.iv_msg_praise);
+		rl_msg_praise = (RelativeLayout) findViewById(R.id.rl_msg_praise);
 	}
 
 	@Override
@@ -79,6 +88,15 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 				mNotifyFg.DeleteAllMessage();
 			}
 		}
+		if(object instanceof ModelNotiyState){
+			ModelNotiyState state = (ModelNotiyState) object;
+			status = state.getStatus();
+			if(status != null && status.equals("1")){
+				iv_msg_praise.setVisibility(View.VISIBLE);
+			} else{
+				iv_msg_praise.setVisibility(View.GONE);
+			} 
+		}
 		return object;
 	}
 
@@ -87,6 +105,7 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		tv_msg.setOnClickListener(this);
 		tv_praise.setOnClickListener(this);
 		tv_notify.setOnClickListener(this);
+		rl_msg_praise.setOnClickListener(this);
 	}
 
 	@Override
@@ -115,7 +134,7 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 			break;
 		case R.id.tv_notify:
 			resetTextBg();
-			tv_notify.setBackgroundResource(R.drawable.view_border_green_right_solid_3);
+			rl_msg_praise.setBackgroundResource(R.drawable.view_border_green_right_solid_3);
 			tv_notify.setTextColor(getResources().getColor(R.color.text_white));
 			if (mNotifyFg == null) {
 				mNotifyFg = new FragmentNotify();
@@ -134,9 +153,19 @@ public class MsgNotifyPraiseActivity extends BaseActivity {
 		tv_msg.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_praise.setTextColor(getResources().getColor(R.color.text_more_gray));
 		tv_notify.setTextColor(getResources().getColor(R.color.text_more_gray));
-		tv_msg.setBackgroundResource(R.drawable.view_border_green_left3);
-		tv_praise.setBackgroundResource(R.drawable.view_border_only_top_bottom_green);
-		tv_notify.setBackgroundResource(R.drawable.view_border_green_right_3);
+		tv_msg.setBackgroundResource(R.drawable.view_border_green_left3_white);
+		tv_praise.setBackgroundResource(R.drawable.view_border_only_top_bottom_green_white);
+		rl_msg_praise.setBackgroundResource(R.drawable.view_border_green_right_3_white);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		/**
+		 * 获取是否有未读消息
+		 * */
+		sendRequest(mApp.getNotifyImpl().isRead(), ModelNotiyState.class, REQUEST_GET);
 	}
 
 }

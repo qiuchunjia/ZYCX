@@ -73,5 +73,14 @@ public class CaseHistoryActivity extends BaseActivity {
 		return super.onRequestFailed();
 		
 	}
+	
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		if(mAdapter != null){
+			mAdapter.refreshNew();
+		}
+	}
 
 }

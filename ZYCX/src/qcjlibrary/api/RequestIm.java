@@ -4,6 +4,7 @@ import qcjlibrary.model.ModelRequestAnswerComom;
 import qcjlibrary.model.ModelRequestAsk;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestSearch;
 
 import com.loopj.android.http.RequestParams;
@@ -44,6 +45,9 @@ public interface RequestIm {
 	public static final String AUID = "auid";
 	public static final String AID = "aid";
 	public static final String TID = "tid";
+	public static final String PAGE = "page";
+	
+	public static final String MEDRECORD_STATE = "medrecord_state";
 
 	/**
 	 * 问答首页
@@ -145,5 +149,12 @@ public interface RequestIm {
 	 * @param item
 	 * @return
 	 */
-	public RequestParams myAsk();
+	public RequestParams myAsk(ModelRequestMyAsk myAsk);
+	
+	public RequestParams myAskDetail();
+	
+	/**
+	 * 获取病历信息
+	 * */
+	public RequestParams getMedrecordState();
 }

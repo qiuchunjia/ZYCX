@@ -52,6 +52,8 @@
     <color name="text_gray">#636563</color>
     <!-- 次要文字 -->
     <color name="text_more_gray">#9a9f9b</color>
+    <color name="text_gray_end">#C3C6C4</color>
+    <color name="text_gray_a">#C3C6C4C8</color>
     <color name="btn_blue_color">#7ebbff</color>
     <color name="quit_color">#3AA349</color>
     <!-- 其它 -->

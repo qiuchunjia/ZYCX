@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.adapter.CommentMyListAdapter;
 import com.zhiyicx.zycx.sociax.android.Thinksns;
@@ -46,7 +47,6 @@ public class WebCommentFragment extends BaseListFragment
         Thinksns app = (Thinksns)mContext.getApplicationContext();
         ListData<SociaxItem> data = new ListData<SociaxItem>();
         ListData<SociaxItem> tempAtMeDatas2 = app.getMyCommentSql().getDBCommentList();
-
         //if (tempAtMeDatas2.size() != 0 && !isLoadNew)
         if(false)
         {

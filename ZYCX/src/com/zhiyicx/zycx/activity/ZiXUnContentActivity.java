@@ -12,9 +12,12 @@ import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 import com.zhiyicx.zycx.util.Utils;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -34,6 +37,8 @@ import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.ModelZiXunDetail;
+import qcjlibrary.util.EditTextUtils;
+import qcjlibrary.util.LoadingDialogUtl;
 import qcjlibrary.util.ToastUtils;
 import qcjlibrary.widget.popupview.PopShareContent;
 import qcjlibrary.widget.popupview.PopSizeChoose;
@@ -63,10 +68,11 @@ public class ZiXUnContentActivity extends BaseActivity {
 
 	private int mCurrentPraise;
 	private boolean isBig = false;
-
+	private String contnet;
+	private String mWebUrl;
 	@Override
 	public String setCenterTitle() {
-		return "咨询详情";
+		return "资讯详情";
 	}
 
 	@Override
@@ -82,6 +88,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			mId = intent.getIntExtra("id", 0);
 			mUid = intent.getIntExtra("uid", 0);
 			mTitle = intent.getStringExtra("title");
+			Log.d("Cathy", "mTitle : "+mTitle);
 			mDetail = new ModelZiXunDetail();
 			mDetail.setId(mId + "");
 		}
@@ -117,10 +124,33 @@ public class ZiXUnContentActivity extends BaseActivity {
 				}
 				return true;
 			}
+
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				// TODO 自动生成的方法存根
+				super.onPageStarted(view, url, favicon);
+				LoadingDialogUtl.loadingView(ZiXUnContentActivity.this);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO 自动生成的方法存根
+				super.onPageFinished(view, url);
+				LoadingDialogUtl.hideLoadingView();
+			}
+			
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				// TODO 自动生成的方法存根
+				super.onReceivedError(view, errorCode, description, failingUrl);
+				ToastUtils.showToast("网页加载失败");
+			}
+			
+			
 		});
 		// mContent.loadUrl(mUrl);
 		// mContent.loadUrl("javascript:getComment()");
-		loadData();
+		loadData(false);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_share).setOnClickListener(this);
 		findViewById(R.id.btn_comment).setOnClickListener(this);
@@ -142,8 +172,25 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (mFaceView.getVisibility() == View.VISIBLE) {
 						mFace.setImageResource(R.drawable.smile_face);
 						mFaceView.setVisibility(View.GONE);
-					}
+					} 
 				}
+			}
+		});
+		
+		mCmtEdit.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(isLogin()){
+					if (mFaceView.getVisibility() == View.VISIBLE) {
+						mFace.setImageResource(R.drawable.smile_face);
+						mFaceView.setVisibility(View.GONE);
+					} 
+				} else{
+					Intent intent = new Intent(ZiXUnContentActivity.this, LoginActivity.class);
+					startActivity(intent);
+				}
+				return false;
 			}
 		});
 
@@ -197,6 +244,28 @@ public class ZiXUnContentActivity extends BaseActivity {
 				return false;
 			}
 		});
+		//限制输入字数
+		mCmtEdit.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				contnet = s.toString();
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(contnet.length() > 400){
+					contnet = contnet.substring(0, 400);
+					ToastUtils.showLongToast(ZiXUnContentActivity.this, "评论不可超过400字");
+					mCmtEdit.setText(contnet);
+				}
+			}
+		});
 		// 点击后隐藏标签和输入框 如果有的话
 	}
 
@@ -219,14 +288,14 @@ public class ZiXUnContentActivity extends BaseActivity {
 				popView.showPop(mTitleLayout.iv_title_right3, Gravity.TOP, 0, 0);
 			} else {
 				ToastUtils.showToast("请稍后。。。");
-				loadData();
+				loadData(false);
 			}
 			break;
 		case R.id.iv_title_right1:
 			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("青稞网资讯分享:" + mTitle);
-			shareContent.setUrl(mUrl);
+			shareContent.setUrl(mWebUrl);
 			PopShareContent PopshareContent = new PopShareContent(this, shareContent, this);
 			PopshareContent.showPop(mContent, Gravity.BOTTOM, 0, 0);
 			// Utils.shareText(this, mController, "青稞网资讯分享:" + mTitle + " - ",
@@ -274,11 +343,25 @@ public class ZiXUnContentActivity extends BaseActivity {
 		}
 		return object;
 	}
+	/** 是否已经提交成功标记**/
+	private boolean isCommit = true; 
 
 	private void comment() {
 		String txt = mCmtEdit.getText().toString().trim();
 		if (TextUtils.isEmpty(txt)) {
+			loadData(true);
 			ToastUtils.showToast("评论内容不能为空！");
+			return;
+		}
+		if(EditTextUtils.containsEmoji(txt)){
+			loadData(true);
+			ToastUtils.showLongToast(this, "不可输入表情！");
+			return;
+		}
+		if(isCommit){
+			isCommit = false;
+		} else{
+			ToastUtils.showToast("提交中...");
 			return;
 		}
 		String url = MyConfig.ZIXUN_COMMENT_URL + "&id=" + mId + "&uid=" + mUid + "&content=" + Utils.getUTF8String(txt)
@@ -292,6 +375,8 @@ public class ZiXUnContentActivity extends BaseActivity {
 					if (ret == 0) {
 						Utils.showToast(ZiXUnContentActivity.this, "评论成功！");
 						// mContent.loadUrl("javascript:getComment()");
+						isCommit = true;
+						loadData(true);
 						mContent.reload();
 						mCmtEdit.setText("");
 						// SociaxUIUtils.hideSoftKeyboard(ZiXUnContentActivity.this,
@@ -367,7 +452,7 @@ public class ZiXUnContentActivity extends BaseActivity {
 			public void onClick(View v) {
 				if (mFaceView.getVisibility() == View.VISIBLE) {
 					mFaceView.setVisibility(View.GONE);
-					mFace.setImageResource(R.drawable.keyboard);
+					mFace.setImageResource(R.drawable.smile_face);
 					SociaxUIUtils.showSoftKeyborad(ZiXUnContentActivity.this, mCmtEdit);
 				}
 			}
@@ -405,8 +490,10 @@ public class ZiXUnContentActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-	private void loadData() {
+	
+	private boolean isComment;
+	private void loadData(boolean b) {
+		isComment = b;
 		final String url = MyConfig.ZIXUN_GET_URL + Utils.getTokenString(this) + "&id=" + mId + "&uid=" + mUid;
 		NetComTools netComTools = NetComTools.getInstance(this);
 		netComTools.getNetJson(url, new JsonDataListener() {
@@ -419,8 +506,16 @@ public class ZiXUnContentActivity extends BaseActivity {
 						Log.i("loadData", jsonObject.toString());
 						JSONObject data = jsonObject.getJSONObject("data");
 						mUrl = data.getString("url");
+						/**
+						 * 是否点击评论而刷新页面，如果是则添加标签"#comment"，可直接定位到评论处
+						 * */
+						if(isComment){
+							mUrl += "#comment";
+						}
+						Log.d("Cathy", "mUrl = "+mUrl);
+						mWebUrl = data.getString("weburl");
 						mChangeSizeUrl = mUrl + Utils.getTokenString(ZiXUnContentActivity.this);
-						mContent.loadUrl(mChangeSizeUrl);
+						mContent.loadUrl(mUrl);
 						mIsColl = data.getInt("isColl");
 						int is_praise = data.getInt("isPraise");
 						mCurrentPraise = Integer.valueOf(data.getString("praiseCount"));

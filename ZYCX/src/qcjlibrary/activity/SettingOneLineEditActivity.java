@@ -4,12 +4,16 @@ import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.util.EditTextUtils;
 import qcjlibrary.util.ToastUtils;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.sociax.component.MyTextView;
 
 /**
  * author：qiuchunjia time：下午2:39:22 类描述：这个类是实现
@@ -59,15 +63,23 @@ public class SettingOneLineEditActivity extends BaseActivity {
 	public void initListener() {
 		Title title = getTitleClass();
 		title.tv_title_right.setOnClickListener(this);
-
+		if(mCurrentPosition == DECLARATION){
+			et_oneline.addTextChangedListener(new EditTextUtils().getMyWatcher(28, et_oneline, this));
+		} else if(mCurrentPosition == NICK){
+			et_oneline.addTextChangedListener(new EditTextUtils().getMyWatcher(15, et_oneline, this));
+		}
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_title_right:
 			String content = et_oneline.getText().toString();
 			if (!TextUtils.isEmpty(content)) {
+				if(EditTextUtils.containsEmoji(content)){
+					ToastUtils.showToast(this, "不可输入表情!");
+					return;
+				}
 				sendContent(mCurrentPosition, content);
 			}
 			break;
@@ -118,7 +130,7 @@ public class SettingOneLineEditActivity extends BaseActivity {
 	private void sendContent(int position, String content) {
 		switch (position) {
 		case DECLARATION:
-			if(content.length() < 28){
+			if(content.length() < 29){
 				mUserData.setIntro(content);
 				sendRequest(mApp.getUserImpl().edituserdata(mUserData),
 						ModelMsg.class, REQUEST_GET);
@@ -128,6 +140,10 @@ public class SettingOneLineEditActivity extends BaseActivity {
 			break;
 
 		case NICK:
+			if(content.length() < 2){
+				ToastUtils.showLongToast(this, "字数不可少于2个字");
+				return;
+			} 
 			mUserData.setUname(content);
 			sendRequest(mApp.getUserImpl().edituserdata(mUserData),
 					ModelMsg.class, REQUEST_GET);

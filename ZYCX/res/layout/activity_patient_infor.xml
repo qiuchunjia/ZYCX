@@ -63,9 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_gender"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择性别"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择性别" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -129,9 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_marry"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择婚姻状态"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择婚姻状态" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -164,9 +164,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_nation"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择民族"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择民族" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -230,9 +230,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_education"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择文化程度"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择文化程度" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -265,9 +265,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_insurance"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择保险形式"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择保险形式" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -300,9 +300,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_hometown"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择籍贯"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择籍贯" -->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -335,9 +335,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_address"
                 android:layout_marginTop="@dimen/margin_top"
-                android:hint="请选择居住地"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_common" />
+<!--                 android:hint="请选择居住地" -->
 
             <ImageView
                 android:layout_width="wrap_content"

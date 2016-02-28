@@ -110,7 +110,7 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	@Override
 	public void refreshHeader(Model item, int count) {
-
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
 
@@ -118,10 +118,12 @@ public class FoodCategoryAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
-
+		if(isLoading()){
+			setLoading(false);
+		}
+		dismissTheProgress();
 		// sendRequest(mApp.getFoodImpl().food_search(mSearch),
 		// ModelFoodSearchIndex.class, 0, REFRESH_NEW);
-
 	}
 
 	@Override
@@ -134,6 +136,9 @@ public class FoodCategoryAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelFoodSearchIndex) {
 			ModelFoodSearchIndex index = (ModelFoodSearchIndex) object;
+			if(isLoading()){
+				setLoading(false);
+			}
 			if (mSearch.getState() == 0) {
 				return index.getFoodList();
 			} else {

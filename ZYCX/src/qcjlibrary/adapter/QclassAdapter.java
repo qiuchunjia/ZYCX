@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zhiyicx.zycx.R;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,6 +39,13 @@ public class QclassAdapter extends BAdapter {
 
 	public QclassAdapter(BaseFragment fragment, List<Model> mList, ModelQclassDetail detail) {
 		super(fragment, mList);
+		this.detail = detail;
+		update_head = "已更新";
+		update_tail = "课";
+	}
+	
+	public QclassAdapter(BaseFragment fragment,ModelQclassDetail detail){
+		super(fragment,null);
 		this.detail = detail;
 		update_head = "已更新";
 		update_tail = "课";
@@ -98,6 +106,8 @@ public class QclassAdapter extends BAdapter {
 	@Override
 	public void refreshNew() {
 		detail.setStatus(status);
+		detail.setLastid(null);
+		detail.setMaxid(null);
 		requstMessage(detail, REFRESH_NEW);
 	}
 
@@ -111,14 +121,24 @@ public class QclassAdapter extends BAdapter {
 		// requstMessage(detail, REFRESH_HEADER);
 		// }
 	}
+	
+	private int lastid;
 
 	@Override
 	public void refreshFooter(Model item, int count) {
 		if (item instanceof ModelQclassDetail) {
 			ModelQclassDetail detailitem = (ModelQclassDetail) item;
+			/** 列表排序规则标记**/
 			detail.setStatus(status);
 			detail.setLastid(detailitem.getCourse_id() + "");
+			lastid = detailitem.getCourse_id();
 			requstMessage(detail, REFRESH_FOOTER);
+//			/**
+//			 * 数据已经加载完成，则手动设置为未加载
+//			 * */
+//			if(isLoading()){
+//				setLoading(false);
+//			}
 		}
 	}
 
@@ -132,10 +152,18 @@ public class QclassAdapter extends BAdapter {
 	public Object getReallyList(Object object, Class type2) {
 		if (object instanceof ModelQclass) {
 			ModelQclass mQclass = (ModelQclass) object;
+			/** 如果选择分类为我的，则清空列表**/
 			if (status == 2 && mList != null) {
 				mList.clear();
 			}
-			return mQclass.getList();
+			List<ModelQclassDetail> list = mQclass.getList();
+			/**
+			 * 数据已经加载完成，则手动设置为未加载
+			 * */
+			if(isLoading()){
+				setLoading(false);
+			}
+			return list;
 		}
 		return null;
 	}
@@ -150,9 +178,17 @@ public class QclassAdapter extends BAdapter {
 		QclassImpl qClassImpl = new QclassImpl();
 		sendRequest(qClassImpl.indexItem(data), ModelQclass.class, 0, type);
 	}
-
+	
+	/**
+	 * @param int status
+	 * 		提供外部设置排序方式
+	 * */
 	public void setStatus(int status) {
 		this.status = status;
+		if(isLoading()){
+			setLoading(false);
+		}
+		refreshNew();
 	}
 
 }

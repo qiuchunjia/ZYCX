@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import cn.jpush.android.api.JPushInterface;
 
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
@@ -59,8 +60,24 @@ public class GuideActivity extends Activity {
 			GuideActivity.this.finish();
         }
     };
-
+    
+    
+    
     @Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		JPushInterface.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO 自动生成的方法存根
+		super.onPause();
+		JPushInterface.onPause(this);
+	}
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -263,5 +280,6 @@ class GuidePageAdapter extends PagerAdapter {
         // TODO Auto-generated method stub
         return null;
     }
+    
 
 }

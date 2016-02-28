@@ -40,7 +40,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/zoom" />
+                android:src="@drawable/shiliaosearch" />
+
+            <ImageView
+                android:id="@+id/iv_quxiao"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/quxiao02"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/et_search"
@@ -49,26 +60,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/iv_search"
+                android:layout_marginRight="30dp"
+                android:layout_weight="4"
                 android:background="@null"
-                android:imeOptions="actionSearch"
-                android:hint="搜索关键词"
-                android:textColorHint="#5EAB69"
                 android:cursorVisible="true"
-                android:textCursorDrawable="@null"
+                android:hint="搜索关键词"
+                android:imeOptions="actionSearch"
                 android:src="@drawable/search_icon"
                 android:textColor="@color/text_white"
+                android:textColorHint="#5EAB69"
+                android:textCursorDrawable="@null"
                 android:textSize="@dimen/text_common" />
-
-            <ImageView
-                android:id="@+id/iv_quxiao"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:visibility="gone"
-                android:background="@drawable/quxiao02" />
-
         </RelativeLayout>
     </RelativeLayout>
     <!-- 下面5个标题 -->
@@ -93,7 +95,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="微博"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -103,7 +105,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="问答"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -113,7 +115,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="资讯"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -123,7 +125,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="轻课堂"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
 
             <TextView
@@ -133,7 +135,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="食疗"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </LinearLayout>
 

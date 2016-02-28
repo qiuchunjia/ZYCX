@@ -108,6 +108,7 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public void refreshFooter(Model item, int count) {
+		dismissTheProgress();
 	}
 
 	@Override
@@ -117,6 +118,9 @@ public class UseMedicineNotifyAdapter extends BAdapter {
 
 	@Override
 	public Object getReallyList(Object object, Class type2) {
+		if(isLoading()){
+			setLoading(false);
+		}
 		return null;
 	}
 

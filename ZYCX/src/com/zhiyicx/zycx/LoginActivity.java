@@ -3,6 +3,7 @@ package com.zhiyicx.zycx;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.umeng.analytics.MobclickAgent;
@@ -53,6 +54,7 @@ import android.widget.Toast;
 import qcjlibrary.activity.base.BaseActivity;
 import qcjlibrary.activity.base.Title;
 import qcjlibrary.model.ModelUser;
+import qcjlibrary.response.DataAnalyze;
 import qcjlibrary.util.L;
 
 /**
@@ -449,6 +451,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					preferenceUtil.saveString("oauth_token_secret", authorizeResult.getSecretToken());
 					preferenceUtil.saveString("oauth_token", authorizeResult.getToken());
 					preferenceUtil.saveInt("uid", authorizeResult.getUid());
+					
 					break;
 				case 2:
 					authorizeResult = oauth.authorize(data.getString("username"), data.getString("password"),

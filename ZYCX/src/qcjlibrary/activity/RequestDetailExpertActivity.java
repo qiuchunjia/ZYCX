@@ -7,12 +7,15 @@ import qcjlibrary.activity.base.Title;
 import qcjlibrary.config.Config;
 import qcjlibrary.model.ModelMsg;
 import qcjlibrary.model.ModelRequestAnswerComom;
+import qcjlibrary.model.ModelRequestDetailCommon;
 import qcjlibrary.model.ModelRequestDetailExpert;
 import qcjlibrary.model.ModelRequestFlag;
 import qcjlibrary.model.ModelRequestItem;
+import qcjlibrary.model.ModelRequestMyAsk;
 import qcjlibrary.model.ModelRequestRelate;
 import qcjlibrary.model.ModelShareContent;
 import qcjlibrary.model.base.Model;
+import qcjlibrary.util.DefaultLayoutUtil;
 import qcjlibrary.util.SpanUtil;
 import qcjlibrary.widget.RoundImageView;
 import qcjlibrary.widget.popupview.PopShareContent;
@@ -22,11 +25,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.LoginActivity;
 import com.zhiyicx.zycx.R;
+import com.zhiyicx.zycx.config.MyConfig;
+import com.zhiyicx.zycx.sociax.unit.SociaxUIUtils;
 
 /**
  * author：qiuchunjia time：下午4:31:08 类描述：这个类是实现
@@ -58,6 +66,13 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private ModelRequestItem mRequestItem;
 	// 返回的数据
 	private ModelRequestDetailExpert mDetailExpert;
+	
+	/** 网络异常时的缺省图**/
+	private View defaultView;
+	private boolean isFirst = true;
+	private RelativeLayout rl_request_02;
+	private LinearLayout ll_request_expert;
+	private FrameLayout frame_request_expert;
 
 	@Override
 	public String setCenterTitle() {
@@ -66,7 +81,15 @@ public class RequestDetailExpertActivity extends BaseActivity {
 
 	@Override
 	public void initIntent() {
-		mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		//mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		Model model = (Model) getDataFromIntent(getIntent(), null);
+		if(model instanceof ModelRequestItem){
+			mRequestItem = (ModelRequestItem) getDataFromIntent(getIntent(), null);
+		} else if(model instanceof ModelRequestMyAsk){
+			ModelRequestMyAsk mAsk = (ModelRequestMyAsk) model;
+			mRequestItem = new ModelRequestItem();
+			mRequestItem.setQuestion_id(mAsk.getQuestion_id());
+		}
 	}
 
 	@Override
@@ -85,7 +108,8 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		tv_username = (TextView) findViewById(R.id.tv_username);
 		tv_date = (TextView) findViewById(R.id.tv_date);
 		ll_relate = (LinearLayout) findViewById(R.id.ll_relate);
-
+		ll_request_expert = (LinearLayout) findViewById(R.id.ll_request_expert);
+		rl_request_02 = (RelativeLayout) findViewById(R.id.rl_request_02);
 		ll_expert_repaly = (LinearLayout) findViewById(R.id.ll_expert_repaly);
 		ll_expert_repaly.setVisibility(View.GONE);
 		et_content = (EditText) findViewById(R.id.et_content);
@@ -95,12 +119,14 @@ public class RequestDetailExpertActivity extends BaseActivity {
 		tv_expertcontent = (TextView) findViewById(R.id.tv_expertcontent);
 		find_more = (TextView) findViewById(R.id.find_more);
 		tv_flag_value3 = (TextView) findViewById(R.id.tv_flag_value3);
+		frame_request_expert = (FrameLayout) findViewById(R.id.frame_request_expert);
 	}
 
 	@Override
 	public void initData() {
 		Title title = getTitleClass();
 		title.iv_title_right1.setOnClickListener(this);
+		SociaxUIUtils.hideSoftKeyboard(this, et_content);
 		sendRequest(mApp.getRequestImpl().answer(mRequestItem), ModelRequestDetailExpert.class, REQUEST_GET);
 	}
 
@@ -167,7 +193,9 @@ public class RequestDetailExpertActivity extends BaseActivity {
 	private void addDataToExpertAnswer(ModelRequestAnswerComom data, List<ModelRequestAnswerComom> answers) {
 		if (data != null) {
 			tv_expert_date.setText(data.getTime());
-			tv_expertcontent.setText(data.getAnswer_content());
+			if(data.getAnswer_content() != null && !data.getAnswer_content().equals(" ") && !data.getAnswer_content().equals("")){
+				tv_expertcontent.setText(data.getAnswer_content());
+			}
 			find_more.setVisibility(View.VISIBLE);
 			find_more.setOnClickListener(new OnClickListener() {
 
@@ -299,7 +327,12 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			ModelShareContent shareContent = new ModelShareContent();
 			shareContent.setType(Config.SHARE_TEXT);
 			shareContent.setTitle("问答分享：");
-			shareContent.setUrl(mRequestItem.getUrl());
+			String url = mRequestItem.getUrl();
+			if(mRequestItem.getUrl() == null || mRequestItem.getUrl().equals(" ")){
+				url = MyConfig.HOST + "index.php?app=ask&mod=Question&act=view&id="+mRequestItem.getQuestion_id();
+			}
+			shareContent.setUrl(url);
+			Log.d("Cathy", "url = "+url);
 			PopShareContent popShareContent = new PopShareContent(this, shareContent, this);
 			popShareContent.showPop(tv_send, Gravity.BOTTOM, 0, 0);
 			// mApp.startActivity_qcj(this, RequestDetailResponceActivity.class,
@@ -349,6 +382,31 @@ public class RequestDetailExpertActivity extends BaseActivity {
 			sendRequest(mApp.getRequestImpl().answerComment(answerComom), ModelMsg.class, REQUEST_GET);
 		}
 
+	}
+	
+	@Override
+	public View onRequestFailed() {
+		// TODO 自动生成的方法存根
+		defaultView =  super.onRequestFailed();
+		TextView tv_reload = (TextView) defaultView.findViewById(R.id.tv_reload);
+		tv_reload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendRequest(mApp.getRequestImpl().answer(mRequestItem), 
+						ModelRequestDetailExpert.class, REQUEST_GET);
+			}
+		});
+		DefaultLayoutUtil.showDefault(frame_request_expert, defaultView);
+		return defaultView;
+	}
+	
+	@Override
+	public View onRequestSuccess() {
+		// TODO 自动生成的方法存根
+		defaultView = super.onRequestSuccess();
+		DefaultLayoutUtil.hideDefault(frame_request_expert, defaultView);
+		return defaultView;
 	}
 
 }

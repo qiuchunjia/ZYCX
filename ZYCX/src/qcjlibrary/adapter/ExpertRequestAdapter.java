@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.utils.Log;
 import com.zhiyicx.zycx.R;
 
 /**
@@ -63,9 +64,9 @@ public class ExpertRequestAdapter extends BAdapter {
                 holder.tv_answer.setText(myAsk.getQuestion_detail());
                 if (!TextUtils.isEmpty(myAsk.getAnswercontent())) {
                 	  holder.tv_expert_answer.setText("");
-                	  holder.tv_expert_answer.append(SpanUtil.setForegroundColorSpan("专家建议：", 0, 0,
+                	  holder.tv_expert_answer.setText(SpanUtil.setForegroundColorSpan("专家建议："+myAsk.getAnswercontent(), 0, 5,
 								mBaseActivity.getResources().getColor(R.color.text_yellow)));
-					  holder.tv_expert_answer.append(myAsk.getAnswercontent());
+//					  holder.tv_expert_answer.append(myAsk.getAnswercontent());
                     holder.tv_expert_answer.setVisibility(View.VISIBLE);
                 }
                 holder.tv_date.setText(myAsk.getTime());
@@ -73,7 +74,7 @@ public class ExpertRequestAdapter extends BAdapter {
                     if (myAsk.getEvaluate().equals("1")) {
                         holder.tv_agree.setText("满意评价");
                         holder.tv_agree.setVisibility(View.VISIBLE);
-                    } else if (myAsk.getEvaluate().equals("1")) {
+                    } else if (myAsk.getEvaluate().equals("2")) {
                         holder.tv_noagree.setText("不满意评价");
                         holder.tv_noagree.setVisibility(View.VISIBLE);
                     } else {
@@ -138,16 +139,22 @@ public class ExpertRequestAdapter extends BAdapter {
 
     @Override
     public void refreshFooter(Model item, int count) {
-        ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
-        myAsk.setLastid(myAsk.getQuestion_id());
-        sendRequest(mApp.getUserImpl().myQuestion(myAsk), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+//    	if(item instanceof ModelRequestMyAsk){
+//    		ModelRequestMyAsk myAsk = (ModelRequestMyAsk) item;
+//    		data = new ModelRequestMyAsk();
+//    		data.setLastid(myAsk.getQuestion_id());
+////    		myAsk.setLastid(myAsk.getQuestion_id());
+//    		sendRequest(mApp.getUserImpl().myQuestion(data), ModelRequestMyAsk.class, REQUEST_GET, REFRESH_FOOTER);
+//    	}
     }
+    
+    private ModelRequestMyAsk data;
 
     @Override
     public int getTheCacheType() {
         return 0;
     }
-
+    
     @Override
     public Object onResponceSuccess(String str, Class class1) {
         return DataAnalyze.parseData(str, class1);
@@ -155,11 +162,14 @@ public class ExpertRequestAdapter extends BAdapter {
 
     @Override
     public Object getReallyList(Object object, Class type2) {
+    	if(isLoading()){
+			setLoading(false);
+		}
         return object;
     }
 
-    @Override
-    public void addHeadList(List<Model> list) {
-        addHeadListWay2(list);
-    }
+//    @Override
+//    public void addHeadList(List<Model> list) {
+//        addHeadListWay2(list);
+//    }
 }

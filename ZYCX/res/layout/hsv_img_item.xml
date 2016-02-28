@@ -3,7 +3,7 @@
     android:id="@+id/topic_fl_big_image"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="5dp"
+    android:paddingLeft="10dp"
     android:paddingRight="5dp" >
 
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/default_image_small" />
 
     <ImageView

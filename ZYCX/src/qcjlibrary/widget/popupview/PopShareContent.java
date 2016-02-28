@@ -5,6 +5,7 @@ import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.sso.UMSsoHandler;
 import com.zhiyicx.zycx.R;
 import com.zhiyicx.zycx.util.Utils;
 
@@ -137,8 +138,8 @@ public class PopShareContent extends PopView {
 		public void onComplete(SHARE_MEDIA platform, int stCode, SocializeEntity entity) {
 			if (stCode == 200) {
 				ToastUtils.showToast("分享成功");
-			} else {
-				ToastUtils.showToast("分享成功" + stCode);
+			} else if(stCode == 0000) {
+				ToastUtils.showToast("分享失败" + stCode);
 			}
 			mPopWindow.dismiss();
 		}

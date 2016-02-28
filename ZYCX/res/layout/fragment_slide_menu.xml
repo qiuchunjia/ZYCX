@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:paddingRight="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingRight="10dp" >
 
             <qcjlibrary.widget.RoundImageView
                 android:id="@+id/riv_user_icon"
@@ -33,6 +33,7 @@
                 android:layout_marginLeft="@dimen/margin_left_small"
                 android:layout_weight="2"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLines="1"
                 android:text="青稞官方网站"
                 android:textColor="@color/text_white"
@@ -42,8 +43,8 @@
                 android:id="@+id/menu_iv_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 android:layout_marginRight="20dp"
+                android:layout_weight="0.5"
                 android:src="@drawable/gerenshezhiicon"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_big" />
@@ -171,10 +172,52 @@
                 android:id="@+id/tv_periodical"
                 style="@style/text_home"
                 android:layout_toRightOf="@id/iv_periodical"
-                android:text="我的期刊" />
+                android:text="我的园地" />
 
             <ImageView
                 android:id="@+id/iv_periodical_next"
+                style="@style/img_home"
+                android:src="@drawable/arrows_right_write" />
+        </RelativeLayout>
+        <!-- 我的消息    新加功能 -->
+
+        <RelativeLayout
+            android:id="@+id/rl_msgnotify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginTop="@dimen/margin_left_small" >
+
+            <FrameLayout
+                android:id="@+id/frame_menu_msg"
+                style="@style/text_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/iv_msgnotify"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/index" />
+
+                <ImageView
+                    android:id="@+id/iv_menu_msg"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    android:background="@drawable/remind" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_msgnotify"
+                style="@style/text_home"
+                android:layout_toRightOf="@id/frame_menu_msg"
+                android:text="我的消息" />
+
+            <ImageView
+                android:id="@+id/iv_msgnotify_next"
                 style="@style/img_home"
                 android:src="@drawable/arrows_right_write" />
         </RelativeLayout>
@@ -182,7 +225,7 @@
 
     <Button
         android:id="@+id/btn_quit"
-        android:layout_width="160dp"
+        android:layout_width="170dp"
         android:layout_height="@dimen/item_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

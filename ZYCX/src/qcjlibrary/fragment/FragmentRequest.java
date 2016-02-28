@@ -83,6 +83,9 @@ public class FragmentRequest extends BaseFragment{
 	public void initData() {
 		mItemList = new ArrayList<Model>();
 		mRequestSearch = new ModelRequestSearch();
+		mRequestSearch.setKey("");
+		sendRequest(mApp.getRequestImpl().search(mRequestSearch),
+				ModelRequest.class, REQUEST_GET);
 	}
 
 	@Override
@@ -103,8 +106,7 @@ public class FragmentRequest extends BaseFragment{
 	public void onResume() {
 		// TODO 自动生成的方法存根
 		super.onResume();
-		Log.d("Cathy", "request:onResume");
-		//initData();
+//		getData();
 	}
 	
 	 //仅当可见时才加载内容
@@ -116,7 +118,6 @@ public class FragmentRequest extends BaseFragment{
     	if(!isCreate){
     		return;
     	}
-    	L.d("Cathy", "request isVisibleToUser = "+isVisibleToUser);
     	if(isVisibleToUser){
     		getData();
     	}
@@ -139,7 +140,6 @@ public class FragmentRequest extends BaseFragment{
 			
 			@Override
 			public void onSearchTouch_Request(String key) {
-				Log.d("Cathy", "request:"+key);
 				mRequestSearch.setKey(key);
 				sendRequest(mApp.getRequestImpl().search(mRequestSearch),
 						ModelRequest.class, REQUEST_GET);

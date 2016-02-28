@@ -32,6 +32,7 @@ public class ModelRequestMyAsk extends Model {
     private String time;
     private String evaluate;
     private String answercontent;
+    private String page;
 
     public ModelRequestMyAsk(JSONObject data) {
         try {
@@ -133,4 +134,13 @@ public class ModelRequestMyAsk extends Model {
     public void setEvaluate(String evaluate) {
         this.evaluate = evaluate;
     }
+
+	public String getPage() {
+		return page;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
+	}
+    
 }

@@ -68,9 +68,10 @@
 
                 <qcjlibrary.widget.MyGridView
                     android:id="@+id/gv_contain"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numColumns="3"
+                    android:horizontalSpacing="@dimen/margin_top_big"
                     android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
@@ -110,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:numColumns="3"
+                    android:horizontalSpacing="@dimen/margin_top_big"
                     android:verticalSpacing="@dimen/margin_left_small" />
             </RelativeLayout>
         </RelativeLayout>
@@ -169,12 +171,12 @@
 
             <TextView
                 android:id="@+id/tv_food_way_value"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_food_way"
                 android:layout_marginTop="@dimen/margin_top"
                 android:lineSpacingExtra="@dimen/text_lineSpacingExtra"
-                android:text="与豆类搭配，不可长期作为单类使用，不要吃霉变玉米。"
+                android:text=" "
                 android:textColor="@color/text_more_gray"
                 android:textSize="@dimen/text_common" />
         </RelativeLayout>
@@ -232,10 +234,11 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/yijibox"
                     android:paddingBottom="@dimen/margin_bottom"
                     android:paddingLeft="@dimen/margin_left"
+                    android:layout_marginBottom="2dp"
                     android:paddingRight="@dimen/margin_left_small"
                     android:paddingTop="@dimen/margin_top" >
 
@@ -321,16 +324,21 @@
                 android:orientation="horizontal" >
 
                 <RelativeLayout
+                    android:id="@+id/rl_way_relate1"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
+                    
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_relate1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/view_border_gray_gray_image_border"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -345,16 +353,21 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_way_relate2"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
+                    
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_relate2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/view_border_gray_gray_image_border"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -378,16 +391,21 @@
                 android:orientation="horizontal" >
 
                 <RelativeLayout
+                    android:id="@+id/rl_way_relate3"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
+                    
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_relate3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/view_border_gray_gray_image_border"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
@@ -402,16 +420,21 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_way_relate4"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
+                    
+                    <ImageView 
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:background="@drawable/view_border_gray_gray_image_border"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_relate4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="fitXY"
-                        android:background="@drawable/view_border_gray_gray_image_border"
+                        style="@style/food_relate"
                         android:src="@drawable/default_image_small" />
 
                     <TextView
